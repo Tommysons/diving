@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import CardsGrid from './components/CardsGrid'
-import { cards, CardData } from './lib/data'
-import Footer from './components/Footer'
-import Header from './components/Header'
+import CardsGrid from '../components/CardsGrid'
+import { cards, CardData } from '../lib/data'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
 
 export default function HomePage() {
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)

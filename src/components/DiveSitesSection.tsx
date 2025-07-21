@@ -1,5 +1,5 @@
 import CardsGrid from './CardsGrid'
-import { cards, CardData } from '../../lib/data'
+import { cards, CardData } from '../lib/data'
 
 interface DiveSitesSectionProps {
   onCardClick: (card: CardData) => void
