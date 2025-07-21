@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import CardsGrid from '../components/CardsGrid'
 import { cards, CardData } from '../lib/data'
 import Footer from '../components/Footer'
@@ -8,11 +9,28 @@ import Header from '../components/Header'
 
 export default function HomePage() {
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
+  const router = useRouter()
 
   const handleCardClick = (card: CardData) => {
     setSelectedCard(card)
-    // You can implement modal or detail view here
-    alert(`You clicked on: ${card.title}`)
+
+    // Navigate based on card title or id
+    switch (card.title.toLowerCase()) {
+      case 'dive sites':
+        router.push('/divesites')
+        break
+      case 'scuba diving courses':
+        router.push('/scubadivingcourses')
+        break
+      case 'freediving courses':
+        router.push('/freedivingcourses')
+        break
+      case 'about me':
+        router.push('/aboutme')
+        break
+      default:
+        alert(`You clicked on: ${card.title}`)
+    }
   }
 
   return (
@@ -25,7 +43,7 @@ export default function HomePage() {
           <CardsGrid cards={cards} onCardClick={handleCardClick} />
         </section>
 
-        {/* Future sections with IDs "scubacourses", "freedivingcourses", "contacts" can go here */}
+        {/* Other sections here */}
       </main>
       <Footer />
     </>
