@@ -38,7 +38,7 @@ export default function HomePage() {
       <Header />
 
       {/* Main Content */}
-      <main className='bg-gray-100 min-h-screen'>
+      <main className='flex-grow'>
         <section id='divesites' className='mt-12'>
           <CardsGrid cards={cards} onCardClick={handleCardClick} />
         </section>
