@@ -1,12 +1,21 @@
 // lib/data/freedivingCourses.ts
 
-export const freedivingCourses = [
+export interface FreedivingCourse {
+  name: string
+  description: string
+  maxDepth: string
+  prerequisites: string
+  image: string
+}
+
+export const freedivingCourses: FreedivingCourse[] = [
   {
     name: 'Freediver',
     description:
       'The entry-level course that teaches basic theory, breathing techniques, and static/dynamic apnea in confined water.',
     maxDepth: 'Up to 16 meters',
     prerequisites: 'Comfortable swimmer, 12 years or older',
+    image: '/images/freediver.jpeg',
   },
   {
     name: 'Advanced Freediver',
@@ -14,6 +23,7 @@ export const freedivingCourses = [
       'Builds on Freediver skills, includes training for deeper dives, longer breath holds, and better technique.',
     maxDepth: 'Up to 24-30 meters',
     prerequisites: 'PADI Freediver certification or equivalent',
+    image: '/images/advancedfreediver.jpeg',
   },
   {
     name: 'Master Freediver',
@@ -21,5 +31,6 @@ export const freedivingCourses = [
       'Advanced theory and physical conditioning to improve personal performance and support others.',
     maxDepth: 'Up to 40 meters or more',
     prerequisites: 'PADI Advanced Freediver certification or equivalent',
+    image: '/images/masterfreediver.jpeg',
   },
 ]

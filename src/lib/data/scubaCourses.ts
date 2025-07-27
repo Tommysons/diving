@@ -1,64 +1,94 @@
-export const scubaCourses = [
+// lib/data/scubaCourses.ts
+
+export interface ScubaCourse {
+  name: string
+  description: string
+  maxDepth: string
+  image: string
+  prerequisites?: string
+}
+
+export interface SpecialtyCourse {
+  name: string
+  description: string
+  prerequisites: string
+  image: string
+}
+
+export const scubaCourses: ScubaCourse[] = [
   {
     name: 'Discover Scuba Diving (DSD)',
     description:
-      'An introductory experience for beginners. Not a certification course.',
-    maxDepth: '12m / 40ft',
+      'Experience scuba diving without a certification. Great for beginners wanting to try diving under professional supervision.',
+    maxDepth: '12 meters',
+    image: '/images/dsd.jpeg',
   },
   {
-    name: 'Open Water Diver',
+    name: 'Open Water Diver (OWD)',
     description:
-      'First full certification allowing independent diving with a buddy.',
-    maxDepth: '18m / 60ft',
+      'Your first full certification. Learn basic diving skills and theory. Dive with a buddy anywhere in the world.',
+    maxDepth: '18 meters',
+    image: '/images/owd.jpeg',
   },
   {
-    name: 'Advanced Open Water Diver',
-    description: 'Builds experience with deep and navigation dives.',
-    maxDepth: '30m / 100ft',
+    name: 'Advanced Open Water Diver (AOWD)',
+    description:
+      'Improve your skills with navigation, deep dives, and 3 other specialty dives.',
+    maxDepth: '30 meters',
+    image: '/images/awd.jpeg',
+    prerequisites: 'OWD',
   },
   {
     name: 'Rescue Diver',
     description:
-      'Teaches self-rescue and how to assist others in emergency situations.',
-    maxDepth: '30m / 100ft',
+      'Learn how to prevent and manage diving emergencies. Builds confidence and leadership.',
+    maxDepth: '30 meters',
+    image: '/images/rescue.jpeg',
+    prerequisites: 'AOWD + EFR/CPR certification',
   },
   {
     name: 'Divemaster',
     description:
-      'First professional level. Allows supervising divers and assisting instructors.',
-    maxDepth: '40m / 130ft',
+      'First professional level. Lead certified divers and assist instructors.',
+    maxDepth: '40 meters',
+    image: '/images/dm.jpeg',
+    prerequisites: 'Rescue Diver + 40 logged dives + medical clearance',
   },
 ]
 
-export const specialtyCourses = [
+export const specialtyCourses: SpecialtyCourse[] = [
+  {
+    name: 'Peak Performance Buoyancy',
+    description: 'Master your buoyancy for better air consumption and control.',
+    prerequisites: 'OWD or equivalent',
+    image: '/images/buoyancy.jpeg',
+  },
   {
     name: 'Deep Diver',
-    description: 'Learn to dive to depths of up to 40 meters.',
-    prerequisites: 'Advanced Open Water Diver',
-  },
-  {
-    name: 'Nitrox / Enriched Air Diver',
-    description: 'Stay down longer with enriched air (nitrox).',
-    prerequisites: 'Open Water Diver',
-  },
-  {
-    name: 'Wreck Diver',
-    description: 'Explore sunken ships and other structures safely.',
-    prerequisites: 'Advanced Open Water Diver',
+    description:
+      'Extend your depth limit safely with proper techniques and planning.',
+    prerequisites: 'AOWD or equivalent',
+    image: '/images/deep.jpeg',
   },
   {
     name: 'Night Diver',
-    description: 'Dive safely after dark using lights and signals.',
-    prerequisites: 'Open Water Diver',
+    description:
+      'Experience the underwater world after dark and learn night navigation.',
+    prerequisites: 'OWD or equivalent',
+    image: '/images/night.jpeg',
   },
   {
-    name: 'Peak Performance Buoyancy',
-    description: 'Refine your buoyancy skills for better control underwater.',
-    prerequisites: 'Open Water Diver',
+    name: 'Enriched Air (Nitrox)',
+    description:
+      'Dive longer with enriched air while learning safety protocols.',
+    prerequisites: 'OWD or equivalent',
+    image: '/images/nitrox.jpeg',
   },
   {
-    name: 'Underwater Naturalist',
-    description: 'Learn more about marine life and ecosystems.',
-    prerequisites: 'Open Water Diver',
+    name: 'Wreck Diver',
+    description:
+      'Explore underwater wrecks while learning safety and navigation inside structures.',
+    prerequisites: 'AOWD or equivalent',
+    image: '/images/wreck.jpeg',
   },
 ]
