@@ -6,5 +6,5 @@
 4. Dive site info page - done
 5. Need to create arrows to navigate between dive sites - done
 6. Create smaller boxes for All Dive sites.
-7. Add course info
-8. Add freediving info
+7. Add course info - done
+8. Add freediving info - done
