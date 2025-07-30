@@ -37,8 +37,7 @@ export const diveSites: DiveSite[] = [
   {
     slug: 'cpn',
     name: 'Chumphon Pinnacle',
-    shortDescription: `One of Koh Tao’s most iconic dive sites, 
-    Chumphon Pinnacle features deep granite formations teeming with pelagic life and occasional whale sharks.`,
+    shortDescription: `Iconic deep dive site with granite pinnacles and pelagic life.`,
     longDescription: `Chumphon Pinnacle is a world-class dive site northwest of Koh Tao, 
     featuring dramatic submerged granite formations that descend beyond 36 meters. 
     The area is covered in sea anemones, soft corals, and is home to schools of trevally, batfish, and barracuda. 

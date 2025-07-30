@@ -1,5 +1,3 @@
-// app/divesites/page.tsx
-
 import Link from 'next/link'
 import { diveSites } from '@/lib/data/diveSites'
 import Header from '@/components/Header'
@@ -9,11 +7,15 @@ export default function DiveSitesPage() {
   return (
     <>
       <Header />
-      <div className='p-6 max-w-4xl mx-auto space-y-4'>
-        <h1 className='text-4xl font-bold mb-6'>All Dive Sites</h1>
-        <ul className='space-y-4'>
+      <div className='p-6 max-w-4xl mx-auto'>
+        <h1 className='text-4xl font-bold mb-8 text-center'>All Dive Sites</h1>
+
+        <ul className='space-y-6'>
           {diveSites.map((site) => (
-            <li key={site.slug} className='border rounded p-4 hover:shadow-lg'>
+            <li
+              key={site.slug}
+              className='border rounded-xl p-4 hover:shadow-lg max-w-xl mx-auto bg-white'
+            >
               <Link
                 href={`/divesites/${site.slug}`}
                 className='flex items-center space-x-4 cursor-pointer'

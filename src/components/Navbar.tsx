@@ -1,12 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 const navItems = [
-  { id: 'divesites', label: 'Dive sites' },
-  { id: 'scubacourses', label: 'Scuba diving Courses' },
-  { id: 'freedivingcourses', label: 'FreeDiving courses' },
-  { id: 'contacts', label: 'Contacts' },
+  { href: '/divesites', label: 'Dive Sites' },
+  { href: '/scubadivingcourses', label: 'Scuba Diving Courses' },
+  { href: '/freedivingcourses', label: 'Freediving Courses' },
+  { href: '/aboutme', label: 'About Me' },
 ]
 
 export default function Navbar() {
@@ -14,11 +15,13 @@ export default function Navbar() {
 
   return (
     <nav className='bg-blue-900 text-white px-6 py-4 flex items-center justify-between'>
-      <div className='text-2xl font-bold'>
-        {' '}
-        {/* Placeholder for logo */}
+      {/* Logo - clickable */}
+      <Link
+        href='/'
+        className='text-2xl font-bold hover:text-yellow-400 transition'
+      >
         Your Logo
-      </div>
+      </Link>
 
       {/* Mobile hamburger */}
       <button
@@ -59,11 +62,11 @@ export default function Navbar() {
           text-lg
         `}
       >
-        {navItems.map(({ id, label }) => (
-          <li key={id}>
-            <a href={`#${id}`} className='hover:text-yellow-400'>
+        {navItems.map(({ href, label }) => (
+          <li key={href}>
+            <Link href={href} className='hover:text-yellow-400 transition'>
               {label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
