@@ -19,7 +19,8 @@ export default function ScubaDivingCoursesPage() {
           {scubaCourses.map((course) => (
             <div
               key={course.name}
-              className='flex flex-col md:flex-row gap-6 border rounded-2xl shadow-lg p-6 bg-white'
+              className='flex flex-col md:flex-row gap-6 border rounded-2xl shadow-lg p-6 bg-white
+              transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:z-10'
             >
               <div className='relative w-full md:w-1/3 h-64'>
                 <Image
@@ -66,7 +67,8 @@ export default function ScubaDivingCoursesPage() {
           {specialtyCourses.map((course) => (
             <div
               key={course.name}
-              className='flex flex-col md:flex-row gap-6 border rounded-2xl shadow-lg p-6 bg-white'
+              className='flex flex-col md:flex-row gap-6 border rounded-2xl shadow-lg p-6 bg-white
+              transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:z-10'
             >
               <div className='relative w-full md:w-1/3 h-64'>
                 <Image

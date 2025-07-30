@@ -14,7 +14,8 @@ export default function DiveSitesPage() {
           {diveSites.map((site) => (
             <li
               key={site.slug}
-              className='border rounded-xl p-4 hover:shadow-lg max-w-xl mx-auto bg-white'
+              className='border rounded-xl p-4 max-w-xl mx-auto bg-white transform transition-transform duration-300 ease-in-out
+              hover:scale-105 hover:shadow-xl hover:z-10 cursor-pointer'
             >
               <Link
                 href={`/divesites/${site.slug}`}

@@ -20,7 +20,8 @@ export default function FreedivingCoursesPage() {
           {freedivingCourses.map((course) => (
             <div
               key={course.name}
-              className='bg-white rounded-2xl shadow-md overflow-hidden flex flex-col md:flex-row'
+              className='bg-white rounded-2xl shadow-md overflow-hidden flex flex-col md:flex-row
+              transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:z-10'
             >
               <Image
                 src={course.image}
