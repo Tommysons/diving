@@ -10,14 +10,19 @@
   "dependencies": {
     "@u-wave/react-youtube": "^0.7.4",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.23.12",
     "next": "15.4.2",
+    "nodemailer": "^7.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "react-player": "^3.3.1",
-    "react-youtube": "^10.1.0"
+    "react-youtube": "^10.1.0",
+    "zod": "^4.0.17"
   },
   "devDependencies": {
     "@types/node": "24.0.15",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^18.0.38",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.31.0",

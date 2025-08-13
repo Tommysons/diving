@@ -8,6 +8,7 @@ const navItems = [
   { href: '/scubadivingcourses', label: 'Scuba Diving Courses' },
   { href: '/freedivingcourses', label: 'Freediving Courses' },
   { href: '/aboutme', label: 'About Me' },
+  { href: '/contact', label: 'Contact Me' },
 ]
 
 export default function Navbar() {
