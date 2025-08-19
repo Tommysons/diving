@@ -21,14 +21,10 @@ const transporter = nodemailer.createTransport({
 
 export async function POST(req: NextRequest) {
   try {
-    console.log('Book API called')
     const data = await req.json()
-    console.log('Request body:', data)
-
     const { name, email, phone, type, activity, date, time, message } = data
 
     if (!name || !email || !date || !time || !type || !activity) {
-      console.warn('Missing required fields')
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -36,10 +32,8 @@ export async function POST(req: NextRequest) {
     }
 
     const collectionName = collectionMap[type]
-    if (!collectionName) {
-      console.warn('Invalid type:', type)
+    if (!collectionName)
       return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
-    }
 
     const client = await clientPromise
     const db = client.db('scuba_booking')
@@ -66,31 +60,33 @@ export async function POST(req: NextRequest) {
     })
 
     if (conflict) {
-      console.warn('Booking conflict detected:', conflict)
       return NextResponse.json(
         { error: 'This time slot is already booked' },
         { status: 400 }
       )
     }
 
-    console.log('Inserting booking into collection:', collectionName)
-    const result = await collection.insertOne({
+    // --- Insert new booking with correct field ---
+    const doc: any = {
       name,
       email,
       phone,
       type,
-      activity,
       date,
       time,
       message: message || '',
       status: 'pending',
       createdAt: new Date(),
-    })
+    }
 
+    if (type === 'scuba_course' || type === 'freediving_course')
+      doc.course = activity
+    if (type === 'dive_trip') doc.site = activity
+
+    const result = await collection.insertOne(doc)
     console.log('Booking inserted with id:', result.insertedId)
 
     // --- Send email notification ---
-    console.log('Sending confirmation email to:', email)
     await transporter.sendMail({
       from: `"Admin Dashboard" <${process.env.SMTP_USER}>`,
       to: email,
