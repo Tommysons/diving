@@ -1,12 +1,15 @@
 'use client'
 
+import { useState } from 'react'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { scubaCourses, specialtyCourses } from '@/lib/data/scubaCourses'
 import Image from 'next/image'
-import Link from 'next/link'
+import BookingForm from '@/components/BookingForm'
 
 export default function ScubaDivingCoursesPage() {
+  const [activeForm, setActiveForm] = useState<string | null>(null)
+
   return (
     <>
       <Header />
@@ -15,6 +18,7 @@ export default function ScubaDivingCoursesPage() {
           Scuba Diving Courses
         </h1>
 
+        {/* Main Scuba Courses */}
         <div className='space-y-12'>
           {scubaCourses.map((course) => (
             <div
@@ -48,17 +52,32 @@ export default function ScubaDivingCoursesPage() {
                     {course.prerequisites}
                   </p>
                 )}
-                <Link
-                  href='#'
+
+                <button
                   className='inline-block mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition'
+                  onClick={() =>
+                    setActiveForm(
+                      activeForm === course.name ? null : course.name
+                    )
+                  }
                 >
-                  Book Appointment
-                </Link>
+                  {activeForm === course.name
+                    ? 'Close Booking Form'
+                    : 'Book Course'}
+                </button>
+
+                {activeForm === course.name && (
+                  <BookingForm
+                    type='scuba_course' // unified booking type
+                    activity={course.name}
+                  />
+                )}
               </div>
             </div>
           ))}
         </div>
 
+        {/* Specialty Courses */}
         <h2 className='text-3xl font-bold mt-16 mb-8 text-center'>
           Specialty Courses
         </h2>
@@ -88,12 +107,26 @@ export default function ScubaDivingCoursesPage() {
                   </span>{' '}
                   {course.prerequisites}
                 </p>
-                <Link
-                  href='#'
+
+                <button
                   className='inline-block mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition'
+                  onClick={() =>
+                    setActiveForm(
+                      activeForm === course.name ? null : course.name
+                    )
+                  }
                 >
-                  Book Appointment
-                </Link>
+                  {activeForm === course.name
+                    ? 'Close Booking Form'
+                    : 'Book Course'}
+                </button>
+
+                {activeForm === course.name && (
+                  <BookingForm
+                    type='scuba_course' // unified booking type
+                    activity={course.name}
+                  />
+                )}
               </div>
             </div>
           ))}

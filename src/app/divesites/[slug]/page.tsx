@@ -6,6 +6,8 @@ import YouTube, { YouTubeProps } from 'react-youtube'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import clsx from 'clsx'
+import { useState } from 'react'
+import BookingForm from '@/components/BookingForm'
 
 export default function DiveSiteDetailPage() {
   const router = useRouter()
@@ -13,6 +15,8 @@ export default function DiveSiteDetailPage() {
   const slugStr = Array.isArray(slug) ? slug[0] : slug
   const currentIndex = diveSites.findIndex((site) => site.slug === slugStr)
   const site = diveSites[currentIndex]
+
+  const [activeForm, setActiveForm] = useState(false)
 
   if (!site) return <div className='p-6 text-red-500'>Dive site not found.</div>
 
@@ -67,8 +71,7 @@ export default function DiveSiteDetailPage() {
                 onClick={goToPrev}
                 aria-label='Previous'
                 className={clsx(
-                  'absolute left-4',
-                  'z-10 w-12 h-12 md:w-14 md:h-14',
+                  'absolute left-4 z-10 w-12 h-12 md:w-14 md:h-14',
                   'bg-cyan-700 hover:bg-cyan-800 text-white',
                   'rounded-full flex items-center justify-center',
                   'text-3xl font-bold shadow-md'
@@ -81,8 +84,7 @@ export default function DiveSiteDetailPage() {
                 onClick={goToNext}
                 aria-label='Next'
                 className={clsx(
-                  'absolute right-4',
-                  'z-10 w-12 h-12 md:w-14 md:h-14',
+                  'absolute right-4 z-10 w-12 h-12 md:w-14 md:h-14',
                   'bg-cyan-700 hover:bg-cyan-800 text-white',
                   'rounded-full flex items-center justify-center',
                   'text-3xl font-bold shadow-md'
@@ -115,6 +117,18 @@ export default function DiveSiteDetailPage() {
                 ))}
               </ul>
             </div>
+
+            {/* Booking Form Toggle */}
+            <button
+              className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-4'
+              onClick={() => setActiveForm(!activeForm)}
+            >
+              {activeForm ? 'Close Booking Form' : 'Book a Dive Trip'}
+            </button>
+
+            {activeForm && (
+              <BookingForm type='dive_trip' activity={site.name} />
+            )}
           </div>
         </section>
       </main>
@@ -136,6 +150,7 @@ function Info({ label, value }: { label: string; value: string }) {
 
 function extractYouTubeId(url: string): string {
   const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&\n?#]+)/
+
   const match = url.match(regex)
   return match ? match[1] : ''
 }

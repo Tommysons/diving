@@ -1,5 +1,6 @@
 import './globals.css'
 import { ReactNode } from 'react'
+import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata = {
   title: 'Scuba Diving Site',
@@ -10,7 +11,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en'>
       <body className=' flex flex-col min-h-screen bg-gray-100'>
-        {children}
+        <ClerkProvider>{children}</ClerkProvider>
       </body>
     </html>
   )

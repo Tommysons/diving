@@ -1,13 +1,14 @@
-// app/freedivingcourses/page.tsx
-
 'use client'
-
+import { useState } from 'react'
 import Image from 'next/image'
 import { freedivingCourses } from '@/lib/data/freedivingCourses'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import BookingForm from '@/components/BookingForm'
 
 export default function FreedivingCoursesPage() {
+  const [activeForm, setActiveForm] = useState<string | null>(null)
+
   return (
     <>
       <Header />
@@ -20,8 +21,7 @@ export default function FreedivingCoursesPage() {
           {freedivingCourses.map((course) => (
             <div
               key={course.name}
-              className='bg-white rounded-2xl shadow-md overflow-hidden flex flex-col md:flex-row
-              transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:z-10'
+              className='bg-white rounded-2xl shadow-md overflow-hidden flex flex-col md:flex-row transform transition hover:scale-105 hover:shadow-xl'
             >
               <Image
                 src={course.image}
@@ -41,9 +41,26 @@ export default function FreedivingCoursesPage() {
                   <strong className='text-purple-600'>Prerequisites:</strong>{' '}
                   {course.prerequisites}
                 </p>
-                <button className='mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition'>
-                  Book Appointment
+
+                <button
+                  className='mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition'
+                  onClick={() =>
+                    setActiveForm(
+                      activeForm === course.name ? null : course.name
+                    )
+                  }
+                >
+                  {activeForm === course.name
+                    ? 'Close Booking Form'
+                    : 'Book Appointment'}
                 </button>
+
+                {activeForm === course.name && (
+                  <BookingForm
+                    type='freediving_course'
+                    activity={course.name}
+                  />
+                )}
               </div>
             </div>
           ))}
