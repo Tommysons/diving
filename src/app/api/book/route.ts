@@ -21,10 +21,14 @@ const transporter = nodemailer.createTransport({
 
 export async function POST(req: NextRequest) {
   try {
+    console.log('Book API called')
     const data = await req.json()
+    console.log('Request body:', data)
+
     const { name, email, phone, type, activity, date, time, message } = data
 
     if (!name || !email || !date || !time || !type || !activity) {
+      console.warn('Missing required fields')
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -32,8 +36,10 @@ export async function POST(req: NextRequest) {
     }
 
     const collectionName = collectionMap[type]
-    if (!collectionName)
+    if (!collectionName) {
+      console.warn('Invalid type:', type)
       return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
+    }
 
     const client = await clientPromise
     const db = client.db('scuba_booking')
@@ -60,13 +66,14 @@ export async function POST(req: NextRequest) {
     })
 
     if (conflict) {
+      console.warn('Booking conflict detected:', conflict)
       return NextResponse.json(
         { error: 'This time slot is already booked' },
         { status: 400 }
       )
     }
 
-    // --- Insert new booking ---
+    console.log('Inserting booking into collection:', collectionName)
     const result = await collection.insertOne({
       name,
       email,
@@ -80,7 +87,10 @@ export async function POST(req: NextRequest) {
       createdAt: new Date(),
     })
 
+    console.log('Booking inserted with id:', result.insertedId)
+
     // --- Send email notification ---
+    console.log('Sending confirmation email to:', email)
     await transporter.sendMail({
       from: `"Admin Dashboard" <${process.env.SMTP_USER}>`,
       to: email,
