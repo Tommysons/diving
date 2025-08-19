@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
 import nodemailer from 'nodemailer'
-import { ObjectId } from 'mongodb'
 
-const projectCollections: Record<string, string> = {
-  scuba: 'bookings',
-  freediving: 'bookings',
-  dive_trips: 'bookings',
+const collectionMap: Record<string, string> = {
+  scuba_course: 'scuba_bookings',
+  freediving_course: 'freediving_bookings',
+  dive_trip: 'dive_trips',
 }
 
 // Setup Nodemailer
@@ -20,11 +19,6 @@ const transporter = nodemailer.createTransport({
   },
 })
 
-// Helper: format date object as HH:mm
-function formatTime(date: Date) {
-  return date.toTimeString().slice(0, 5)
-}
-
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json()
@@ -37,9 +31,13 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    const collectionName = collectionMap[type]
+    if (!collectionName)
+      return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
+
     const client = await clientPromise
     const db = client.db('scuba_booking')
-    const collection = db.collection('bookings')
+    const collection = db.collection(collectionName)
 
     // --- Check for conflicts (2-hour sessions) ---
     const bookingStart = new Date(`${date}T${time}:00`)
@@ -47,10 +45,7 @@ export async function POST(req: NextRequest) {
     bookingEnd.setHours(bookingEnd.getHours() + 2)
 
     const existingBookings = await collection
-      .find({
-        date,
-        status: { $ne: 'cancelled' },
-      })
+      .find({ date, status: { $ne: 'cancelled' } })
       .toArray()
 
     const conflict = existingBookings.find((b) => {
