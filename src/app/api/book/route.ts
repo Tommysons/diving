@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
 
     const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB) // Use env DB
+    const db = client.db(process.env.MONGODB_DB)
     const collection = db.collection(collectionName)
 
     // --- Check for conflicts (2-hour sessions) ---
@@ -78,24 +78,34 @@ export async function POST(req: NextRequest) {
     const result = await collection.insertOne(doc)
     console.log('Booking inserted with id:', result.insertedId)
 
-    // --- Send email to client ---
-    await resend.emails.send({
-      from: 'Scuba Diving <noreply@yourdomain.com>',
-      to: email,
-      subject: `Booking received: ${activity}`,
-      text: `Hi ${name},\n\nYour booking for ${activity} on ${date} at ${time} has been received!\n\nThank you.`,
-    })
-
-    // --- Send email to admin ---
-    if (process.env.ADMIN_EMAIL) {
+    // --- Send email to client with logging ---
+    try {
       await resend.emails.send({
-        from: 'Scuba Diving <noreply@yourdomain.com>',
-        to: process.env.ADMIN_EMAIL,
-        subject: `New Booking: ${activity} (${name})`,
-        text: `New booking received:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nType: ${type}\nActivity: ${activity}\nDate: ${date}\nTime: ${time}\nMessage: ${
-          message || 'N/A'
-        }`,
+        from: 'hello@resend.dev', // must be verified in Resend
+        to: email,
+        subject: `Booking received: ${activity}`,
+        text: `Hi ${name},\n\nYour booking for ${activity} on ${date} at ${time} has been received!\n\nThank you.`,
       })
+      console.log('Resend email sent to client:', email)
+    } catch (err) {
+      console.error('Resend client email error:', err)
+    }
+
+    // --- Send email to admin with logging ---
+    if (process.env.ADMIN_EMAIL) {
+      try {
+        await resend.emails.send({
+          from: 'Scuba Diving <vermiona15@gmail.com>',
+          to: process.env.ADMIN_EMAIL,
+          subject: `New Booking: ${activity} (${name})`,
+          text: `New booking received:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nType: ${type}\nActivity: ${activity}\nDate: ${date}\nTime: ${time}\nMessage: ${
+            message || 'N/A'
+          }`,
+        })
+        console.log('Resend email sent to admin:', process.env.ADMIN_EMAIL)
+      } catch (err) {
+        console.error('Resend admin email error:', err)
+      }
     }
 
     return NextResponse.json(
