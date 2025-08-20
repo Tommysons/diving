@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
     const data = await req.json()
     const { name, email, phone, type, activity, date, time, message } = data
 
+    // --- Validate required fields ---
     if (!name || !email || !date || !time || !type || !activity) {
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
 
     const client = await clientPromise
-    const db = client.db('scuba_booking')
+    const db = client.db(process.env.MONGODB_DB) // Use env DB
     const collection = db.collection(collectionName)
 
     // --- Check for conflicts (2-hour sessions) ---
@@ -57,7 +58,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // --- Insert new booking with correct field ---
+    // --- Insert new booking ---
     const doc: any = {
       name,
       email,
@@ -77,20 +78,35 @@ export async function POST(req: NextRequest) {
     const result = await collection.insertOne(doc)
     console.log('Booking inserted with id:', result.insertedId)
 
-    // --- Send email notification with Resend ---
+    // --- Send email to client ---
     await resend.emails.send({
-      from: 'Scuba Diving <noreply@yourdomain.com>', // use your verified sender domain later
+      from: 'Scuba Diving <noreply@yourdomain.com>',
       to: email,
       subject: `Booking received: ${activity}`,
       text: `Hi ${name},\n\nYour booking for ${activity} on ${date} at ${time} has been received!\n\nThank you.`,
     })
 
+    // --- Send email to admin ---
+    if (process.env.ADMIN_EMAIL) {
+      await resend.emails.send({
+        from: 'Scuba Diving <noreply@yourdomain.com>',
+        to: process.env.ADMIN_EMAIL,
+        subject: `New Booking: ${activity} (${name})`,
+        text: `New booking received:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nType: ${type}\nActivity: ${activity}\nDate: ${date}\nTime: ${time}\nMessage: ${
+          message || 'N/A'
+        }`,
+      })
+    }
+
     return NextResponse.json(
       { message: 'Booking received successfully!', id: result.insertedId },
       { status: 200 }
     )
-  } catch (error) {
-    console.error('Booking error:', error)
-    return NextResponse.json({ error: 'Failed to book' }, { status: 500 })
+  } catch (error: any) {
+    console.error('Booking error full:', error)
+    return NextResponse.json(
+      { error: error?.message || JSON.stringify(error) },
+      { status: 500 }
+    )
   }
 }
