@@ -1,23 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const collectionMap: Record<string, string> = {
   scuba_course: 'scuba_bookings',
   freediving_course: 'freediving_bookings',
   dive_trip: 'dive_trips',
 }
-
-// Setup Nodemailer
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: Number(process.env.SMTP_PORT) === 465,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-})
 
 export async function POST(req: NextRequest) {
   try {
@@ -86,9 +77,9 @@ export async function POST(req: NextRequest) {
     const result = await collection.insertOne(doc)
     console.log('Booking inserted with id:', result.insertedId)
 
-    // --- Send email notification ---
-    await transporter.sendMail({
-      from: `"Admin Dashboard" <${process.env.SMTP_USER}>`,
+    // --- Send email notification with Resend ---
+    await resend.emails.send({
+      from: 'Scuba Diving <noreply@yourdomain.com>', // use your verified sender domain later
       to: email,
       subject: `Booking received: ${activity}`,
       text: `Hi ${name},\n\nYour booking for ${activity} on ${date} at ${time} has been received!\n\nThank you.`,
