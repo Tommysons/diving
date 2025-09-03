@@ -1,7 +1,7 @@
 'use client'
 
-import { useParams, useRouter } from 'next/navigation'
-import { diveSites } from '@/lib/data/diveSites'
+import { useParams, useRouter, usePathname } from 'next/navigation'
+import { diveSites, diveSitesRU, DiveSite } from '@/lib/data/diveSites'
 import YouTube, { YouTubeProps } from 'react-youtube'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -9,16 +9,32 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import BookingForm from '@/components/BookingForm'
 
-export default function DiveSiteDetailPage() {
+interface Props {
+  locale?: 'en' | 'ru'
+  data?: DiveSite[]
+}
+
+export default function DiveSiteDetailPage({ locale, data }: Props) {
   const router = useRouter()
+  const pathname = usePathname() || '/'
+  const inferredLocale = locale || (pathname.startsWith('/ru') ? 'ru' : 'en')
+  const diveData = data || (inferredLocale === 'ru' ? diveSitesRU : diveSites)
+
   const { slug } = useParams()
   const slugStr = Array.isArray(slug) ? slug[0] : slug
-  const currentIndex = diveSites.findIndex((site) => site.slug === slugStr)
-  const site = diveSites[currentIndex]
+  const currentIndex = diveData.findIndex((site) => site.slug === slugStr)
+  const site = diveData[currentIndex]
 
   const [activeForm, setActiveForm] = useState(false)
 
-  if (!site) return <div className='p-6 text-red-500'>Dive site not found.</div>
+  if (!site)
+    return (
+      <div className='p-6 text-red-500'>
+        {inferredLocale === 'ru'
+          ? 'Место для дайвинга не найдено.'
+          : 'Dive site not found.'}
+      </div>
+    )
 
   const videoId = extractYouTubeId(site.videoUrl)
 
@@ -31,13 +47,21 @@ export default function DiveSiteDetailPage() {
   }
 
   const goToPrev = () => {
-    const prevIndex = (currentIndex - 1 + diveSites.length) % diveSites.length
-    router.push(`/divesites/${diveSites[prevIndex].slug}`)
+    const prevIndex = (currentIndex - 1 + diveData.length) % diveData.length
+    router.push(
+      `${inferredLocale === 'ru' ? '/ru' : ''}/divesites/${
+        diveData[prevIndex].slug
+      }`
+    )
   }
 
   const goToNext = () => {
-    const nextIndex = (currentIndex + 1) % diveSites.length
-    router.push(`/divesites/${diveSites[nextIndex].slug}`)
+    const nextIndex = (currentIndex + 1) % diveData.length
+    router.push(
+      `${inferredLocale === 'ru' ? '/ru' : ''}/divesites/${
+        diveData[nextIndex].slug
+      }`
+    )
   }
 
   return (
@@ -57,11 +81,7 @@ export default function DiveSiteDetailPage() {
                   opts={{
                     width: '100%',
                     height: '100%',
-                    playerVars: {
-                      autoplay: 1,
-                      controls: 1,
-                      mute: 1,
-                    },
+                    playerVars: { autoplay: 1, controls: 1, mute: 1 },
                   }}
                   onReady={onReady}
                 />
@@ -69,7 +89,7 @@ export default function DiveSiteDetailPage() {
 
               <button
                 onClick={goToPrev}
-                aria-label='Previous'
+                aria-label={inferredLocale === 'ru' ? 'Предыдущий' : 'Previous'}
                 className={clsx(
                   'absolute left-4 z-10 w-12 h-12 md:w-14 md:h-14',
                   'bg-cyan-700 hover:bg-cyan-800 text-white',
@@ -82,7 +102,7 @@ export default function DiveSiteDetailPage() {
 
               <button
                 onClick={goToNext}
-                aria-label='Next'
+                aria-label={inferredLocale === 'ru' ? 'Следующий' : 'Next'}
                 className={clsx(
                   'absolute right-4 z-10 w-12 h-12 md:w-14 md:h-14',
                   'bg-cyan-700 hover:bg-cyan-800 text-white',
@@ -99,15 +119,26 @@ export default function DiveSiteDetailPage() {
 
             {/* Info Grid */}
             <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
-              <Info label='Depth' value={site.depth} />
-              <Info label='Current' value={site.current} />
-              <Info label='Visibility' value={site.visibility} />
+              <Info
+                label={inferredLocale === 'ru' ? 'Глубина' : 'Depth'}
+                value={site.depth}
+              />
+              <Info
+                label={inferredLocale === 'ru' ? 'Течение' : 'Current'}
+                value={site.current}
+              />
+              <Info
+                label={inferredLocale === 'ru' ? 'Видимость' : 'Visibility'}
+                value={site.visibility}
+              />
             </div>
 
             {/* Sea Life */}
             <div>
               <h2 className='text-xl font-semibold mt-4 mb-2'>
-                Seasonal Sea Life
+                {inferredLocale === 'ru'
+                  ? 'Сезонная морская жизнь'
+                  : 'Seasonal Sea Life'}
               </h2>
               <ul className='list-disc list-inside text-gray-700'>
                 {Object.entries(site.seaLife).map(([season, species]) => (
@@ -123,7 +154,13 @@ export default function DiveSiteDetailPage() {
               className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-4'
               onClick={() => setActiveForm(!activeForm)}
             >
-              {activeForm ? 'Close Booking Form' : 'Book a Dive Trip'}
+              {activeForm
+                ? inferredLocale === 'ru'
+                  ? 'Закрыть форму бронирования'
+                  : 'Close Booking Form'
+                : inferredLocale === 'ru'
+                ? 'Забронировать дайв'
+                : 'Book a Dive Trip'}
             </button>
 
             {activeForm && (
@@ -150,7 +187,6 @@ function Info({ label, value }: { label: string; value: string }) {
 
 function extractYouTubeId(url: string): string {
   const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&\n?#]+)/
-
   const match = url.match(regex)
   return match ? match[1] : ''
 }

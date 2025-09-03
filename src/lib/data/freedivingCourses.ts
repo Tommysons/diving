@@ -8,6 +8,7 @@ export interface FreedivingCourse {
   image: string
 }
 
+// English freediving courses
 export const freedivingCourses: FreedivingCourse[] = [
   {
     name: 'Freediver',
@@ -31,6 +32,34 @@ export const freedivingCourses: FreedivingCourse[] = [
       'Advanced theory and physical conditioning to improve personal performance and support others.',
     maxDepth: 'Up to 40 meters or more',
     prerequisites: 'PADI Advanced Freediver certification or equivalent',
+    image: '/images/masterfreediver.jpeg',
+  },
+]
+
+// Russian freediving courses
+export const freedivingCoursesRU: FreedivingCourse[] = [
+  {
+    name: 'Фридайвер',
+    description:
+      'Начальный курс, который обучает базовой теории, дыхательным техникам и статической/динамической апноэ в ограниченной воде.',
+    maxDepth: 'До 16 метров',
+    prerequisites: 'Уверенный пловец, 12 лет и старше',
+    image: '/images/freediver.jpeg',
+  },
+  {
+    name: 'Продвинутый Фридайвер',
+    description:
+      'Развивает навыки фридайвинга, включает тренировки для более глубоких погружений, длинных задержек дыхания и улучшения техники.',
+    maxDepth: 'До 24-30 метров',
+    prerequisites: 'Сертификат PADI Freediver или эквивалент',
+    image: '/images/advancedfreediver.jpeg',
+  },
+  {
+    name: 'Мастер Фридайвера',
+    description:
+      'Продвинутая теория и физическая подготовка для улучшения личной производительности и поддержки других.',
+    maxDepth: 'До 40 метров и более',
+    prerequisites: 'Сертификат PADI Advanced Freediver или эквивалент',
     image: '/images/masterfreediver.jpeg',
   },
 ]

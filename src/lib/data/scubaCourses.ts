@@ -15,6 +15,7 @@ export interface SpecialtyCourse {
   image: string
 }
 
+// English scuba courses
 export const scubaCourses: ScubaCourse[] = [
   {
     name: 'Discover Scuba Diving (DSD)',
@@ -56,6 +57,50 @@ export const scubaCourses: ScubaCourse[] = [
   },
 ]
 
+// Russian scuba courses
+export const scubaCoursesRU: ScubaCourse[] = [
+  {
+    name: 'Открой Подводное Плавание (DSD)',
+    description:
+      'Попробуйте дайвинг без сертификации. Отлично для новичков, желающих испытать погружение под профессиональным наблюдением.',
+    maxDepth: '12 метров',
+    image: '/images/dsd.jpeg',
+  },
+  {
+    name: 'Open Water Diver (OWD)',
+    description:
+      'Ваша первая полная сертификация. Изучите базовые навыки и теорию дайвинга. Погружайтесь с напарником в любой точке мира.',
+    maxDepth: '18 метров',
+    image: '/images/owd.jpeg',
+  },
+  {
+    name: 'Advanced Open Water Diver (AOWD)',
+    description:
+      'Улучшите свои навыки с навигацией, глубокими погружениями и 3 другими специальными погружениями.',
+    maxDepth: '30 метров',
+    image: '/images/awd.jpeg',
+    prerequisites: 'OWD',
+  },
+  {
+    name: 'Rescue Diver',
+    description:
+      'Научитесь предотвращать и управлять аварийными ситуациями при дайвинге. Развивает уверенность и лидерство.',
+    maxDepth: '30 метров',
+    image: '/images/rescue.jpeg',
+    prerequisites: 'AOWD + сертификация EFR/CPR',
+  },
+  {
+    name: 'Divemaster',
+    description:
+      'Первый профессиональный уровень. Руководите сертифицированными дайверами и помогайте инструкторам.',
+    maxDepth: '40 метров',
+    image: '/images/dm.jpeg',
+    prerequisites:
+      'Rescue Diver + 40 погружений в журнале + медицинское разрешение',
+  },
+]
+
+// English specialty courses
 export const specialtyCourses: SpecialtyCourse[] = [
   {
     name: 'Peak Performance Buoyancy',
@@ -89,6 +134,44 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Explore underwater wrecks while learning safety and navigation inside structures.',
     prerequisites: 'AOWD or equivalent',
+    image: '/images/wreck.jpeg',
+  },
+]
+
+// Russian specialty courses
+export const specialtyCoursesRU: SpecialtyCourse[] = [
+  {
+    name: 'Совершенная Буйность (Peak Performance Buoyancy)',
+    description:
+      'Освойте контроль плавучести для лучшего расхода воздуха и управления телом под водой.',
+    prerequisites: 'OWD или эквивалент',
+    image: '/images/buoyancy.jpeg',
+  },
+  {
+    name: 'Глубоководный Дайвинг (Deep Diver)',
+    description:
+      'Безопасно увеличьте предел глубины с правильными техниками и планированием.',
+    prerequisites: 'AOWD или эквивалент',
+    image: '/images/deep.jpeg',
+  },
+  {
+    name: 'Ночное Погружение (Night Diver)',
+    description: 'Исследуйте подводный мир ночью и изучите ночную навигацию.',
+    prerequisites: 'OWD или эквивалент',
+    image: '/images/night.jpeg',
+  },
+  {
+    name: 'Обогащенный Воздух (Nitrox)',
+    description:
+      'Погружайтесь дольше с обогащенным воздухом, изучая протоколы безопасности.',
+    prerequisites: 'OWD или эквивалент',
+    image: '/images/nitrox.jpeg',
+  },
+  {
+    name: 'Исследование Кораблекрушений (Wreck Diver)',
+    description:
+      'Изучайте подводные кораблекрушения, осваивая безопасность и навигацию внутри конструкций.',
+    prerequisites: 'AOWD или эквивалент',
     image: '/images/wreck.jpeg',
   },
 ]

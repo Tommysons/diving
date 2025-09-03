@@ -2,75 +2,148 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 
-const navItems = [
+// English labels
+const navItemsEN = [
   { href: '/divesites', label: 'Dive Sites' },
   { href: '/scubadivingcourses', label: 'Scuba Diving Courses' },
   { href: '/freedivingcourses', label: 'Freediving Courses' },
+  { href: '/gallery', label: 'Gallery', highlight: true },
   { href: '/aboutme', label: 'About Me' },
-  { href: '/contact', label: 'Contact Me' },
+  { href: '/contact', label: 'Contact' },
+]
+
+// Russian labels
+const navItemsRU = [
+  { href: '/divesites', label: 'Места для дайвинга' },
+  { href: '/scubadivingcourses', label: 'Курсы по дайвингу' },
+  { href: '/freedivingcourses', label: 'Курсы по фридайвингу' },
+  { href: '/gallery', label: 'Галерея', highlight: true },
+  { href: '/aboutme', label: 'Обо мне' },
+  { href: '/contact', label: 'Контакты' },
 ]
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname() || '/'
+  const locale = pathname.startsWith('/ru') ? 'ru' : 'en'
+
+  const navItems = locale === 'ru' ? navItemsRU : navItemsEN
+
+  // Function to switch locale and modify URL
+  function switchLocale(pathname: string, targetLocale: string) {
+    if (pathname.startsWith('/ru')) {
+      return targetLocale === 'en'
+        ? pathname.replace(/^\/ru/, '') || '/'
+        : pathname
+    }
+    return targetLocale === 'ru' ? `/ru${pathname}` : pathname
+  }
 
   return (
     <nav className='bg-blue-900 text-white px-6 py-4 flex items-center justify-between'>
-      {/* Logo - clickable */}
-      <Link
-        href='/'
-        className='text-2xl font-bold hover:text-yellow-400 transition'
-      >
-        Your Logo
+      {/* Logo with hover animation */}
+      <Link href={locale === 'ru' ? '/ru' : '/'}>
+        <motion.div
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          className='rounded-full overflow-hidden border-2 border-white shadow-md'
+        >
+          <Image
+            src='/images/logo.jpg'
+            alt='Logo'
+            width={80}
+            height={80}
+            className='object-cover'
+          />
+        </motion.div>
       </Link>
 
-      {/* Mobile hamburger */}
-      <button
-        className='sm:hidden'
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label='Toggle menu'
-      >
-        <svg
-          className='w-6 h-6'
-          fill='none'
-          stroke='currentColor'
-          viewBox='0 0 24 24'
-          xmlns='http://www.w3.org/2000/svg'
+      {/* Desktop + Mobile Navigation */}
+      <div className='flex items-center space-x-6'>
+        {/* Navigation items */}
+        <ul
+          className={`sm:flex sm:items-center sm:space-x-8 ${
+            isOpen ? 'block' : 'hidden'
+          } sm:block mt-4 sm:mt-0 text-lg`}
         >
-          {isOpen ? (
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M6 18L18 6M6 6l12 12'
-            />
-          ) : (
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M4 6h16M4 12h16M4 18h16'
-            />
-          )}
-        </svg>
-      </button>
+          {navItems.map(({ href, label, highlight }) => (
+            <li key={href}>
+              <Link
+                href={locale === 'ru' ? `/ru${href}` : href}
+                className={`transition ${
+                  highlight
+                    ? 'text-yellow-400 font-semibold animate-pulse hover:text-yellow-300'
+                    : 'hover:text-yellow-400'
+                }`}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
 
-      {/* Desktop + Mobile Menu */}
-      <ul
-        className={`
-          sm:flex sm:items-center sm:space-x-8
-          ${isOpen ? 'block' : 'hidden'} sm:block mt-4 sm:mt-0
-          text-lg
-        `}
-      >
-        {navItems.map(({ href, label }) => (
-          <li key={href}>
-            <Link href={href} className='hover:text-yellow-400 transition'>
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+        {/* Language Switcher */}
+        <div className='hidden sm:flex space-x-4'>
+          <Link href={switchLocale(pathname, 'en')}>
+            <button
+              className={`px-2 py-1 rounded ${
+                locale === 'en'
+                  ? 'font-bold bg-yellow-400 text-blue-900'
+                  : 'text-white hover:text-yellow-400'
+              }`}
+            >
+              EN
+            </button>
+          </Link>
+          <Link href={switchLocale(pathname, 'ru')}>
+            <button
+              className={`px-2 py-1 rounded ${
+                locale === 'ru'
+                  ? 'font-bold bg-yellow-400 text-blue-900'
+                  : 'text-white hover:text-yellow-400'
+              }`}
+            >
+              RU
+            </button>
+          </Link>
+        </div>
+
+        {/* Mobile Hamburger */}
+        <button
+          className='sm:hidden ml-4'
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label='Toggle menu'
+        >
+          <svg
+            className='w-6 h-6'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            {isOpen ? (
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M6 18L18 6M6 6l12 12'
+              />
+            ) : (
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M4 6h16M4 12h16M4 18h16'
+              />
+            )}
+          </svg>
+        </button>
+      </div>
     </nav>
   )
 }
