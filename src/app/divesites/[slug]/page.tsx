@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams, useRouter, usePathname } from 'next/navigation'
-import { diveSites, diveSitesRU, DiveSite } from '@/lib/data/diveSites'
+import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
 import YouTube, { YouTubeProps } from 'react-youtube'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -9,16 +9,11 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import BookingForm from '@/components/BookingForm'
 
-interface Props {
-  locale?: 'en' | 'ru'
-  data?: DiveSite[]
-}
-
-export default function DiveSiteDetailPage({ locale, data }: Props) {
+export default function DiveSiteDetailClient() {
   const router = useRouter()
   const pathname = usePathname() || '/'
-  const inferredLocale = locale || (pathname.startsWith('/ru') ? 'ru' : 'en')
-  const diveData = data || (inferredLocale === 'ru' ? diveSitesRU : diveSites)
+  const inferredLocale = pathname.startsWith('/ru') ? 'ru' : 'en'
+  const diveData = inferredLocale === 'ru' ? diveSitesRU : diveSites
 
   const { slug } = useParams()
   const slugStr = Array.isArray(slug) ? slug[0] : slug
