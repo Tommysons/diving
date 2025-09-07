@@ -1,4 +1,3 @@
-// src/components/CardsGrid.tsx
 import { CardData } from '../lib/data'
 import Card from './Card'
 
@@ -11,11 +10,11 @@ export default function CardsGrid({ cards, onCardClick }: CardsGridProps) {
   return (
     <div
       className='
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-3
+        flex
+        flex-row
+        flex-wrap
         gap-8
+        justify-start
         max-w-7xl
         mx-auto
         px-4
@@ -23,7 +22,12 @@ export default function CardsGrid({ cards, onCardClick }: CardsGridProps) {
       '
     >
       {cards.map((card) => (
-        <Card key={card.id} card={card} onClick={onCardClick} />
+        <div
+          key={card.id}
+          className='flex-shrink-0 w-full sm:w-64 md:w-72 lg:w-80'
+        >
+          <Card card={card} onClick={onCardClick} />
+        </div>
       ))}
     </div>
   )

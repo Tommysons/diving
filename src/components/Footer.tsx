@@ -30,6 +30,7 @@ export default function Footer() {
   }
 
   const t = translations[locale]
+  const currentContacts = contacts[locale] // ✅ pick correct locale
 
   return (
     <footer className='bg-blue-900 text-white py-8 px-6 mt-16'>
@@ -39,18 +40,18 @@ export default function Footer() {
           <h3 className='font-bold text-lg mb-2'>{t.contact}</h3>
           <p>
             {t.phone}:{' '}
-            <a href={`tel:${contacts.phone}`} className='underline'>
-              {contacts.phone}
+            <a href={`tel:${currentContacts.phone}`} className='underline'>
+              {currentContacts.phone}
             </a>
           </p>
           <p>
             {t.email}:{' '}
-            <a href={`mailto:${contacts.email}`} className='underline'>
-              {contacts.email}
+            <a href={`mailto:${currentContacts.email}`} className='underline'>
+              {currentContacts.email}
             </a>
           </p>
           <p>
-            {t.address}: {contacts.address}
+            {t.address}: {currentContacts.address}
           </p>
         </div>
 
@@ -58,7 +59,7 @@ export default function Footer() {
         <div>
           <h3 className='font-bold text-lg mb-2'>{t.follow}</h3>
           <ul>
-            {contacts.socialLinks.map(({ platform, url }) => (
+            {currentContacts.socialLinks.map(({ platform, url }) => (
               <li key={platform}>
                 <a
                   href={url}

@@ -1,32 +1,34 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import CardsGrid from '../components/CardsGrid'
 import { cards, CardData } from '../lib/data'
-import Footer from '../components/Footer'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default function HomePage() {
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
   const router = useRouter()
+  const pathname = usePathname() || '/'
+  const locale = pathname.startsWith('/ru') ? 'ru' : 'en'
 
   const handleCardClick = (card: CardData) => {
     setSelectedCard(card)
 
-    // Navigate based on card title or id
-    switch (card.title.toLowerCase()) {
-      case 'dive sites':
-        router.push('/divesites')
+    // Navigate based on card id
+    switch (card.id) {
+      case 'diveSites':
+        router.push(`${locale === 'ru' ? '/ru' : ''}/divesites`)
         break
-      case 'scuba diving courses':
-        router.push('/scubadivingcourses')
+      case 'divingCourses':
+        router.push(`${locale === 'ru' ? '/ru' : ''}/scubadivingcourses`)
         break
-      case 'freediving courses':
-        router.push('/freedivingcourses')
+      case 'freeDivingCourses':
+        router.push(`${locale === 'ru' ? '/ru' : ''}/freedivingcourses`)
         break
-      case 'about me':
-        router.push('/aboutme')
+      case 'aboutMe':
+        router.push(`${locale === 'ru' ? '/ru' : ''}/aboutme`)
         break
       default:
         alert(`You clicked on: ${card.title}`)
@@ -37,14 +39,12 @@ export default function HomePage() {
     <>
       <Header />
 
-      {/* Main Content */}
       <main className='flex-grow'>
-        <section id='divesites' className='mt-12'>
-          <CardsGrid cards={cards} onCardClick={handleCardClick} />
+        <section id='main-cards' className='mt-12'>
+          <CardsGrid cards={cards[locale]} onCardClick={handleCardClick} />
         </section>
-
-        {/* Other sections here */}
       </main>
+
       <Footer />
     </>
   )

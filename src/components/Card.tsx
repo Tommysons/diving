@@ -1,4 +1,3 @@
-// src/components/Card.tsx
 import Image from 'next/image'
 import { CardData } from '../lib/data'
 
@@ -24,8 +23,8 @@ export default function Card({ card, onClick }: CardProps) {
         flex
         flex-col
         h-full
-        '
-      style={{ minWidth: 0 }} // prevents flexbox overflow issues
+      '
+      style={{ minWidth: 0 }}
     >
       <div className='relative w-full h-48'>
         <Image
