@@ -13,7 +13,8 @@ export default function CardsGrid({ cards, onCardClick }: CardsGridProps) {
         flex
         flex-row
         flex-wrap
-        gap-8
+        gap-x-[400px]
+       gap-y-[50px]
         justify-start
         max-w-7xl
         mx-auto
@@ -21,6 +22,7 @@ export default function CardsGrid({ cards, onCardClick }: CardsGridProps) {
         py-8
       '
     >
+      {' '}
       {cards.map((card) => (
         <div
           key={card.id}

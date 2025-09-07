@@ -24,9 +24,9 @@ export default function HomePage() {
       case 'divingCourses':
         router.push(`${locale === 'ru' ? '/ru' : ''}/scubadivingcourses`)
         break
-      case 'freeDivingCourses':
-        router.push(`${locale === 'ru' ? '/ru' : ''}/freedivingcourses`)
-        break
+      // case 'freeDivingCourses':
+      //   router.push(`${locale === 'ru' ? '/ru' : ''}/freedivingcourses`)
+      //   break
       case 'aboutMe':
         router.push(`${locale === 'ru' ? '/ru' : ''}/aboutme`)
         break

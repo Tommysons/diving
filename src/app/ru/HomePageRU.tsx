@@ -25,9 +25,9 @@ export default function HomePage() {
           `${inferredLocale === 'ru' ? '/ru' : ''}/scubadivingcourses`
         )
         break
-      case 'freeDivingCourses':
-        router.push(`${inferredLocale === 'ru' ? '/ru' : ''}/freedivingcourses`)
-        break
+      // case 'freeDivingCourses':
+      //   router.push(`${inferredLocale === 'ru' ? '/ru' : ''}/freedivingcourses`)
+      //   break
       case 'aboutMe':
         router.push(`${inferredLocale === 'ru' ? '/ru' : ''}/aboutme`)
         break

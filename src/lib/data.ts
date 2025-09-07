@@ -33,15 +33,15 @@ export const cards: LocalizedCards = {
         'Our scuba diving courses cover beginner to advanced levels with experienced instructors. Certification upon completion.',
       videoUrl: 'https://www.w3schools.com/html/movie.mp4',
     },
-    {
-      id: 'freeDivingCourses',
-      title: 'Freediving courses',
-      image: '/images/freediving.jpg',
-      shortDesc: 'Master breath-hold diving with expert freediving courses.',
-      fullDesc:
-        'Freediving courses teach breathing techniques and safety for breath-hold diving. Suitable for all skill levels.',
-      videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    },
+    // {
+    //   id: 'freeDivingCourses',
+    //   title: 'Freediving courses',
+    //   image: '/images/freediving.jpg',
+    //   shortDesc: 'Master breath-hold diving with expert freediving courses.',
+    //   fullDesc:
+    //     'Freediving courses teach breathing techniques and safety for breath-hold diving. Suitable for all skill levels.',
+    //   videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    // },
   ],
   ru: [
     {
@@ -64,15 +64,15 @@ export const cards: LocalizedCards = {
         'Наши курсы по дайвингу охватывают от начального до продвинутого уровня с опытными инструкторами. Сертификация по завершении.',
       videoUrl: 'https://www.w3schools.com/html/movie.mp4',
     },
-    {
-      id: 'freeDivingCourses',
-      title: 'Курсы по фридайвингу',
-      image: '/images/freediving.jpg',
-      shortDesc: 'Освойте задержку дыхания с помощью курсов по фридайвингу.',
-      fullDesc:
-        'Курсы по фридайвингу обучают дыхательным техникам и безопасности при нырянии с задержкой дыхания. Подходит для всех уровней подготовки.',
-      videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    },
+    // {
+    //   id: 'freeDivingCourses',
+    //   title: 'Курсы по фридайвингу',
+    //   image: '/images/freediving.jpg',
+    //   shortDesc: 'Освойте задержку дыхания с помощью курсов по фридайвингу.',
+    //   fullDesc:
+    //     'Курсы по фридайвингу обучают дыхательным техникам и безопасности при нырянии с задержкой дыхания. Подходит для всех уровней подготовки.',
+    //   videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    // },
   ],
 }
 
