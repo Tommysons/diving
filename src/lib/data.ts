@@ -88,9 +88,9 @@ export interface ContactData {
 
 export const contacts: Record<'en' | 'ru', ContactData> = {
   en: {
-    phone: '+1 234 567 890',
+    phone: '+66855147167',
     email: 'info@scubadiving.com',
-    address: '123 Ocean Drive, Dive City, Atlantis',
+    address: 'Koh Tao, Thailand',
     socialLinks: [
       { platform: 'Facebook', url: 'https://facebook.com/scubadiving' },
       { platform: 'Instagram', url: 'https://instagram.com/scubadiving' },
@@ -98,9 +98,9 @@ export const contacts: Record<'en' | 'ru', ContactData> = {
     ],
   },
   ru: {
-    phone: '+7 999 123 45 67',
+    phone: '+66855147167',
     email: 'info@scubadiving.ru',
-    address: '123 Океан Драйв, Дайв-Сити, Атлантида',
+    address: 'Koh Tao, Thailand',
     socialLinks: [
       { platform: 'ВКонтакте', url: 'https://vk.com/scubadiving' },
       { platform: 'Instagram', url: 'https://instagram.com/scubadiving' },
