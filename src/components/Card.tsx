@@ -11,7 +11,7 @@ export default function Card({ card, onClick }: CardProps) {
     <div
       onClick={() => onClick(card)}
       className='
-        cursor-pointer
+cursor-pointer
         rounded-lg
         shadow-lg
         overflow-hidden
@@ -23,6 +23,7 @@ export default function Card({ card, onClick }: CardProps) {
         flex
         flex-col
         h-full
+        w-96
       '
       style={{ minWidth: 0 }}
     >

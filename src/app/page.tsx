@@ -6,6 +6,7 @@ import CardsGrid from '../components/CardsGrid'
 import { cards, CardData } from '../lib/data'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { motion } from 'framer-motion'
 
 export default function HomePage() {
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
@@ -35,14 +36,37 @@ export default function HomePage() {
     }
   }
 
+  // Quotes in both languages
+  const quotes = {
+    en: 'In diving, as in the ocean of life, every descent is followed by a rise—never give up.',
+    ru: 'В дайвинге, как и в океане жизни, за каждым погружением следует подъём — никогда не сдавайся.',
+  }
+
   return (
     <>
       <Header />
 
-      <main className='flex-grow'>
+      <main
+        className='flex
+        flex-wrap
+        justify-center
+        gap-5
+        mx-auto
+        px-4'
+      >
         <section id='main-cards' className='mt-12'>
           <CardsGrid cards={cards[locale]} onCardClick={handleCardClick} />
         </section>
+        {/* Mission / Teaching Style */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.4 }}
+        >
+          <div className='bg-blue-50 border-l-4 border-blue-400 p-6 italic shadow rounded-md'>
+            “{quotes[locale]}”
+          </div>
+        </motion.div>
       </main>
 
       <Footer />

@@ -46,7 +46,7 @@ export default function AboutPage() {
               className='w-40 h-40 rounded-full object-cover shadow-md'
             />
             <div>
-              <h2 className='text-2xl font-semibold'>Hi, I'm Tommy!</h2>
+              <h2 className='text-2xl font-semibold'>Hi, I'm Tom!</h2>
               <p className='text-gray-700 mt-2'>
                 I’m a certified scuba diving instructor based in Koh Tao with
                 over 3 years of experience and 2000+ dives. My journey began

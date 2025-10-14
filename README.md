@@ -16,3 +16,7 @@
 14. Create buttons for navbar - done
 15. Update Contact info
 16. Create contact us form with email notification - done
+17. Create new design for courses page. Than have description why people should choose each course.
+18. On specific course page need to put next steps after complition.
+19. Requirments
+20. F.A.Q

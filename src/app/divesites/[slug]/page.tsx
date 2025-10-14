@@ -1,5 +1,17 @@
-import DiveSiteDetailClient from '@/app/ru/divesites/[slug]/DiveSiteDetailClient'
+import { diveSites } from '@/lib/data/diveSites'
+import DiveSiteDetail from '@/components/DiveSiteDetailPage'
 
-export default function Page() {
-  return <DiveSiteDetailClient />
+interface Props {
+  params: Promise<{ slug: string }>
+}
+
+export default async function Page({ params }: Props) {
+  const { slug } = await params // ✅ Must await here
+
+  const locale: 'en' = 'en'
+  const site = diveSites.find((s) => s.slug === slug)
+
+  if (!site) return <div>Not Found</div>
+
+  return <DiveSiteDetail site={site} locale={locale} />
 }

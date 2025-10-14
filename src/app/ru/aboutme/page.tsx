@@ -44,7 +44,7 @@ export default function AboutPageRu() {
               className='w-40 h-40 rounded-full object-cover shadow-md'
             />
             <div>
-              <h2 className='text-2xl font-semibold'>Привет! Я Томми!</h2>
+              <h2 className='text-2xl font-semibold'>Привет! Я Том!</h2>
               <p className='text-gray-700 mt-2'>
                 Я сертифицированный инструктор по дайвингу на Ко Тао с опытом
                 более 3 лет и более 2000 погружений. Мое путешествие началось
