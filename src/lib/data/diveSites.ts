@@ -7,6 +7,7 @@ export interface DiveSite {
   thingsToSee?: string[]
   imageUrl?: string
   diveMapUrl?: string
+  extraImages?: string[]
   depth: string
   current: string
   visibility: string
@@ -47,6 +48,11 @@ export const diveSites: DiveSite[] = [
     ],
     imageUrl: '/images/cpn.jpg',
     diveMapUrl: '/images/cpn-map.jpg',
+    extraImages: [
+      '/images/divesites/white-rock/1.jpg',
+      '/images/divesites/white-rock/2.jpg',
+      '/images/divesites/white-rock/3.jpg',
+    ],
     depth: '12–35m',
     current: 'Moderate to strong',
     visibility: '10–30m',
