@@ -46,24 +46,20 @@ export default function HomePage() {
     <>
       <Header />
 
-      <main
-        className='flex
-        flex-wrap
-        justify-center
-        gap-5
-        mx-auto
-        px-4'
-      >
+      <main className='mx-auto px-4'>
+        {/* Cards Section */}
         <section id='main-cards' className='mt-12'>
           <CardsGrid cards={cards[locale]} onCardClick={handleCardClick} />
         </section>
-        {/* Mission / Teaching Style */}
+
+        {/* Quote Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.4 }}
+          className='w-full flex justify-center mt-12 mb-12'
         >
-          <div className='bg-blue-50 border-l-4 border-blue-400 p-6 italic shadow rounded-md'>
+          <div className='bg-blue-50 border-l-4 border-blue-400 p-6 italic shadow rounded-md max-w-3xl text-center'>
             “{quotes[locale]}”
           </div>
         </motion.div>
