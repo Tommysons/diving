@@ -94,7 +94,7 @@ export const contacts: Record<'en' | 'ru', ContactData> = {
     socialLinks: [
       { platform: 'Facebook', url: 'https://facebook.com/scubadiving' },
       { platform: 'Instagram', url: 'https://instagram.com/scubadiving' },
-      { platform: 'Twitter', url: 'https://twitter.com/scubadiving' },
+      { platform: 'YouTube', url: 'https://www.youtube.com/@lokatorist' },
     ],
   },
   ru: {
@@ -102,7 +102,7 @@ export const contacts: Record<'en' | 'ru', ContactData> = {
     email: 'info@scubadiving.ru',
     address: 'Koh Tao, Thailand',
     socialLinks: [
-      { platform: 'ВКонтакте', url: 'https://vk.com/scubadiving' },
+      { platform: 'YouTube', url: 'https://www.youtube.com/@lokatorist' },
       { platform: 'Instagram', url: 'https://instagram.com/scubadiving' },
       { platform: 'Telegram', url: 'https://t.me/scubadiving' },
     ],
