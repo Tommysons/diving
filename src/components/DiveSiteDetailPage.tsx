@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import { useState } from 'react'
 import BookingForm from '@/components/BookingForm'
 import { DiveSite, diveSites, diveSitesRU } from '@/lib/data/diveSites'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface Props {
   site: DiveSite
@@ -58,27 +58,57 @@ export default function DiveSiteDetail({ site, locale }: Props) {
             transition={{ duration: 0.6 }}
             className='bg-white shadow-lg rounded-2xl overflow-hidden relative'
           >
-            {/* Navigation Arrows */}
-            <button
-              onClick={goToPrev}
-              className='absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-cyan-700 hover:bg-cyan-800 text-white w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-3xl font-bold shadow-md'
-              aria-label={locale === 'ru' ? 'Предыдущий' : 'Previous'}
-            >
-              ‹
-            </button>
-            <button
-              onClick={goToNext}
-              className='absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-cyan-700 hover:bg-cyan-800 text-white w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-3xl font-bold shadow-md'
-              aria-label={locale === 'ru' ? 'Следующий' : 'Next'}
-            >
-              ›
-            </button>
+            {/* Header Row – Buttons + Site Name */}
+            <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 border-b border-gray-200 bg-gray-50'>
+              {/* Desktop/tablet layout: buttons on sides of name */}
+              <div className='hidden md:flex items-center justify-center w-full gap-4'>
+                <button
+                  onClick={goToPrev}
+                  className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-2xl font-bold shadow-md transition-all duration-200'
+                  aria-label={locale === 'ru' ? 'Предыдущий' : 'Previous'}
+                >
+                  ‹
+                </button>
+                <h1 className='text-3xl font-bold text-gray-800 text-center whitespace-normal px-3'>
+                  {site.name}
+                </h1>
+                <button
+                  onClick={goToNext}
+                  className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-2xl font-bold shadow-md transition-all duration-200'
+                  aria-label={locale === 'ru' ? 'Следующий' : 'Next'}
+                >
+                  ›
+                </button>
+              </div>
+
+              {/* Mobile layout: title on top, buttons below */}
+              <div className='flex flex-col items-center justify-center w-full md:hidden'>
+                <h1 className='text-2xl font-bold text-gray-800 text-center mb-3'>
+                  {site.name}
+                </h1>
+                <div className='flex items-center gap-4 justify-center'>
+                  <button
+                    onClick={goToPrev}
+                    className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl font-bold shadow-md transition-all duration-200'
+                    aria-label={locale === 'ru' ? 'Предыдущий' : 'Previous'}
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={goToNext}
+                    className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl font-bold shadow-md transition-all duration-200'
+                    aria-label={locale === 'ru' ? 'Следующий' : 'Next'}
+                  >
+                    ›
+                  </button>
+                </div>
+              </div>
+            </div>
 
             {/* Layout */}
             <div className='grid md:grid-cols-2 gap-0'>
               {/* Left Side – Image Grid */}
               <div className='relative bg-gray-100 p-4 rounded-l-2xl overflow-hidden'>
-                {/* Grid of images (fills full left side) */}
                 <div className='grid grid-cols-2 sm:grid-cols-3 gap-3'>
                   {imageList.map((img, i) => (
                     <motion.div
@@ -124,11 +154,8 @@ export default function DiveSiteDetail({ site, locale }: Props) {
               </div>
 
               {/* Right Side – Info */}
-              <div className='p-8 flex flex-col justify-center space-y-5'>
-                <h1 className='text-3xl font-bold text-gray-800'>
-                  {site.name}
-                </h1>
-                <p className='text-gray-700 leading-relaxed'>
+              <div className='p-6 sm:p-8 flex flex-col justify-center space-y-5'>
+                <p className='text-gray-700 leading-relaxed text-base sm:text-lg'>
                   {site.longDescription}
                 </p>
 
@@ -152,7 +179,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                     <h2 className='text-xl font-semibold text-gray-800 mt-4 mb-2'>
                       {locale === 'ru' ? 'Что можно увидеть' : 'Things to See'}
                     </h2>
-                    <ul className='list-disc list-inside text-gray-700'>
+                    <ul className='list-disc list-inside text-gray-700 space-y-1'>
                       {site.thingsToSee.map((item, i) => (
                         <li key={i}>{item}</li>
                       ))}
@@ -200,7 +227,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                 {/* Booking */}
                 <button
                   onClick={() => setActiveForm(!activeForm)}
-                  className='bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl mt-4 transition-all duration-300'
+                  className='bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl mt-4 transition-all duration-300 self-center sm:self-start'
                 >
                   {activeForm
                     ? locale === 'ru'
