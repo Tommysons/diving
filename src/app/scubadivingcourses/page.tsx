@@ -178,7 +178,7 @@ function CourseCard({ course, activeForm, setActiveForm }: any) {
 
       <div className='p-4 sm:p-6 pt-0'>
         <button
-          className='inline-block mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm sm:text-base'
+          className='inline-block mt-2 px-4 py-2 bg-cyan-700 hover:bg-cyan-800 text-white rounded transition text-sm sm:text-base'
           onClick={(e) => {
             e.stopPropagation()
             setActiveForm(isActive ? null : course.slug)

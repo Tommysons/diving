@@ -119,16 +119,22 @@ export default function ScubaCourseDetailClient({
           )}
 
           <div className='flex items-center gap-4 mt-4'>
-            <button onClick={() => go(-1)} className='p-2 border rounded-full'>
+            <button
+              onClick={() => go(-1)}
+              className=' bg-cyan-700 hover:bg-cyan-800 text-white p-2 border rounded-full'
+            >
               <ChevronLeft />
             </button>
-            <button onClick={() => go(1)} className='p-2 border rounded-full'>
+            <button
+              onClick={() => go(1)}
+              className='bg-cyan-700 hover:bg-cyan-800 text-white p-2 border rounded-full'
+            >
               <ChevronRight />
             </button>
           </div>
 
           <button
-            className='mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition'
+            className='mt-4 px-4 py-2 bg-cyan-700 hover:bg-cyan-800 text-white transition'
             onClick={() => setActiveForm(!activeForm)}
           >
             {activeForm

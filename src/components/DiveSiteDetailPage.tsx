@@ -7,6 +7,7 @@ import { useState } from 'react'
 import BookingForm from '@/components/BookingForm'
 import { DiveSite, diveSites, diveSitesRU } from '@/lib/data/diveSites'
 import { motion } from 'framer-motion'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 interface Props {
   site: DiveSite
@@ -64,20 +65,20 @@ export default function DiveSiteDetail({ site, locale }: Props) {
               <div className='hidden md:flex items-center justify-center w-full gap-4'>
                 <button
                   onClick={goToPrev}
-                  className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-2xl font-bold shadow-md transition-all duration-200'
+                  className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
                   aria-label={locale === 'ru' ? 'Предыдущий' : 'Previous'}
                 >
-                  ‹
+                  <ChevronLeft className='w-5 h-5' />
                 </button>
                 <h1 className='text-3xl font-bold text-gray-800 text-center whitespace-normal px-3'>
                   {site.name}
                 </h1>
                 <button
                   onClick={goToNext}
-                  className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-2xl font-bold shadow-md transition-all duration-200'
+                  className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
                   aria-label={locale === 'ru' ? 'Следующий' : 'Next'}
                 >
-                  ›
+                  <ChevronRight className='w-5 h-5' />
                 </button>
               </div>
 
@@ -89,17 +90,17 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                 <div className='flex items-center gap-4 justify-center'>
                   <button
                     onClick={goToPrev}
-                    className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl font-bold shadow-md transition-all duration-200'
+                    className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
                     aria-label={locale === 'ru' ? 'Предыдущий' : 'Previous'}
                   >
-                    ‹
+                    <ChevronLeft className='w-5 h-5' />
                   </button>
                   <button
                     onClick={goToNext}
-                    className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl font-bold shadow-md transition-all duration-200'
+                    className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
                     aria-label={locale === 'ru' ? 'Следующий' : 'Next'}
                   >
-                    ›
+                    <ChevronRight className='w-5 h-5' />
                   </button>
                 </div>
               </div>
@@ -126,7 +127,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   ))}
                 </div>
 
-                {/* Popup / modal for full image */}
+                {/* Popup / modal for full image with arrows + swipe */}
                 {hoveredImage && (
                   <motion.div
                     className='fixed inset-0 bg-black/80 flex items-center justify-center z-50'
@@ -135,20 +136,73 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                     exit={{ opacity: 0 }}
                     onClick={() => setHoveredImage(null)}
                   >
-                    <motion.img
-                      src={hoveredImage}
-                      alt='Zoomed dive image'
-                      className='max-w-[90vw] max-h-[80vh] rounded-xl shadow-2xl object-contain'
-                      initial={{ scale: 0.9, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    <button
-                      className='absolute top-6 right-6 text-white text-4xl font-bold hover:text-gray-300 transition'
-                      onClick={() => setHoveredImage(null)}
+                    <motion.div
+                      className='relative flex items-center justify-center w-full h-full max-w-[90vw] max-h-[80vh]'
+                      onClick={(e) => e.stopPropagation()} // prevent modal close when clicking image
                     >
-                      ×
-                    </button>
+                      {/* Left arrow (desktop only) */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          const current = imageList.indexOf(hoveredImage)
+                          const prevIndex =
+                            (current - 1 + imageList.length) % imageList.length
+                          setHoveredImage(imageList[prevIndex]!)
+                        }}
+                        className='hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2 text-white bg-cyan-700 hover:bg-cyan-800 rounded-full w-12 h-12 items-center justify-center transition'
+                        aria-label='Previous image'
+                      >
+                        <ChevronLeft className='w-6 h-6' />
+                      </button>
+
+                      {/* Swipe + image */}
+                      <motion.img
+                        key={hoveredImage}
+                        src={hoveredImage}
+                        alt='Zoomed dive image'
+                        className='max-w-full max-h-[80vh] rounded-xl shadow-2xl object-contain select-none'
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        drag='x'
+                        dragConstraints={{ left: 0, right: 0 }}
+                        onDragEnd={(event, info) => {
+                          if (info.offset.x > 100) {
+                            const current = imageList.indexOf(hoveredImage)
+                            const prevIndex =
+                              (current - 1 + imageList.length) %
+                              imageList.length
+                            setHoveredImage(imageList[prevIndex]!)
+                          } else if (info.offset.x < -100) {
+                            const current = imageList.indexOf(hoveredImage)
+                            const nextIndex = (current + 1) % imageList.length
+                            setHoveredImage(imageList[nextIndex]!)
+                          }
+                        }}
+                      />
+
+                      {/* Right arrow (desktop only) */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          const current = imageList.indexOf(hoveredImage)
+                          const nextIndex = (current + 1) % imageList.length
+                          setHoveredImage(imageList[nextIndex]!)
+                        }}
+                        className='hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2 text-white bg-cyan-700 hover:bg-cyan-800 rounded-full w-12 h-12 items-center justify-center transition'
+                        aria-label='Next image'
+                      >
+                        <ChevronRight className='w-6 h-6' />
+                      </button>
+
+                      {/* Close button */}
+                      <button
+                        className='absolute top-6 right-6 text-white hover:text-gray-300 transition'
+                        onClick={() => setHoveredImage(null)}
+                      >
+                        <X className='w-7 h-7' />
+                      </button>
+                    </motion.div>
                   </motion.div>
                 )}
               </div>
@@ -227,7 +281,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                 {/* Booking */}
                 <button
                   onClick={() => setActiveForm(!activeForm)}
-                  className='bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl mt-4 transition-all duration-300 self-center sm:self-start'
+                  className='bg-cyan-700 hover:bg-cyan-800 text-white px-5 py-2.5 rounded-xl mt-4 transition-all duration-300 self-center sm:self-start'
                 >
                   {activeForm
                     ? locale === 'ru'
