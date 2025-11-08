@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { label } from 'framer-motion/client'
 
 const navItemsEN = [
   { href: '/divesites', label: 'Dive Sites' },
@@ -13,6 +14,7 @@ const navItemsEN = [
   { href: '/gallery', label: 'Gallery', highlight: true },
   { href: '/aboutme', label: 'About Me' },
   { href: '/contact', label: 'Contact' },
+  { href: '/faq', label: 'FAQ' },
 ]
 
 const navItemsRU = [
@@ -22,6 +24,7 @@ const navItemsRU = [
   { href: '/gallery', label: 'Галерея', highlight: true },
   { href: '/aboutme', label: 'Обо мне' },
   { href: '/contact', label: 'Контакты' },
+  { href: '/faq', label: 'FAQ (Вопросы и ответы)' },
 ]
 
 export default function Navbar() {
