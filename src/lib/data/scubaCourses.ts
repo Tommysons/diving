@@ -33,7 +33,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Try scuba diving for the first time under the guidance of professional instructors. Perfect for curious beginners.',
     maxDepth: '12 meters',
-    image: '/images/dsd.jpeg',
+    image: '/images/courses/dsd.jpg',
     price: '2,500฿',
     duration: '1 day',
     program: [
@@ -49,7 +49,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Complete your first full scuba certification. Learn essential skills, safety protocols, and dive theory.',
     maxDepth: '18 meters',
-    image: '/images/owd.jpeg',
+    image: '/images/courses/owd.jpg',
     price: '11,000฿ ',
     duration: '3-4 days',
     program: [
@@ -65,7 +65,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Take your diving to the next level with deep dives, navigation skills, and specialty dives.',
     maxDepth: '30 meters',
-    image: '/images/awd.jpeg',
+    image: '/images/awd.jpg',
     price: '10,000฿',
     prerequisites: 'OWD',
     duration: '2-3 days',
@@ -99,7 +99,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'First professional level for leading certified divers and assisting instructors. Develop professional skills and experience guiding divers safely.',
     maxDepth: '40 meters',
-    image: '/images/dm.jpeg',
+    image: '/images/dm.jpg',
     price: '33,000฿',
     prerequisites: 'Rescue Diver + 40 logged dives + medical clearance',
     duration: '2-4 weeks',
@@ -122,7 +122,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Master your buoyancy for better air consumption, smoother dives, and precise underwater control.',
     prerequisites: 'OWD or equivalent',
-    image: '/images/buoyancy.jpeg',
+    image: '/images/buoyancy.jpg',
     price: '฿5,500',
     duration: '1 day',
     program: [
@@ -138,7 +138,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Safely extend your depth limit while learning proper planning, gas management, and emergency procedures.',
     prerequisites: 'AOWD or equivalent',
-    image: '/images/deep.jpeg',
+    image: '/images/deep.jpg',
     price: '฿8,500',
     duration: '1-2 days',
     program: [
@@ -154,7 +154,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Experience the underwater world after dark and learn night diving navigation and safety.',
     prerequisites: 'OWD or equivalent',
-    image: '/images/night.jpeg',
+    image: '/images/night.jpg',
     price: '฿฿7,000',
     duration: '1 day',
     program: [
@@ -208,7 +208,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Попробуйте дайвинг впервые под руководством профессиональных инструкторов. Отлично для начинающих.',
     maxDepth: '12 метров',
-    image: '/images/dsd.jpeg',
+    image: '/images/courses/dsd.jpg',
     price: '2,500฿',
     duration: '1 день',
     program: [
@@ -224,7 +224,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Получите вашу первую полную сертификацию дайвера. Изучите навыки, правила безопасности и теорию погружений.',
     maxDepth: '18 метров',
-    image: '/images/owd.jpeg',
+    image: '/images/courses/owd.jpg',
     price: '11,000฿ ',
     duration: '3-4 дня',
     program: [
@@ -240,7 +240,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Поднимите свои навыки дайвинга на новый уровень: глубокие погружения, навигация и специальные погружения.',
     maxDepth: '30 метров',
-    image: '/images/awd.jpeg',
+    image: '/images/awd.jpg',
     price: '10,000฿',
     prerequisites: 'OWD',
     duration: '2-3 дня',
@@ -274,7 +274,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Первый профессиональный уровень: руководите сертифицированными дайверами и помогайте инструкторам.',
     maxDepth: '40 метров',
-    image: '/images/dm.jpeg',
+    image: '/images/dm.jpg',
     price: '33,000฿',
     prerequisites: 'Rescue Diver + 40 погружений + медицинское разрешение',
     duration: '2-4 недели',
@@ -297,7 +297,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Освойте контроль плавучести для экономии воздуха и точного управления под водой.',
     prerequisites: 'OWD или эквивалент',
-    image: '/images/buoyancy.jpeg',
+    image: '/images/buoyancy.jpg',
     price: '฿5,500',
     duration: '1 день',
     program: [
@@ -313,7 +313,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Безопасно увеличьте предел глубины с правильными техниками и планированием погружений.',
     prerequisites: 'AOWD или эквивалент',
-    image: '/images/deep.jpeg',
+    image: '/images/deep.jpg',
     price: '฿8,500',
     duration: '1-2 дня',
     program: [
@@ -329,7 +329,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Исследуйте подводный мир ночью и изучите ночную навигацию и правила безопасности.',
     prerequisites: 'OWD или эквивалент',
-    image: '/images/night.jpeg',
+    image: '/images/night.jpg',
     price: '฿฿7,000',
     duration: '1 день',
     program: [
