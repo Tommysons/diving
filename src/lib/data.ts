@@ -17,7 +17,7 @@ export const cards: LocalizedCards = {
     {
       id: 'diveSites',
       title: 'Dive sites',
-      image: '/images/cpn1.jpg',
+      image: '/images/cpn/cpn1.jpg',
       shortDesc: 'Explore beautiful and diverse dive sites around the world.',
       fullDesc:
         'Coral Garden is a vibrant reef with amazing corals, tropical fish, and turtles. Visibility up to 30m. Currents are mild. Best to visit in summer.',
@@ -26,7 +26,7 @@ export const cards: LocalizedCards = {
     {
       id: 'divingCourses',
       title: 'Scuba diving courses',
-      image: '/images/scubadiving.avif',
+      image: '/images/courses/dsd.jpg',
       shortDesc:
         'Learn scuba diving with professional courses designed for all levels.',
       fullDesc:
