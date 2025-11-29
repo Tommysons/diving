@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 import { contactSchema } from '@/lib/validation/contactSchema'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   try {
@@ -18,22 +20,17 @@ export async function POST(req: Request) {
     }
 
     const { name, email, subject, message } = validation.data
-
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: Number(process.env.SMTP_PORT) === 465,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    })
-
     const timeSent = new Date().toLocaleString()
 
-    await transporter.sendMail({
-      from: `"${name}" <${email}>`,
-      to: process.env.CONTACT_EMAIL,
+    // Ensure email is present
+    if (!email) {
+      return NextResponse.json({ error: 'No email provided' }, { status: 400 })
+    }
+
+    // 1️⃣ Send email to your inbox (admin)
+    await resend.emails.send({
+      from: 'Diving Website <contact@lokawndr.com>',
+      to: process.env.ADMIN_EMAIL!, // your email
       subject: subject || 'New Contact Message from website',
       html: `
         <h3>New message from your website contact form</h3>
@@ -46,9 +43,10 @@ export async function POST(req: Request) {
       `,
     })
 
-    await transporter.sendMail({
-      from: process.env.CONTACT_EMAIL,
-      to: email,
+    // 2️⃣ Send confirmation email to the user
+    await resend.emails.send({
+      from: 'Diving Website <contact@lokawndr.com>',
+      to: email!, // TypeScript-safe
       subject: 'We received your email',
       html: `
         <p>Hi ${name},</p>
