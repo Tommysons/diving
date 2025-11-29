@@ -4,14 +4,15 @@ import { currentUser } from '@clerk/nextjs/server'
 import nodemailer from 'nodemailer'
 import { ObjectId } from 'mongodb'
 
+// ✅ Correct collections
 const projectCollections: Record<string, string> = {
-  scuba: 'bookings',
-  freediving: 'bookings',
-  dive_trips: 'bookings',
-  digital_art: 'bookings',
+  scuba: 'scuba_bookings',
+  freediving: 'freediving_bookings',
+  dive_trips: 'dive_trips',
+  digital_art: 'digital_art_orders',
 }
 
-// Setup Nodemailer
+// Nodemailer setup
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT) || 587,
@@ -24,11 +25,12 @@ const transporter = nodemailer.createTransport({
 
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<{ projectId: string }> } // ✅ must await
+  context: { params: Promise<{ projectId: string }> }
 ) {
   try {
     const { projectId } = await context.params
     const collectionName = projectCollections[projectId]
+
     if (!collectionName)
       return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
 
@@ -36,14 +38,13 @@ export async function POST(
     if (!user)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const data = await req.json()
-    const { id, action, newDate, newTime } = data
+    const { id, action, newDate, newTime } = await req.json()
 
     const client = await clientPromise
-    const db = client.db('scuba_booking')
+    const db = client.db(process.env.MONGODB_DB)
     const collection = db.collection(collectionName)
 
-    // Handle edit
+    // --- APPLY ACTION ---
     if (action === 'edit') {
       await collection.updateOne(
         { _id: new ObjectId(id) },
@@ -56,23 +57,23 @@ export async function POST(
       )
     }
 
-    // Fetch updated document
+    // Get updated booking
     const item = await collection.findOne({ _id: new ObjectId(id) })
 
-    // Send notification email
+    // --- EMAIL TO CUSTOMER ---
     if (item?.email) {
       const subject =
         action === 'edit'
-          ? `Your ${projectId} booking has been updated`
-          : `Your ${projectId} has been ${action}`
+          ? `Your booking has been updated`
+          : `Your booking has been ${action}`
 
       const text =
         action === 'edit'
-          ? `Hi ${item.name},\n\nYour booking has been updated to ${newDate} at ${newTime}.\n\nCheers,\nAdmin Team`
-          : `Hi ${item.name},\n\nYour booking/order has been ${action}.\n\nCheers,\nAdmin Team`
+          ? `Hi ${item.name},\n\nYour booking has been updated to:\nDate: ${newDate}\nTime: ${newTime}\n\nBest regards,\nDiving Team`
+          : `Hi ${item.name},\n\nYour booking status is now: ${action}.\n\nBest regards,\nDiving Team`
 
       await transporter.sendMail({
-        from: `"Admin Dashboard" <${process.env.SMTP_USER}>`,
+        from: `"Loka Wonder" <${process.env.SMTP_USER}>`,
         to: item.email,
         subject,
         text,
