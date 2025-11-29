@@ -78,29 +78,54 @@ export async function POST(req: NextRequest) {
     const result = await collection.insertOne(doc)
     console.log('Booking inserted with id:', result.insertedId)
 
-    // --- Send email to client with logging ---
+    const subjectText = `Booking: ${activity} on ${date} at ${time}`
+
+    // --- Send confirmation email to client (English + Russian) ---
     try {
       await resend.emails.send({
-        from: 'hello@resend.dev', // must be verified in Resend
-        to: email,
-        subject: `Booking received: ${activity}`,
-        text: `Hi ${name},\n\nYour booking for ${activity} on ${date} at ${time} has been received!\n\nThank you.`,
+        from: 'Loka Wonder <contact@lokawndr.com>',
+        to: email!,
+        subject: `Booking Confirmation / Подтверждение бронирования: ${activity} on ${date}`,
+        html: `
+          <p>Hi ${name},</p>
+          <p>Thank you for booking with us! We have received your booking for <strong>${activity}</strong> on <strong>${date}</strong> at <strong>${time}</strong>.</p>
+          <p>Спасибо за бронирование! Мы получили вашу заявку на <strong>${activity}</strong> на <strong>${date}</strong> в <strong>${time}</strong>.</p>
+          ${
+            message
+              ? `<p><strong>Your message / Ваше сообщение:</strong><br>${message}</p>`
+              : ''
+          }
+          <br/>
+          <p>Best regards / С уважением,<br/>Your Scuba Diving Team / Ваша команда по дайвингу</p>
+        `,
       })
       console.log('Resend email sent to client:', email)
     } catch (err) {
       console.error('Resend client email error:', err)
     }
 
-    // --- Send email to admin with logging ---
+    // --- Send email to admin ---
     if (process.env.ADMIN_EMAIL) {
       try {
         await resend.emails.send({
-          from: 'Scuba Diving <vermiona15@gmail.com>',
-          to: process.env.ADMIN_EMAIL,
-          subject: `New Booking: ${activity} (${name})`,
-          text: `New booking received:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nType: ${type}\nActivity: ${activity}\nDate: ${date}\nTime: ${time}\nMessage: ${
-            message || 'N/A'
-          }`,
+          from: 'Loka Wonder <contact@lokawndr.com>',
+          to: process.env.ADMIN_EMAIL!,
+          subject: subjectText,
+          html: `
+            <h3>New Booking / Новое бронирование</h3>
+            <p><strong>Name / Имя:</strong> ${name}</p>
+            <p><strong>Email / Эл. почта:</strong> ${email}</p>
+            <p><strong>Phone / Телефон:</strong> ${phone}</p>
+            <p><strong>Type / Тип:</strong> ${type}</p>
+            <p><strong>Activity / Активность:</strong> ${activity}</p>
+            <p><strong>Date / Дата:</strong> ${date}</p>
+            <p><strong>Time / Время:</strong> ${time}</p>
+            ${
+              message
+                ? `<p><strong>Message / Сообщение:</strong><br>${message}</p>`
+                : ''
+            }
+          `,
         })
         console.log('Resend email sent to admin:', process.env.ADMIN_EMAIL)
       } catch (err) {
