@@ -28,7 +28,7 @@ export async function POST(req: Request) {
 
     // 1️⃣ Send email to admin
     await resend.emails.send({
-      from: 'Diving Website <contact@lokawndr.com>',
+      from: 'Loka Wonder <contact@lokawndr.com>',
       to: process.env.ADMIN_EMAIL!, // Vercel variable
       subject: subject || 'New Contact Message from website',
       html: `
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
 
     // 2️⃣ Send confirmation email to user (English + Russian)
     await resend.emails.send({
-      from: 'Diving Website <contact@lokawndr.com>',
+      from: 'Loka Wonder <contact@lokawndr.com>',
       to: email!,
       subject: subject
         ? `Re: ${subject}`
