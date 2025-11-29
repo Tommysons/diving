@@ -89,21 +89,21 @@ export interface ContactData {
 export const contacts: Record<'en' | 'ru', ContactData> = {
   en: {
     phone: '+66855147167',
-    email: 'info@scubadiving.com',
+    email: 'contact@lokawndr.com',
     address: 'Koh Tao, Thailand',
     socialLinks: [
       { platform: 'Facebook', url: 'https://facebook.com/scubadiving' },
-      { platform: 'Instagram', url: 'https://instagram.com/scubadiving' },
+      { platform: 'Instagram', url: 'https://instagram.com/tom_the_newbie/' },
       { platform: 'YouTube', url: 'https://www.youtube.com/@lokatorist' },
     ],
   },
   ru: {
     phone: '+66855147167',
-    email: 'info@scubadiving.ru',
+    email: 'contact@lokawndr.com',
     address: 'Koh Tao, Thailand',
     socialLinks: [
       { platform: 'YouTube', url: 'https://www.youtube.com/@lokatorist' },
-      { platform: 'Instagram', url: 'https://instagram.com/scubadiving' },
+      { platform: 'Instagram', url: 'https://instagram.com/tom_the_newbie/' },
       { platform: 'Telegram', url: 'https://t.me/scubadiving' },
     ],
   },
