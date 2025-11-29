@@ -13,10 +13,13 @@ const collectionMap: Record<string, string> = {
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json()
+    console.log('Incoming booking data:', data)
+
     const { name, email, phone, type, activity, date, time, message } = data
 
-    // --- Validate required fields ---
+    // Validate required fields
     if (!name || !email || !date || !time || !type || !activity) {
+      console.error('Missing required fields:', data)
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -24,14 +27,18 @@ export async function POST(req: NextRequest) {
     }
 
     const collectionName = collectionMap[type]
-    if (!collectionName)
+    if (!collectionName) {
+      console.error('Invalid type:', type)
       return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
+    }
+
+    console.log('Using collection:', collectionName)
 
     const client = await clientPromise
     const db = client.db(process.env.MONGODB_DB)
     const collection = db.collection(collectionName)
 
-    // --- Check for conflicts (2-hour sessions) ---
+    // Check for conflicts (2-hour sessions)
     const bookingStart = new Date(`${date}T${time}:00`)
     const bookingEnd = new Date(bookingStart)
     bookingEnd.setHours(bookingEnd.getHours() + 2)
@@ -52,13 +59,14 @@ export async function POST(req: NextRequest) {
     })
 
     if (conflict) {
+      console.warn('Conflict detected with:', conflict)
       return NextResponse.json(
         { error: 'This time slot is already booked' },
         { status: 400 }
       )
     }
 
-    // --- Insert new booking ---
+    // Insert booking
     const doc: any = {
       name,
       email,
@@ -76,15 +84,19 @@ export async function POST(req: NextRequest) {
     if (type === 'dive_trip') doc.site = activity
 
     const result = await collection.insertOne(doc)
-    console.log('Booking inserted with id:', result.insertedId)
+    console.log('Booking inserted with ID:', result.insertedId)
 
     const subjectText = `Booking: ${activity} on ${date} at ${time}`
 
-    // --- Send confirmation email to client (English + Russian) ---
+    // -----------------------------
+    // SEND CLIENT CONFIRMATION EMAIL
+    // -----------------------------
+    console.log('Attempting to send client confirmation email to:', email)
+
     try {
-      await resend.emails.send({
+      const response = await resend.emails.send({
         from: 'Loka Wonder <contact@lokawndr.com>',
-        to: email!,
+        to: email,
         subject: `Booking Confirmation / Подтверждение бронирования: ${activity} on ${date}`,
         html: `
           <p>Hi ${name},</p>
@@ -95,21 +107,27 @@ export async function POST(req: NextRequest) {
               ? `<p><strong>Your message / Ваше сообщение:</strong><br>${message}</p>`
               : ''
           }
-          <br/>
-          <p>Best regards / С уважением,<br/>Your Scuba Diving Team / Ваша команда по дайвингу</p>
         `,
       })
-      console.log('Resend email sent to client:', email)
-    } catch (err) {
-      console.error('Resend client email error:', err)
+
+      console.log('Client email sent successfully:', response)
+    } catch (err: any) {
+      console.error(
+        'Resend client email error:',
+        err?.response?.data || err?.message || err
+      )
     }
 
-    // --- Send email to admin ---
+    // -----------------------------
+    // SEND ADMIN EMAIL
+    // -----------------------------
     if (process.env.ADMIN_EMAIL) {
+      console.log('Attempting to send admin email to:', process.env.ADMIN_EMAIL)
+
       try {
-        await resend.emails.send({
+        const response = await resend.emails.send({
           from: 'Loka Wonder <contact@lokawndr.com>',
-          to: process.env.ADMIN_EMAIL!,
+          to: process.env.ADMIN_EMAIL,
           subject: subjectText,
           html: `
             <h3>New Booking / Новое бронирование</h3>
@@ -127,10 +145,16 @@ export async function POST(req: NextRequest) {
             }
           `,
         })
-        console.log('Resend email sent to admin:', process.env.ADMIN_EMAIL)
-      } catch (err) {
-        console.error('Resend admin email error:', err)
+
+        console.log('Admin email sent successfully:', response)
+      } catch (err: any) {
+        console.error(
+          'Resend admin email error:',
+          err?.response?.data || err?.message || err
+        )
       }
+    } else {
+      console.warn('ADMIN_EMAIL is not set, skipping admin notification.')
     }
 
     return NextResponse.json(
@@ -138,9 +162,9 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Booking error full:', error)
+    console.error('Booking route fatal error:', error)
     return NextResponse.json(
-      { error: error?.message || JSON.stringify(error) },
+      { error: error?.message || 'Server error' },
       { status: 500 }
     )
   }
