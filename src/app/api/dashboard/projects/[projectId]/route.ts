@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
-import { currentUser } from '@clerk/nextjs/server'
+import { auth } from '@clerk/nextjs/server'
 
-// ✅ Correct real collections where booking form saves data
 const projectCollections: Record<string, string> = {
   scuba: 'scuba_bookings',
   freediving: 'freediving_bookings',
@@ -12,20 +11,21 @@ const projectCollections: Record<string, string> = {
 
 export async function GET(
   req: Request,
-  context: { params: Promise<{ projectId: string }> }
+  context: { params: { projectId: string } }
 ) {
   try {
-    const { projectId } = await context.params
+    const { projectId } = context.params
 
     if (!projectId)
       return NextResponse.json({ error: 'Project ID missing' }, { status: 400 })
 
     const collectionName = projectCollections[projectId]
+
     if (!collectionName)
       return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
 
-    const user = await currentUser()
-    if (!user)
+    const { userId } = await auth()
+    if (!userId)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const client = await clientPromise

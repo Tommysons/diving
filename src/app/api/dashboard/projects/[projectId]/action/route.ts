@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
-import { currentUser } from '@clerk/nextjs/server'
+import { auth } from '@clerk/nextjs/server'
 import nodemailer from 'nodemailer'
 import { ObjectId } from 'mongodb'
 
-// ✅ Correct collections
 const projectCollections: Record<string, string> = {
   scuba: 'scuba_bookings',
   freediving: 'freediving_bookings',
@@ -12,7 +11,6 @@ const projectCollections: Record<string, string> = {
   digital_art: 'digital_art_orders',
 }
 
-// Nodemailer setup
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT) || 587,
@@ -25,17 +23,17 @@ const transporter = nodemailer.createTransport({
 
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<{ projectId: string }> }
+  context: { params: { projectId: string } }
 ) {
   try {
-    const { projectId } = await context.params
+    const { projectId } = context.params
     const collectionName = projectCollections[projectId]
 
     if (!collectionName)
       return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
 
-    const user = await currentUser()
-    if (!user)
+    const { userId } = await auth()
+    if (!userId)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const { id, action, newDate, newTime } = await req.json()
@@ -44,7 +42,7 @@ export async function POST(
     const db = client.db(process.env.MONGODB_DB)
     const collection = db.collection(collectionName)
 
-    // --- APPLY ACTION ---
+    // Perform action
     if (action === 'edit') {
       await collection.updateOne(
         { _id: new ObjectId(id) },
@@ -57,10 +55,10 @@ export async function POST(
       )
     }
 
-    // Get updated booking
+    // Get updated record
     const item = await collection.findOne({ _id: new ObjectId(id) })
 
-    // --- EMAIL TO CUSTOMER ---
+    // Send email
     if (item?.email) {
       const subject =
         action === 'edit'
