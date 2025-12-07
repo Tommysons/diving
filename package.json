@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.23",
-    "@clerk/nextjs": "^6.31.1",
+    "@clerk/nextjs": "^6.35.6",
     "@u-wave/react-youtube": "^0.7.4",
     "@vercel/speed-insights": "^1.2.0",
     "clsx": "^2.1.1",
@@ -33,6 +33,7 @@
     "@types/react": "^18.0.38",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.31.0",
+    "eslint-config-next": "^16.0.7",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.4.0"

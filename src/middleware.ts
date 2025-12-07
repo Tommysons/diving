@@ -1,19 +1,17 @@
-import { clerkMiddleware } from '@clerk/nextjs/server'
-import { NextResponse } from 'next/server'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-export default clerkMiddleware({
-  // optional: protect all routes or specific paths
-  // you can use the `matcher` below
+const isProtectedRoute = createRouteMatcher([
+  '/dashboard(.*)',
+  '/account(.*)',
+  '/protected(.*)',
+])
+
+export default clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoute(req)) {
+    await auth.protect()
+  }
 })
 
 export const config = {
-  matcher: [
-    /*
-      Match all routes that require auth:
-      - dashboard pages
-      - API routes
-    */
-    '/dashboard/:path*',
-    '/api/dashboard/:path*',
-  ],
+  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/'],
 }
