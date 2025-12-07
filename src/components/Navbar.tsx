@@ -61,8 +61,8 @@ export default function Navbar() {
             loop
             playsInline
             preload='auto'
-            poster='/images/logo.png'
-            className='w-full h-full object-cover object-center scale-105'
+            poster='images/logo.png'
+            className='w-full h-full object-cover object-center scale-105 -translate-x-[-4px] -translate-y-[2px]'
           />
         </motion.div>
       </Link>
