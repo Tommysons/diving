@@ -45,24 +45,25 @@ export default function Navbar() {
 
   return (
     <nav className='bg-blue-900 text-white px-6 py-4 flex items-center justify-between'>
-      {/* Logo */}
+      {/* Logo (Video) */}
       <Link href={locale === 'ru' ? '/ru' : '/'}>
         <motion.div
           whileHover={{ scale: 1.1, rotate: 5 }}
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className='rounded-full overflow-hidden border-2 border-white shadow-md'
+          className='rounded-l-full rounded-r-full overflow-hidden border-2 border-white shadow-md'
+          style={{ width: '100px', height: '60px' }}
         >
-          <Image
-            src='/images/logo.jpg'
-            alt='Logo'
-            width={80}
-            height={80}
-            className='object-cover'
+          <video
+            src='/images/logo.mkv'
+            autoPlay
+            muted
+            loop
+            playsInline
+            className='w-full h-full object-cover object-center scale-105 -translate-x-[-4px] -translate-y-[2px]'
           />
         </motion.div>
       </Link>
-
       {/* Navigation + Language */}
       <div className='flex items-center space-x-6'>
         {/* Desktop Links (large screens only) */}

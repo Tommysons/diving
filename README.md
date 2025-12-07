@@ -10,7 +10,7 @@
 8. Add freediving info - done
 9. Add about me info - done
 10. Create apointment system with email notification - done
-11. Create logo -
+11. Create logo - done
 12. Design style of buttons
 13. Design background of the pages
 14. Create buttons for navbar - done
@@ -24,11 +24,10 @@
 22. deploy webiste - done
 23. Redesign whole website
 24. Create page for Mia
-25. Logo Change
-26. Add Photo
-27. Crypto payments
-28. Check all text
-29. Create picture "Haven't loka wndr yet
-30. Telegram channel
-31. Vkontakte channel
-32. Dive planner
+25. Add Photo
+26. Crypto payments
+27. Check all text
+28. Create picture "Haven't loka wndr yet
+29. Telegram channel
+30. Vkontakte channel
+31. Dive planner
