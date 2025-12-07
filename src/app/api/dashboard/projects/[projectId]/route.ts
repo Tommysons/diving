@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
 import { currentUser } from '@clerk/nextjs/server'
 import { ObjectId } from 'mongodb'
+import { Resend } from 'resend'
 
-/* =========================
-   COLLECTION MAP
-========================= */
+const resend = new Resend(process.env.RESEND_API_KEY)
+
 const projectCollections: Record<string, string> = {
   scuba: 'scuba_bookings',
   freediving: 'freediving_bookings',
@@ -17,93 +17,9 @@ function getCollection(projectId: string) {
   return projectCollections[projectId]
 }
 
-/* =========================
-   HELPERS
-========================= */
 function isAdminUser(user: any) {
   const email = user?.emailAddresses?.[0]?.emailAddress
   return email === process.env.ADMIN_EMAIL
-}
-
-/* =========================
-   READ (GET)
-========================= */
-export async function GET(
-  req: NextRequest,
-  context: { params: Promise<{ projectId: string }> }
-) {
-  try {
-    const { projectId } = await context.params
-    const user = await currentUser()
-
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    if (!isAdminUser(user)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
-    const collectionName = getCollection(projectId)
-    if (!collectionName) {
-      return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
-    }
-
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
-
-    const bookings = await db
-      .collection(collectionName)
-      .find({})
-      .sort({ createdAt: -1 })
-      .toArray()
-
-    return NextResponse.json(bookings)
-  } catch (err) {
-    console.error('Dashboard GET error:', err)
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
-  }
-}
-
-/* =========================
-   CREATE (POST)
-========================= */
-export async function POST(
-  req: NextRequest,
-  context: { params: Promise<{ projectId: string }> }
-) {
-  try {
-    const { projectId } = await context.params
-    const user = await currentUser()
-
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    if (!isAdminUser(user)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
-    const body = await req.json()
-
-    const collectionName = getCollection(projectId)
-    if (!collectionName) {
-      return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
-    }
-
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
-
-    const result = await db.collection(collectionName).insertOne({
-      ...body,
-      createdAt: new Date(),
-    })
-
-    return NextResponse.json({ insertedId: result.insertedId })
-  } catch (err) {
-    console.error('Dashboard POST error:', err)
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
-  }
 }
 
 /* =========================
@@ -117,81 +33,45 @@ export async function PUT(
     const { projectId } = await context.params
     const user = await currentUser()
 
-    if (!user) {
+    if (!user || !isAdminUser(user)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    if (!isAdminUser(user)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
     const body = await req.json()
     const { id, ...updates } = body
 
-    if (!id) {
-      return NextResponse.json({ error: 'Missing ID' }, { status: 400 })
-    }
-
-    const collectionName = getCollection(projectId)
-    if (!collectionName) {
-      return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
-    }
-
     const client = await clientPromise
     const db = client.db(process.env.MONGODB_DB)
 
-    await db
-      .collection(collectionName)
-      .updateOne({ _id: new ObjectId(id) }, { $set: updates })
-
-    return NextResponse.json({ success: true })
-  } catch (err) {
-    console.error('Dashboard PUT error:', err)
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
-  }
-}
-
-/* =========================
-   DELETE (DELETE)
-========================= */
-export async function DELETE(
-  req: NextRequest,
-  context: { params: Promise<{ projectId: string }> }
-) {
-  try {
-    const { projectId } = await context.params
-    const user = await currentUser()
-
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    if (!isAdminUser(user)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
-    const { searchParams } = new URL(req.url)
-    const id = searchParams.get('id')
-
-    if (!id) {
-      return NextResponse.json({ error: 'Missing ID' }, { status: 400 })
-    }
-
     const collectionName = getCollection(projectId)
-    if (!collectionName) {
-      return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
-    }
+    const col = db.collection(collectionName)
 
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
+    const oldBooking = await col.findOne({ _id: new ObjectId(id) })
 
-    await db.collection(collectionName).deleteOne({
-      _id: new ObjectId(id),
+    await col.updateOne({ _id: new ObjectId(id) }, { $set: updates })
+
+    const updatedBooking = { ...oldBooking, ...updates }
+
+    /* ✅ SEND EMAIL TO USER */
+    await resend.emails.send({
+      from: 'Bookings <onboarding@resend.dev>',
+      to: updatedBooking.email,
+      subject: 'Your Booking Has Been Updated',
+      html: `
+        <h2>Your booking was updated</h2>
+        <p><b>Name:</b> ${updatedBooking.name}</p>
+        <p><b>Course / Trip:</b> ${
+          updatedBooking.course || updatedBooking.site
+        }</p>
+        <p><b>Date:</b> ${updatedBooking.date}</p>
+        <p><b>Time:</b> ${updatedBooking.time}</p>
+        <p><b>Status:</b> ${updatedBooking.status}</p>
+      `,
     })
 
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error('Dashboard DELETE error:', err)
+    console.error('PUT error:', err)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }
