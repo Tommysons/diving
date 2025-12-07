@@ -15,11 +15,12 @@ const collections: Record<string, string> = {
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { projectId: string } }
+  context: { params: Promise<{ projectId: string }> }
 ) {
   try {
-    const user = await currentUser()
+    const { projectId } = await context.params
 
+    const user = await currentUser()
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
@@ -35,7 +36,7 @@ export async function PUT(
     const client = await clientPromise
     const db = client.db(process.env.MONGODB_DB)
 
-    const collectionName = collections[params.projectId]
+    const collectionName = collections[projectId]
     if (!collectionName) {
       return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
     }
@@ -43,7 +44,6 @@ export async function PUT(
     const collection = db.collection(collectionName)
 
     const booking = await collection.findOne({ _id: new ObjectId(id) })
-
     if (!booking) {
       return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
     }
@@ -53,17 +53,17 @@ export async function PUT(
       { $set: { date, time, status } }
     )
 
-    // ✅ Send email to user
+    // ✅ Send notification email
     if (booking.email) {
       await resend.emails.send({
         from: 'Lokawndr <bookings@lokawndr.com>',
         to: booking.email,
         subject: 'Your booking has been updated',
         html: `
-          <h2>Your booking was updated ✅</h2>
-          <p><b>New Date:</b> ${date}</p>
-          <p><b>New Time:</b> ${time}</p>
-          <p><b>Status:</b> ${status}</p>
+          <h2>Booking Updated ✅</h2>
+          <p>New Date: ${date}</p>
+          <p>New Time: ${time}</p>
+          <p>Status: ${status}</p>
         `,
       })
     }
