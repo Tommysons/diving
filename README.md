@@ -10,7 +10,7 @@
 8. Add freediving info - done
 9. Add about me info - done
 10. Create apointment system with email notification - done
-11. Create logo
+11. Create logo -
 12. Design style of buttons
 13. Design background of the pages
 14. Create buttons for navbar - done
@@ -19,4 +19,16 @@
 17. Create new design for courses page. Than have description why people should choose each course.
 18. On specific course page need to put next steps after complition.
 19. Requirments
-20. F.A.Q
+20. Update F.A.Q - in works
+21. Create CRUD - done
+22. deploy webiste - done
+23. Redesign whole website
+24. Create page for Mia
+25. Logo Change
+26. Add Photo
+27. Crypto payments
+28. Check all text
+29. Create picture "Haven't loka wndr yet
+30. Telegram channel
+31. Vkontakte channel
+32. Dive planner
