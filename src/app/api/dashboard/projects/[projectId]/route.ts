@@ -4,9 +4,9 @@ import { currentUser } from '@clerk/nextjs/server'
 import { ObjectId } from 'mongodb'
 
 const projectCollections: Record<string, string> = {
-  scuba: 'bookings',
-  freediving: 'bookings',
-  dive_trips: 'bookings',
+  scuba: 'scuba_bookings',
+  freediving: 'freediving_bookings',
+  dive_trips: 'dive_trips',
   digital_art: 'bookings',
 }
 
