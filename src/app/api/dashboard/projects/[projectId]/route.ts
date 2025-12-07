@@ -1,73 +1,72 @@
 import { NextRequest, NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
 import { currentUser } from '@clerk/nextjs/server'
-import { ObjectId } from 'mongodb'
 import { Resend } from 'resend'
+import { ObjectId } from 'mongodb'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const projectCollections: Record<string, string> = {
+const collections: Record<string, string> = {
   scuba: 'scuba_bookings',
   freediving: 'freediving_bookings',
   dive_trips: 'dive_trips',
   digital_art: 'bookings',
 }
 
-function getCollection(projectId: string) {
-  return projectCollections[projectId]
-}
-
-function isAdminUser(user: any) {
-  const email = user?.emailAddresses?.[0]?.emailAddress
-  return email === process.env.ADMIN_EMAIL
-}
-
-/* =========================
-   UPDATE (PUT)
-========================= */
 export async function PUT(
   req: NextRequest,
-  context: { params: Promise<{ projectId: string }> }
+  { params }: { params: { projectId: string } }
 ) {
   try {
-    const { projectId } = await context.params
     const user = await currentUser()
 
-    if (!user || !isAdminUser(user)) {
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const email = user.emailAddresses?.[0]?.emailAddress
+    if (email !== process.env.ADMIN_EMAIL) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
     const body = await req.json()
-    const { id, ...updates } = body
+    const { id, date, time, status } = body
 
     const client = await clientPromise
     const db = client.db(process.env.MONGODB_DB)
 
-    const collectionName = getCollection(projectId)
-    const col = db.collection(collectionName)
+    const collectionName = collections[params.projectId]
+    if (!collectionName) {
+      return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
+    }
 
-    const oldBooking = await col.findOne({ _id: new ObjectId(id) })
+    const collection = db.collection(collectionName)
 
-    await col.updateOne({ _id: new ObjectId(id) }, { $set: updates })
+    const booking = await collection.findOne({ _id: new ObjectId(id) })
 
-    const updatedBooking = { ...oldBooking, ...updates }
+    if (!booking) {
+      return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
+    }
 
-    /* ✅ SEND EMAIL TO USER */
-    await resend.emails.send({
-      from: 'Bookings <onboarding@resend.dev>',
-      to: updatedBooking.email,
-      subject: 'Your Booking Has Been Updated',
-      html: `
-        <h2>Your booking was updated</h2>
-        <p><b>Name:</b> ${updatedBooking.name}</p>
-        <p><b>Course / Trip:</b> ${
-          updatedBooking.course || updatedBooking.site
-        }</p>
-        <p><b>Date:</b> ${updatedBooking.date}</p>
-        <p><b>Time:</b> ${updatedBooking.time}</p>
-        <p><b>Status:</b> ${updatedBooking.status}</p>
-      `,
-    })
+    await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { date, time, status } }
+    )
+
+    // ✅ Send email to user
+    if (booking.email) {
+      await resend.emails.send({
+        from: 'Lokawndr <bookings@lokawndr.com>',
+        to: booking.email,
+        subject: 'Your booking has been updated',
+        html: `
+          <h2>Your booking was updated ✅</h2>
+          <p><b>New Date:</b> ${date}</p>
+          <p><b>New Time:</b> ${time}</p>
+          <p><b>Status:</b> ${status}</p>
+        `,
+      })
+    }
 
     return NextResponse.json({ success: true })
   } catch (err) {
