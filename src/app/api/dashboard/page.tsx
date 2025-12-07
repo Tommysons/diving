@@ -1,6 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import {
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+  UserButton,
+} from '@clerk/nextjs'
 import DashboardTable from '@/components/DashboardTable'
 
 export default function DashboardPage() {
@@ -9,55 +15,43 @@ export default function DashboardPage() {
   >('scuba')
 
   return (
-    <div className='p-6 max-w-6xl mx-auto'>
-      <h1 className='text-2xl font-bold mb-4'>Welcome, Tommy!</h1>
-      <p className='mb-6'>Select a project to manage:</p>
+    <>
+      {/* If user is signed in ✅ */}
+      <SignedIn>
+        <div className='p-6 max-w-6xl mx-auto'>
+          <div className='flex justify-between items-center mb-4'>
+            <h1 className='text-2xl font-bold'>Welcome!</h1>
+            <UserButton />
+          </div>
 
-      <div className='flex gap-4 mb-6'>
-        <button
-          className={`px-4 py-2 rounded ${
-            selectedProject === 'scuba'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200'
-          }`}
-          onClick={() => setSelectedProject('scuba')}
-        >
-          Scuba Diving
-        </button>
-        <button
-          className={`px-4 py-2 rounded ${
-            selectedProject === 'freediving'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200'
-          }`}
-          onClick={() => setSelectedProject('freediving')}
-        >
-          Freediving
-        </button>
-        <button
-          className={`px-4 py-2 rounded ${
-            selectedProject === 'dive_trips'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200'
-          }`}
-          onClick={() => setSelectedProject('dive_trips')}
-        >
-          Dive Trips
-        </button>
-        <button
-          className={`px-4 py-2 rounded ${
-            selectedProject === 'digital_art'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200'
-          }`}
-          onClick={() => setSelectedProject('digital_art')}
-        >
-          Digital Art
-        </button>
-      </div>
+          <p className='mb-6'>Select a project to manage:</p>
 
-      {/* Display the table for the selected project */}
-      <DashboardTable projectId={selectedProject} />
-    </div>
+          <div className='flex gap-4 mb-6 flex-wrap'>
+            {(
+              ['scuba', 'freediving', 'dive_trips', 'digital_art'] as const
+            ).map((project) => (
+              <button
+                key={project}
+                className={`px-4 py-2 rounded ${
+                  selectedProject === project
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200'
+                }`}
+                onClick={() => setSelectedProject(project)}
+              >
+                {project.replace('_', ' ').toUpperCase()}
+              </button>
+            ))}
+          </div>
+
+          <DashboardTable projectId={selectedProject} />
+        </div>
+      </SignedIn>
+
+      {/* If user is signed out ❌ */}
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+    </>
   )
 }
