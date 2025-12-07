@@ -60,7 +60,9 @@ export default function Navbar() {
             muted
             loop
             playsInline
-            className='w-full h-full object-cover object-center scale-105 -translate-x-[-4px] -translate-y-[2px]'
+            preload='auto'
+            poster='/images/logo.png'
+            className='w-full h-full object-cover object-center scale-105'
           />
         </motion.div>
       </Link>
