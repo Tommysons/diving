@@ -14,7 +14,7 @@ export default function AboutPageRu() {
         {/* Hero Section */}
         <div className='relative h-72 flex items-center justify-center text-white text-center'>
           <img
-            src='/images/hero-about.jpeg'
+            src='/images/hero-about.jpg'
             alt='Фоновое изображение дайвинга'
             className='absolute inset-0 w-full h-full object-cover'
           />
@@ -39,7 +39,7 @@ export default function AboutPageRu() {
             className='bg-white/80 backdrop-blur p-6 rounded-xl shadow-md flex flex-col md:flex-row items-center gap-8'
           >
             <img
-              src='/images/badge.png'
+              src='/images/badge.jpg'
               alt='Фото инструктора'
               className='w-40 h-40 rounded-full object-cover shadow-md'
             />
