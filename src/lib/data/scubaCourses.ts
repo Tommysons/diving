@@ -170,7 +170,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Dive longer and safer using enriched air while learning proper planning and safety protocols.',
     prerequisites: 'OWD or equivalent',
-    image: '/images/nitrox.jpeg',
+    image: '/images/nitrox.jpg',
     price: '7,500฿',
     duration: '1 day',
     program: [
@@ -186,7 +186,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Explore underwater wrecks while learning safety, navigation, and penetration techniques.',
     prerequisites: 'AOWD or equivalent',
-    image: '/images/wreck.jpeg',
+    image: '/images/wreck.jpg',
     price: '฿8,500',
     duration: '1-2 days',
     program: [
@@ -345,7 +345,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Погружайтесь дольше и безопаснее с обогащенным воздухом, изучая правильное планирование и безопасность.',
     prerequisites: 'OWD или эквивалент',
-    image: '/images/nitrox.jpeg',
+    image: '/images/nitrox.jpg',
     price: '7,500฿',
     duration: '1 день',
     program: [
@@ -361,7 +361,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Изучайте подводные кораблекрушения с безопасностью и навигацией внутри конструкций.',
     prerequisites: 'AOWD или эквивалент',
-    image: '/images/wreck.jpeg',
+    image: '/images/wreck.jpg',
     price: '฿8,500',
     duration: '1-2 дня',
     program: [
