@@ -99,7 +99,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'First professional level for leading certified divers and assisting instructors. Develop professional skills and experience guiding divers safely.',
     maxDepth: '40 meters',
-    image: '/images/dm.jpg',
+    image: '/images/buoyancy.jpg',
     price: '33,000฿',
     prerequisites: 'Rescue Diver + 40 logged dives + medical clearance',
     duration: '2-4 weeks',
@@ -313,7 +313,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Безопасно увеличьте предел глубины с правильными техниками и планированием погружений.',
     prerequisites: 'AOWD или эквивалент',
-    image: '/images/deep.jpg',
+    image: '/images/buoyancy.jpg',
     price: '฿8,500',
     duration: '1-2 дня',
     program: [
