@@ -24,7 +24,7 @@
 22. deploy webiste - done
 23. Redesign whole website
 24. Create page for Mia
-25. Add Photo
+25. Add Photo - done
 26. Crypto payments
 27. Check all text
 28. Create picture "Haven't loka wndr yet
@@ -33,3 +33,5 @@
 31. Dive planner
 32. Main page
 33. favicon - done
+34. youtube channel - done
+35. blog page about places and what to do

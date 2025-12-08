@@ -47,7 +47,7 @@ export const cards: LocalizedCards = {
     {
       id: 'diveSites',
       title: 'Места для дайвинга',
-      image: '/images/cpn.jpg',
+      image: '/images/cpn/cpn1.jpg',
       shortDesc:
         'Исследуйте красивые и разнообразные места для дайвинга по всему миру.',
       fullDesc:
