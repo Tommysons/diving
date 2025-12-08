@@ -32,3 +32,4 @@
 30. Vkontakte channel
 31. Dive planner
 32. Main page
+33. favicon - done
