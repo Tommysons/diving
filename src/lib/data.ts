@@ -26,7 +26,7 @@ export const cards: LocalizedCards = {
     {
       id: 'divingCourses',
       title: 'Scuba diving courses',
-      image: '/images/courses/dsd.jpg',
+      image: '/images/awd.jpg',
       shortDesc:
         'Learn scuba diving with professional courses designed for all levels.',
       fullDesc:
@@ -57,7 +57,7 @@ export const cards: LocalizedCards = {
     {
       id: 'divingCourses',
       title: 'Курсы по дайвингу',
-      image: '/images/scubadiving.avif',
+      image: '/images/awd.jpg',
       shortDesc:
         'Изучайте дайвинг с профессиональными курсами для всех уровней.',
       fullDesc:

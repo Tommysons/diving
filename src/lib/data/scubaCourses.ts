@@ -49,7 +49,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Complete your first full scuba certification. Learn essential skills, safety protocols, and dive theory.',
     maxDepth: '18 meters',
-    image: '/images/courses/owd.jpg',
+    image: '/images/owd.jpg',
     price: '11,000฿ ',
     duration: '3-4 days',
     program: [
@@ -138,7 +138,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Safely extend your depth limit while learning proper planning, gas management, and emergency procedures.',
     prerequisites: 'AOWD or equivalent',
-    image: '/images/deep.jpg',
+    image: '/images/ddeep.jpg',
     price: '฿8,500',
     duration: '1-2 days',
     program: [
@@ -224,7 +224,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Получите вашу первую полную сертификацию дайвера. Изучите навыки, правила безопасности и теорию погружений.',
     maxDepth: '18 метров',
-    image: '/images/courses/owd.jpg',
+    image: '/images/owd.jpg',
     price: '11,000฿ ',
     duration: '3-4 дня',
     program: [
