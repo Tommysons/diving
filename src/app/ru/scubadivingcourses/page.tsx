@@ -41,7 +41,7 @@ export default function ScubaDivingCoursesPageRU() {
             className='flex justify-center'
           >
             <Image
-              src='/images/scuba-intro.jpg'
+              src='/images/awd.jpg'
               alt='Введение в Подводное Плавание'
               width={600}
               height={400}

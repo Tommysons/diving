@@ -39,7 +39,7 @@ export default function ScubaDivingCoursesPage() {
             className='flex justify-center'
           >
             <Image
-              src='/images/scuba-intro.jpg'
+              src='/images/awd.jpg'
               alt='Scuba Diving Introduction'
               width={600}
               height={400}
