@@ -27,7 +27,7 @@
 25. Add Photo - done
 26. Crypto payments
 27. Check all text
-28. Create picture "Haven't loka wndr yet
+28. Create picture "Haven't loka wndr yet - done
 29. Telegram channel
 30. Vkontakte channel
 31. Dive planner
