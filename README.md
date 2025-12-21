@@ -28,8 +28,8 @@
 26. Crypto payments
 27. Check all text
 28. Create picture "Haven't loka wndr yet - done
-29. Telegram channel
-30. Vkontakte channel
+29. Telegram channel - done
+30. Vkontakte channel - cancel
 31. Dive planner
 32. Main page
 33. favicon - done

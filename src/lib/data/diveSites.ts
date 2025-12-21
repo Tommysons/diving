@@ -186,7 +186,6 @@ export const diveSites: DiveSite[] = [
     This site should not be missed during your stay on Koh Tao.`,
     imageUrl: '/images/sattakut/sattakut1.jpg',
     extraImages: [
-      '/images/sattakut/sattakut1.jpg',
       '/images/sattakut/sattakut2.jpg',
       '/images/sattakut/sattakut3.jpg',
       '/images/sattakut/sattakut4.jpg',
@@ -207,7 +206,6 @@ export const diveSites: DiveSite[] = [
     longDescription: `The HTMS SUPHAIRIN is one of two wrecks sunk in September 2023. This wreck is 44.9m long, 7m wide, and was a high speed attack ship belonging to the Gulf Patrol Fleet (Royal Thai Navy). After 42 years of service, these ships were decommissioned in 2018 and transferred to the Department of Marine and Coastal Resources for a new mission as part of the Underwater Learning Park and Marine Ecosystem Rehabilitation Project in Surat Thani Province.`,
     imageUrl: '/images/313/313a.jpg',
     extraImages: [
-      '/images/313/313a.jpg',
       '/images/313/313b.jpg',
       '/images/313/313c.jpg',
       '/images/313/313d.jpg',
@@ -582,7 +580,6 @@ export const diveSitesRU: DiveSite[] = [
   Этот дайв-сайт обязательно стоит посетить во время вашего пребывания на Ко Тао.`,
     imageUrl: '/images/sattakut/sattakut1.jpg',
     extraImages: [
-      '/images/sattakut/sattakut1.jpg',
       '/images/sattakut/sattakut2.jpg',
       '/images/sattakut/sattakut3.jpg',
       '/images/sattakut/sattakut4.jpg',
@@ -604,7 +601,6 @@ export const diveSitesRU: DiveSite[] = [
     longDescription: `HTMS SUPHAIRIN — один из двух кораблей, затопленных в сентябре 2023 года. Длина — 44,9 м, ширина — 7 м, высокоскоростной боевой корабль ВМС Таиланда. После 42 лет службы корабли были выведены из эксплуатации и переданы Департаменту морских и прибрежных ресурсов для проекта по восстановлению морской экосистемы и обучающего подводного парка в провинции Сурат Тхани.`,
     imageUrl: '/images/313/313a.jpg',
     extraImages: [
-      '/images/313/313a.jpg',
       '/images/313/313b.jpg',
       '/images/313/313c.jpg',
       '/images/313/313d.jpg',
