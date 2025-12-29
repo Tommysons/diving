@@ -82,7 +82,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Learn how to prevent and handle diving emergencies. Develop leadership and problem-solving skills.',
     maxDepth: '30 meters',
-    image: '/images/rescue.jpeg',
+    image: '/images/rescue.jpg',
     price: '11,000฿',
     prerequisites: 'AOWD + EFR/CPR certification',
     duration: '3 days',
@@ -257,7 +257,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Научитесь предотвращать и управлять аварийными ситуациями при дайвинге. Развивайте лидерские навыки.',
     maxDepth: '30 метров',
-    image: '/images/rescue.jpeg',
+    image: '/images/rescue.jpg',
     price: '11,000฿',
     prerequisites: 'AOWD + сертификация EFR/CPR',
     duration: '3 дня',
