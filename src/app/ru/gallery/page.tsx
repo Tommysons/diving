@@ -10,27 +10,37 @@ export default function GalleryPageRU() {
     <>
       <Navbar />
 
-      <div className='min-h-screen bg-gray-50 py-12 px-6 max-w-6xl mx-auto'>
-        {/* Page Title */}
-        <h1 className='text-3xl font-bold text-center text-blue-900 mb-8'>
-          Моя Подводная Галерея
-        </h1>
+      {/* HERO */}
+      <section className='relative bg-blue-900 py-20 sm:py-28 md:py-32'>
+        <div className='absolute inset-0'>
+          <img
+            src='/images/hero-about.jpg'
+            alt='Галерея LokaWndr'
+            className='w-full h-full object-cover'
+          />
+          <div className='absolute inset-0 ' />
+        </div>
 
-        {/* Quote / Intro */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
+          transition={{ duration: 0.8 }}
+          className='relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8'
         >
-          <div className='bg-blue-50 border-l-4 border-blue-400 p-6 italic shadow rounded-md text-center mb-12'>
-            «Исследуйте завораживающий мир под волнами. От ярких коралловых
-            рифов до встреч с величественными морскими существами — эти видео
-            передают красоту и захватывающий дух подводных приключений.»
-          </div>
+          <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4'>
+            Моя Подводная Галерея
+          </h1>
+          <p className='text-white/90 text-sm sm:text-base md:text-lg'>
+            Я люблю исследовать мир под волнами. От ярких коралловых рифов до
+            встреч с величественными морскими обитателями — эти видео передают
+            красоту и захватывающий дух моих подводных приключений.
+          </p>
         </motion.div>
+      </section>
 
-        {/* Videos Grid */}
-        <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+      {/* VIDEOS GRID */}
+      <main className='py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto'>
+        <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {videos.map((video, index) => (
             <motion.a
               key={video.id}
@@ -39,7 +49,7 @@ export default function GalleryPageRU() {
               rel='noopener noreferrer'
               className='relative group rounded-2xl overflow-hidden shadow-lg cursor-pointer'
               initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
               {/* Thumbnail */}
@@ -49,7 +59,7 @@ export default function GalleryPageRU() {
                   `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`
                 }
                 alt={video.title}
-                className='w-full h-60 object-cover group-hover:scale-105 transition-transform duration-300'
+                className='w-full h-64 sm:h-60 object-cover group-hover:scale-105 transition-transform duration-300'
               />
 
               {/* Overlay Play Button */}
@@ -63,11 +73,13 @@ export default function GalleryPageRU() {
                 </svg>
               </div>
 
-              {/* Title & optional description */}
-              <div className='absolute bottom-0 w-full bg-black/60 text-white text-center py-2 text-lg'>
-                <div className='font-semibold'>{video.title}</div>
+              {/* Title & Description */}
+              <div className='absolute bottom-0 w-full bg-black/60 text-white text-center py-2 px-2 sm:px-3'>
+                <div className='font-semibold text-sm sm:text-base'>
+                  {video.title}
+                </div>
                 {video.description && (
-                  <div className='text-sm mt-1 line-clamp-2'>
+                  <div className='text-xs sm:text-sm mt-1 line-clamp-2'>
                     {video.description}
                   </div>
                 )}
@@ -75,7 +87,7 @@ export default function GalleryPageRU() {
             </motion.a>
           ))}
         </div>
-      </div>
+      </main>
 
       <Footer />
     </>

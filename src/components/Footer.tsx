@@ -8,24 +8,24 @@ export default function Footer() {
 
   const translations = {
     en: {
-      contact: 'Contact Us',
+      contact: 'Contact Me',
       phone: 'Phone',
       email: 'Email',
       address: 'Address',
-      follow: 'Follow Us',
-      about: 'About',
+      follow: 'Follow Me',
+      about: 'About Me',
       aboutText:
-        'Discover the best diving experiences with us. Safe, professional, and fun!',
+        'Discover the best diving experiences with me. Safe, professional, and fun!',
     },
     ru: {
-      contact: 'Свяжитесь с нами',
+      contact: 'Свяжитесь со мной',
       phone: 'Телефон',
       email: 'Эл. почта',
       address: 'Адрес',
-      follow: 'Мы в социальных сетях',
-      about: 'О нас',
+      follow: 'Я в социальных сетях',
+      about: 'Обо мне',
       aboutText:
-        'Откройте для себя лучшие дайвинг-приключения с нами. Безопасно, профессионально и весело!',
+        'Откройте для себя лучшие дайвинг-приключения со мной. Безопасно, профессионально и весело!',
     },
   }
 

@@ -17,7 +17,7 @@ export default function ContactPageRu() {
   const [errors, setErrors] = useState<string[]>([])
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm({
       ...form,
@@ -28,7 +28,6 @@ export default function ContactPageRu() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validate client-side
     const validation = contactSchema.safeParse(form)
     if (!validation.success) {
       setErrors(validation.error.issues.map((err) => err.message))
@@ -46,13 +45,13 @@ export default function ContactPageRu() {
 
       if (res.ok) {
         setStatus(
-          'Сообщение успешно отправлено! Проверьте свою почту для подтверждения.'
+          'Сообщение успешно отправлено! Проверьте почту для подтверждения.',
         )
         setForm({ name: '', email: '', subject: '', message: '' })
       } else {
         const data = await res.json()
         setStatus(
-          'Ошибка: ' + (data.error || 'Не удалось отправить сообщение.')
+          'Ошибка: ' + (data.error || 'Не удалось отправить сообщение.'),
         )
       }
     } catch {
@@ -63,52 +62,118 @@ export default function ContactPageRu() {
   return (
     <>
       <Header />
-      <div className='max-w-3xl mx-auto p-6'>
-        <h1 className='text-3xl font-semibold mb-6'>Связаться со мной</h1>
-        <motion.form onSubmit={handleSubmit} className='space-y-4'>
-          {errors.length > 0 && (
-            <ul className='text-red-600'>
-              {errors.map((err, i) => (
-                <li key={i}>{err}</li>
-              ))}
-            </ul>
-          )}
-          <input
-            name='name'
-            placeholder='Имя'
-            value={form.name}
-            onChange={handleChange}
-            className='w-full p-2 border border-gray-300 rounded'
-          />
-          <input
-            name='email'
-            placeholder='Электронная почта'
-            value={form.email}
-            onChange={handleChange}
-            className='w-full p-2 border border-gray-300 rounded'
-          />
-          <input
-            name='subject'
-            placeholder='Тема'
-            value={form.subject}
-            onChange={handleChange}
-            className='w-full p-2 border border-gray-300 rounded'
-          />
-          <textarea
-            name='message'
-            placeholder='Сообщение'
-            value={form.message}
-            onChange={handleChange}
-            className='w-full p-2 border border-gray-300 rounded'
-          />
-          <button
-            type='submit'
-            className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition'
+
+      <main className='mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 overflow-hidden'>
+        {/* HERO */}
+        <section className='relative min-h-[35vh] flex items-center justify-center text-center mt-6'>
+          <div className='absolute inset-0 rounded-2xl overflow-hidden'>
+            <img
+              src='/images/hero-about.jpg'
+              alt='Контакт LokaWndr'
+              className='w-full h-full object-cover'
+            />
+            <div className='absolute inset-0 bg-black/45' />
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className='relative z-10 px-6'
           >
-            {status || 'Отправить'}
-          </button>
-        </motion.form>
-      </div>
+            <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3'>
+              Связаться с LokaWndr
+            </h1>
+            <p className='text-white/90 max-w-xl mx-auto'>
+              Запланируем ваше подводное приключение. Спросите о дайвинге,
+              курсах или погружениях.
+            </p>
+          </motion.div>
+        </section>
+
+        {/* FORM */}
+        <section className='mt-16 mb-24 flex justify-center'>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className='w-full max-w-xl bg-white/80 backdrop-blur p-6 sm:p-8 rounded-2xl shadow-lg'
+          >
+            <h2 className='text-2xl font-semibold mb-6 text-center'>
+              Отправить сообщение
+            </h2>
+
+            <motion.form onSubmit={handleSubmit} className='space-y-5'>
+              {errors.length > 0 && (
+                <ul className='bg-red-50 text-red-600 p-3 rounded-lg text-sm'>
+                  {errors.map((err, i) => (
+                    <li key={i}>• {err}</li>
+                  ))}
+                </ul>
+              )}
+
+              <div>
+                <label className='text-sm font-medium'>Имя</label>
+                <input
+                  name='name'
+                  placeholder='Ваше имя'
+                  value={form.name}
+                  onChange={handleChange}
+                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none'
+                />
+              </div>
+
+              <div>
+                <label className='text-sm font-medium'>Email</label>
+                <input
+                  name='email'
+                  placeholder='you@email.com'
+                  value={form.email}
+                  onChange={handleChange}
+                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none'
+                />
+              </div>
+
+              <div>
+                <label className='text-sm font-medium'>Тема</label>
+                <input
+                  name='subject'
+                  placeholder='О чём сообщение?'
+                  value={form.subject}
+                  onChange={handleChange}
+                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none'
+                />
+              </div>
+
+              <div>
+                <label className='text-sm font-medium'>Сообщение</label>
+                <textarea
+                  name='message'
+                  rows={5}
+                  placeholder='Расскажите о своих планах погружения...'
+                  value={form.message}
+                  onChange={handleChange}
+                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none resize-none'
+                />
+              </div>
+
+              <button
+                type='submit'
+                className='w-full py-3 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white active:scale-95 transition'
+              >
+                {status || 'Отправить сообщение'}
+              </button>
+
+              {status && (
+                <p className='text-center text-sm text-gray-600 mt-2'>
+                  {status}
+                </p>
+              )}
+            </motion.form>
+          </motion.div>
+        </section>
+      </main>
+
       <Footer />
     </>
   )

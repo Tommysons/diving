@@ -10,27 +10,37 @@ export default function GalleryPage() {
     <>
       <Navbar />
 
-      <div className='min-h-screen bg-gray-50 py-12 px-6 max-w-6xl mx-auto'>
-        {/* Page Title */}
-        <h1 className='text-3xl font-bold text-center text-blue-900 mb-8'>
-          My Underwater Gallery
-        </h1>
+      {/* HERO */}
+      <section className='relative py-20 sm:py-28 md:py-32'>
+        <div className='absolute inset-0'>
+          <img
+            src='/images/hero-about.jpg'
+            alt='Gallery Hero'
+            className='w-full h-full object-cover'
+          />
+          <div className='absolute inset-0 ' />
+        </div>
 
-        {/* Quote / Intro */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
+          transition={{ duration: 0.8 }}
+          className='relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8'
         >
-          <div className='bg-blue-50 border-l-4 border-blue-400 p-6 italic shadow rounded-md text-center mb-12'>
-            “Explore the mesmerizing world beneath the waves. From vibrant coral
+          <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4'>
+            My Underwater Gallery
+          </h1>
+          <p className='text-white/90 text-sm sm:text-base md:text-lg'>
+            Explore the mesmerizing world beneath the waves. From vibrant coral
             reefs to encounters with majestic marine life, these videos capture
-            the beauty and thrill of diving adventures.”
-          </div>
+            the beauty and thrill of diving adventures.
+          </p>
         </motion.div>
+      </section>
 
-        {/* Videos Grid */}
-        <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+      {/* VIDEOS GRID */}
+      <main className='py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto'>
+        <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {videos.map((video, index) => (
             <motion.a
               key={video.id}
@@ -39,7 +49,7 @@ export default function GalleryPage() {
               rel='noopener noreferrer'
               className='relative group rounded-2xl overflow-hidden shadow-lg cursor-pointer'
               initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
               {/* Thumbnail */}
@@ -49,7 +59,7 @@ export default function GalleryPage() {
                   `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`
                 }
                 alt={video.title}
-                className='w-full h-60 object-cover group-hover:scale-105 transition-transform duration-300'
+                className='w-full h-64 sm:h-60 object-cover group-hover:scale-105 transition-transform duration-300'
               />
 
               {/* Overlay Play Button */}
@@ -63,11 +73,13 @@ export default function GalleryPage() {
                 </svg>
               </div>
 
-              {/* Title & optional description */}
-              <div className='absolute bottom-0 w-full bg-black/60 text-white text-center py-2 text-lg'>
-                <div className='font-semibold'>{video.title}</div>
+              {/* Title & Description */}
+              <div className='absolute bottom-0 w-full bg-black/60 text-white text-center py-2 px-2 sm:px-3'>
+                <div className='font-semibold text-sm sm:text-base'>
+                  {video.title}
+                </div>
                 {video.description && (
-                  <div className='text-sm mt-1 line-clamp-2'>
+                  <div className='text-xs sm:text-sm mt-1 line-clamp-2'>
                     {video.description}
                   </div>
                 )}
@@ -75,7 +87,7 @@ export default function GalleryPage() {
             </motion.a>
           ))}
         </div>
-      </div>
+      </main>
 
       <Footer />
     </>

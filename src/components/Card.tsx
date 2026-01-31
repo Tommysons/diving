@@ -11,33 +11,35 @@ export default function Card({ card, onClick }: CardProps) {
     <div
       onClick={() => onClick(card)}
       className='
-cursor-pointer
-        rounded-lg
+        cursor-pointer
+        rounded-2xl
         shadow-lg
         overflow-hidden
         bg-white
-        hover:scale-105
-        transform
         transition-transform
         duration-300
+        active:scale-[0.98]
+        hover:scale-[1.02]
         flex
         flex-col
         h-full
-        w-96
+        w-full
+        mx-auto
       '
       style={{ minWidth: 0 }}
     >
-      <div className='relative w-full h-48'>
+      <div className='relative w-full h-52'>
         <Image
           src={card.image}
           alt={card.title}
           fill
-          style={{ objectFit: 'cover' }}
+          className='object-cover'
           loading='lazy'
           sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
         />
       </div>
-      <div className='p-4 flex-grow flex flex-col justify-center'>
+
+      <div className='p-5 flex-grow flex flex-col justify-center'>
         <h3 className='text-xl font-semibold mb-2'>{card.title}</h3>
         <p className='text-gray-600'>{card.shortDesc}</p>
       </div>

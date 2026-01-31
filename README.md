@@ -35,3 +35,4 @@
 33. favicon - done
 34. youtube channel - done
 35. blog page about places and what to do
+36. need to change color for gallery header image make same as well like in landing page
