@@ -1,12 +1,13 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect } from 'react'
 
 interface MedicalFormModalProps {
   isOpen: boolean
   onClose: () => void
-  filePath?: string // optional, default to English
-  lang?: 'en' | 'ru' // optional, default to 'en'
+  filePath?: string
+  lang?: 'en' | 'ru'
 }
 
 export default function MedicalFormModal({
@@ -15,21 +16,30 @@ export default function MedicalFormModal({
   filePath = '/forms/medical-form.pdf',
   lang = 'en',
 }: MedicalFormModalProps) {
-  // Localized texts
   const texts = {
     en: {
       header: 'Medical Questionnaire',
-      close: 'Close',
       download: 'Download PDF',
     },
     ru: {
       header: 'Медицинская анкета',
-      close: 'Закрыть',
       download: 'Скачать PDF',
     },
   }
 
-  const t = texts[lang] // current language
+  const t = texts[lang]
+
+  // ✅ Close on ESC
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [isOpen, onClose])
 
   return (
     <AnimatePresence>
@@ -39,37 +49,40 @@ export default function MedicalFormModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={onClose} // ✅ click outside
         >
           <motion.div
-            className='relative w-full h-full md:w-5/6 md:h-5/6 bg-white rounded-2xl overflow-hidden shadow-lg flex flex-col'
+            onClick={(e) => e.stopPropagation()}
+            className='relative w-full h-full md:w-5/6 md:h-5/6 bg-white rounded-2xl overflow-hidden shadow-xl flex flex-col'
             initial={{ scale: 0.95, opacity: 0, y: 30 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 30 }}
             transition={{ duration: 0.3 }}
           >
-            {/* Header with Close Button */}
-            <div className='flex justify-between items-center bg-gray-100 px-4 py-2 border-b shadow-sm'>
+            {/* ✅ HEADER */}
+            <div className='sticky top-0 z-20 bg-white px-4 py-3 border-b flex justify-between items-center'>
               <h2 className='text-lg font-semibold text-gray-800'>
                 {t.header}
               </h2>
+
               <button
                 onClick={onClose}
-                className='ml-3 bg-white/80 hover:bg-white p-2 rounded-full shadow-md'
+                aria-label='Close'
+                className='p-2 rounded-full hover:bg-gray-200 transition text-gray-700 text-xl leading-none'
               >
-                ✕ {t.close}
+                ✕
               </button>
             </div>
 
-            {/* PDF Viewer */}
+            {/* ✅ PDF */}
             <iframe
               src={filePath}
-              width='100%'
-              height='100%'
-              className='flex-grow'
-            ></iframe>
+              className='flex-grow w-full'
+              title='Medical Form'
+            />
 
-            {/* Footer with Download */}
-            <div className='bg-gray-100 px-4 py-3 text-right border-t'>
+            {/* ✅ FOOTER */}
+            <div className='bg-white px-4 py-3 border-t text-right'>
               <a
                 href={filePath}
                 download

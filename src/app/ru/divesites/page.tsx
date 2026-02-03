@@ -100,6 +100,30 @@ export default function DiveSitesPageRu() {
           ))}
         </div>
       </div>
+      {/* Bottom Credit */}
+      <div className=''>
+        <div className='border-t border-gray-300'></div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className='text-center text-gray-600 text-lg'
+        >
+          Все фотографии сделаны{' '}
+          <span className='font-semibold text-blue-700'>
+            Mia{' '}
+            <a
+              href='https://www.instagram.com/kakadong123/'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='underline hover:text-blue-500 transition'
+            >
+              @kakadong123
+            </a>
+          </span>
+        </motion.p>
+      </div>
 
       <Footer />
     </>

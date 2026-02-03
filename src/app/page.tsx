@@ -41,18 +41,15 @@ export default function HomePage() {
     <>
       <Header />
 
-      <main className='relative mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 overflow-x-hidden'>
+      <main className='relative w-full overflow-x-hidden'>
+        {' '}
+        {/* prevent horizontal scroll */}
         {/* HERO */}
-        <section className='relative min-h-[60vh] sm:min-h-[65vh] md:min-h-[70vh] flex items-center justify-center text-center mt-4'>
-          <div className='absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden'>
-            <img
-              src='/images/hero-about.jpg'
-              alt='LokaWndr Diving'
-              className='w-full h-full object-cover'
-            />
-            <div className='absolute inset-0 bg-black/45' />
-          </div>
-
+        <section
+          className='relative min-h-[60vh] sm:min-h-[65vh] md:min-h-[70vh] flex items-center justify-center text-center bg-fixed bg-center bg-cover'
+          style={{ backgroundImage: "url('/images/hero-about.jpg')" }}
+        >
+          <div className='absolute inset-0 bg-black/45' />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -81,20 +78,24 @@ export default function HomePage() {
             </button>
           </motion.div>
         </section>
-
         {/* WHY */}
-        <section className='mt-20 flex justify-center'>
-          <div className='w-full max-w-xl px-2'>
+        <section
+          className='relative flex justify-center items-center bg-fixed bg-center bg-cover'
+          style={{ backgroundImage: "url('/images/wr/wr1.jpg')" }}
+        >
+          <div className='absolute inset-0 bg-black/30' />
+
+          <div className='relative z-10 w-full max-w-3xl lg:max-w-4xl px-4 py-12 mx-auto text-center'>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-10'
+              className='text-2xl sm:text-3xl md:text-4xl font-bold mb-10 text-white'
             >
               {locale === 'ru' ? 'Почему LokaWndr?' : 'Why LokaWndr?'}
             </motion.h2>
 
-            <div className='grid gap-6'>
+            <div className='grid gap-5 place-items-center'>
               {[
                 {
                   title: locale === 'ru' ? 'Безопасность' : 'Safety First',
@@ -120,15 +121,27 @@ export default function HomePage() {
               ].map((item, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.15 }}
-                  className='bg-white/80 backdrop-blur p-5 sm:p-6 rounded-2xl shadow'
+                  className='
+            bg-white/85
+            backdrop-blur
+            px-5 py-4
+            sm:px-6 sm:py-4
+            rounded-xl
+            shadow
+            text-center
+            flex flex-col
+            items-center
+            w-full
+            max-w-md
+          '
                 >
-                  <h3 className='text-lg sm:text-xl font-semibold mb-2'>
+                  <h3 className='text-base sm:text-lg font-semibold mb-1'>
                     {item.title}
                   </h3>
-                  <p className='text-gray-600 text-sm sm:text-base'>
+                  <p className='text-gray-700 text-sm sm:text-base leading-snug'>
                     {item.text}
                   </p>
                 </motion.div>
@@ -136,34 +149,37 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        {/* CHOOSE PATH */}
-        <section id='main-cards' className='mt-20 flex justify-center'>
-          <div className='w-full max-w-xl px-2'>
+        {/* CHOOSE PATH + QUOTE combined */}
+        <section
+          id='main-cards'
+          className='relative flex flex-col justify-center items-center bg-fixed bg-center bg-cover'
+          style={{ backgroundImage: "url('/images/twins/twins1.jpg')" }}
+        >
+          <div className='absolute inset-0 bg-black/30' />
+          <div className='relative z-10 w-full max-w-xl px-2 py-12'>
+            {/* CHOOSE PATH */}
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8'
+              className='text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 text-white'
             >
               {locale === 'ru' ? 'Выбери свой путь' : 'Choose Your Path'}
             </motion.h2>
 
             <CardsGrid cards={cards[locale]} onCardClick={handleCardClick} />
+
+            {/* QUOTE under cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9 }}
+              className='mt-8 bg-blue-50 border-l-4 border-blue-400 sm:p-6 italic shadow rounded-xl max-w-xl text-sm sm:text-base text-center mx-auto'
+            >
+              “{quotes[locale]}”
+            </motion.div>
           </div>
         </section>
-
-        {/* QUOTE */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9 }}
-          className='w-full flex justify-center mt-20 mb-20'
-        >
-          <div className='bg-blue-50 border-l-4 border-blue-400 p-5 sm:p-6 italic shadow rounded-xl max-w-xl text-sm sm:text-base text-center'>
-            “{quotes[locale]}”
-          </div>
-        </motion.div>
       </main>
 
       <Footer />

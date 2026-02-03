@@ -24,7 +24,7 @@ const navItemsRU = [
   { href: '/gallery', label: 'Галерея', highlight: true },
   { href: '/aboutme', label: 'Обо мне' },
   { href: '/contact', label: 'Контакты' },
-  { href: '/faq', label: 'FAQ (Вопросы и ответы)' },
+  { href: '/faq', label: 'Вопросы и ответы' },
 ]
 
 export default function Navbar() {

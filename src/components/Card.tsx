@@ -28,7 +28,8 @@ export default function Card({ card, onClick }: CardProps) {
       '
       style={{ minWidth: 0 }}
     >
-      <div className='relative w-full h-52'>
+      {/* IMAGE */}
+      <div className='relative w-full h-52 flex items-center justify-center'>
         <Image
           src={card.image}
           alt={card.title}
@@ -39,9 +40,11 @@ export default function Card({ card, onClick }: CardProps) {
         />
       </div>
 
-      <div className='p-5 flex-grow flex flex-col justify-center'>
+      {/* CONTENT */}
+      <div className='p-5 flex-grow flex flex-col justify-center items-center text-center'>
         <h3 className='text-xl font-semibold mb-2'>{card.title}</h3>
-        <p className='text-gray-600'>{card.shortDesc}</p>
+
+        <p className='text-gray-600 text-sm sm:text-base'>{card.shortDesc}</p>
       </div>
     </div>
   )

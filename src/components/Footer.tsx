@@ -33,7 +33,7 @@ export default function Footer() {
   const currentContacts = contacts[locale] // ✅ pick correct locale
 
   return (
-    <footer className='bg-blue-900 text-white py-8 px-6 mt-16'>
+    <footer className='bg-blue-900 text-white py-8 px-6 '>
       <div className='max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8'>
         {/* Contact Section */}
         <div>

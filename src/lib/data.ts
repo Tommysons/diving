@@ -92,9 +92,9 @@ export const contacts: Record<'en' | 'ru', ContactData> = {
     email: 'contact@lokawndr.com',
     address: 'Koh Tao, Thailand',
     socialLinks: [
-      { platform: 'Facebook', url: 'https://facebook.com/scubadiving' },
+      { platform: 'Facebook', url: 'https://www.facebook.com/tomtereshenko' },
       { platform: 'Instagram', url: 'https://instagram.com/tom_the_newbie/' },
-      { platform: 'YouTube', url: 'https://www.youtube.com/@lokatorist' },
+      { platform: 'YouTube', url: 'https://www.youtube.com/@lokawndr' },
     ],
   },
   ru: {
