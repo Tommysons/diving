@@ -13,7 +13,7 @@ import {
   SpecialtyCourse,
 } from '@/lib/data/scubaCourses'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import MedicalFormModal from '@/components/MedicalFormModal'
+import MedicalFormModal from './MedicalFormModal'
 
 interface ScubaCourseDetailClientProps {
   lang: 'en' | 'ru'
@@ -24,16 +24,21 @@ export default function ScubaCourseDetailClient({
 }: ScubaCourseDetailClientProps) {
   const router = useRouter()
   const params = useParams()
-  const slug = params?.slug
 
+  // Normalize slug in case of array
+  const rawSlug = params?.slug
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug
+
+  // Select courses based on language
   const allCourses: (ScubaCourse | SpecialtyCourse)[] =
     lang === 'en'
       ? [...scubaCourses, ...specialtyCourses]
       : [...scubaCoursesRU, ...specialtyCoursesRU]
 
+  // Find index of the course by slug
   const index = useMemo(
     () => allCourses.findIndex((c) => c.slug === slug),
-    [slug]
+    [slug, allCourses],
   )
 
   const [activeForm, setActiveForm] = useState(false)
@@ -45,13 +50,14 @@ export default function ScubaCourseDetailClient({
   const course = allCourses[index]
   const isScubaCourse = (c: any): c is ScubaCourse => 'maxDepth' in c
 
+  // Navigation between courses
   const go = (dir: -1 | 1) => {
     const nextIndex = (index + dir + allCourses.length) % allCourses.length
     const nextSlug = allCourses[nextIndex].slug
     router.push(
       lang === 'en'
         ? `/scubadivingcourses/${nextSlug}`
-        : `/ru/scubadivingcourses/${nextSlug}`
+        : `/ru/scubadivingcourses/${nextSlug}`,
     )
   }
 
@@ -81,7 +87,6 @@ export default function ScubaCourseDetailClient({
                 {course.maxDepth}
               </p>
             )}
-
             {course.prerequisites && (
               <p>
                 <span className='font-semibold text-blue-600'>
@@ -90,7 +95,6 @@ export default function ScubaCourseDetailClient({
                 {course.prerequisites}
               </p>
             )}
-
             {course.duration && (
               <p>
                 <span className='font-semibold text-blue-600'>
@@ -99,7 +103,6 @@ export default function ScubaCourseDetailClient({
                 {course.duration}
               </p>
             )}
-
             {course.price && (
               <p>
                 <span className='font-semibold text-blue-600'>
@@ -124,7 +127,7 @@ export default function ScubaCourseDetailClient({
             </div>
           )}
 
-          {/* Medical Questionnaire Section */}
+          {/* Medical Questionnaire */}
           <div className='mt-6 p-4 border rounded-xl bg-gray-50 space-y-3'>
             <h3 className='text-xl font-semibold'>
               {lang === 'en' ? 'Medical Questionnaire' : 'Медицинская анкета'}
@@ -150,7 +153,7 @@ export default function ScubaCourseDetailClient({
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className='inline-block bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition'
+                className='inline-block bg-cyan-700 hover:bg-cyan-800 text-white px-4 py-2 rounded-lg  transition'
               >
                 {lang === 'en' ? 'View Fullscreen' : 'Открыть на весь экран'}
               </button>
@@ -175,7 +178,6 @@ export default function ScubaCourseDetailClient({
 
           {/* Action Buttons */}
           <div className='flex flex-col md:flex-row gap-4 mt-4'>
-            {/* Book Course */}
             <button
               className='flex-1 px-4 py-2 bg-cyan-700 hover:bg-cyan-800 text-white transition rounded-lg'
               onClick={() => setActiveForm(!activeForm)}
@@ -185,13 +187,12 @@ export default function ScubaCourseDetailClient({
                   ? 'Close Booking Form'
                   : 'Закрыть форму бронирования'
                 : lang === 'en'
-                ? 'Book Course'
-                : 'Забронировать курс'}
+                  ? 'Book Course'
+                  : 'Забронировать курс'}
             </button>
 
-            {/* Have a Question? */}
             <button
-              className='flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white transition rounded-lg'
+              className='flex-1 px-4 py-2 bg-cyan-700 hover:bg-cyan-800 text-white transition rounded-lg'
               onClick={() => router.push(lang === 'en' ? '/faq' : '/ru/faq')}
             >
               {lang === 'en' ? 'Have a Question?' : 'Есть вопрос?'}

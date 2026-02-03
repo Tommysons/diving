@@ -204,7 +204,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
 export const scubaCoursesRU: ScubaCourse[] = [
   {
     name: 'Открой Подводное Плавание (DSD)',
-    slug: 'otkroy-podvodnoe-plavanie-dsd',
+    slug: 'discover-scuba-diving-dsd',
     description:
       'Попробуйте дайвинг впервые под руководством профессиональных инструкторов. Отлично для начинающих.',
     maxDepth: '12 метров',
@@ -293,7 +293,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
 export const specialtyCoursesRU: SpecialtyCourse[] = [
   {
     name: 'Совершенная Буйность (Peak Performance Buoyancy)',
-    slug: 'sovershennaya-buynost',
+    slug: 'peak-performance-buoyancy',
     description:
       'Освойте контроль плавучести для экономии воздуха и точного управления под водой.',
     prerequisites: 'OWD или эквивалент',
@@ -309,7 +309,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
   },
   {
     name: 'Глубоководный Дайвинг (Deep Diver)',
-    slug: 'glubokovodnyy-dyving',
+    slug: 'deep-diver',
     description:
       'Безопасно увеличьте предел глубины с правильными техниками и планированием погружений.',
     prerequisites: 'AOWD или эквивалент',
@@ -325,7 +325,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
   },
   {
     name: 'Ночное Погружение (Night Diver)',
-    slug: 'nochnoye-pogruzheniye',
+    slug: 'night-diver',
     description:
       'Исследуйте подводный мир ночью и изучите ночную навигацию и правила безопасности.',
     prerequisites: 'OWD или эквивалент',
@@ -341,7 +341,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
   },
   {
     name: 'Обогащенный Воздух (Nitrox)',
-    slug: 'obogashchennyy-vozdukh-nitrox',
+    slug: 'enriched-air-nitrox',
     description:
       'Погружайтесь дольше и безопаснее с обогащенным воздухом, изучая правильное планирование и безопасность.',
     prerequisites: 'OWD или эквивалент',
@@ -357,7 +357,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
   },
   {
     name: 'Исследование Кораблекрушений (Wreck Diver)',
-    slug: 'issledovaniye-korablekrusheniy',
+    slug: 'wreck-diver',
     description:
       'Изучайте подводные кораблекрушения с безопасностью и навигацией внутри конструкций.',
     prerequisites: 'AOWD или эквивалент',

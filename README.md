@@ -11,18 +11,18 @@
 9. Add about me info - done
 10. Create apointment system with email notification - done
 11. Create logo - done
-12. Design style of buttons
-13. Design background of the pages
+12. Design style of buttons - almost done ( courses)
+13. Design background of the pages almost done
 14. Create buttons for navbar - done
-15. Update Contact info
+15. Update Contact info - need include background image
 16. Create contact us form with email notification - done
 17. Create new design for courses page. Than have description why people should choose each course.
 18. On specific course page need to put next steps after complition.
-19. Requirments
-20. Update F.A.Q - in works
+19. Requirments - done
+20. Update F.A.Q - need more info
 21. Create CRUD - done
 22. deploy webiste - done
-23. Redesign whole website
+23. Redesign whole website - almost done
 24. Create page for Mia
 25. Add Photo - done
 26. Crypto payments
@@ -31,7 +31,7 @@
 29. Telegram channel - done
 30. Vkontakte channel - cancel
 31. Dive planner
-32. Main page
+32. Main page - done
 33. favicon - done
 34. youtube channel - done
 35. blog page about places and what to do

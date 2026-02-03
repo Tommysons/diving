@@ -12,13 +12,13 @@ import { motion } from 'framer-motion'
 export default function ScubaDivingCoursesPageRU() {
   const [activeForm, setActiveForm] = useState<string | null>(null)
 
-  const beginnerSlugs = [
-    'otkroy-podvodnoe-plavanie-dsd',
-    'open-water-diver-owd',
-  ]
+  // Beginner courses slugs in Russian
+  const beginnerSlugs = ['discover-scuba-diving-dsd', 'open-water-diver-owd']
+
   const nonCertified = scubaCoursesRU.filter((c) =>
-    beginnerSlugs.includes(c.slug)
+    beginnerSlugs.includes(c.slug),
   )
+
   const certified = [
     ...scubaCoursesRU.filter((c) => !beginnerSlugs.includes(c.slug)),
     ...specialtyCoursesRU,
@@ -98,6 +98,7 @@ export default function ScubaDivingCoursesPageRU() {
           </Link>
         </div>
 
+        {/* Beginner Courses */}
         <h2
           id='non-certified'
           className='text-2xl sm:text-3xl font-bold text-blue-800 mb-6'
@@ -115,6 +116,7 @@ export default function ScubaDivingCoursesPageRU() {
           ))}
         </div>
 
+        {/* Certified Courses */}
         <h2
           id='certified'
           className='text-2xl sm:text-3xl font-bold text-blue-800 mt-16 mb-6'
@@ -138,6 +140,9 @@ export default function ScubaDivingCoursesPageRU() {
   )
 }
 
+// -----------------
+// Course Card Component
+// -----------------
 function CourseCardRU({ course, activeForm, setActiveForm }: any) {
   if (!course) return null
 
@@ -146,7 +151,7 @@ function CourseCardRU({ course, activeForm, setActiveForm }: any) {
   return (
     <div className='border rounded-2xl shadow-lg bg-white transform transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl flex flex-col md:flex-row md:items-stretch relative w-full max-w-full overflow-hidden'>
       <Link
-        href={`/scubadivingcourses/${course.slug}`}
+        href={`/ru/scubadivingcourses/${course.slug}`} // ✅ Russian prefix
         className='flex-1 flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 cursor-pointer'
       >
         <div className='relative w-full sm:w-1/3 h-56 sm:h-64 flex-shrink-0'>
