@@ -22,7 +22,7 @@ export const faqsEN: FAQItem[] = [
   {
     question: 'How can I pay for diving activities?',
     answer:
-      'Cash is preferred. Payment by bank card is also possible, however a 5% processing fee will be added to the final price.',
+      'Cash is preferred. Payment by bank card is also possible, however a 3% processing fee will be added to the final price.',
   },
   {
     question:
@@ -94,7 +94,7 @@ export const faqsRU: FAQItem[] = [
   {
     question: 'Как можно оплатить дайвинг?',
     answer:
-      'Предпочтительна оплата наличными. Также возможна оплата банковской картой, однако к стоимости будет добавлена комиссия 5%.',
+      'Предпочтительна оплата наличными. Также возможна оплата банковской картой, однако к стоимости будет добавлена комиссия 3%.',
   },
   {
     question:
