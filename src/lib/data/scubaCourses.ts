@@ -34,6 +34,9 @@ export const scubaCourses: ScubaCourse[] = [
       'Try scuba diving for the first time under the guidance of professional instructors. Perfect for curious beginners.',
     maxDepth: '12 meters',
     image: '/images/courses/dsd.jpg',
+    prerequisites: `Basic swimming skills are required or the ability to learn them with the instructor. 
+    You should feel comfortable in the water and not be afraid of it. Minimum age is 10 years old. 
+    For ages 8–9, please contact me personally — there is a special kids program without scuba certification.`,
     price: '2,500฿',
     duration: '1 day',
     program: [
@@ -50,6 +53,9 @@ export const scubaCourses: ScubaCourse[] = [
       'Complete your first full scuba certification. Learn essential skills, safety protocols, and dive theory.',
     maxDepth: '18 meters',
     image: '/images/owd.jpg',
+    prerequisites: `Basic swimming skills are required or the ability to learn them with the instructor. 
+    You should feel comfortable in the water and not be afraid of it. Minimum age is 10 years old. 
+    For ages 8–9, please contact me personally — there is a special kids program without scuba certification.`,
     price: '11,000฿ ',
     duration: '3-4 days',
     program: [
@@ -209,6 +215,9 @@ export const scubaCoursesRU: ScubaCourse[] = [
       'Попробуйте дайвинг впервые под руководством профессиональных инструкторов. Отлично для начинающих.',
     maxDepth: '12 метров',
     image: '/images/courses/dsd.jpg',
+    prerequisites: `Требуются базовые навыки плавания или готовность обучаться им с инструктором. 
+    Важно чувствовать себя уверенно в воде и не бояться её. Минимальный возраст — 10 лет. 
+    Для детей 8–9 лет свяжитесь со мной лично — существует отдельная детская программа без сертификации дайвера.`,
     price: '2,500฿',
     duration: '1 день',
     program: [
@@ -225,6 +234,9 @@ export const scubaCoursesRU: ScubaCourse[] = [
       'Получите вашу первую полную сертификацию дайвера. Изучите навыки, правила безопасности и теорию погружений.',
     maxDepth: '18 метров',
     image: '/images/owd.jpg',
+    prerequisites: `Требуются базовые навыки плавания или готовность обучаться им с инструктором. 
+    Важно чувствовать себя уверенно в воде и не бояться её. Минимальный возраст — 10 лет. 
+    Для детей 8–9 лет свяжитесь со мной лично — существует отдельная детская программа без сертификации дайвера.`,
     price: '11,000฿ ',
     duration: '3-4 дня',
     program: [

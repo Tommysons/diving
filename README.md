@@ -37,3 +37,4 @@
 35. blog page about places and what to do
 36. need to change color for gallery header image make same as well like in landing page
 37. need to work on mobile screen resolution, landing page some content goes to the right
+38. need to optimize website, loading is to slow
