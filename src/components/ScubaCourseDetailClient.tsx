@@ -14,6 +14,7 @@ import {
 } from '@/lib/data/scubaCourses'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import MedicalFormModal from './MedicalFormModal'
+import { motion } from 'framer-motion'
 
 interface ScubaCourseDetailClientProps {
   lang: 'en' | 'ru'
@@ -42,11 +43,7 @@ export default function ScubaCourseDetailClient({
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   if (!slug || index === -1)
-    return (
-      <p className='text-center mt-10'>
-        {lang === 'en' ? 'Course not found' : 'Курс не найден'}
-      </p>
-    )
+    return <p>{lang === 'en' ? 'Course not found' : 'Курс не найден'}</p>
 
   const course = allCourses[index]
   const isScubaCourse = (c: any): c is ScubaCourse => 'maxDepth' in c
@@ -63,176 +60,189 @@ export default function ScubaCourseDetailClient({
 
   return (
     <main className='relative min-h-screen w-full overflow-hidden'>
-      {/* BACKGROUND IMAGE */}
+      {/* BACKGROUND */}
       <div className='absolute inset-0'>
         <img
           src='/images/training.jpg'
-          alt={course.name}
+          alt='Training Background'
           className='w-full h-full object-cover brightness-110'
         />
-        <div className='absolute inset-0 bg-black/20' />
+        <div className='absolute inset-0 bg-black/30' />
       </div>
 
       {/* CONTENT */}
-      <div className='relative z-10 max-w-5xl mx-auto px-6 py-12 space-y-8'>
-        {/* Course Card */}
-        <div className='relative rounded-2xl shadow-lg overflow-hidden bg-white/90 backdrop-blur-md'>
-          <div className='relative w-full h-64 md:h-80'>
-            <Image
-              src={course.image}
-              alt={course.name}
-              fill
-              className='object-cover'
-            />
+      <section className='relative z-10 max-w-7xl mx-auto px-4 py-10'>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className='bg-white/90 backdrop-blur-md shadow-lg rounded-2xl overflow-hidden'
+        >
+          {/* HEADER */}
+          <div className='flex items-center justify-center gap-4 p-6 border-b bg-white/80'>
+            <button
+              onClick={() => go(-1)}
+              className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center'
+            >
+              <ChevronLeft />
+            </button>
+
+            <h1 className='text-3xl font-bold text-gray-800 text-center px-4'>
+              {course.name}
+            </h1>
+
+            <button
+              onClick={() => go(1)}
+              className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center'
+            >
+              <ChevronRight />
+            </button>
           </div>
 
-          <div className='p-6 space-y-4'>
-            <h2 className='text-3xl font-bold text-center'>{course.name}</h2>
-            <p className='text-center'>{course.description}</p>
-
-            {/* Course Details */}
-            <div className='space-y-1 text-center'>
-              {isScubaCourse(course) && (
-                <p>
-                  <span className='font-semibold text-blue-600'>
-                    {lang === 'en' ? 'Max Depth:' : 'Максимальная глубина:'}
-                  </span>{' '}
-                  {course.maxDepth}
-                </p>
-              )}
-              {course.prerequisites && (
-                <p>
-                  <span className='font-semibold text-blue-600'>
-                    {lang === 'en' ? 'Prerequisites:' : 'Требования:'}
-                  </span>{' '}
-                  {course.prerequisites}
-                </p>
-              )}
-              {course.duration && (
-                <p>
-                  <span className='font-semibold text-blue-600'>
-                    {lang === 'en' ? 'Duration:' : 'Продолжительность:'}
-                  </span>{' '}
-                  {course.duration}
-                </p>
-              )}
-              {course.price && (
-                <p>
-                  <span className='font-semibold text-blue-600'>
-                    {lang === 'en' ? 'Price:' : 'Цена:'}
-                  </span>{' '}
-                  {course.price}
-                </p>
-              )}
+          {/* LAYOUT */}
+          <div className='grid md:grid-cols-2'>
+            {/* IMAGE */}
+            <div className='relative h-[350px] md:h-full'>
+              <Image
+                src={course.image}
+                alt={course.name}
+                fill
+                className='object-cover'
+              />
             </div>
 
-            {/* Course Program */}
-            {course.program && course.program.length > 0 && (
-              <div className='text-center'>
-                <span className='font-semibold text-blue-600'>
-                  {lang === 'en' ? 'Course Program:' : 'Программа курса:'}
-                </span>
-                <ul className='list-disc ml-6 mt-1 inline-block text-left'>
-                  {course.program.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
+            {/* INFO */}
+            <div className='p-6 sm:p-8 space-y-5 bg-white/80'>
+              <p className='text-gray-700 text-lg'>{course.description}</p>
+
+              {/* INFO BOXES */}
+              <div className='grid grid-cols-3 gap-3'>
+                <Info
+                  label={lang === 'en' ? 'Price' : 'Цена'}
+                  value={course.price || '-'}
+                />
+                <Info
+                  label={lang === 'en' ? 'Duration' : 'Длительность'}
+                  value={course.duration || '-'}
+                />
+                <Info
+                  label={lang === 'en' ? 'Max Depth' : 'Глубина'}
+                  value={isScubaCourse(course) ? course.maxDepth : '-'}
+                />
               </div>
-            )}
 
-            {/* Medical Form */}
-            <div className='mt-6 p-4 border rounded-xl bg-gray-50 space-y-3 text-center'>
-              <h3 className='text-xl font-semibold'>
-                {lang === 'en' ? 'Medical Questionnaire' : 'Медицинская анкета'}
-              </h3>
-              <p className='text-gray-700'>
-                {lang === 'en'
-                  ? 'Before enrolling in this course, please review the medical questionnaire. If you answer "YES" to any question, a doctor’s approval may be required.'
-                  : 'Перед записью на курс, пожалуйста, ознакомьтесь с медицинской анкетой. Если вы ответите «ДА» на какой-либо вопрос, может потребоваться одобрение врача.'}
-              </p>
+              {course.prerequisites && (
+                <div>
+                  <h3 className='font-semibold text-lg mt-3'>
+                    {lang === 'en' ? 'Prerequisites' : 'Требования'}
+                  </h3>
+                  <p className='text-gray-700'>{course.prerequisites}</p>
+                </div>
+              )}
 
-              <div className='flex flex-wrap justify-center gap-4'>
-                <a
-                  href={
-                    lang === 'en'
-                      ? '/forms/medical-form.pdf'
-                      : '/forms/medical-form-rus.pdf'
-                  }
-                  download
-                  className='inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition'
+              {course.program && (
+                <div>
+                  <h3 className='font-semibold text-lg mt-3'>
+                    {lang === 'en' ? 'Course Program' : 'Программа курса'}
+                  </h3>
+                  <ul className='list-disc list-inside text-gray-700'>
+                    {course.program.map((p, i) => (
+                      <li key={i}>{p}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* BUTTONS */}
+              <div className='flex flex-col sm:flex-row gap-4 pt-4'>
+                <button
+                  onClick={() => setActiveForm(!activeForm)}
+                  className='bg-cyan-700 hover:bg-cyan-800 text-white px-5 py-2.5 rounded-xl transition'
                 >
-                  {lang === 'en' ? 'Download PDF' : 'Скачать PDF'}
-                </a>
+                  {activeForm
+                    ? lang === 'en'
+                      ? 'Close Booking Form'
+                      : 'Закрыть форму'
+                    : lang === 'en'
+                      ? 'Book Course'
+                      : 'Забронировать курс'}
+                </button>
 
                 <button
-                  onClick={() => setIsModalOpen(true)}
-                  className='inline-block bg-cyan-700 hover:bg-cyan-800 text-white px-4 py-2 rounded-lg transition'
+                  onClick={() =>
+                    router.push(lang === 'en' ? '/faq' : '/ru/faq')
+                  }
+                  className='bg-cyan-700 hover:bg-cyan-800 text-white px-5 py-2.5 rounded-xl transition'
                 >
-                  {lang === 'en' ? 'View Fullscreen' : 'Открыть на весь экран'}
+                  {lang === 'en' ? 'Have a Question?' : 'Есть вопрос?'}
                 </button>
               </div>
+
+              {activeForm && (
+                <div className='mt-4'>
+                  <BookingForm type='scuba_course' activity={course.name} />
+                </div>
+              )}
             </div>
-
-            {/* Navigation Arrows */}
-            <div className='flex justify-center items-center gap-4 mt-4'>
-              <button
-                onClick={() => go(-1)}
-                className='bg-cyan-700 hover:bg-cyan-800 text-white p-2 border rounded-full'
-              >
-                <ChevronLeft />
-              </button>
-              <button
-                onClick={() => go(1)}
-                className='bg-cyan-700 hover:bg-cyan-800 text-white p-2 border rounded-full'
-              >
-                <ChevronRight />
-              </button>
-            </div>
-
-            {/* Action Buttons */}
-            <div className='flex flex-col md:flex-row justify-center gap-4 mt-4'>
-              <button
-                className='flex-1 px-4 py-2 bg-cyan-700 hover:bg-cyan-800 text-white transition rounded-lg'
-                onClick={() => setActiveForm(!activeForm)}
-              >
-                {activeForm
-                  ? lang === 'en'
-                    ? 'Close Booking Form'
-                    : 'Закрыть форму бронирования'
-                  : lang === 'en'
-                    ? 'Book Course'
-                    : 'Забронировать курс'}
-              </button>
-
-              <button
-                className='flex-1 px-4 py-2 bg-cyan-700 hover:bg-cyan-800 text-white transition rounded-lg'
-                onClick={() => router.push(lang === 'en' ? '/faq' : '/ru/faq')}
-              >
-                {lang === 'en' ? 'Have a Question?' : 'Есть вопрос?'}
-              </button>
-            </div>
-
-            {/* Booking Form */}
-            {activeForm && (
-              <div className='mt-4'>
-                <BookingForm type='scuba_course' activity={course.name} />
-              </div>
-            )}
           </div>
-        </div>
 
-        {/* Fullscreen Medical Modal */}
-        <MedicalFormModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          filePath={
-            lang === 'en'
-              ? '/forms/medical-form.pdf'
-              : '/forms/medical-form-rus.pdf'
-          }
-          lang={lang}
-        />
-      </div>
+          {/* MEDICAL */}
+          <div className='p-6 bg-white/90 border-t space-y-3'>
+            <h3 className='text-xl font-semibold'>
+              {lang === 'en' ? 'Medical Questionnaire' : 'Медицинская анкета'}
+            </h3>
+
+            <p className='text-gray-700'>
+              {lang === 'en'
+                ? 'Before enrolling in this course, please review the medical questionnaire.'
+                : 'Перед записью на курс ознакомьтесь с медицинской анкетой.'}
+            </p>
+
+            <div className='flex gap-4'>
+              <a
+                href={
+                  lang === 'en'
+                    ? '/forms/medical-form.pdf'
+                    : '/forms/medical-form-rus.pdf'
+                }
+                download
+                className='bg-blue-600 text-white px-4 py-2 rounded-lg'
+              >
+                {lang === 'en' ? 'Download PDF' : 'Скачать PDF'}
+              </a>
+
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className='bg-cyan-700 text-white px-4 py-2 rounded-lg'
+              >
+                {lang === 'en' ? 'View Fullscreen' : 'Открыть'}
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      <MedicalFormModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        filePath={
+          lang === 'en'
+            ? '/forms/medical-form.pdf'
+            : '/forms/medical-form-rus.pdf'
+        }
+        lang={lang}
+      />
     </main>
+  )
+}
+
+function Info({ label, value }: { label: string; value: string }) {
+  return (
+    <div className='rounded-xl border border-gray-300 bg-gray-50 py-2'>
+      <div className='text-center text-sm text-gray-500'>{label}</div>
+      <div className='text-center text-lg font-semibold text-gray-800'>
+        {value}
+      </div>
+    </div>
   )
 }

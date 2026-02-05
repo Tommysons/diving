@@ -9,34 +9,41 @@ export default function AboutPageRu() {
   return (
     <>
       <Header />
-      {/* Фоновое фото в стиле альбома */}
-      <div className='flex flex-col'>
-        {/* Hero Section */}
-        <div className='relative h-72 flex items-center justify-center text-white text-center'>
+
+      <main className='relative min-h-screen w-full overflow-hidden'>
+        {/* BACKGROUND IMAGE */}
+        <div className='absolute inset-0'>
           <img
-            src='/images/hero-about.jpg'
-            alt='Фоновое изображение дайвинга'
-            className='absolute inset-0 w-full h-full object-cover'
+            src='/images/about-me.jpg'
+            alt='Фоновое изображение о преподавателе'
+            className='w-full h-full object-cover brightness-110'
           />
-          {/* Темный оверлей */}
-          <div className='absolute inset-0 bg-black bg-opacity-50' />
-          <div className='relative z-10'>
-            <h1 className='text-4xl font-bold drop-shadow-md'>
-              Знакомьтесь с вашим инструктором
-            </h1>
-            <p className='text-lg mt-2 drop-shadow-md'>
-              Страсть к дайвингу. Безопасность превыше всего.
-            </p>
-          </div>
+          <div className='absolute inset-0 bg-black/45' />
         </div>
 
-        <div className='max-w-4xl mx-auto px-4 py-12 space-y-12'>
-          {/* Profile Section */}
+        {/* CONTENT */}
+        <section className='relative z-10 max-w-5xl mx-auto px-6 py-16 space-y-12'>
+          {/* HERO */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className='text-center text-white'
+          >
+            <h1 className='text-4xl md:text-5xl font-bold drop-shadow-md mb-3'>
+              Знакомьтесь с вашим инструктором
+            </h1>
+            <p className='text-white/90'>
+              Страсть к дайвингу. Безопасность превыше всего.
+            </p>
+          </motion.div>
+
+          {/* PROFILE */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className='bg-white/80 backdrop-blur p-6 rounded-xl shadow-md flex flex-col md:flex-row items-center gap-8'
+            className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-8'
           >
             <img
               src='/images/badge.jpg'
@@ -55,11 +62,12 @@ export default function AboutPageRu() {
             </div>
           </motion.div>
 
-          {/* Certifications Section */}
+          {/* CERTIFICATIONS */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl'
           >
             <h3 className='text-xl font-semibold mb-4'>Сертификаты и опыт</h3>
             <ul className='grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-700'>
@@ -86,24 +94,24 @@ export default function AboutPageRu() {
             </ul>
           </motion.div>
 
-          {/* Mission / Teaching Style */}
+          {/* MISSION */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl italic text-gray-800'
           >
-            <div className='bg-blue-50 border-l-4 border-blue-400 p-6 italic shadow rounded-md'>
-              «Я создаю расслабленную и поддерживающую атмосферу, где студенты
-              чувствуют себя в безопасности и уверенно — даже если это их первое
-              погружение.»
-            </div>
+            «Я создаю расслабленную и поддерживающую атмосферу, где студенты
+            чувствуют себя в безопасности и уверенно — даже если это их первое
+            погружение.»
           </motion.div>
 
-          {/* Personal Section */}
+          {/* PERSONAL */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl'
           >
             <h3 className='text-xl font-semibold mb-2'>Когда я не ныряю...</h3>
             <p className='text-gray-700'>
@@ -117,18 +125,19 @@ export default function AboutPageRu() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.8 }}
-            className='text-center mt-8'
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className='text-center'
           >
             <a
               href='/ru/contact'
-              className='inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition'
+              className='inline-block bg-cyan-700 text-white px-6 py-3 rounded-xl shadow hover:bg-cyan-800 transition'
             >
               Связаться или забронировать погружение
             </a>
           </motion.div>
-        </div>
-      </div>
+        </section>
+      </main>
+
       <Footer />
     </>
   )
