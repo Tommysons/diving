@@ -63,45 +63,33 @@ export default function ContactPageRu() {
     <>
       <Header />
 
-      <main className='mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 overflow-hidden'>
-        {/* HERO */}
-        <section className='relative min-h-[35vh] flex items-center justify-center text-center mt-6'>
-          <div className='absolute inset-0 rounded-2xl overflow-hidden'>
-            <img
-              src='/images/hero-about.jpg'
-              alt='Контакт LokaWndr'
-              className='w-full h-full object-cover'
-            />
-            <div className='absolute inset-0 bg-black/45' />
-          </div>
+      <main className='relative min-h-screen w-full overflow-hidden'>
+        {/* BACKGROUND */}
+        <div className='absolute inset-0'>
+          <img
+            src='/images/contact.jpg'
+            alt='Контакт LokaWndr'
+            className='w-full h-full object-cover scale-105'
+          />
+          <div className='absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/70' />
+        </div>
 
+        {/* CONTENT */}
+        <div className='relative z-10 min-h-screen flex items-center justify-center px-4'>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className='relative z-10 px-6'
+            transition={{ duration: 0.6 }}
+            className='w-full max-w-xl bg-white/85 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl'
           >
-            <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3'>
+            <h1 className='text-3xl font-bold tracking-tight text-center mb-2'>
               Связаться с LokaWndr
             </h1>
-            <p className='text-white/90 max-w-xl mx-auto'>
+
+            <p className='text-center text-gray-600 mb-6'>
               Запланируем ваше подводное приключение. Спросите о дайвинге,
               курсах или погружениях.
             </p>
-          </motion.div>
-        </section>
-
-        {/* FORM */}
-        <section className='mt-16 mb-24 flex justify-center'>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className='w-full max-w-xl bg-white/80 backdrop-blur p-6 sm:p-8 rounded-2xl shadow-lg'
-          >
-            <h2 className='text-2xl font-semibold mb-6 text-center'>
-              Отправить сообщение
-            </h2>
 
             <motion.form onSubmit={handleSubmit} className='space-y-5'>
               {errors.length > 0 && (
@@ -119,7 +107,7 @@ export default function ContactPageRu() {
                   placeholder='Ваше имя'
                   value={form.name}
                   onChange={handleChange}
-                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none'
+                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
                 />
               </div>
 
@@ -130,7 +118,7 @@ export default function ContactPageRu() {
                   placeholder='you@email.com'
                   value={form.email}
                   onChange={handleChange}
-                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none'
+                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
                 />
               </div>
 
@@ -141,7 +129,7 @@ export default function ContactPageRu() {
                   placeholder='О чём сообщение?'
                   value={form.subject}
                   onChange={handleChange}
-                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none'
+                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
                 />
               </div>
 
@@ -153,7 +141,7 @@ export default function ContactPageRu() {
                   placeholder='Расскажите о своих планах погружения...'
                   value={form.message}
                   onChange={handleChange}
-                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none resize-none'
+                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none resize-none'
                 />
               </div>
 
@@ -171,7 +159,7 @@ export default function ContactPageRu() {
               )}
             </motion.form>
           </motion.div>
-        </section>
+        </div>
       </main>
 
       <Footer />

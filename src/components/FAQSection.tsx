@@ -17,7 +17,7 @@ export default function FAQSection() {
   return (
     <section
       className='relative bg-fixed bg-center bg-cover'
-      style={{ backgroundImage: "url('/images/contact.avif')" }}
+      style={{ backgroundImage: "url('/images/faq.avif')" }}
     >
       <div className='absolute inset-0 bg-black/40' />
 

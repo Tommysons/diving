@@ -14,7 +14,7 @@ export default function ScubaDivingCoursesPage() {
 
   const beginnerSlugs = ['discover-scuba-diving-dsd', 'open-water-diver-owd']
   const nonCertified = scubaCourses.filter((c) =>
-    beginnerSlugs.includes(c.slug)
+    beginnerSlugs.includes(c.slug),
   )
   const certified = [
     ...scubaCourses.filter((c) => !beginnerSlugs.includes(c.slug)),
@@ -25,109 +25,129 @@ export default function ScubaDivingCoursesPage() {
     <>
       <Header />
 
-      <div className='px-4 sm:px-6 md:px-8 py-10 max-w-6xl mx-auto'>
-        <h1 className='text-3xl sm:text-4xl font-bold mb-10 text-center text-blue-800'>
-          Scuba Diving Courses
-        </h1>
-
-        {/* Introduction */}
-        <div className='grid md:grid-cols-2 gap-8 md:gap-10 mb-16 items-center'>
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className='flex justify-center'
-          >
-            <Image
-              src='/images/awd.jpg'
-              alt='Scuba Diving Introduction'
-              width={600}
-              height={400}
-              className='rounded-2xl shadow-lg object-cover w-full h-auto max-w-md'
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className='text-gray-700 leading-relaxed text-base sm:text-lg px-2'
-          >
-            <h2 className='text-2xl font-semibold mb-4 text-blue-700'>
-              Discover the Underwater World
-            </h2>
-            <p className='mb-4'>
-              Scuba diving opens a window to a breathtaking underwater universe.
-              From colorful coral reefs to majestic marine creatures, every dive
-              is an adventure. Whether you’re a beginner or already certified,
-              there’s a course tailored to your level.
-            </p>
-            <p>
-              Dive safely, learn essential skills, and gain the confidence to
-              explore deeper. Our courses combine fun, knowledge, and
-              professional guidance to make your underwater journey
-              unforgettable.
-            </p>
-          </motion.div>
+      <main className='relative min-h-screen w-full overflow-hidden'>
+        {/* BACKGROUND IMAGE */}
+        <div className='absolute inset-0'>
+          <img
+            src='/images/training.jpg'
+            alt='Scuba Diving Training'
+            className='w-full h-full object-cover brightness-110'
+          />
+          <div className='absolute inset-0 bg-black/10' />
         </div>
 
-        {/* Navigation */}
-        <div className='grid md:grid-cols-2 gap-6 mb-12'>
-          <Link
-            href='#non-certified'
-            className='bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl p-5 text-center shadow-lg transition transform hover:scale-105 text-base sm:text-lg'
+        {/* CONTENT */}
+        <div className='relative z-10 max-w-6xl mx-auto px-6 py-10 space-y-12'>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className='text-4xl md:text-5xl font-bold text-center text-blue-700'
           >
-            <h3 className='text-xl font-semibold mb-2'>
-              For Non-Certified Divers
-            </h3>
-            <p>DSD & Open Water courses to start your diving adventure.</p>
-          </Link>
+            Scuba Diving Courses
+          </motion.h1>
 
-          <Link
-            href='#certified'
-            className='bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-5 text-center shadow-lg transition transform hover:scale-105 text-base sm:text-lg'
+          {/* Introduction */}
+          <div className='grid md:grid-cols-2 gap-8 md:gap-10 items-center bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg'>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className='flex justify-center'
+            >
+              <Image
+                src='/images/awd.jpg'
+                alt='Scuba Diving Training'
+                width={600}
+                height={400}
+                className='rounded-2xl shadow-lg object-cover w-full h-auto max-w-md'
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className='text-gray-700 leading-relaxed text-base sm:text-lg px-2'
+            >
+              <h2 className='text-2xl font-semibold mb-4 text-blue-700'>
+                Discover the Underwater World
+              </h2>
+              <p className='mb-4'>
+                Scuba diving opens a window to a breathtaking underwater
+                universe. From colorful coral reefs to majestic marine
+                creatures, every dive is an adventure. Whether you’re a beginner
+                or already certified, there’s a course tailored to your level.
+              </p>
+              <p>
+                Dive safely, learn essential skills, and gain the confidence to
+                explore deeper. Our courses combine fun, knowledge, and
+                professional guidance to make your underwater journey
+                unforgettable.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Navigation */}
+          <div className='grid md:grid-cols-2 gap-6 mb-12'>
+            <Link
+              href='#non-certified'
+              className='bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl p-5 text-center shadow-lg transition transform hover:scale-105 text-base sm:text-lg'
+            >
+              <h3 className='text-xl font-semibold mb-2'>
+                For Non-Certified Divers
+              </h3>
+              <p>DSD & Open Water courses to start your diving adventure.</p>
+            </Link>
+
+            <Link
+              href='#certified'
+              className='bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-5 text-center shadow-lg transition transform hover:scale-105 text-base sm:text-lg'
+            >
+              <h3 className='text-xl font-semibold mb-2'>
+                For Certified Divers
+              </h3>
+              <p>Advanced and specialty courses to take your skills further.</p>
+            </Link>
+          </div>
+
+          {/* Non-Certified */}
+          <h2
+            id='non-certified'
+            className='text-2xl sm:text-3xl font-bold text-blue-700 mb-6 text-center'
           >
-            <h3 className='text-xl font-semibold mb-2'>For Certified Divers</h3>
-            <p>Advanced and specialty courses to take your skills further.</p>
-          </Link>
-        </div>
+            Courses for Non-Certified Divers
+          </h2>
+          <div className='space-y-8'>
+            {nonCertified.map((course) => (
+              <CourseCard
+                key={course.slug}
+                course={course}
+                activeForm={activeForm}
+                setActiveForm={setActiveForm}
+              />
+            ))}
+          </div>
 
-        {/* Non-Certified */}
-        <h2
-          id='non-certified'
-          className='text-2xl sm:text-3xl font-bold text-blue-800 mb-6'
-        >
-          Courses for Non-Certified Divers
-        </h2>
-        <div className='space-y-8'>
-          {nonCertified.map((course) => (
-            <CourseCard
-              key={course.slug}
-              course={course}
-              activeForm={activeForm}
-              setActiveForm={setActiveForm}
-            />
-          ))}
+          {/* Certified */}
+          <h2
+            id='certified'
+            className='text-2xl sm:text-3xl font-bold text-blue-700 mt-16 mb-6 text-center'
+          >
+            Courses for Certified Divers
+          </h2>
+          <div className='space-y-8'>
+            {certified.map((course) => (
+              <CourseCard
+                key={course.slug}
+                course={course}
+                activeForm={activeForm}
+                setActiveForm={setActiveForm}
+              />
+            ))}
+          </div>
         </div>
-
-        {/* Certified */}
-        <h2
-          id='certified'
-          className='text-2xl sm:text-3xl font-bold text-blue-800 mt-16 mb-6'
-        >
-          Courses for Certified Divers
-        </h2>
-        <div className='space-y-8'>
-          {certified.map((course) => (
-            <CourseCard
-              key={course.slug}
-              course={course}
-              activeForm={activeForm}
-              setActiveForm={setActiveForm}
-            />
-          ))}
-        </div>
-      </div>
+      </main>
 
       <Footer />
     </>

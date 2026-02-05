@@ -29,7 +29,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
     router.push(
       `${inferredLocale === 'ru' ? '/ru' : ''}/divesites/${
         diveData[prevIndex].slug
-      }`
+      }`,
     )
   }
 
@@ -38,7 +38,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
     router.push(
       `${inferredLocale === 'ru' ? '/ru' : ''}/divesites/${
         diveData[nextIndex].slug
-      }`
+      }`,
     )
   }
 
@@ -51,17 +51,29 @@ export default function DiveSiteDetail({ site, locale }: Props) {
   return (
     <>
       <Header />
-      <main className='flex-grow relative'>
-        <section className='max-w-7xl mx-auto px-4 py-10'>
+
+      <main className='relative min-h-screen w-full overflow-hidden'>
+        {/* BACKGROUND IMAGE */}
+        <div className='absolute inset-0'>
+          <img
+            src='/images/location.jpg'
+            alt='Dive Site Background'
+            className='w-full h-full object-cover brightness-110'
+          />
+          <div className='absolute inset-0 bg-black/30' />{' '}
+          {/* Slight dark overlay */}
+        </div>
+
+        {/* CONTENT */}
+        <section className='relative z-10 max-w-7xl mx-auto px-4 py-10'>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className='bg-white shadow-lg rounded-2xl overflow-hidden relative'
+            className='bg-white/90 backdrop-blur-md shadow-lg rounded-2xl overflow-hidden'
           >
             {/* Header Row – Buttons + Site Name */}
-            <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 border-b border-gray-200 bg-gray-50'>
-              {/* Desktop/tablet layout: buttons on sides of name */}
+            <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 border-b border-gray-200 bg-white/80 backdrop-blur-sm'>
               <div className='hidden md:flex items-center justify-center w-full gap-4'>
                 <button
                   onClick={goToPrev}
@@ -82,7 +94,6 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                 </button>
               </div>
 
-              {/* Mobile layout: title on top, buttons below */}
               <div className='flex flex-col items-center justify-center w-full md:hidden'>
                 <h1 className='text-2xl font-bold text-gray-800 text-center mb-3'>
                   {site.name}
@@ -109,7 +120,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
             {/* Layout */}
             <div className='grid md:grid-cols-2 gap-0'>
               {/* Left Side – Image Grid */}
-              <div className='relative bg-gray-100 p-4 rounded-l-2xl overflow-hidden'>
+              <div className='relative bg-white/80 backdrop-blur-md p-4 rounded-l-2xl overflow-hidden'>
                 <div className='grid grid-cols-2 sm:grid-cols-3 gap-3'>
                   {imageList.map((img, i) => (
                     <motion.div
@@ -127,7 +138,6 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   ))}
                 </div>
 
-                {/* Popup / modal for full image with arrows + swipe */}
                 {hoveredImage && (
                   <motion.div
                     className='fixed inset-0 bg-black/80 flex items-center justify-center z-50'
@@ -138,9 +148,8 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   >
                     <motion.div
                       className='relative flex items-center justify-center w-full h-full max-w-[90vw] max-h-[80vh]'
-                      onClick={(e) => e.stopPropagation()} // prevent modal close when clicking image
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      {/* Left arrow (desktop only) */}
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
@@ -155,7 +164,6 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                         <ChevronLeft className='w-6 h-6' />
                       </button>
 
-                      {/* Swipe + image */}
                       <motion.img
                         key={hoveredImage}
                         src={hoveredImage}
@@ -181,21 +189,6 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                         }}
                       />
 
-                      {/* Right arrow (desktop only) */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          const current = imageList.indexOf(hoveredImage)
-                          const nextIndex = (current + 1) % imageList.length
-                          setHoveredImage(imageList[nextIndex]!)
-                        }}
-                        className='hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2 text-white bg-cyan-700 hover:bg-cyan-800 rounded-full w-12 h-12 items-center justify-center transition'
-                        aria-label='Next image'
-                      >
-                        <ChevronRight className='w-6 h-6' />
-                      </button>
-
-                      {/* Close button */}
                       <button
                         className='absolute top-6 right-6 text-white hover:text-gray-300 transition'
                         onClick={() => setHoveredImage(null)}
@@ -208,7 +201,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
               </div>
 
               {/* Right Side – Info */}
-              <div className='p-6 sm:p-8 flex flex-col justify-center space-y-5'>
+              <div className='p-6 sm:p-8 flex flex-col justify-center space-y-5 bg-white/80 backdrop-blur-md rounded-r-2xl'>
                 <p className='text-gray-700 leading-relaxed text-base sm:text-lg'>
                   {site.longDescription}
                 </p>
@@ -288,8 +281,8 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                       ? 'Закрыть форму бронирования'
                       : 'Close Booking Form'
                     : locale === 'ru'
-                    ? 'Забронировать дайв'
-                    : 'Book a Dive Trip'}
+                      ? 'Забронировать дайв'
+                      : 'Book a Dive Trip'}
                 </button>
 
                 {activeForm && (
@@ -302,6 +295,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
           </motion.div>
         </section>
       </main>
+
       <Footer />
     </>
   )
