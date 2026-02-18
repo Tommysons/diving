@@ -25,19 +25,9 @@ export default function ScubaDivingCoursesPage() {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full overflow-hidden'>
-        {/* BACKGROUND IMAGE */}
-        <div className='absolute inset-0'>
-          <img
-            src='/images/training.jpg'
-            alt='Scuba Diving Training'
-            className='w-full h-full object-cover brightness-110'
-          />
-          <div className='absolute inset-0 bg-black/10' />
-        </div>
-
-        {/* CONTENT */}
+      <main className='relative min-h-screen w-full bg-blue-200'>
         <div className='relative z-10 max-w-6xl mx-auto px-6 py-10 space-y-12'>
+          {/* Page Title */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -61,6 +51,7 @@ export default function ScubaDivingCoursesPage() {
                 width={600}
                 height={400}
                 className='rounded-2xl shadow-lg object-cover w-full h-auto max-w-md'
+                priority
               />
             </motion.div>
 
@@ -88,7 +79,7 @@ export default function ScubaDivingCoursesPage() {
             </motion.div>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation Links */}
           <div className='grid md:grid-cols-2 gap-6 mb-12'>
             <Link
               href='#non-certified'
@@ -111,41 +102,23 @@ export default function ScubaDivingCoursesPage() {
             </Link>
           </div>
 
-          {/* Non-Certified */}
-          <h2
+          {/* Non-Certified Courses */}
+          <CourseSection
             id='non-certified'
-            className='text-2xl sm:text-3xl font-bold text-blue-700 mb-6 text-center'
-          >
-            Courses for Non-Certified Divers
-          </h2>
-          <div className='space-y-8'>
-            {nonCertified.map((course) => (
-              <CourseCard
-                key={course.slug}
-                course={course}
-                activeForm={activeForm}
-                setActiveForm={setActiveForm}
-              />
-            ))}
-          </div>
+            title='Courses for Non-Certified Divers'
+            courses={nonCertified}
+            activeForm={activeForm}
+            setActiveForm={setActiveForm}
+          />
 
-          {/* Certified */}
-          <h2
+          {/* Certified Courses */}
+          <CourseSection
             id='certified'
-            className='text-2xl sm:text-3xl font-bold text-blue-700 mt-16 mb-6 text-center'
-          >
-            Courses for Certified Divers
-          </h2>
-          <div className='space-y-8'>
-            {certified.map((course) => (
-              <CourseCard
-                key={course.slug}
-                course={course}
-                activeForm={activeForm}
-                setActiveForm={setActiveForm}
-              />
-            ))}
-          </div>
+            title='Courses for Certified Divers'
+            courses={certified}
+            activeForm={activeForm}
+            setActiveForm={setActiveForm}
+          />
         </div>
       </main>
 
@@ -154,6 +127,29 @@ export default function ScubaDivingCoursesPage() {
   )
 }
 
+// Section for a group of courses
+function CourseSection({ id, title, courses, activeForm, setActiveForm }: any) {
+  return (
+    <div className='space-y-8'>
+      <h2
+        id={id}
+        className='text-2xl sm:text-3xl font-bold text-blue-700 mb-6 text-center'
+      >
+        {title}
+      </h2>
+      {courses.map((course: any) => (
+        <CourseCard
+          key={course.slug}
+          course={course}
+          activeForm={activeForm}
+          setActiveForm={setActiveForm}
+        />
+      ))}
+    </div>
+  )
+}
+
+// Individual Course Card
 function CourseCard({ course, activeForm, setActiveForm }: any) {
   if (!course) return null
 

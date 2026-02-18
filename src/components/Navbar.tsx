@@ -10,6 +10,7 @@ import { label } from 'framer-motion/client'
 const navItemsEN = [
   { href: '/divesites', label: 'Dive Sites' },
   { href: '/scubadivingcourses', label: 'Scuba Diving Courses' },
+  { href: '/blog', label: 'Blog', highlight: true }, // <-- new
   // { href: '/freedivingcourses', label: 'Freediving Courses' },
   { href: '/gallery', label: 'Gallery', highlight: true },
   { href: '/aboutme', label: 'About Me' },
@@ -20,6 +21,7 @@ const navItemsEN = [
 const navItemsRU = [
   { href: '/divesites', label: 'Места для дайвинга' },
   { href: '/scubadivingcourses', label: 'Курсы по дайвингу' },
+  { href: '/blog', label: 'Блог', highlight: true }, // <-- new
   // { href: '/freedivingcourses', label: 'Курсы по фридайвингу' },
   { href: '/gallery', label: 'Галерея', highlight: true },
   { href: '/aboutme', label: 'Обо мне' },

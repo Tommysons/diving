@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import BookingForm from '@/components/BookingForm'
 import { DiveSite, diveSites, diveSitesRU } from '@/lib/data/diveSites'
 import { motion } from 'framer-motion'
@@ -20,51 +20,41 @@ export default function DiveSiteDetail({ site, locale }: Props) {
   const inferredLocale = pathname.startsWith('/ru') ? 'ru' : 'en'
   const diveData = inferredLocale === 'ru' ? diveSitesRU : diveSites
 
-  const currentIndex = diveData.findIndex((s) => s.slug === site.slug)
+  const currentIndex = useMemo(
+    () => diveData.findIndex((s) => s.slug === site.slug),
+    [diveData, site.slug],
+  )
+
+  const imageList = useMemo(
+    () =>
+      [site.imageUrl, site.diveMapUrl, ...(site.extraImages || [])].filter(
+        Boolean,
+      ),
+    [site.imageUrl, site.diveMapUrl, site.extraImages],
+  )
+
   const [activeForm, setActiveForm] = useState(false)
   const [hoveredImage, setHoveredImage] = useState<string | null>(null)
 
   const goToPrev = () => {
     const prevIndex = (currentIndex - 1 + diveData.length) % diveData.length
     router.push(
-      `${inferredLocale === 'ru' ? '/ru' : ''}/divesites/${
-        diveData[prevIndex].slug
-      }`,
+      `${inferredLocale === 'ru' ? '/ru' : ''}/divesites/${diveData[prevIndex].slug}`,
     )
   }
 
   const goToNext = () => {
     const nextIndex = (currentIndex + 1) % diveData.length
     router.push(
-      `${inferredLocale === 'ru' ? '/ru' : ''}/divesites/${
-        diveData[nextIndex].slug
-      }`,
+      `${inferredLocale === 'ru' ? '/ru' : ''}/divesites/${diveData[nextIndex].slug}`,
     )
   }
-
-  const imageList = [
-    site.imageUrl,
-    site.diveMapUrl,
-    ...(site.extraImages || []),
-  ].filter(Boolean)
 
   return (
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full overflow-hidden'>
-        {/* BACKGROUND IMAGE */}
-        <div className='absolute inset-0'>
-          <img
-            src='/images/location.jpg'
-            alt='Dive Site Background'
-            className='w-full h-full object-cover brightness-110'
-          />
-          <div className='absolute inset-0 bg-black/30' />{' '}
-          {/* Slight dark overlay */}
-        </div>
-
-        {/* CONTENT */}
+      <main className='relative min-h-screen w-full bg-blue-200 overflow-hidden'>
         <section className='relative z-10 max-w-7xl mx-auto px-4 py-10'>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -72,26 +62,24 @@ export default function DiveSiteDetail({ site, locale }: Props) {
             transition={{ duration: 0.6 }}
             className='bg-white/90 backdrop-blur-md shadow-lg rounded-2xl overflow-hidden'
           >
-            {/* Header Row – Buttons + Site Name */}
+            {/* Header Row */}
             <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 border-b border-gray-200 bg-white/80 backdrop-blur-sm'>
               <div className='hidden md:flex items-center justify-center w-full gap-4'>
-                <button
+                <NavButton
                   onClick={goToPrev}
-                  className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
-                  aria-label={locale === 'ru' ? 'Предыдущий' : 'Previous'}
+                  ariaLabel={locale === 'ru' ? 'Предыдущий' : 'Previous'}
                 >
                   <ChevronLeft className='w-5 h-5' />
-                </button>
+                </NavButton>
                 <h1 className='text-3xl font-bold text-gray-800 text-center whitespace-normal px-3'>
                   {site.name}
                 </h1>
-                <button
+                <NavButton
                   onClick={goToNext}
-                  className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
-                  aria-label={locale === 'ru' ? 'Следующий' : 'Next'}
+                  ariaLabel={locale === 'ru' ? 'Следующий' : 'Next'}
                 >
                   <ChevronRight className='w-5 h-5' />
-                </button>
+                </NavButton>
               </div>
 
               <div className='flex flex-col items-center justify-center w-full md:hidden'>
@@ -99,20 +87,18 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   {site.name}
                 </h1>
                 <div className='flex items-center gap-4 justify-center'>
-                  <button
+                  <NavButton
                     onClick={goToPrev}
-                    className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
-                    aria-label={locale === 'ru' ? 'Предыдущий' : 'Previous'}
+                    ariaLabel={locale === 'ru' ? 'Предыдущий' : 'Previous'}
                   >
                     <ChevronLeft className='w-5 h-5' />
-                  </button>
-                  <button
+                  </NavButton>
+                  <NavButton
                     onClick={goToNext}
-                    className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
-                    aria-label={locale === 'ru' ? 'Следующий' : 'Next'}
+                    ariaLabel={locale === 'ru' ? 'Следующий' : 'Next'}
                   >
                     <ChevronRight className='w-5 h-5' />
-                  </button>
+                  </NavButton>
                 </div>
               </div>
             </div>
@@ -131,6 +117,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                     >
                       <img
                         src={img!}
+                        loading='lazy'
                         alt={`${site.name} image ${i + 1}`}
                         className='w-full h-48 object-cover transition-transform duration-300 hover:scale-110'
                       />
@@ -150,19 +137,30 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                       className='relative flex items-center justify-center w-full h-full max-w-[90vw] max-h-[80vh]'
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
+                      {/* Left arrow */}
+                      <ZoomButton
+                        onClick={() => {
                           const current = imageList.indexOf(hoveredImage)
                           const prevIndex =
                             (current - 1 + imageList.length) % imageList.length
                           setHoveredImage(imageList[prevIndex]!)
                         }}
-                        className='hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2 text-white bg-cyan-700 hover:bg-cyan-800 rounded-full w-12 h-12 items-center justify-center transition'
-                        aria-label='Previous image'
+                        position='left'
                       >
                         <ChevronLeft className='w-6 h-6' />
-                      </button>
+                      </ZoomButton>
+
+                      {/* Right arrow */}
+                      <ZoomButton
+                        onClick={() => {
+                          const current = imageList.indexOf(hoveredImage)
+                          const nextIndex = (current + 1) % imageList.length
+                          setHoveredImage(imageList[nextIndex]!)
+                        }}
+                        position='right'
+                      >
+                        <ChevronRight className='w-6 h-6' />
+                      </ZoomButton>
 
                       <motion.img
                         key={hoveredImage}
@@ -175,14 +173,13 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                         drag='x'
                         dragConstraints={{ left: 0, right: 0 }}
                         onDragEnd={(event, info) => {
+                          const current = imageList.indexOf(hoveredImage)
                           if (info.offset.x > 100) {
-                            const current = imageList.indexOf(hoveredImage)
                             const prevIndex =
                               (current - 1 + imageList.length) %
                               imageList.length
                             setHoveredImage(imageList[prevIndex]!)
                           } else if (info.offset.x < -100) {
-                            const current = imageList.indexOf(hoveredImage)
                             const nextIndex = (current + 1) % imageList.length
                             setHoveredImage(imageList[nextIndex]!)
                           }
@@ -221,7 +218,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   />
                 </div>
 
-                {site.thingsToSee?.length ? (
+                {site.thingsToSee?.length && (
                   <div>
                     <h2 className='text-xl font-semibold text-gray-800 mt-4 mb-2'>
                       {locale === 'ru' ? 'Что можно увидеть' : 'Things to See'}
@@ -232,7 +229,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                       ))}
                     </ul>
                   </div>
-                ) : null}
+                )}
 
                 {/* Prices */}
                 {site.prices && (
@@ -309,5 +306,46 @@ function Info({ label, value }: { label: string; value: string }) {
         {value}
       </div>
     </div>
+  )
+}
+
+// Small reusable button for navigation
+function NavButton({
+  onClick,
+  ariaLabel,
+  children,
+}: {
+  onClick: () => void
+  ariaLabel: string
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={ariaLabel}
+      className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-md transition-all duration-200'
+    >
+      {children}
+    </button>
+  )
+}
+
+// Zoom modal buttons
+function ZoomButton({
+  onClick,
+  position,
+  children,
+}: {
+  onClick: () => void
+  position: 'left' | 'right'
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`hidden sm:flex absolute ${position}-6 top-1/2 -translate-y-1/2 text-white bg-cyan-700 hover:bg-cyan-800 rounded-full w-12 h-12 items-center justify-center transition`}
+    >
+      {children}
+    </button>
   )
 }

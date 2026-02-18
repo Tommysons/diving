@@ -43,7 +43,11 @@ export default function ScubaCourseDetailClient({
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   if (!slug || index === -1)
-    return <p>{lang === 'en' ? 'Course not found' : 'Курс не найден'}</p>
+    return (
+      <p className='text-center py-10'>
+        {lang === 'en' ? 'Course not found' : 'Курс не найден'}
+      </p>
+    )
 
   const course = allCourses[index]
   const isScubaCourse = (c: any): c is ScubaCourse => 'maxDepth' in c
@@ -59,18 +63,7 @@ export default function ScubaCourseDetailClient({
   }
 
   return (
-    <main className='relative min-h-screen w-full overflow-hidden'>
-      {/* BACKGROUND */}
-      <div className='absolute inset-0'>
-        <img
-          src='/images/training.jpg'
-          alt='Training Background'
-          className='w-full h-full object-cover brightness-110'
-        />
-        <div className='absolute inset-0 bg-black/30' />
-      </div>
-
-      {/* CONTENT */}
+    <main className='relative min-h-screen w-full bg-blue-200'>
       <section className='relative z-10 max-w-7xl mx-auto px-4 py-10'>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -108,6 +101,7 @@ export default function ScubaCourseDetailClient({
                 alt={course.name}
                 fill
                 className='object-cover'
+                priority={true} // preloads image for faster display
               />
             </div>
 

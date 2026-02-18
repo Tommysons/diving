@@ -10,17 +10,7 @@ export default function AboutPageRu() {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full overflow-hidden'>
-        {/* BACKGROUND IMAGE */}
-        <div className='absolute inset-0'>
-          <img
-            src='/images/about-me.jpg'
-            alt='Фоновое изображение о преподавателе'
-            className='w-full h-full object-cover brightness-110'
-          />
-          <div className='absolute inset-0 bg-black/45' />
-        </div>
-
+      <main className='relative min-h-screen w-full bg-blue-200'>
         {/* CONTENT */}
         <section className='relative z-10 max-w-5xl mx-auto px-6 py-16 space-y-12'>
           {/* HERO */}
@@ -30,10 +20,10 @@ export default function AboutPageRu() {
             transition={{ duration: 0.7 }}
             className='text-center text-white'
           >
-            <h1 className='text-4xl md:text-5xl font-bold drop-shadow-md mb-3'>
+            <h1 className='text-4xl text-black md:text-5xl font-bold drop-shadow-md mb-3'>
               Знакомьтесь с вашим инструктором
             </h1>
-            <p className='text-white/90'>
+            <p className='text-black'>
               Страсть к дайвингу. Безопасность превыше всего.
             </p>
           </motion.div>

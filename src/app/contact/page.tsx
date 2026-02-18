@@ -61,102 +61,87 @@ export default function ContactPage() {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full overflow-hidden'>
-        {/* BACKGROUND */}
-        <div className='absolute inset-0'>
-          <img
-            src='/images/contact.jpg'
-            alt='Contact background'
-            className='w-full h-full object-cover scale-105'
-          />
-          <div className='absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/70' />
-        </div>
+      <main className='relative min-h-screen w-full bg-blue-200 flex items-center justify-center px-4 py-12'>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className='w-full max-w-xl bg-white/85 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl'
+        >
+          <h1 className='text-3xl font-bold text-center mb-2'>
+            Contact LokaWndr
+          </h1>
+          <p className='text-center text-gray-600 mb-6'>
+            Let’s plan your underwater adventure. Ask anything about diving,
+            courses, or experiences.
+          </p>
 
-        {/* CONTENT */}
-        <div className='relative z-10 min-h-screen flex items-center justify-center px-4'>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className='w-full max-w-xl bg-white/85 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl'
-          >
-            <h1 className='text-3xl font-bold text-center mb-2'>
-              Contact LokaWndr
-            </h1>
-            <p className='text-center text-gray-600 mb-6'>
-              Let’s plan your underwater adventure. Ask anything about diving,
-              courses, or experiences.
-            </p>
+          <motion.form onSubmit={handleSubmit} className='space-y-5'>
+            {errors.length > 0 && (
+              <ul className='bg-red-50 text-red-600 p-3 rounded-lg text-sm'>
+                {errors.map((err, i) => (
+                  <li key={i}>• {err}</li>
+                ))}
+              </ul>
+            )}
 
-            <motion.form onSubmit={handleSubmit} className='space-y-5'>
-              {errors.length > 0 && (
-                <ul className='bg-red-50 text-red-600 p-3 rounded-lg text-sm'>
-                  {errors.map((err, i) => (
-                    <li key={i}>• {err}</li>
-                  ))}
-                </ul>
-              )}
+            <div>
+              <label className='text-sm font-medium'>Name</label>
+              <input
+                name='name'
+                placeholder='Your name'
+                value={form.name}
+                onChange={handleChange}
+                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+              />
+            </div>
 
-              <div>
-                <label className='text-sm font-medium'>Name</label>
-                <input
-                  name='name'
-                  placeholder='Your name'
-                  value={form.name}
-                  onChange={handleChange}
-                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
-                />
-              </div>
+            <div>
+              <label className='text-sm font-medium'>Email</label>
+              <input
+                name='email'
+                placeholder='you@email.com'
+                value={form.email}
+                onChange={handleChange}
+                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+              />
+            </div>
 
-              <div>
-                <label className='text-sm font-medium'>Email</label>
-                <input
-                  name='email'
-                  placeholder='you@email.com'
-                  value={form.email}
-                  onChange={handleChange}
-                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
-                />
-              </div>
+            <div>
+              <label className='text-sm font-medium'>Subject</label>
+              <input
+                name='subject'
+                placeholder='What is this about?'
+                value={form.subject}
+                onChange={handleChange}
+                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+              />
+            </div>
 
-              <div>
-                <label className='text-sm font-medium'>Subject</label>
-                <input
-                  name='subject'
-                  placeholder='What is this about?'
-                  value={form.subject}
-                  onChange={handleChange}
-                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
-                />
-              </div>
+            <div>
+              <label className='text-sm font-medium'>Message</label>
+              <textarea
+                name='message'
+                rows={5}
+                placeholder='Tell me about your diving plans...'
+                value={form.message}
+                onChange={handleChange}
+                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none resize-none'
+              />
+            </div>
 
-              <div>
-                <label className='text-sm font-medium'>Message</label>
-                <textarea
-                  name='message'
-                  rows={5}
-                  placeholder='Tell me about your diving plans...'
-                  value={form.message}
-                  onChange={handleChange}
-                  className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none resize-none'
-                />
-              </div>
+            <button
+              type='submit'
+              className='w-full py-3 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white active:scale-95 transition'
+            >
+              {status || 'Send Message'}
+            </button>
 
-              <button
-                type='submit'
-                className='w-full py-3 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white active:scale-95 transition'
-              >
-                {status || 'Send Message'}
-              </button>
-
-              {status && (
-                <p className='text-center text-sm text-gray-600 mt-2'>
-                  {status}
-                </p>
-              )}
-            </motion.form>
-          </motion.div>
-        </div>
+            {status && (
+              <p className='text-center text-sm text-gray-600 mt-2'>{status}</p>
+            )}
+          </motion.form>
+        </motion.div>
       </main>
 
       <Footer />

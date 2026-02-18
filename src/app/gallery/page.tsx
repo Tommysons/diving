@@ -10,18 +10,7 @@ export default function GalleryPage() {
     <>
       <Navbar />
 
-      <main className='relative min-h-screen w-full overflow-hidden'>
-        {/* BACKGROUND IMAGE */}
-        <div className='absolute inset-0'>
-          <img
-            src='/images/gallery.jpg'
-            alt='Gallery Background'
-            className='w-full h-full object-cover brightness-110'
-          />
-          <div className='absolute inset-0 bg-black/40' />
-        </div>
-
-        {/* CONTENT */}
+      <main className='relative min-h-screen w-full bg-blue-200 overflow-hidden'>
         <section className='relative z-10 max-w-7xl mx-auto px-4 py-12'>
           {/* HEADER */}
           <motion.div
@@ -30,22 +19,22 @@ export default function GalleryPage() {
             transition={{ duration: 0.7 }}
             className='text-center mb-10'
           >
-            <h1 className='text-4xl md:text-5xl font-bold text-white mb-4'>
+            <h1 className='text-4xl md:text-5xl font-bold text-gray-800 mb-4'>
               My Underwater Gallery
             </h1>
-            <p className='text-white/90 max-w-2xl mx-auto'>
+            <p className='text-gray-700 max-w-2xl mx-auto'>
               Explore the mesmerizing world beneath the waves. From vibrant
               coral reefs to encounters with majestic marine life, these videos
               capture the beauty and thrill of diving adventures.
             </p>
           </motion.div>
 
-          {/* GRID */}
+          {/* VIDEO GRID */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className='bg-white/85 backdrop-blur-md rounded-2xl shadow-xl p-6'
+            className='bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-6'
           >
             <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
               {videos.map((video, index) => (
@@ -70,7 +59,7 @@ export default function GalleryPage() {
                   />
 
                   {/* Overlay */}
-                  <div className='absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition'>
+                  <div className='absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition'>
                     <svg
                       className='w-16 h-16 text-white'
                       fill='currentColor'
@@ -81,7 +70,7 @@ export default function GalleryPage() {
                   </div>
 
                   {/* Title */}
-                  <div className='absolute bottom-0 w-full bg-black/60 text-white text-center py-3 px-3'>
+                  <div className='absolute bottom-0 w-full bg-black/50 text-white text-center py-3 px-3'>
                     <div className='font-semibold'>{video.title}</div>
                     {video.description && (
                       <div className='text-sm mt-1 line-clamp-2 text-white/90'>
