@@ -81,7 +81,7 @@ export default function HomePage() {
         {/* ================= HERO (LCP PRIORITY ONLY) ================= */}
         <section className='relative min-h-[70vh] flex items-center justify-center text-center overflow-hidden'>
           <Image
-            src='/images/hero-about.webp'
+            src='/images/hero-about-a.webp'
             alt='Scuba diving underwater'
             fill
             priority
@@ -104,7 +104,7 @@ export default function HomePage() {
         {/* ================= WHY SECTION ================= */}
         <section className='relative py-20 overflow-hidden'>
           <Image
-            src='/images/wr/wr1.webp'
+            src='/images/wr/wr1a.webp'
             alt='Diver underwater'
             fill
             sizes='100vw'
@@ -136,7 +136,7 @@ export default function HomePage() {
         {/* ================= CHOOSE PATH ================= */}
         <section className='relative py-20 overflow-hidden'>
           <Image
-            src='/images/cpn6.webp'
+            src='/images/cpn6a.webp'
             alt='Ocean background'
             fill
             sizes='100vw'
@@ -158,7 +158,7 @@ export default function HomePage() {
         {/* ================= BLOG SECTION ================= */}
         <section className='relative py-20 overflow-hidden'>
           <Image
-            src='/images/wr/wr2.webp'
+            src='/images/wr/wr2a.webp'
             alt='Underwater blog background'
             fill
             sizes='100vw'
