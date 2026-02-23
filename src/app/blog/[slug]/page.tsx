@@ -41,7 +41,9 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
 
     case 'paragraph':
       return (
-        <p className='text-gray-800 leading-relaxed'>{block.value || ''}</p>
+        <p className='text-gray-800 text-l leading-relaxed'>
+          {block.value || ''}
+        </p>
       )
 
     case 'quote':

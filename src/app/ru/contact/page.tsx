@@ -70,11 +70,11 @@ export default function ContactPageRu() {
           transition={{ duration: 0.6 }}
           className='w-full max-w-xl bg-white/85 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl'
         >
-          <h1 className='text-3xl font-bold tracking-tight text-center mb-2'>
+          <h1 className='text-3xl font-bold tracking-tight text-blue-700 text-center mb-2'>
             Связаться с LokaWndr
           </h1>
 
-          <p className='text-center text-gray-600 mb-6'>
+          <p className='text-center text-blue-700 mb-6'>
             Запланируем ваше подводное приключение. Спросите о дайвинге, курсах
             или погружениях.
           </p>

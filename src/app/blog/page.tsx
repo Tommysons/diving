@@ -15,8 +15,10 @@ export default function BlogPage() {
       <main className='min-h-screen bg-blue-200 px-6 py-12'>
         {/* Header */}
         <div className='text-center mb-12'>
-          <h1 className='text-4xl font-bold text-blue-900 mb-4'>Blog</h1>
-          <p className='text-blue-800'>
+          <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
+            Blog
+          </h1>
+          <p className='text-blue-700 text-lg'>
             Read my stories from the underwater world.
           </p>
         </div>

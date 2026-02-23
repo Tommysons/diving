@@ -9,9 +9,9 @@ export default function Footer() {
   const translations = {
     en: {
       contact: 'Contact Me',
-      phone: 'Phone',
+      phone: 'WhatsApp',
       email: 'Email',
-      address: 'Address',
+      // address: 'Address',
       follow: 'Follow Me',
       about: 'About Me',
       aboutText:
@@ -19,9 +19,9 @@ export default function Footer() {
     },
     ru: {
       contact: 'Свяжитесь со мной',
-      phone: 'Телефон',
+      phone: 'WhatsApp',
       email: 'Эл. почта',
-      address: 'Адрес',
+      // address: 'Адрес',
       follow: 'Я в социальных сетях',
       about: 'Обо мне',
       aboutText:
@@ -50,9 +50,9 @@ export default function Footer() {
               {currentContacts.email}
             </a>
           </p>
-          <p>
+          {/* <p>
             {t.address}: {currentContacts.address}
-          </p>
+          </p> */}
         </div>
 
         {/* Social Section */}

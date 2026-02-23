@@ -80,7 +80,7 @@ export default function HomePage() {
         {/* HERO */}
         <section
           className='relative min-h-[60vh] sm:min-h-[65vh] md:min-h-[70vh] flex items-center justify-center text-center bg-fixed bg-center bg-cover'
-          style={{ backgroundImage: "url('/images/hero-about.jpg')" }}
+          style={{ backgroundImage: "url('/images/hero-about.webp')" }}
         >
           <div className='absolute inset-0 bg-black/45' />
           <motion.div
@@ -113,7 +113,7 @@ export default function HomePage() {
         {/* WHY SECTION */}
         <section
           className='relative flex justify-center items-center bg-fixed bg-center bg-cover'
-          style={{ backgroundImage: "url('/images/wr/wr1.jpg')" }}
+          style={{ backgroundImage: "url('/images/wr/wr1.webp')" }}
         >
           <div className='absolute inset-0 bg-black/30' />
           <div className='relative z-10 w-full max-w-4xl px-4 py-12 mx-auto text-center'>
@@ -150,7 +150,7 @@ export default function HomePage() {
         {/* CHOOSE PATH + BLOG + QUOTE */}
         <section
           className='relative flex flex-col justify-center items-center bg-fixed bg-center bg-cover'
-          style={{ backgroundImage: "url('/images/twins/twins1.jpg')" }}
+          style={{ backgroundImage: "url('/images/cpn6.webp')" }}
         >
           <div className='absolute inset-0 bg-black/30' />
           <div className='relative z-10 w-full max-w-xl px-2 py-12'>

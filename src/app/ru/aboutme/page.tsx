@@ -20,10 +20,10 @@ export default function AboutPageRu() {
             transition={{ duration: 0.7 }}
             className='text-center text-white'
           >
-            <h1 className='text-4xl text-black md:text-5xl font-bold drop-shadow-md mb-3'>
+            <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
               Знакомьтесь с вашим инструктором
             </h1>
-            <p className='text-black'>
+            <p className='text-blue-700 text-lg mx-auto'>
               Страсть к дайвингу. Безопасность превыше всего.
             </p>
           </motion.div>
@@ -36,7 +36,7 @@ export default function AboutPageRu() {
             className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-8'
           >
             <img
-              src='/images/badge.jpg'
+              src='/images/badge.webp'
               alt='Фото инструктора'
               className='w-40 h-40 rounded-full object-cover shadow-md'
             />

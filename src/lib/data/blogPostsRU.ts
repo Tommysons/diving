@@ -8,7 +8,7 @@ export const blogPostsRU: BlogPost[] = [
     slug: 'first-dives-koh-tao',
     excerpt:
       'Делюсь моими первыми впечатлениями от погружений на Ко Тао и что их сделало особенными.',
-    image: '/images/scuba-intro.jpg',
+    image: '/images/scuba-intro.webp',
     date: '2026-02-17',
     tags: ['дайвинг', 'Ко Тао'],
     content: [
@@ -139,7 +139,7 @@ export const blogPostsRU: BlogPost[] = [
     slug: 'bans-diving-resort',
     excerpt:
       'Почему стоит пройти курс дайвинга в Ban’s Diving Resort на Ко Тао?',
-    image: '/images/bans.jpg',
+    image: '/images/bans.webp',
     date: '2026-02-18',
     tags: ['дайвинг', 'Ко Тао'],
     content: [

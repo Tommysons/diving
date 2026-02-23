@@ -28,7 +28,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'first-dives-koh-tao',
     excerpt:
       'Sharing my first diving experiences in Koh Tao and what made them special.',
-    image: '/images/scuba-intro.jpg',
+    image: '/images/scuba-intro.webp',
     date: '2026-02-17',
     tags: ['diving', 'Koh Tao'],
     content: [
@@ -182,7 +182,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'bans-diving-resort',
     excerpt:
       'Why Should You Do a Diving Course at Ban’s Diving Resort in Koh Tao?',
-    image: '/images/bans.jpg',
+    image: '/images/bans.webp',
     date: '2026-02-18',
     tags: ['diving', 'Koh Tao'],
     content: [

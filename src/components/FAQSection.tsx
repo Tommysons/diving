@@ -18,7 +18,7 @@ export default function FAQSection() {
     <section className='relative bg-blue-200 py-16'>
       <div className='relative z-10 max-w-4xl mx-auto px-4 text-gray-900'>
         <motion.h1
-          className='text-3xl font-bold mb-8 text-center text-gray-800'
+          className='text-3xl md:text-4xl font-bold text-center text-blue-700 mb-1'
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >

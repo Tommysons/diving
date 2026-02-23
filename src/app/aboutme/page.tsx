@@ -21,10 +21,10 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className='text-center'
           >
-            <h1 className='text-4xl md:text-5xl font-bold text-gray-900 mb-3'>
+            <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
               Meet Your Instructor
             </h1>
-            <p className='text-gray-600'>
+            <p className='text-blue-700 text-lg mx-auto'>
               Passionate about diving. Focused on safety.
             </p>
           </motion.div>
@@ -32,7 +32,7 @@ export default function AboutPage() {
           {/* PROFILE */}
           <div className='bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row items-center gap-8'>
             <Image
-              src='/images/badge.jpg'
+              src='/images/badge.webp'
               alt='Instructor photo'
               width={160}
               height={160}

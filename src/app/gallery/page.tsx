@@ -19,10 +19,10 @@ export default function GalleryPage() {
             transition={{ duration: 0.7 }}
             className='text-center mb-10'
           >
-            <h1 className='text-4xl md:text-5xl font-bold text-gray-800 mb-4'>
+            <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
               My Underwater Gallery
             </h1>
-            <p className='text-gray-700 max-w-2xl mx-auto'>
+            <p className='text-blue-700 text-lg mx-auto'>
               Explore the mesmerizing world beneath the waves. From vibrant
               coral reefs to encounters with majestic marine life, these videos
               capture the beauty and thrill of diving adventures.

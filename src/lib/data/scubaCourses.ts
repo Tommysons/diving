@@ -33,7 +33,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Try scuba diving for the first time under the guidance of professional instructors. Perfect for curious beginners.',
     maxDepth: '12 meters',
-    image: '/images/courses/dsd.jpg',
+    image: '/images/courses/dsd.webp',
     prerequisites: `Basic swimming skills are required or the ability to learn them with the instructor. 
     You should feel comfortable in the water and not be afraid of it. Minimum age is 10 years old. 
     For ages 8–9, please contact me personally — there is a special kids program without scuba certification.`,
@@ -52,7 +52,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Complete your first full scuba certification. Learn essential skills, safety protocols, and dive theory.',
     maxDepth: '18 meters',
-    image: '/images/owd.jpg',
+    image: '/images/courses/owd.webp',
     prerequisites: `Basic swimming skills are required or the ability to learn them with the instructor. 
     You should feel comfortable in the water and not be afraid of it. Minimum age is 10 years old. 
     For ages 8–9, please contact me personally — there is a special kids program without scuba certification.`,
@@ -71,7 +71,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Take your diving to the next level with deep dives, navigation skills, and specialty dives.',
     maxDepth: '30 meters',
-    image: '/images/awd.jpg',
+    image: '/images/courses/awd.webp',
     price: '10,000฿',
     prerequisites: 'OWD',
     duration: '2-3 days',
@@ -88,7 +88,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'Learn how to prevent and handle diving emergencies. Develop leadership and problem-solving skills.',
     maxDepth: '30 meters',
-    image: '/images/rescue.jpg',
+    image: '/images/courses/rescue.webp',
     price: '11,000฿',
     prerequisites: 'AOWD + EFR/CPR certification',
     duration: '3 days',
@@ -105,7 +105,7 @@ export const scubaCourses: ScubaCourse[] = [
     description:
       'First professional level for leading certified divers and assisting instructors. Develop professional skills and experience guiding divers safely.',
     maxDepth: '40 meters',
-    image: '/images/ddd.jpg',
+    image: '/images/courses/ddd.webp',
     price: '33,000฿',
     prerequisites: 'Rescue Diver + 40 logged dives + medical clearance',
     duration: '2-4 weeks',
@@ -128,7 +128,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Master your buoyancy for better air consumption, smoother dives, and precise underwater control.',
     prerequisites: 'OWD or equivalent',
-    image: '/images/buoyancy.jpg',
+    image: '/images/courses/buoyancy.webp',
     price: '฿5,500',
     duration: '1 day',
     program: [
@@ -144,7 +144,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Safely extend your depth limit while learning proper planning, gas management, and emergency procedures.',
     prerequisites: 'AOWD or equivalent',
-    image: '/images/eee.jpg',
+    image: '/images/courses/eee.webp',
     price: '฿8,500',
     duration: '1-2 days',
     program: [
@@ -160,7 +160,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Experience the underwater world after dark and learn night diving navigation and safety.',
     prerequisites: 'OWD or equivalent',
-    image: '/images/night.jpg',
+    image: '/images/courses/night.webp',
     price: '฿฿7,000',
     duration: '1 day',
     program: [
@@ -176,7 +176,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Dive longer and safer using enriched air while learning proper planning and safety protocols.',
     prerequisites: 'OWD or equivalent',
-    image: '/images/nitrox.jpg',
+    image: '/images/courses/nitrox.webp',
     price: '7,500฿',
     duration: '1 day',
     program: [
@@ -192,7 +192,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
     description:
       'Explore underwater wrecks while learning safety, navigation, and penetration techniques.',
     prerequisites: 'AOWD or equivalent',
-    image: '/images/wreck.jpg',
+    image: '/images/courses/wreck.webp',
     price: '฿8,500',
     duration: '1-2 days',
     program: [
@@ -233,7 +233,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Получите вашу первую полную сертификацию дайвера. Изучите навыки, правила безопасности и теорию погружений.',
     maxDepth: '18 метров',
-    image: '/images/owd.jpg',
+    image: '/images/courses/owd.webp',
     prerequisites: `Требуются базовые навыки плавания или готовность обучаться им с инструктором. 
     Важно чувствовать себя уверенно в воде и не бояться её. Минимальный возраст — 10 лет. 
     Для детей 8–9 лет свяжитесь со мной лично — существует отдельная детская программа без сертификации дайвера.`,
@@ -252,7 +252,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Поднимите свои навыки дайвинга на новый уровень: глубокие погружения, навигация и специальные погружения.',
     maxDepth: '30 метров',
-    image: '/images/awd.jpg',
+    image: '/images/courses/awd.webp',
     price: '10,000฿',
     prerequisites: 'OWD',
     duration: '2-3 дня',
@@ -269,7 +269,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Научитесь предотвращать и управлять аварийными ситуациями при дайвинге. Развивайте лидерские навыки.',
     maxDepth: '30 метров',
-    image: '/images/rescue.jpg',
+    image: '/images/courses/rescue.webp',
     price: '11,000฿',
     prerequisites: 'AOWD + сертификация EFR/CPR',
     duration: '3 дня',
@@ -286,7 +286,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     description:
       'Первый профессиональный уровень: руководите сертифицированными дайверами и помогайте инструкторам.',
     maxDepth: '40 метров',
-    image: '/images/ddd.jpg',
+    image: '/images/courses/ddd.webp',
     price: '33,000฿',
     prerequisites: 'Rescue Diver + 40 погружений + медицинское разрешение',
     duration: '2-4 недели',
@@ -309,7 +309,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Освойте контроль плавучести для экономии воздуха и точного управления под водой.',
     prerequisites: 'OWD или эквивалент',
-    image: '/images/buoyancy.jpg',
+    image: '/images/courses/buoyancy.webp',
     price: '฿5,500',
     duration: '1 день',
     program: [
@@ -325,7 +325,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Безопасно увеличьте предел глубины с правильными техниками и планированием погружений.',
     prerequisites: 'AOWD или эквивалент',
-    image: '/images/eee.jpg',
+    image: '/images/courses/eee.webp',
     price: '฿8,500',
     duration: '1-2 дня',
     program: [
@@ -341,7 +341,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Исследуйте подводный мир ночью и изучите ночную навигацию и правила безопасности.',
     prerequisites: 'OWD или эквивалент',
-    image: '/images/night.jpg',
+    image: '/images/courses/night.webp',
     price: '฿฿7,000',
     duration: '1 день',
     program: [
@@ -357,7 +357,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Погружайтесь дольше и безопаснее с обогащенным воздухом, изучая правильное планирование и безопасность.',
     prerequisites: 'OWD или эквивалент',
-    image: '/images/nitrox.jpg',
+    image: '/images/courses/nitrox.webp',
     price: '7,500฿',
     duration: '1 день',
     program: [
@@ -373,7 +373,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     description:
       'Изучайте подводные кораблекрушения с безопасностью и навигацией внутри конструкций.',
     prerequisites: 'AOWD или эквивалент',
-    image: '/images/wreck.jpg',
+    image: '/images/courses/wreck.webp',
     price: '฿8,500',
     duration: '1-2 дня',
     program: [

@@ -19,10 +19,10 @@ export default function GalleryPageRU() {
             transition={{ duration: 0.7 }}
             className='text-center mb-10'
           >
-            <h1 className='text-4xl md:text-5xl font-bold text-gray-800 mb-4'>
+            <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
               Моя Подводная Галерея
             </h1>
-            <p className='text-gray-700 max-w-2xl mx-auto'>
+            <p className='text-blue-700 text-lg mx-auto'>
               Исследуйте завораживающий мир под волнами. От ярких коралловых
               рифов до встреч с величественными морскими обитателями — эти видео
               передают красоту и атмосферу моих подводных приключений.
