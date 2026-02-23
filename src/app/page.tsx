@@ -14,6 +14,7 @@ import Link from 'next/link'
 
 export default function HomePage() {
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
+
   const router = useRouter()
   const pathname = usePathname() || '/'
   const locale = pathname.startsWith('/ru') ? 'ru' : 'en'
@@ -26,8 +27,8 @@ export default function HomePage() {
   }
 
   const handleCardClick = (card: CardData) => {
-    setSelectedCard(card)
     const base = locale === 'ru' ? '/ru' : ''
+
     switch (card.id) {
       case 'diveSites':
         router.push(`${base}/divesites`)
@@ -38,8 +39,6 @@ export default function HomePage() {
       case 'aboutMe':
         router.push(`${base}/aboutme`)
         break
-      default:
-        alert(`You clicked on: ${card.title}`)
     }
   }
 
@@ -79,7 +78,7 @@ export default function HomePage() {
       <Header />
 
       <main className='relative w-full overflow-x-hidden'>
-        {/* HERO */}
+        {/* ================= HERO (LCP PRIORITY ONLY) ================= */}
         <section className='relative min-h-[70vh] flex items-center justify-center text-center overflow-hidden'>
           <Image
             src='/images/hero-about.webp'
@@ -87,8 +86,10 @@ export default function HomePage() {
             fill
             priority
             fetchPriority='high'
+            sizes='100vw'
             className='object-cover'
           />
+
           <div className='absolute inset-0 bg-black/45' />
 
           <div className='relative z-10 max-w-xl px-4'>
@@ -100,14 +101,17 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* WHY SECTION */}
+        {/* ================= WHY SECTION ================= */}
         <section className='relative py-20 overflow-hidden'>
           <Image
             src='/images/wr/wr1.webp'
             alt='Diver underwater'
             fill
+            sizes='100vw'
+            loading='lazy'
             className='object-cover'
           />
+
           <div className='absolute inset-0 bg-black/30' />
 
           <div className='relative z-10 max-w-4xl mx-auto text-center px-4'>
@@ -129,14 +133,17 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CHOOSE PATH */}
+        {/* ================= CHOOSE PATH ================= */}
         <section className='relative py-20 overflow-hidden'>
           <Image
             src='/images/cpn6.webp'
             alt='Ocean background'
             fill
+            sizes='100vw'
+            loading='lazy'
             className='object-cover'
           />
+
           <div className='absolute inset-0 bg-black/30' />
 
           <div className='relative z-10 max-w-xl mx-auto px-4'>
@@ -148,14 +155,17 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* NEW BLOG SECTION (4th Image) */}
+        {/* ================= BLOG SECTION ================= */}
         <section className='relative py-20 overflow-hidden'>
           <Image
-            src='/images/wr/wr2.webp' // 👈 ADD YOUR 4TH IMAGE HERE
+            src='/images/wr/wr2.webp'
             alt='Underwater blog background'
             fill
+            sizes='100vw'
+            loading='lazy'
             className='object-cover'
           />
+
           <div className='absolute inset-0 bg-black/40' />
 
           <div className='relative z-10 max-w-5xl mx-auto px-4 text-center'>
@@ -180,13 +190,18 @@ export default function HomePage() {
                     alt={post.title}
                     width={600}
                     height={400}
+                    loading='lazy'
+                    sizes='(max-width: 768px) 100vw, 600px'
                     className='w-full h-48 object-cover'
                   />
+
                   <div className='p-4'>
                     <h3 className='text-xl font-semibold text-blue-900 mb-2'>
                       {post.title}
                     </h3>
+
                     <p className='text-blue-800 mb-4'>{post.excerpt}</p>
+
                     <Link
                       href={`${locale === 'ru' ? '/ru' : ''}/blog/${post.slug}`}
                       className='inline-block px-4 py-2 bg-yellow-400 text-blue-900 font-semibold rounded'
@@ -198,7 +213,6 @@ export default function HomePage() {
               ))}
             </div>
 
-            {/* QUOTE */}
             <div className='mt-12 bg-white/90 p-6 italic shadow rounded-xl max-w-xl mx-auto'>
               “{quotes[locale]}”
             </div>
