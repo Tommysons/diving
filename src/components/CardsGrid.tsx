@@ -2,7 +2,7 @@
 
 import { CardData } from '../lib/data'
 import Card from './Card'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 
 interface CardsGridProps {
   cards: CardData[]
@@ -10,18 +10,27 @@ interface CardsGridProps {
 }
 
 export default function CardsGrid({ cards, onCardClick }: CardsGridProps) {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
-    <div className='w-full flex flex-col lg:flex-col gap-6'>
-      {cards.map((card, i) => (
-        <motion.div
+    <div className='w-full flex flex-col gap-6'>
+      {cards.map((card) => (
+        <div
           key={card.id}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: i * 0.15 }}
-          className='w-full'
+          className={`transition-all duration-500 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
         >
           <Card card={card} onClick={onCardClick} />
-        </motion.div>
+        </div>
       ))}
     </div>
   )
