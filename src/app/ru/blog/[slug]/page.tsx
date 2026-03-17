@@ -1,11 +1,14 @@
 'use client'
 
 import { use } from 'react'
-import { notFound } from 'next/navigation'
+import { notFound, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
 import { BlogPost, BlogContentBlock } from '@/lib/data/blogPosts'
 import { blogPostsRU } from '@/lib/data/blogPostsRU'
+
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -28,7 +31,7 @@ const item: Variants = {
   },
 }
 
-// Render blocks
+// Render content blocks
 const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
   switch (block.type) {
     case 'heading':
@@ -41,16 +44,21 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
           {block.value || ''}
         </h2>
       )
+
     case 'paragraph':
       return (
-        <p className='text-gray-800 leading-relaxed'>{block.value || ''}</p>
+        <p className='text-gray-800 text-lg leading-relaxed'>
+          {block.value || ''}
+        </p>
       )
+
     case 'quote':
       return (
         <blockquote className='pl-6 border-l-4 border-blue-500 italic text-gray-700 bg-blue-50 p-4 rounded-md shadow-inner my-4'>
           {block.value || ''}
         </blockquote>
       )
+
     case 'list':
       if (!block.items || block.items.length === 0) return null
       return (
@@ -60,6 +68,7 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
           ))}
         </ul>
       )
+
     case 'image':
       if (!block.image) return null
       return (
@@ -76,6 +85,7 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
           )}
         </div>
       )
+
     default:
       return null
   }
@@ -83,8 +93,23 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
 
 export default function BlogPostPageRU({ params }: BlogPostPageProps) {
   const { slug } = use(params)
+  const router = useRouter()
+
   const post: BlogPost | undefined = blogPostsRU.find((p) => p.slug === slug)
   if (!post) notFound()
+
+  const currentIndex = blogPostsRU.findIndex((p) => p.slug === slug)
+
+  const goToPrev = () => {
+    const prevIndex =
+      (currentIndex - 1 + blogPostsRU.length) % blogPostsRU.length
+    router.push(`/ru/blog/${blogPostsRU[prevIndex].slug}`)
+  }
+
+  const goToNext = () => {
+    const nextIndex = (currentIndex + 1) % blogPostsRU.length
+    router.push(`/ru/blog/${blogPostsRU[nextIndex].slug}`)
+  }
 
   return (
     <>
@@ -97,15 +122,26 @@ export default function BlogPostPageRU({ params }: BlogPostPageProps) {
           animate='show'
           className='max-w-4xl mx-auto space-y-10'
         >
-          {/* Title */}
+          {/* Title + Navigation */}
           <motion.div
             variants={item}
             className='bg-white p-8 rounded-xl shadow-lg text-center'
           >
-            <h1 className='text-5xl sm:text-6xl font-extrabold text-gray-900 mb-2 leading-tight'>
-              {post.title}
-            </h1>
-            <p className='text-gray-600 text-sm sm:text-base'>
+            <div className='flex items-center justify-center gap-6'>
+              <NavButton onClick={goToPrev} ariaLabel='Previous post'>
+                <ChevronLeft className='w-6 h-6' />
+              </NavButton>
+
+              <h1 className='text-5xl sm:text-6xl font-extrabold text-gray-900 mb-2 leading-tight'>
+                {post.title}
+              </h1>
+
+              <NavButton onClick={goToNext} ariaLabel='Next post'>
+                <ChevronRight className='w-6 h-6' />
+              </NavButton>
+            </div>
+
+            <p className='text-gray-600 text-sm sm:text-base mt-3'>
               {new Date(post.date).toLocaleDateString('ru-RU', {
                 year: 'numeric',
                 month: 'long',
@@ -161,5 +197,25 @@ export default function BlogPostPageRU({ params }: BlogPostPageProps) {
 
       <Footer />
     </>
+  )
+}
+
+function NavButton({
+  onClick,
+  ariaLabel,
+  children,
+}: {
+  onClick: () => void
+  ariaLabel: string
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={ariaLabel}
+      className='bg-cyan-700 hover:bg-cyan-800 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md transition'
+    >
+      {children}
+    </button>
   )
 }

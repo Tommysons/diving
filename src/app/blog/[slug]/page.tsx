@@ -1,9 +1,11 @@
 'use client'
 
 import { use } from 'react'
-import { notFound } from 'next/navigation'
+import { notFound, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
 import { blogPosts, BlogPost, BlogContentBlock } from '@/lib/data/blogPosts'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -41,7 +43,7 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
 
     case 'paragraph':
       return (
-        <p className='text-gray-800 text-l leading-relaxed'>
+        <p className='text-gray-800 text-lg leading-relaxed'>
           {block.value || ''}
         </p>
       )
@@ -87,8 +89,22 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = use(params)
+  const router = useRouter()
+
   const post: BlogPost | undefined = blogPosts.find((p) => p.slug === slug)
   if (!post) notFound()
+
+  const currentIndex = blogPosts.findIndex((p) => p.slug === slug)
+
+  const goToPrev = () => {
+    const prevIndex = (currentIndex - 1 + blogPosts.length) % blogPosts.length
+    router.push(`/blog/${blogPosts[prevIndex].slug}`)
+  }
+
+  const goToNext = () => {
+    const nextIndex = (currentIndex + 1) % blogPosts.length
+    router.push(`/blog/${blogPosts[nextIndex].slug}`)
+  }
 
   return (
     <>
@@ -101,15 +117,26 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           animate='show'
           className='max-w-4xl mx-auto space-y-10'
         >
-          {/* Title */}
+          {/* Title + Navigation */}
           <motion.div
             variants={item}
             className='bg-white p-8 rounded-xl shadow-lg text-center'
           >
-            <h1 className='text-5xl sm:text-6xl font-extrabold text-gray-900 mb-2 leading-tight'>
-              {post.title}
-            </h1>
-            <p className='text-gray-600 text-sm sm:text-base'>
+            <div className='flex items-center justify-center gap-6'>
+              <NavButton onClick={goToPrev} ariaLabel='Previous post'>
+                <ChevronLeft className='w-6 h-6' />
+              </NavButton>
+
+              <h1 className='text-5xl sm:text-6xl font-extrabold text-gray-900 mb-2 leading-tight'>
+                {post.title}
+              </h1>
+
+              <NavButton onClick={goToNext} ariaLabel='Next post'>
+                <ChevronRight className='w-6 h-6' />
+              </NavButton>
+            </div>
+
+            <p className='text-gray-600 text-sm sm:text-base mt-3'>
               {new Date(post.date).toLocaleDateString('en-GB', {
                 year: 'numeric',
                 month: 'long',
@@ -165,5 +192,25 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
       <Footer />
     </>
+  )
+}
+
+function NavButton({
+  onClick,
+  ariaLabel,
+  children,
+}: {
+  onClick: () => void
+  ariaLabel: string
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={ariaLabel}
+      className='bg-cyan-700 hover:bg-cyan-800 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md transition'
+    >
+      {children}
+    </button>
   )
 }
