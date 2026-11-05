@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import AtlasGlobe from '@/components/AtlasGlobe'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Globe2, MapPin, RotateCcw, Waves } from 'lucide-react'
@@ -9,9 +10,9 @@ import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
 
 type Destination = 'earth' | 'thailand' | 'maldives'
 const markers: Record<string,{x:number;y:number}> = {
- 'chumphon-pinnacle':{x:37,y:25},'southwest-pinnacle':{x:25,y:65},
- 'white-rock':{x:53,y:62},'twins':{x:38,y:46},
- 'sattakut-shipwreck':{x:57,y:40},'313-shipwreck':{x:65,y:55},
+ 'chumphon-pinnacle':{x:37,y:18},'southwest-pinnacle':{x:17,y:65},
+ 'white-rock':{x:42,y:62},'twins':{x:38,y:38},
+ 'sattakut-shipwreck':{x:31,y:47},'313-shipwreck':{x:48,y:42},
 }
 export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  const ru=locale==='ru', base=ru?'/ru':''
@@ -24,12 +25,12 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  const t=ru?{
   eyebrow:'LOKAWNDR · ИНТЕРАКТИВНЫЙ АТЛАС',title:'Одна планета. Бесконечный океан.',lead:'Выберите направление и откройте места для дайвинга. Начните с Ко Тао.',
   thailand:'Таиланд',maldives:'Мальдивы',explore:'Исследовать Ко Тао',soon:'Открыть Мальдивы',back:'Назад к Земле',sites:'Места для дайвинга · Ко Тао',
-  mapNote:'Схематичная карта для знакомства с дайв-сайтами. Положение маркеров приблизительное, не используйте для навигации.',
+  mapNote:'Интерактивная 3D-иллюстрация Ко Тао: маркеры показывают общие районы погружений, а не точные GPS-координаты.',
   choose:'Выберите маркер, чтобы посмотреть описание и фотографии.',depth:'Глубина',current:'Течение',visibility:'Видимость',photos:'Фотографии',more:'Полная информация',return:'К карте',maldivesText:'Путеводитель по дайвингу и снорклингу на Мальдивах',maldivesLink:'Открыть путеводитель',photoCredit:'Подводные фотографии: Mia @kakadong123',globeNote:'Перетащите Землю, чтобы повернуть её. Выберите направление ниже.',reset:'Сбросить вращение'
  }:{
   eyebrow:'LOKAWNDR · INTERACTIVE ATLAS',title:'One planet. Infinite blue.',lead:'Choose a destination and discover underwater places. Begin with Koh Tao.',
   thailand:'Thailand',maldives:'Maldives',explore:'Explore Koh Tao',soon:'Explore Maldives',back:'Back to Earth',sites:'Koh Tao · Dive Sites',
-  mapNote:'Illustrative map for exploring dive sites. Marker positions are approximate and must not be used for navigation.',
+  mapNote:'Explore a stylized 3D view of Koh Tao. Markers indicate general dive-site areas, not verified GPS positions.',
   choose:'Select a marker to discover dive information and underwater photos.',depth:'Depth',current:'Current',visibility:'Visibility',photos:'Photo gallery',more:'Full dive-site guide',return:'Back to map',maldivesText:'Discover the Maldives scuba diving and snorkeling guide',maldivesLink:'Open Maldives guide',photoCredit:'Underwater photography: Mia @kakadong123',globeNote:'Drag the Earth to rotate it. Choose a destination below.',reset:'Reset rotation'
  }
  return <><Header/><main className='min-h-screen overflow-hidden bg-[#020d1b] text-white'>
@@ -40,17 +41,9 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  <h1 className='mt-4 max-w-4xl text-4xl font-black tracking-tight md:text-6xl'>{t.title}</h1>
  <p className='mt-5 max-w-2xl text-lg text-slate-300'>{t.lead}</p>
  {destination==='earth'?<>
- <div className='relative mx-auto mt-7 flex min-h-[350px] max-w-[850px] items-center justify-center md:min-h-[540px]'>
- <div className='pointer-events-none absolute h-[330px] w-[330px] rounded-full border border-cyan-400/20 md:h-[540px] md:w-[540px]' style={{transform:'rotateX(68deg) rotate(-20deg)'}}/>
- <div className='pointer-events-none absolute h-[300px] w-[300px] rounded-full bg-cyan-400/10 blur-3xl md:h-[480px] md:w-[480px]'/>
- <div role='img' aria-label={ru?'Вращающаяся Земля':'Rotatable Earth'} className='relative h-[280px] w-[280px] cursor-grab select-none overflow-hidden rounded-full border border-cyan-200/25 shadow-[inset_-40px_-20px_65px_#000d,0_0_35px_#3ecfff55,0_0_120px_#007dff22] active:cursor-grabbing md:h-[470px] md:w-[470px]'
- onPointerDown={e=>{setDragStart(e.clientX);e.currentTarget.setPointerCapture(e.pointerId)}}
- onPointerMove={e=>{if(dragStart!==null){setSpin(v=>v+(e.clientX-dragStart)*.6);setDragStart(e.clientX)}}}
- onPointerUp={()=>setDragStart(null)} onPointerCancel={()=>setDragStart(null)}>
- <div className='absolute inset-0' style={{backgroundImage:'url(https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg)',backgroundSize:'auto 100%',backgroundPosition:`${50+spin/3}% center`,filter:'saturate(1.25) contrast(1.1)'}}/>
- <div className='absolute inset-0 rounded-full' style={{background:'radial-gradient(circle at 30% 27%,#d4f8ff33,transparent 34%),linear-gradient(95deg,transparent 37%,#001223b8 95%)'}}/>
- </div>
- <div className='pointer-events-none absolute bottom-2 text-center text-xs tracking-wider text-cyan-100/70'>{t.globeNote}</div>
+ <div className='relative mx-auto mt-7 h-[390px] max-w-[950px] overflow-hidden rounded-[2rem] border border-cyan-400/15 bg-[#020b19] md:h-[570px]'>
+ <AtlasGlobe focus='earth'/>
+ <div className='pointer-events-none absolute bottom-5 left-0 right-0 text-center text-xs tracking-wider text-cyan-100/70'>{t.globeNote}</div>
  </div>
  <div className='mx-auto mt-3 flex max-w-2xl flex-wrap justify-center gap-4'>
  <button onClick={()=>{setDestination('thailand');setSelected(null)}} className='flex items-center gap-3 rounded-2xl border border-cyan-300/40 bg-cyan-500/20 px-6 py-4 font-bold transition hover:bg-cyan-400/30'><MapPin size={20}/>{t.thailand}<ArrowRight size={17}/></button>
@@ -64,8 +57,17 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  <p className='mt-3 max-w-3xl text-sm text-slate-400'>{t.mapNote}</p>
  <div className='mt-7 grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(300px,1fr)]'>
  <div className='relative aspect-[4/5] max-h-[730px] overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#07334c] md:aspect-[5/4]'>
- <Image src='/images/koh-tao-map.jpg' alt='Koh Tao dive map' fill sizes='(max-width:1024px) 100vw, 60vw' className='object-contain opacity-75'/>
- <div className='absolute inset-0 bg-gradient-to-t from-[#021827]/45 to-transparent'/>
+ <div className='absolute inset-0' style={{background:'radial-gradient(ellipse at 55% 43%,#187b8b 0%,#07506a 38%,#031e37 77%)'}}/>
+ <div className='absolute inset-0 opacity-30' style={{backgroundImage:'repeating-radial-gradient(ellipse at 50% 48%,transparent 0px,transparent 23px,#8eeaff44 24px,#8eeaff44 25px)'}}/>
+ <svg viewBox='0 0 100 100' preserveAspectRatio='none' className='absolute inset-0 h-full w-full drop-shadow-[12px_18px_16px_#001321]'>
+ <defs><linearGradient id='islandLand' x1='0' y1='0' x2='1' y2='1'><stop stopColor='#92bc8b'/><stop offset='.4' stopColor='#377f66'/><stop offset='1' stopColor='#0c473d'/></linearGradient><filter id='islandShadow'><feGaussianBlur stdDeviation='1.5'/></filter></defs>
+ <path d='M52 9 C64 12 65 24 63 32 C70 42 65 52 62 60 C63 70 55 80 49 92 C42 96 35 85 36 74 C32 63 34 52 37 44 C32 35 38 24 42 17 Z' fill='#001c28' opacity='.65' transform='translate(2 3)' filter='url(#islandShadow)'/>
+ <path d='M52 9 C64 12 65 24 63 32 C70 42 65 52 62 60 C63 70 55 80 49 92 C42 96 35 85 36 74 C32 63 34 52 37 44 C32 35 38 24 42 17 Z' fill='url(#islandLand)' stroke='#a6ead7' strokeWidth='.8'/>
+ <path d='M49 17 C54 25 46 32 54 41 S48 54 54 63 S47 79 47 88' fill='none' stroke='#b8dba3' strokeWidth='3' opacity='.36'/>
+ <path d='M43 29 Q55 35 43 49 M43 61 Q56 66 44 77' fill='none' stroke='#d2e4b2' strokeWidth='1.5' opacity='.35'/>
+ </svg>
+ <div className='pointer-events-none absolute left-[52%] top-[49%] -translate-x-1/2 -translate-y-1/2 -rotate-[75deg] text-2xl font-black tracking-[.35em] text-white/45 md:text-3xl'>KOH TAO</div>
+ <span className='absolute left-5 top-5 rounded-full border border-cyan-200/25 bg-[#06243a]/80 px-4 py-2 text-xs tracking-wider text-cyan-100'>LOKAWNDR · 3D ISLAND CONCEPT</span>
  {sites.filter(s=>markers[s.slug]).map(s=><button key={s.slug} style={{left:markers[s.slug].x+'%',top:markers[s.slug].y+'%'}} onClick={()=>setSelected(s.slug)} aria-label={s.name} title={s.name} className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 p-2 shadow-[0_0_22px_#00cfffaa] transition hover:scale-125 ${selected===s.slug?'border-white bg-amber-400 text-[#05233a]':'border-white bg-cyan-400 text-[#05233a]'}`}><MapPin size={17}/></button>)}
  <span className='absolute bottom-4 left-4 rounded-full border border-white/20 bg-[#031a2c]/80 px-3 py-2 text-xs'>{ru?'Иллюстрация · Не для навигации':'Illustration · Not for navigation'}</span>
  </div>
