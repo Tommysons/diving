@@ -12,6 +12,7 @@ export default function Navbar() {
   const base = ru ? '/ru' : ''
   const path = ru ? pathname.replace(/^\/ru/, '') || '/' : pathname
   const items = [
+    { label:ru?'Атлас Земли':'Explore Earth',href:base+'/atlas' },
     { label:ru?'Направления':'Destinations',href:base+'/destinations/thailand', children:[{label:ru?'Таиланд':'Thailand',href:base+'/destinations/thailand'},{label:ru?'Мальдивы':'Maldives',href:base+'/destinations/maldives'}] },
     { label:ru?'Дайвинг':'Diving',href:base+'/divesites',children:[{label:ru?'Дайв-сайты':'Dive Sites',href:base+'/divesites'},{label:ru?'Курсы':'Courses',href:base+'/scubadivingcourses'}] },
     { label:ru?'Снорклинг':'Snorkeling',href:base+'/destinations/maldives' },
