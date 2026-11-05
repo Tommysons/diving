@@ -16,7 +16,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
     life: 'Встречи в океане', lifeText: 'Манты, китовые акулы, черепахи и скаты — часть удивительного подводного мира Мальдив. Наблюдения зависят от места и сезона и не гарантированы.',
     story: 'Истории из океана', storyText: 'Смотрите реальные подводные видео и следите за новыми путешествиями LokaWndr.',
     watch: 'YouTube LokaWndr', plan: 'Есть вопросы?', planText: 'Хотите узнать больше о дайвинге и снорклинге на Мальдивах? Напишите нам. Бронирование конкретных поездок пока не доступно.',
-    contact: 'Связаться', other: 'Открыть Таиланд', note: 'Фотографии на странице пока взяты из существующей галереи LokaWndr; снимки с Мальдив будут добавлены позже.'
+    contact: 'Связаться', other: 'Места для дайвинга на Мальдивах', note: 'Фотографии на странице пока взяты из существующей галереи LokaWndr; снимки с Мальдив будут добавлены позже.'
   } : {
     label: 'CHAPTER 02 · MALDIVES', title: 'The Maldives, Beneath the Surface', intro: 'Coral reefs, incredible marine life and ocean encounters worth remembering.',
     discover: 'Discover the Ocean', videos: 'Watch Our Videos', why: 'Discover the Maldives with LokaWndr',
@@ -26,7 +26,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
     life: 'Ocean Encounters', lifeText: 'Manta rays, whale sharks, turtles and rays are among the Maldives’ remarkable marine animals. Sightings depend on location and season and are never guaranteed.',
     story: 'Stories from the Ocean', storyText: 'Watch real underwater videos and follow the next LokaWndr adventures.',
     watch: 'LokaWndr on YouTube', plan: 'Questions about the Maldives?', planText: 'Get in touch to learn more about diving and snorkeling. Specific trip bookings are not available here yet.',
-    contact: 'Get in Touch', other: 'Explore Thailand', note: 'Images currently use the existing LokaWndr gallery; Maldives-specific photos will be added next.'
+    contact: 'Get in Touch', other: 'Explore Maldives Dive Sites', note: 'Images currently use the existing LokaWndr gallery; Maldives-specific photos will be added next.'
   }
   return <><Header/><main className='bg-[#06283a] text-white'>
     <section className='relative isolate flex min-h-[530px] items-end overflow-hidden'>
@@ -57,6 +57,24 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
         </article>)}
       </div>
     </section>
+    <section id='dive-spots' className='mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
+      <p className='text-xs font-bold uppercase tracking-[.2em] text-cyan-200'>{ru ? 'ГИД ПО ДАЙВ-САЙТАМ' : 'DIVE DESTINATION GUIDE'}</p>
+      <h2 className='mt-3 text-3xl font-extrabold md:text-4xl'>{ru ? 'Где погружаться на Мальдивах' : 'Where to Dive in the Maldives'}</h2>
+      <p className='mt-4 max-w-3xl leading-8 text-slate-200'>{ru ? 'На Мальдивах множество атоллов: от спокойных рифов до каналов с сильным течением. Вот несколько известных районов для начала планирования.' : 'From sheltered reefs to current-swept channels, the Maldives offers different kinds of diving across its atolls. Start with these well-known areas.'}</p>
+      <div className='mt-9 grid gap-5 md:grid-cols-2'>
+        {[
+          {name:ru?'Южный Ари (South Ari Atoll)':'South Ari Atoll',tag:ru?'Китовые акулы и рифы':'Whale sharks & reefs',detail:ru?'Известен встречами с китовыми акулами и разнообразными рифами. Наблюдения не гарантированы.':'Known for whale shark encounters and varied reef dives. Sightings are never guaranteed.'},
+          {name:ru?'Северный Мале (North Malé Atoll)':'North Malé Atoll',tag:ru?'Рифы и затонувшие суда':'Reefs & wrecks',detail:ru?'Популярный район с рифами, затонувшими объектами и разнообразной морской жизнью.':'An accessible, popular area with reefs, wrecks and diverse marine life.'},
+          {name:ru?'Южный Мале (South Malé Atoll)':'South Malé Atoll',tag:ru?'Каналы и дрейфовые погружения':'Channels & drift dives',detail:ru?'Канду и тила привлекают опытных дайверов. На некоторых сайтах бывает сильное течение.':'Channels and thilas appeal to experienced divers; some sites have strong currents.'},
+          {name:ru?'Баа (Baa Atoll)':'Baa Atoll',tag:ru?'Манты и снорклинг':'Mantas & snorkeling',detail:ru?'Залив Ханифару известен сезонными скоплениями мант. В самом заливе дайвинг запрещён — посещение для снорклинга регулируется.':'Hanifaru Bay is known for seasonal manta gatherings. Scuba diving is prohibited inside the bay; regulated snorkeling visits are available.'},
+          {name:ru?'Северный Ари (North Ari Atoll)':'North Ari Atoll',tag:ru?'Тила и рифовые акулы':'Thilas & reef sharks',detail:ru?'Fish Head — известный подводный риф с акулами и стаями рыб. Учитывайте глубину и течение.':'Fish Head is a well-known pinnacle for reef sharks and schooling fish; consider depth and currents.'}
+        ].map((spot)=><article key={spot.name} className='rounded-2xl border border-white/15 bg-white/[.06] p-7'>
+          <p className='text-xs font-bold uppercase tracking-widest text-cyan-200'>{spot.tag}</p><h3 className='mt-3 text-2xl font-bold'>{spot.name}</h3><p className='mt-3 leading-7 text-slate-200'>{spot.detail}</p>
+        </article>)}
+      </div>
+      <p className='mt-7 max-w-4xl text-sm leading-6 text-slate-400'>{ru?'Сезон, погода и течения влияют на выбор дайв-сайта. Выбирайте погружения в рамках своей подготовки и с местным оператором.':'Season, weather and currents affect site selection. Dive within your training and follow a qualified local operator.'}</p>
+      <p className='mt-4 text-sm text-cyan-100'>{ru?'Источники:':'Sources:'} <a className='underline' href='https://www.padi.com/diving-in/maldives/' target='_blank' rel='noopener noreferrer'>PADI Maldives</a> · <a className='underline' href='https://blog.padi.com/best-maldives-atolls-scuba-diving/' target='_blank' rel='noopener noreferrer'>PADI Atoll Guide</a> · <a className='underline' href='https://www.padi.com/dive-site/maldives/hanifaru-bay/' target='_blank' rel='noopener noreferrer'>Hanifaru Bay</a></p>
+    </section>
     <section className='bg-[#03283b] px-6 py-16 md:px-10'>
       <div className='mx-auto grid max-w-[1480px] items-center gap-9 md:grid-cols-2'>
         <div className='relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/20'>
@@ -72,7 +90,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
         <h2 className='text-3xl font-extrabold'>{t.plan}</h2><p className='mt-4 max-w-2xl leading-7 text-slate-200'>{t.planText}</p>
         <div className='mt-7 flex flex-wrap gap-4'>
           <Link href={base+'/contact'} className='inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-bold text-[#062536]'><Mail size={18}/>{t.contact}</Link>
-          <Link href={base+'/destinations/thailand'} className='inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-bold'>{t.other}<ArrowRight size={18}/></Link>
+          <a href='#dive-spots' className='inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-bold'>{t.other}<ArrowRight size={18}/></a>
         </div>
       </div>
       <p className='mt-6 text-xs text-slate-400'>{t.note}</p>
