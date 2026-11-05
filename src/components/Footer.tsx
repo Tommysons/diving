@@ -1,83 +1,123 @@
 'use client'
-import { contacts } from '../lib/data'
+
+import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { Mail, ArrowUpRight } from 'lucide-react'
+import { contacts } from '../lib/data'
 
 export default function Footer() {
   const pathname = usePathname() || '/'
-  const locale = pathname.startsWith('/ru') ? 'ru' : 'en'
+  const ru = pathname.startsWith('/ru')
+  const locale = ru ? 'ru' : 'en'
+  const base = ru ? '/ru' : ''
+  const currentContacts = contacts[locale]
+  const t = ru
+    ? {
+        tagline: 'Открывайте подводный мир вместе с нами.',
+        description: 'Дайвинг, снорклинг и настоящие истории об океане из Таиланда, Мальдив и других уголков мира.',
+        explore: 'Исследовать',
+        thailand: 'Таиланд',
+        maldives: 'Мальдивы',
+        diveSites: 'Дайв-сайты',
+        courses: 'Курсы дайвинга',
+        stories: 'Истории',
+        about: 'О нас',
+        contact: 'Контакты',
+        follow: 'Мы в соцсетях',
+        rights: 'Все права защищены.',
+        made: 'Создано для тех, кто любит океан.',
+      }
+    : {
+        tagline: 'Explore the underwater world.',
+        description: 'Scuba diving, snorkeling and real ocean stories from Thailand, the Maldives and beyond.',
+        explore: 'Explore',
+        thailand: 'Thailand',
+        maldives: 'Maldives',
+        diveSites: 'Dive Sites',
+        courses: 'Scuba Courses',
+        stories: 'Stories',
+        about: 'About',
+        contact: 'Contact',
+        follow: 'Follow the Journey',
+        rights: 'All rights reserved.',
+        made: 'Made for ocean explorers.',
+      }
 
-  const translations = {
-    en: {
-      contact: 'Contact Me',
-      phone: 'WhatsApp',
-      email: 'Email',
-      // address: 'Address',
-      follow: 'Follow Me',
-      about: 'About Me',
-      aboutText:
-        'Discover the best diving experiences with me. Safe, professional, and fun!',
-    },
-    ru: {
-      contact: 'Свяжитесь со мной',
-      phone: 'WhatsApp',
-      email: 'Эл. почта',
-      // address: 'Адрес',
-      follow: 'Я в социальных сетях',
-      about: 'Обо мне',
-      aboutText:
-        'Откройте для себя лучшие дайвинг-приключения со мной. Безопасно, профессионально и весело!',
-    },
-  }
-
-  const t = translations[locale]
-  const currentContacts = contacts[locale] // ✅ pick correct locale
+  const exploreLinks = [
+    { label: t.thailand, href: base + '/destinations/thailand' },
+    { label: t.maldives, href: base + '/destinations/maldives' },
+    { label: t.diveSites, href: base + '/divesites' },
+    { label: t.courses, href: base + '/scubadivingcourses' },
+  ]
+  const moreLinks = [
+    { label: t.stories, href: base + '/blog' },
+    { label: t.about, href: base + '/aboutme' },
+    { label: t.contact, href: base + '/contact' },
+  ]
 
   return (
-    <footer className='bg-blue-900 text-white py-8 px-6 '>
-      <div className='max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8'>
-        {/* Contact Section */}
-        <div>
-          <h3 className='font-bold text-lg mb-2'>{t.contact}</h3>
-          <p>
-            {t.phone}:{' '}
-            <a href={`tel:${currentContacts.phone}`} className='underline'>
-              {currentContacts.phone}
-            </a>
-          </p>
-          <p>
-            {t.email}:{' '}
-            <a href={`mailto:${currentContacts.email}`} className='underline'>
-              {currentContacts.email}
-            </a>
-          </p>
-          {/* <p>
-            {t.address}: {currentContacts.address}
-          </p> */}
+    <footer className='border-t border-white/10 bg-[#03283b] text-white'>
+      <div className='mx-auto grid max-w-[1480px] gap-10 px-6 pb-12 pt-14 md:grid-cols-2 md:px-10 lg:grid-cols-4'>
+        <div className='lg:pr-8'>
+          <Link href={base || '/'} className='inline-flex items-center gap-3' aria-label='LokaWndr home'>
+            <Image src='/images/logo.png' alt='' width={56} height={48} className='h-12 w-14 object-contain' />
+            <span>
+              <strong className='block text-2xl font-extrabold leading-none tracking-tight'>LokaWndr</strong>
+              <small className='mt-1 block text-[9px] font-bold tracking-[0.18em] text-cyan-100'>EXPLORE · DIVE · SNORKEL</small>
+            </span>
+          </Link>
+          <p className='mt-6 text-lg font-semibold'>{t.tagline}</p>
+          <p className='mt-3 max-w-xs text-sm leading-7 text-slate-300'>{t.description}</p>
         </div>
 
-        {/* Social Section */}
         <div>
-          <h3 className='font-bold text-lg mb-2'>{t.follow}</h3>
-          <ul>
-            {currentContacts.socialLinks.map(({ platform, url }) => (
-              <li key={platform}>
-                <a
-                  href={url}
-                  target='_blank'
-                  rel='noreferrer'
-                  className='underline hover:text-yellow-400'
-                >
-                  {platform}
-                </a>
+          <h2 className='mb-5 text-sm font-bold uppercase tracking-[0.16em] text-cyan-100'>{t.explore}</h2>
+          <ul className='space-y-3'>
+            {exploreLinks.map(item => (
+              <li key={item.href}>
+                <Link href={item.href} className='text-sm text-slate-200 transition hover:text-white hover:underline'>
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* About Section */}
         <div>
-          <h3 className='font-bold text-lg mb-2'>{t.about}</h3>
-          <p>{t.aboutText}</p>
+          <h2 className='mb-5 text-sm font-bold uppercase tracking-[0.16em] text-cyan-100'>LokaWndr</h2>
+          <ul className='space-y-3'>
+            {moreLinks.map(item => (
+              <li key={item.href}>
+                <Link href={item.href} className='text-sm text-slate-200 transition hover:text-white hover:underline'>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className='mb-5 text-sm font-bold uppercase tracking-[0.16em] text-cyan-100'>{t.follow}</h2>
+          <ul className='space-y-3'>
+            {currentContacts.socialLinks.map(({ platform, url }) => (
+              <li key={platform}>
+                <a href={url} target='_blank' rel='noopener noreferrer' className='inline-flex items-center gap-1 text-sm text-slate-200 transition hover:text-white'>
+                  {platform}<ArrowUpRight size={14} aria-hidden='true' />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <h2 className='mb-3 mt-7 text-sm font-bold uppercase tracking-[0.16em] text-cyan-100'>{t.contact}</h2>
+          <a href={`mailto:${currentContacts.email}`} className='inline-flex items-center gap-2 break-all text-sm text-slate-200 transition hover:text-white'>
+            <Mail size={16} aria-hidden='true' />{currentContacts.email}
+          </a>
+        </div>
+      </div>
+      <div className='border-t border-white/15'>
+        <div className='mx-auto flex max-w-[1480px] flex-col justify-between gap-3 px-6 py-6 text-xs text-slate-300 md:flex-row md:items-center md:px-10'>
+          <span>© {new Date().getFullYear()} LokaWndr. {t.rights}</span>
+          <span>{t.made}</span>
         </div>
       </div>
     </footer>
