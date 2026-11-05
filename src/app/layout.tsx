@@ -3,8 +3,8 @@ import { ReactNode } from 'react'
 import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata = {
-  title: 'Scuba Diving Site',
-  description: 'Explore dive sites, courses and more',
+  title: 'LokaWndr | Scuba Diving, Snorkeling & Ocean Adventures',
+  description: 'Explore scuba diving, snorkeling, marine life and real ocean stories from Thailand and the Maldives with LokaWndr.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

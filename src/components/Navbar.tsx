@@ -1,195 +1,48 @@
 'use client'
-
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { label } from 'framer-motion/client'
-
-const navItemsEN = [
-  { href: '/divesites', label: 'Dive Sites' },
-  { href: '/scubadivingcourses', label: 'Scuba Diving Courses' },
-  { href: '/blog', label: 'Blog', highlight: true }, // <-- new
-  // { href: '/freedivingcourses', label: 'Freediving Courses' },
-  { href: '/gallery', label: 'Gallery', highlight: true },
-  { href: '/aboutme', label: 'About Me' },
-  { href: '/contact', label: 'Contact' },
-  { href: '/faq', label: 'FAQ' },
-]
-
-const navItemsRU = [
-  { href: '/divesites', label: 'Места для дайвинга' },
-  { href: '/scubadivingcourses', label: 'Курсы по дайвингу' },
-  { href: '/blog', label: 'Блог', highlight: true }, // <-- new
-  // { href: '/freedivingcourses', label: 'Курсы по фридайвингу' },
-  { href: '/gallery', label: 'Галерея', highlight: true },
-  { href: '/aboutme', label: 'Обо мне' },
-  { href: '/contact', label: 'Контакты' },
-  { href: '/faq', label: 'Вопросы и ответы' },
-]
+import { Menu, X, ChevronDown } from 'lucide-react'
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [open,setOpen] = useState(false)
   const pathname = usePathname() || '/'
-  const locale = pathname.startsWith('/ru') ? 'ru' : 'en'
-
-  const navItems = locale === 'ru' ? navItemsRU : navItemsEN
-
-  function switchLocale(pathname: string, targetLocale: string) {
-    if (pathname.startsWith('/ru')) {
-      return targetLocale === 'en'
-        ? pathname.replace(/^\/ru/, '') || '/'
-        : pathname
-    }
-    return targetLocale === 'ru' ? `/ru${pathname}` : pathname
-  }
-
-  return (
-    <nav className='bg-blue-900 text-white px-6 py-4 flex items-center justify-between'>
-      {/* Logo (Video) */}
-      <Link href={locale === 'ru' ? '/ru' : '/'}>
-        <motion.div
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className='rounded-l-full rounded-r-full overflow-hidden border-2 border-white shadow-md'
-          style={{ width: '100px', height: '60px' }}
-        >
-          <video
-            src='/images/logo.mkv'
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload='auto'
-            poster='images/logo.png'
-            className='w-full h-full object-cover object-center scale-105 -translate-x-[-4px] -translate-y-[2px]'
-          />
-        </motion.div>
+  const ru = pathname.startsWith('/ru')
+  const base = ru ? '/ru' : ''
+  const path = ru ? pathname.replace(/^\/ru/, '') || '/' : pathname
+  const items = [
+    { label:ru?'Направления':'Destinations',href:base+'/destinations/thailand', children:[{label:ru?'Таиланд':'Thailand',href:base+'/destinations/thailand'},{label:ru?'Мальдивы':'Maldives',href:base+'/destinations/maldives'}] },
+    { label:ru?'Дайвинг':'Diving',href:base+'/divesites',children:[{label:ru?'Дайв-сайты':'Dive Sites',href:base+'/divesites'},{label:ru?'Курсы':'Courses',href:base+'/scubadivingcourses'}] },
+    { label:ru?'Снорклинг':'Snorkeling',href:base+'/destinations/maldives' },
+    { label:ru?'Истории':'Stories',href:base+'/blog' },
+    { label:ru?'О нас':'About',href:base+'/aboutme' },
+    { label:ru?'Контакты':'Contact',href:base+'/contact' },
+  ]
+  const localePath = (target:'en'|'ru') => target==='ru' ? '/ru'+(path==='/'?'':path) : path
+  return <nav className='relative z-50 border-b border-white/10 bg-[#03283b] text-white'>
+    <div className='mx-auto flex min-h-[74px] max-w-[1480px] items-center justify-between gap-5 px-5 md:px-8'>
+      <Link href={base||'/'} className='flex shrink-0 items-center gap-3' aria-label='LokaWndr home'>
+        <Image src='/images/logo.png' alt='' width={56} height={48} className='h-12 w-14 object-contain' />
+        <span><strong className='block text-2xl font-extrabold leading-none tracking-tight'>LokaWndr</strong><small className='mt-1 block text-[9px] font-bold tracking-[0.18em] text-cyan-100'>EXPLORE · DIVE · SNORKEL</small></span>
       </Link>
-      {/* Navigation + Language */}
-      <div className='flex items-center space-x-6'>
-        {/* Desktop Links (large screens only) */}
-        <ul className={`hidden lg:flex items-center space-x-8 text-lg`}>
-          {navItems.map(({ href, label, highlight }) => (
-            <li key={href}>
-              <Link
-                href={locale === 'ru' ? `/ru${href}` : href}
-                className={`transition ${
-                  highlight
-                    ? 'text-yellow-400 font-semibold animate-pulse hover:text-yellow-300'
-                    : 'hover:text-yellow-400'
-                }`}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* Desktop Language Switcher */}
-        <div className='hidden lg:flex space-x-4'>
-          <Link href={switchLocale(pathname, 'en')}>
-            <button
-              className={`px-2 py-1 rounded ${
-                locale === 'en'
-                  ? 'font-bold bg-yellow-400 text-blue-900'
-                  : 'text-white hover:text-yellow-400'
-              }`}
-            >
-              EN
-            </button>
-          </Link>
-          <Link href={switchLocale(pathname, 'ru')}>
-            <button
-              className={`px-2 py-1 rounded ${
-                locale === 'ru'
-                  ? 'font-bold bg-yellow-400 text-blue-900'
-                  : 'text-white hover:text-yellow-400'
-              }`}
-            >
-              RU
-            </button>
-          </Link>
-        </div>
-
-        {/* Mobile Hamburger (medium and smaller) */}
-        <div className='lg:hidden'>
-          <button onClick={() => setIsOpen(!isOpen)} aria-label='Toggle menu'>
-            <svg
-              className='w-6 h-6'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              {isOpen ? (
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M6 18L18 6M6 6l12 12'
-                />
-              ) : (
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M4 6h16M4 12h16M4 18h16'
-                />
-              )}
-            </svg>
-          </button>
-
-          {/* Mobile Menu */}
-          {isOpen && (
-            <ul className='mt-4 space-y-4 text-lg'>
-              {navItems.map(({ href, label, highlight }) => (
-                <li key={href}>
-                  <Link
-                    href={locale === 'ru' ? `/ru${href}` : href}
-                    className={`transition block ${
-                      highlight
-                        ? 'text-yellow-400 font-semibold animate-pulse hover:text-yellow-300'
-                        : 'hover:text-yellow-400'
-                    }`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-
-              {/* Mobile Language Switcher */}
-              <li className='flex space-x-2 mt-2'>
-                <Link href={switchLocale(pathname, 'en')}>
-                  <button
-                    className={`px-2 py-1 rounded ${
-                      locale === 'en'
-                        ? 'font-bold bg-yellow-400 text-blue-900'
-                        : 'text-white hover:text-yellow-400'
-                    }`}
-                  >
-                    EN
-                  </button>
-                </Link>
-                <Link href={switchLocale(pathname, 'ru')}>
-                  <button
-                    className={`px-2 py-1 rounded ${
-                      locale === 'ru'
-                        ? 'font-bold bg-yellow-400 text-blue-900'
-                        : 'text-white hover:text-yellow-400'
-                    }`}
-                  >
-                    RU
-                  </button>
-                </Link>
-              </li>
-            </ul>
-          )}
-        </div>
+      <div className='hidden items-center gap-6 xl:flex'>
+        <Link href={base||'/'} className='border-b-2 border-white pb-1 text-sm font-semibold'>{ru?'Главная':'Home'}</Link>
+        {items.map(item=><div key={item.label} className='group relative'>
+          <Link href={item.href} className='flex items-center gap-1 py-3 text-sm font-semibold hover:text-cyan-200'>{item.label}{item.children&&<ChevronDown size={14}/>}</Link>
+          {item.children&&<div className='invisible absolute left-0 top-full min-w-44 rounded-lg border border-white/15 bg-[#06374d] p-2 opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100'>{item.children.map(child=><Link key={child.href} href={child.href} className='block rounded-md px-3 py-2 text-sm hover:bg-white/10'>{child.label}</Link>)}</div>}
+        </div>)}
       </div>
-    </nav>
-  )
+      <div className='hidden shrink-0 items-center gap-3 md:flex'>
+        <Link href={localePath('en')} className={!ru?'font-bold':'text-slate-300'}>EN</Link><span className='text-white/40'>|</span><Link href={localePath('ru')} className={ru?'font-bold':'text-slate-300'}>RU</Link>
+        <Link href={base+'/contact'} className='ml-2 rounded-lg bg-white px-4 py-2.5 text-sm font-bold text-[#062536] hover:bg-cyan-100'>{ru?'Связаться':'Plan Your Experience'}</Link>
+      </div>
+      <button className='rounded-md p-2 xl:hidden' aria-label={open?'Close menu':'Open menu'} aria-expanded={open} onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button>
+    </div>
+    {open&&<div className='absolute left-0 right-0 top-full max-h-[80vh] overflow-auto border-t border-white/15 bg-[#03283b] px-6 py-5 shadow-2xl xl:hidden'>
+      <Link onClick={()=>setOpen(false)} href={base||'/'} className='block py-2 font-semibold'>{ru?'Главная':'Home'}</Link>
+      {items.map(item=><div key={item.label}><Link onClick={()=>setOpen(false)} href={item.href} className='block py-2 font-semibold'>{item.label}</Link>{item.children?.map(child=><Link onClick={()=>setOpen(false)} key={child.href} href={child.href} className='block py-1 pl-5 text-sm text-cyan-100'>{child.label}</Link>)}</div>)}
+      <div className='mt-4 flex gap-5 border-t border-white/15 pt-4'><Link href={localePath('en')} onClick={()=>setOpen(false)}>EN</Link><Link href={localePath('ru')} onClick={()=>setOpen(false)}>RU</Link><Link href={base+'/contact'} onClick={()=>setOpen(false)}>{ru?'Связаться':'Contact'}</Link></div>
+    </div>}
+  </nav>
 }
