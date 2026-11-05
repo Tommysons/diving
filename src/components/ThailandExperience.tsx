@@ -23,18 +23,10 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
   contact:'Get in Touch',maldives:'Explore Maldives',sources:'Sources',safety:'Dive conditions and access depend on season, weather, currents and diver experience. Confirm details with a local operator.'
  }
  const spots=ru?[
-  {name:'Chumphon Pinnacle · Ко Тао',tag:'Стаи рыб и подводные скалы',body:'Один из самых известных дайв-сайтов Ко Тао с крупными стаями рыб и редкими встречами с китовыми акулами.'},
-  {name:'Southwest Pinnacle · Ко Тао',tag:'Скалы и анемоны',body:'Группа подводных скал с анемонами, барракудами и разнообразной рифовой жизнью.'},
-  {name:'White Rock и Twins · Ко Тао',tag:'Рифы для разных уровней',body:'Популярные места для обучения и спокойных рифовых погружений при подходящих условиях.'},
-  {name:'HTMS Sattakut · Ко Тао',tag:'Затонувший корабль',body:'Искусственный риф на затонувшем корабле, подходящий для дайверов с соответствующей подготовкой. Проникновение внутрь требует специального обучения.'},
   {name:'Sail Rock · Сиамский залив',tag:'Подводная скала и стаи рыб',body:'Известный дайв-сайт между Ко Тао и Ко Пханганом. Глубина и течения требуют внимательного планирования.'},
   {name:'Richelieu Rock · Андаманское море',tag:'Морская жизнь и мягкие кораллы',body:'Известная подводная скала у Суринских островов. Доступность зависит от сезона морского национального парка.'},
   {name:'Симиланские острова · Андаманское море',tag:'Гранитные валуны и рифы',body:'Знаменитый район с подводными скалами и рифами; сезон посещения ограничен правилами национального парка.'}
  ]:[
-  {name:'Chumphon Pinnacle · Koh Tao',tag:'Schooling fish & pinnacles',body:'One of Koh Tao’s best-known offshore sites, with large schools of fish and occasional whale shark encounters.'},
-  {name:'Southwest Pinnacle · Koh Tao',tag:'Pinnacles & anemones',body:'A group of submerged pinnacles with anemones, barracuda and diverse reef life.'},
-  {name:'White Rock & Twins · Koh Tao',tag:'Reefs for varied experience levels',body:'Popular reef sites for training and relaxed dives when conditions are suitable.'},
-  {name:'HTMS Sattakut · Koh Tao',tag:'Wreck diving',body:'A sunken naval vessel and artificial reef for suitably trained divers. Wreck penetration requires specialist training.'},
   {name:'Sail Rock · Gulf of Thailand',tag:'Offshore pinnacle & fish schools',body:'A famous site between Koh Tao and Koh Phangan. Depth and currents require careful dive planning.'},
   {name:'Richelieu Rock · Andaman Sea',tag:'Marine life & soft corals',body:'A celebrated pinnacle near the Surin Islands. Access depends on the marine park season.'},
   {name:'Similan Islands · Andaman Sea',tag:'Granite boulders & reefs',body:'A renowned area of underwater rock formations and reefs, with seasonal national park access.'}
