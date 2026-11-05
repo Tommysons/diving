@@ -59,7 +59,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
     </section>
     <section id='dive-spots' className='mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
       <p className='text-xs font-bold uppercase tracking-[.2em] text-cyan-200'>{ru ? 'ГИД ПО ДАЙВ-САЙТАМ' : 'DIVE DESTINATION GUIDE'}</p>
-      <h2 className='mt-3 text-3xl font-extrabold md:text-4xl'>{ru ? 'Где погружаться на Мальдивах' : 'Where to Dive in the Maldives'}</h2>
+      <h2 className='mt-3 text-3xl font-extrabold md:text-4xl'>{ru ? 'Скоро на LokaWndr · Места для дайвинга на Мальдивах' : 'Coming to LokaWndr · Maldives Dive Destinations'}</h2>
       <p className='mt-4 max-w-3xl leading-8 text-slate-200'>{ru ? 'На Мальдивах множество атоллов: от спокойных рифов до каналов с сильным течением. Вот несколько известных районов для начала планирования.' : 'From sheltered reefs to current-swept channels, the Maldives offers different kinds of diving across its atolls. Start with these well-known areas.'}</p>
       <div className='mt-9 grid gap-5 md:grid-cols-2'>
         {[
