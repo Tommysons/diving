@@ -10,9 +10,9 @@ import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
 
 type Destination = 'earth' | 'thailand' | 'maldives'
 const markers: Record<string,{x:number;y:number}> = {
- 'chumphon-pinnacle':{x:37,y:18},'southwest-pinnacle':{x:17,y:65},
- 'white-rock':{x:42,y:62},'twins':{x:38,y:38},
- 'sattakut-shipwreck':{x:31,y:47},'313-shipwreck':{x:48,y:42},
+ 'chumphon-pinnacle':{x:31,y:17},'southwest-pinnacle':{x:18,y:67},
+ 'white-rock':{x:28,y:60},'twins':{x:28,y:34},
+ 'sattakut-shipwreck':{x:24,y:48},'313-shipwreck':{x:73,y:43},
 }
 export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  const ru=locale==='ru', base=ru?'/ru':''
@@ -66,7 +66,7 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  <path d='M49 17 C54 25 46 32 54 41 S48 54 54 63 S47 79 47 88' fill='none' stroke='#b8dba3' strokeWidth='3' opacity='.36'/>
  <path d='M43 29 Q55 35 43 49 M43 61 Q56 66 44 77' fill='none' stroke='#d2e4b2' strokeWidth='1.5' opacity='.35'/>
  </svg>
- <div className='pointer-events-none absolute left-[52%] top-[49%] -translate-x-1/2 -translate-y-1/2 -rotate-[75deg] text-2xl font-black tracking-[.35em] text-white/45 md:text-3xl'>KOH TAO</div>
+ <div className='pointer-events-none absolute left-[51%] top-[52%] -translate-x-1/2 -translate-y-1/2 -rotate-[75deg] text-xl font-black tracking-[.25em] text-white/35 md:text-2xl'>KOH TAO</div>
  <span className='absolute left-5 top-5 rounded-full border border-cyan-200/25 bg-[#06243a]/80 px-4 py-2 text-xs tracking-wider text-cyan-100'>LOKAWNDR · 3D ISLAND CONCEPT</span>
  {sites.filter(s=>markers[s.slug]).map(s=><button key={s.slug} style={{left:markers[s.slug].x+'%',top:markers[s.slug].y+'%'}} onClick={()=>setSelected(s.slug)} aria-label={s.name} title={s.name} className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 p-2 shadow-[0_0_22px_#00cfffaa] transition hover:scale-125 ${selected===s.slug?'border-white bg-amber-400 text-[#05233a]':'border-white bg-cyan-400 text-[#05233a]'}`}><MapPin size={17}/></button>)}
  <span className='absolute bottom-4 left-4 rounded-full border border-white/20 bg-[#031a2c]/80 px-3 py-2 text-xs'>{ru?'Иллюстрация · Не для навигации':'Illustration · Not for navigation'}</span>
