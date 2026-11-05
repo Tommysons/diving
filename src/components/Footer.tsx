@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Mail, ArrowUpRight } from 'lucide-react'
+import { Mail, ArrowUpRight, MessageCircle } from 'lucide-react'
 import { contacts } from '../lib/data'
 
 export default function Footer() {
@@ -24,6 +24,7 @@ export default function Footer() {
         stories: 'Истории',
         about: 'О нас',
         contact: 'Контакты',
+        whatsapp: 'WhatsApp',
         follow: 'Мы в соцсетях',
         rights: 'Все права защищены.',
         made: 'Создано для тех, кто любит океан.',
@@ -39,6 +40,7 @@ export default function Footer() {
         stories: 'Stories',
         about: 'About',
         contact: 'Contact',
+        whatsapp: 'WhatsApp',
         follow: 'Follow the Journey',
         rights: 'All rights reserved.',
         made: 'Made for ocean explorers.',
@@ -109,6 +111,11 @@ export default function Footer() {
             ))}
           </ul>
           <h2 className='mb-3 mt-7 text-sm font-bold uppercase tracking-[0.16em] text-cyan-100'>{t.contact}</h2>
+          <a href={`https://wa.me/${currentContacts.phone.replace(/\D/g, '')}`} target='_blank' rel='noopener noreferrer' className='mb-3 inline-flex items-center gap-2 text-sm text-slate-200 transition hover:text-white'>
+            <MessageCircle size={16} aria-hidden='true' />
+            <span>{t.whatsapp}: {currentContacts.phone}</span>
+          </a>
+          <div />
           <a href={`mailto:${currentContacts.email}`} className='inline-flex items-center gap-2 break-all text-sm text-slate-200 transition hover:text-white'>
             <Mail size={16} aria-hidden='true' />{currentContacts.email}
           </a>
