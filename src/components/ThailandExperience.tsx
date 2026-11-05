@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Waves, Fish, Mail } from 'lucide-react'
+import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -10,14 +11,14 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
   label:'ГЛАВА 01 · ТАИЛАНД',title:'Дайвинг в Таиланде',intro:'От рифов Ко Тао до впечатляющих дайв-сайтов Андаманского моря.',
   guide:'Исследовать дайв-сайты',heading:'Где погружаться в Таиланде',intro2:'Таиланд предлагает разные виды дайвинга: спокойные рифы для новичков, подводные скалы, затонувшие корабли и сильные течения для опытных дайверов.',
   koh:'Ко Тао — начало истории LokaWndr',kohText:'Ко Тао занимает особое место в истории LokaWndr. Здесь можно найти как неглубокие учебные рифы, так и более глубокие подводные скалы. Наши существующие статьи помогут познакомиться с местными дайв-сайтами.',
-  existing:'Наш гид по дайв-сайтам Ко Тао',courses:'Курсы дайвинга',other:'Другие известные места для дайвинга',
+  gallery:'Дайв-сайты Ко Тао — фотографии и подробности',depth:'Глубина',current:'Течение',visibility:'Видимость',see:'Морские обитатели',details:'Подробнее о дайв-сайте',photos:'Фотогалерея',credit:'Фотографии предоставлены Mia',existing:'Наш гид по дайв-сайтам Ко Тао',courses:'Курсы дайвинга',other:'Другие известные места для дайвинга',
   plan:'Вопросы о дайвинге в Таиланде?',planText:'Напишите нам, чтобы узнать больше. Наличие инструкторов и возможность бронирования не гарантируются.',
   contact:'Связаться',maldives:'Исследовать Мальдивы',sources:'Источники',safety:'Условия и доступность дайв-сайтов зависят от сезона, погоды, течений и подготовки дайвера. Уточняйте информацию у местного оператора.'
  }:{
   label:'CHAPTER 01 · THAILAND',title:'Dive into Thailand',intro:'From Koh Tao’s reefs to the dramatic dive sites of the Andaman Sea.',
   guide:'Explore Dive Sites',heading:'Where to Dive in Thailand',intro2:'Thailand offers everything from calm training reefs to offshore pinnacles, wrecks and current-swept sites for experienced divers.',
   koh:'Koh Tao — Where LokaWndr Began',kohText:'Koh Tao is part of the LokaWndr story. Explore shallow training reefs as well as deeper offshore pinnacles, and discover the island through our existing dive-site guides.',
-  existing:'Explore Our Koh Tao Dive Sites',courses:'Scuba Diving Courses',other:'More Famous Thai Dive Destinations',
+  gallery:'Koh Tao Dive Sites — Photos & Details',depth:'Depth',current:'Current',visibility:'Visibility',see:'Marine life',details:'View Full Dive-Site Guide',photos:'Photo Gallery',credit:'Photography by Mia',existing:'Explore Our Koh Tao Dive Sites',courses:'Scuba Diving Courses',other:'More Famous Thai Dive Destinations',
   plan:'Questions About Diving in Thailand?',planText:'Contact us to learn more. Instructor availability and trip bookings are not guaranteed.',
   contact:'Get in Touch',maldives:'Explore Maldives',sources:'Sources',safety:'Dive conditions and access depend on season, weather, currents and diver experience. Confirm details with a local operator.'
  }
@@ -61,6 +62,42 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
      <Link href={base+'/divesites'} className='rounded-xl bg-white px-5 py-3 font-bold text-[#062536]'>{t.existing}</Link>
      <Link href={base+'/scubadivingcourses'} className='rounded-xl border border-white/50 px-5 py-3 font-bold'>{t.courses}</Link>
     </div>
+   </div>
+   <div className='mt-12'>
+    <h3 className='text-3xl font-extrabold'>{t.gallery}</h3>
+    <div className='mt-7 grid gap-7 lg:grid-cols-2'>
+     {(ru ? diveSitesRU : diveSites).filter(site => site.imageUrl).map(site => (
+      <article key={site.slug} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.06]'>
+       <Link href={base+'/divesites/'+site.slug} className='block'>
+        <div className='relative aspect-[16/9] overflow-hidden'>
+         <Image src={site.imageUrl!} alt={site.name} fill sizes='(max-width: 1024px) 100vw, 50vw' className='object-cover transition-transform duration-500 hover:scale-105'/>
+        </div>
+       </Link>
+       <div className='p-6'>
+        <h4 className='text-2xl font-bold'>{site.name}</h4>
+        <p className='mt-3 leading-7 text-slate-200'>{site.longDescription}</p>
+        <dl className='mt-5 grid grid-cols-3 gap-3 border-y border-white/15 py-4 text-sm'>
+         <div><dt className='text-slate-400'>{t.depth}</dt><dd className='mt-1 font-semibold'>{site.depth}</dd></div>
+         <div><dt className='text-slate-400'>{t.current}</dt><dd className='mt-1 font-semibold'>{site.current}</dd></div>
+         <div><dt className='text-slate-400'>{t.visibility}</dt><dd className='mt-1 font-semibold'>{site.visibility}</dd></div>
+        </dl>
+        {site.thingsToSee && site.thingsToSee.length>0 && <p className='mt-4 text-sm leading-6 text-slate-200'><strong>{t.see}: </strong>{site.thingsToSee.join(', ')}</p>}
+        {site.extraImages && site.extraImages.filter(url=>/\.(webp|jpg|jpeg|png)$/i.test(url) && !url.includes('-map.')).length>0 && <>
+         <h5 className='mt-6 text-sm font-bold uppercase tracking-wider text-cyan-200'>{t.photos}</h5>
+         <div className='mt-3 grid grid-cols-3 gap-2'>
+          {site.extraImages.filter(url=>/\.(webp|jpg|jpeg|png)$/i.test(url) && !url.includes('-map.')).slice(0,6).map((url,i)=>(
+           <a key={url} href={url} target='_blank' rel='noopener noreferrer' aria-label={site.name+' photo '+(i+1)} className='relative aspect-square overflow-hidden rounded-lg'>
+            <Image src={url} alt={site.name+' underwater photo '+(i+1)} fill sizes='(max-width: 768px) 33vw, 16vw' className='object-cover transition hover:scale-110'/>
+           </a>
+          ))}
+         </div>
+        </>}
+        <Link href={base+'/divesites/'+site.slug} className='mt-6 inline-flex items-center gap-2 rounded-xl border border-white/50 px-5 py-3 font-semibold hover:bg-white/10'>{t.details}<ArrowRight size={18}/></Link>
+       </div>
+      </article>
+     ))}
+    </div>
+    <p className='mt-5 text-sm text-slate-400'>{t.credit} <a href='https://www.instagram.com/kakadong123/' target='_blank' rel='noopener noreferrer' className='underline'>@kakadong123</a>.</p>
    </div>
    <h3 className='mt-12 text-2xl font-bold'>{t.other}</h3>
    <div className='mt-6 grid gap-5 md:grid-cols-2'>
