@@ -5,9 +5,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { label } from 'framer-motion/client'
 
 const navItemsEN = [
+  { href: '/destinations/thailand', label: 'Thailand' },
+  { href: '/destinations/maldives', label: 'Maldives' },
   { href: '/divesites', label: 'Dive Sites' },
   { href: '/scubadivingcourses', label: 'Scuba Diving Courses' },
   { href: '/blog', label: 'Blog', highlight: true }, // <-- new
@@ -19,6 +20,8 @@ const navItemsEN = [
 ]
 
 const navItemsRU = [
+  { href: '/destinations/thailand', label: 'Таиланд' },
+  { href: '/destinations/maldives', label: 'Мальдивы' },
   { href: '/divesites', label: 'Места для дайвинга' },
   { href: '/scubadivingcourses', label: 'Курсы по дайвингу' },
   { href: '/blog', label: 'Блог', highlight: true }, // <-- new
