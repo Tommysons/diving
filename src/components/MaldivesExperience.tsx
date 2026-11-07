@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Fish, Waves, Play, Mail } from 'lucide-react'
+import LokaVideoSection, { maldivesVideos } from '@/components/LokaVideoSection'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -75,7 +76,8 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
       <p className='mt-7 max-w-4xl text-sm leading-6 text-slate-400'>{ru?'Сезон, погода и течения влияют на выбор дайв-сайта. Выбирайте погружения в рамках своей подготовки и с местным оператором.':'Season, weather and currents affect site selection. Dive within your training and follow a qualified local operator.'}</p>
       <p className='mt-4 text-sm text-cyan-100'>{ru?'Источники:':'Sources:'} <a className='underline' href='https://www.padi.com/diving-in/maldives/' target='_blank' rel='noopener noreferrer'>PADI Maldives</a> · <a className='underline' href='https://blog.padi.com/best-maldives-atolls-scuba-diving/' target='_blank' rel='noopener noreferrer'>PADI Atoll Guide</a> · <a className='underline' href='https://www.padi.com/dive-site/maldives/hanifaru-bay/' target='_blank' rel='noopener noreferrer'>Hanifaru Bay</a></p>
     </section>
-    <section className='bg-[#03283b] px-6 py-16 md:px-10'>
+    <LokaVideoSection locale={locale} videos={maldivesVideos} title={ru?'Видео о Мальдивах':'Snorkeling & Diving Videos from the Maldives'}/>
+  <section className='bg-[#03283b] px-6 py-16 md:px-10'>
       <div className='mx-auto grid max-w-[1480px] items-center gap-9 md:grid-cols-2'>
         <div className='relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/20'>
           <Image src='/images/scuba-intro.webp' alt='Underwater diving photography from the LokaWndr gallery' fill sizes='(max-width: 768px) 100vw, 50vw' className='object-cover'/>
