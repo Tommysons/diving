@@ -24,6 +24,102 @@ export interface BlogPost {
 // Example blog post data
 export const blogPosts: BlogPost[] = [
   {
+    "title": "Snorkeling with Manta Rays in the Maldives — and a Surprise from Dolphins",
+    "excerpt": "A manta ray, a playful pod of dolphins, and a whale shark that got away: my unforgettable Maldives snorkeling adventure.",
+    "tags": [
+      "Maldives",
+      "snorkeling",
+      "manta rays",
+      "dolphins"
+    ],
+    "slug": "maldives-manta-rays-dolphins-snorkeling",
+    "image": "/images/scuba-intro.webp",
+    "date": "2026-11-07",
+    "content": [
+      {
+        "type": "paragraph",
+        "value": "I went snorkeling in the Maldives hoping to see two of the ocean’s most remarkable animals: manta rays and whale sharks. I had no idea that a group of dolphins would end up stealing the show."
+      },
+      {
+        "type": "heading",
+        "value": "A manta ray sighting — and a quick change of plans",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "While we were travelling toward the area where manta rays and whale sharks are sometimes spotted, local people shared some exciting news: a manta ray had just been seen nearby. We changed course and headed toward the sighting."
+      },
+      {
+        "type": "paragraph",
+        "value": "And there it was. The manta ray was really there, gliding through the water. It felt like a lucky start to the excursion, and I was grateful that someone had passed the information along."
+      },
+      {
+        "type": "heading",
+        "value": "The manta ray that loved the attention",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "Once we entered the water, the manta ray seemed to put on a performance. It swam from one side to the other, sometimes slowly and sometimes surprisingly fast. Watching it move so effortlessly was incredible."
+      },
+      {
+        "type": "quote",
+        "value": "In my imagination, the manta ray was saying: “You came all this way to see me? Don't forget to take a selfie — and tag me!”"
+      },
+      {
+        "type": "paragraph",
+        "value": "Of course, that was just my joke. Wild manta rays are not performing for us, and giving them space is much more important than getting the perfect photo."
+      },
+      {
+        "type": "heading",
+        "value": "A surprise visit from dolphins",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "After our manta encounter, we continued searching for a whale shark. But then something completely unexpected happened: a large group of dolphins appeared around the boat."
+      },
+      {
+        "type": "paragraph",
+        "value": "They swam alongside us and leapt out of the water. For a while, it was hard to pay attention to anything else. I had gone out looking for manta rays and whale sharks, yet here I was watching dolphins all around us."
+      },
+      {
+        "type": "heading",
+        "value": "The whale shark we almost saw",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "Eventually, we heard that a whale shark had been spotted in another area. We headed there as quickly as we could, but by the time we arrived, it was gone."
+      },
+      {
+        "type": "paragraph",
+        "value": "I like to joke that the dolphins distracted us so much that we missed our chance. In reality, wildlife encounters are unpredictable. Seeing a whale shark is never guaranteed, even when there has been a recent sighting."
+      },
+      {
+        "type": "heading",
+        "value": "The best moments are not always the ones you planned",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "We didn't get to snorkel with a whale shark that day. But we did share the water with a beautiful manta ray and watch dolphins swimming and jumping around our boat. That is already an adventure I won't forget."
+      },
+      {
+        "type": "paragraph",
+        "value": "If you're planning your own ocean experience, remember to follow local wildlife guidelines, keep a respectful distance, and never chase or touch marine animals. Let the encounter happen naturally."
+      },
+      {
+        "type": "quote",
+        "value": "Sometimes the ocean gives you a different story from the one you expected — and that's what makes exploring it so special."
+      },
+      {
+        "type": "paragraph",
+        "value": "I filmed this adventure for the LokaWndr YouTube channel. Come along for the manta ray, the dolphins, and the whale shark that got away."
+      }
+    ]
+  },
+  {
     title: 'My First Dives in Koh Tao',
     slug: 'first-dives-koh-tao',
     excerpt:
