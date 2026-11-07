@@ -21,22 +21,22 @@ export default function Navbar() {
     { label:ru?'Контакты':'Contact',href:base+'/contact' },
   ]
   const localePath = (target:'en'|'ru') => target==='ru' ? '/ru'+(path==='/'?'':path) : path
-  return <nav className='relative z-50 border-b border-white/10 bg-[#03283b] text-white'>
+  return <nav className='sticky top-0 z-50 border-b border-cyan-200/10 bg-[#031c2e]/95 text-white shadow-[0_10px_30px_#00101b55] backdrop-blur-xl'>
     <div className='mx-auto flex min-h-[74px] max-w-[1480px] items-center justify-between gap-5 px-5 md:px-8'>
       <Link href={base||'/'} className='flex shrink-0 items-center gap-3' aria-label='LokaWndr home'>
         <Image src='/images/logo.png' alt='' width={56} height={48} className='h-12 w-14 object-contain' />
         <span><strong className='block text-2xl font-extrabold leading-none tracking-tight'>LokaWndr</strong><small className='mt-1 block text-[9px] font-bold tracking-[0.18em] text-cyan-100'>EXPLORE · DIVE · SNORKEL</small></span>
       </Link>
       <div className='hidden items-center gap-6 xl:flex'>
-        <Link href={base||'/'} className='border-b-2 border-white pb-1 text-sm font-semibold'>{ru?'Главная':'Home'}</Link>
+        <Link href={base||'/'} className='border-b-2 border-cyan-300 pb-1 text-sm font-semibold'>{ru?'Главная':'Home'}</Link>
         {items.map(item=><div key={item.label} className='group relative'>
-          <Link href={item.href} className='flex items-center gap-1 py-3 text-sm font-semibold hover:text-cyan-200'>{item.label}{item.children&&<ChevronDown size={14}/>}</Link>
-          {item.children&&<div className='invisible absolute left-0 top-full min-w-44 rounded-lg border border-white/15 bg-[#06374d] p-2 opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100'>{item.children.map(child=><Link key={child.href} href={child.href} className='block rounded-md px-3 py-2 text-sm hover:bg-white/10'>{child.label}</Link>)}</div>}
+          <Link href={item.href} className='flex items-center gap-1 rounded-lg px-1 py-3 text-sm font-semibold text-slate-100 transition hover:text-cyan-200'>{item.label}{item.children&&<ChevronDown size={14}/>}</Link>
+          {item.children&&<div className='invisible absolute left-0 top-full min-w-44 rounded-xl border border-cyan-200/15 bg-[#062b41] p-2 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100'>{item.children.map(child=><Link key={child.href} href={child.href} className='block rounded-md px-3 py-2 text-sm hover:bg-white/10'>{child.label}</Link>)}</div>}
         </div>)}
       </div>
       <div className='hidden shrink-0 items-center gap-3 md:flex'>
         <Link href={localePath('en')} className={!ru?'font-bold':'text-slate-300'}>EN</Link><span className='text-white/40'>|</span><Link href={localePath('ru')} className={ru?'font-bold':'text-slate-300'}>RU</Link>
-        <Link href={base+'/contact'} className='ml-2 rounded-lg bg-white px-4 py-2.5 text-sm font-bold text-[#062536] hover:bg-cyan-100'>{ru?'Связаться':'Plan Your Experience'}</Link>
+        <Link href={base+'/contact'} className='ml-2 rounded-xl bg-cyan-100 px-4 py-2.5 text-sm font-bold text-[#062536] transition hover:bg-white'>{ru?'Связаться':'Plan Your Experience'}</Link>
       </div>
       <button className='rounded-md p-2 xl:hidden' aria-label={open?'Close menu':'Open menu'} aria-expanded={open} onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button>
     </div>
