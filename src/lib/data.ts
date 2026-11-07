@@ -88,7 +88,7 @@ export interface ContactData {
 
 export const contacts: Record<'en' | 'ru', ContactData> = {
   en: {
-    phone: '+66855147167',
+    phone: '+37129797233',
     email: 'contact@lokawndr.com',
     address: 'Koh Tao, Thailand',
     socialLinks: [
@@ -98,7 +98,7 @@ export const contacts: Record<'en' | 'ru', ContactData> = {
     ],
   },
   ru: {
-    phone: '+66855147167',
+    phone: '+37129797233',
     email: 'contact@lokawndr.com',
     address: 'Koh Tao, Thailand',
     socialLinks: [

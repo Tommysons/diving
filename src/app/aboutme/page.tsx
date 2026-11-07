@@ -12,7 +12,7 @@ export default function AboutPage() {
       <Header />
 
       {/* MAIN WITH SHARED BACKGROUND */}
-      <main className='min-h-screen w-full bg-blue-200'>
+      <main className='min-h-screen w-full bg-[#06283a]'>
         <section className='max-w-5xl mx-auto px-6 py-16 space-y-12'>
           {/* HERO */}
           <motion.div
@@ -21,16 +21,16 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className='text-center'
           >
-            <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
+            <h1 className='text-4xl md:text-5xl font-bold text-center text-cyan-100 mb-2'>
               Meet Your Instructor
             </h1>
-            <p className='text-blue-700 text-lg mx-auto'>
+            <p className='text-cyan-100 text-lg mx-auto'>
               Passionate about diving. Focused on safety.
             </p>
           </motion.div>
 
           {/* PROFILE */}
-          <div className='bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row items-center gap-8'>
+          <div className='bg-white/95 p-6 rounded-2xl shadow-lg flex flex-col md:flex-row items-center gap-8'>
             <Image
               src='/images/badge.webp'
               alt='Instructor photo'
@@ -56,7 +56,7 @@ export default function AboutPage() {
           </div>
 
           {/* CERTIFICATIONS */}
-          <div className='bg-white p-6 rounded-2xl shadow-lg'>
+          <div className='bg-white/95 p-6 rounded-2xl shadow-lg'>
             <h3 className='text-xl font-semibold mb-4 text-gray-900'>
               Certifications & Experience
             </h3>
@@ -78,13 +78,13 @@ export default function AboutPage() {
           </div>
 
           {/* MISSION */}
-          <div className='bg-white p-6 rounded-2xl shadow-lg italic text-gray-800'>
+          <div className='bg-white/95 p-6 rounded-2xl shadow-lg italic text-gray-800'>
             “I create a relaxed and supportive environment where students feel
             safe and confident — even if it’s their first time underwater.”
           </div>
 
           {/* PERSONAL */}
-          <div className='bg-white p-6 rounded-2xl shadow-lg'>
+          <div className='bg-white/95 p-6 rounded-2xl shadow-lg'>
             <h3 className='text-xl font-semibold mb-2 text-gray-900'>
               When I’m Not Diving...
             </h3>

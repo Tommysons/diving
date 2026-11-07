@@ -80,21 +80,21 @@ export default function DiveSiteDetail({ site, locale }: Props) {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full bg-blue-200 overflow-hidden'>
-        <section className='relative z-10 max-w-7xl mx-auto px-4 py-10'>
+      <main className='relative min-h-screen w-full bg-[#06283a] text-white overflow-hidden'>
+        <section className='relative z-10 max-w-[1480px] mx-auto px-4 sm:px-6 md:px-10 py-12 md:py-16'>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className='bg-white/90 backdrop-blur-md shadow-lg rounded-2xl overflow-hidden'
+            className='bg-white/95 text-[#073044] backdrop-blur-md border border-white/20 shadow-2xl rounded-3xl overflow-hidden'
           >
             {/* Header */}
-            <div className='flex items-center justify-center gap-6 p-6 border-b border-gray-200'>
+            <div className='flex items-center justify-center gap-2 sm:gap-6 p-4 sm:p-6 border-b border-slate-200'>
               <NavButton onClick={goToPrev} ariaLabel='Previous'>
                 <ChevronLeft className='w-5 h-5' />
               </NavButton>
 
-              <h1 className='text-3xl font-bold text-gray-800 text-center'>
+              <h1 className='text-xl sm:text-3xl md:text-4xl font-extrabold text-[#073044] text-center leading-tight min-w-0 break-words'>
                 {site.name}
               </h1>
 
@@ -163,7 +163,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   {/* LEFT ARROW */}
                   <button
                     onClick={goToPrevImage}
-                    className='absolute left-3 top-1/2 -translate-y-1/2 bg-cyan-700 hover:bg-cyan-800 text-white w-12 h-12 rounded-full flex items-center justify-center transition'
+                    className='absolute left-3 top-1/2 -translate-y-1/2 shrink-0 bg-[#075a74] hover:bg-[#087b96] text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition'
                   >
                     <ChevronLeft className='w-6 h-6' />
                   </button>
@@ -171,7 +171,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   {/* RIGHT ARROW */}
                   <button
                     onClick={goToNextImage}
-                    className='absolute right-3 top-1/2 -translate-y-1/2 bg-cyan-700 hover:bg-cyan-800 text-white w-12 h-12 rounded-full flex items-center justify-center transition'
+                    className='absolute right-3 top-1/2 -translate-y-1/2 shrink-0 bg-[#075a74] hover:bg-[#087b96] text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition'
                   >
                     <ChevronRight className='w-6 h-6' />
                   </button>
@@ -209,7 +209,7 @@ function NavButton({
     <button
       onClick={onClick}
       aria-label={ariaLabel}
-      className='bg-cyan-700 hover:bg-cyan-800 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md transition'
+      className='shrink-0 bg-[#075a74] hover:bg-[#087b96] text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-md transition'
     >
       {children}
     </button>
