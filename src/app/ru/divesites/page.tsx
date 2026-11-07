@@ -12,19 +12,19 @@ export default function DiveSitesPageRu() {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full bg-blue-200 overflow-hidden'>
-        <div className='relative z-10 max-w-6xl mx-auto px-6 py-10 space-y-12'>
+      <main className='relative min-h-screen w-full bg-[#06283a] text-white overflow-hidden'>
+        <div className='relative z-10 max-w-[1480px] mx-auto px-5 sm:px-6 md:px-10 py-12 md:py-16 space-y-12'>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className='text-4xl md:text-5xl font-bold text-center text-blue-700'
+            className='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-center text-white'
           >
             Места для дайвинга на Ко Тао
           </motion.h1>
 
           {/* Верхняя секция: Карта + Описание */}
-          <div className='grid md:grid-cols-2 gap-10 items-center bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg'>
+          <div className='grid md:grid-cols-2 gap-10 items-center bg-white/[.07] border border-white/15 backdrop-blur-md p-5 sm:p-8 rounded-3xl shadow-xl'>
             {/* Левая часть: Карта */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -46,9 +46,9 @@ export default function DiveSitesPageRu() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-gray-700 leading-relaxed text-lg'
+              className='text-slate-200 leading-relaxed text-base sm:text-lg'
             >
-              <h2 className='text-2xl font-semibold mb-4 text-blue-700'>
+              <h2 className='text-2xl font-bold mb-4 text-white'>
                 Откройте подводный мир Ко Тао
               </h2>
               <p className='mb-4'>
@@ -71,18 +71,18 @@ export default function DiveSitesPageRu() {
           <div className='border-t border-white/40 my-8' />
 
           {/* Секция: Все места для дайвинга */}
-          <h2 className='text-3xl font-bold text-center mb-8 text-blue-700'>
+          <h2 className='text-3xl font-bold text-center mb-8 text-white'>
             Все места для дайвинга
           </h2>
 
-          <div className='grid md:grid-cols-2 gap-8'>
+          <div className='grid md:grid-cols-2 gap-5 sm:gap-8'>
             {diveSitesRU.map((site) => (
               <motion.div
                 key={site.slug}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className='border rounded-2xl bg-white p-5 shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform duration-300'
+                className='border border-white/15 rounded-2xl bg-[#0b354a] p-4 sm:p-5 shadow-lg hover:border-cyan-300/50 hover:shadow-xl transition duration-300'
               >
                 <Link
                   href={`/ru/divesites/${site.slug}`}
@@ -94,10 +94,10 @@ export default function DiveSitesPageRu() {
                     className='w-28 h-28 object-cover rounded-xl'
                   />
                   <div>
-                    <h3 className='text-xl font-semibold text-blue-700'>
+                    <h3 className='text-xl font-bold text-white'>
                       {site.name}
                     </h3>
-                    <p className='text-gray-600 text-sm line-clamp-3'>
+                    <p className='text-slate-200 text-sm line-clamp-3 leading-6'>
                       {site.shortDescription}
                     </p>
                   </div>
