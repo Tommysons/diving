@@ -58,6 +58,23 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
         </article>)}
       </div>
     </section>
+    <section id='azmee-corner' className='mx-auto max-w-[1480px] px-6 py-14 md:px-10'>
+      <div className='overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#0a354b]'>
+        <div className='grid gap-0 lg:grid-cols-2'>
+          <div className='p-7 md:p-10'>
+            <p className='text-xs font-bold uppercase tracking-[.2em] text-cyan-200'>{ru?'ПЕРВЫЙ ДАЙВ-САЙТ МАЛЬДИВ · DHAALU ATOLL':'FIRST MALDIVES DIVE SITE · DHAALU ATOLL'}</p>
+            <h2 className='mt-4 text-4xl font-extrabold'>Azmee Corner</h2>
+            <p className='mt-5 leading-8 text-slate-200'>{ru?'Азми Корнер — место для погружений у района Vilu Reef в атолле Дхаалу. Подводная стена, навесы и небольшие пещеры создают укрытия для скатов, мурен, скорпен и рифовых рыб.':'Azmee Corner is a wall dive in the Vilu Reef area of Dhaalu Atoll. Its reef wall, overhangs and caves provide habitat for stingrays, moray eels, scorpionfish and reef fish.'}</p>
+            <p className='mt-4 leading-7 text-slate-300'>{ru?'Точные GPS-координаты дайв-сайта пока не подтверждены. Карта показывает регион атолла Дхаалу, а не точку входа в воду.':'The dive site’s exact GPS coordinates have not yet been independently verified. This map shows the Dhaalu Atoll region, not an entry point or exact dive-site pin.'}</p>
+            <a href='https://sundiving.com/sun-siyam-vilu-reef/' target='_blank' rel='noopener noreferrer' className='mt-6 inline-flex items-center gap-2 text-sm font-bold text-cyan-200 underline underline-offset-4'>{ru?'Описание дайв-сайта от Sun Diving':'Dive-site description by Sun Diving'} <ArrowRight size={16}/></a>
+          </div>
+          <div className='relative min-h-[340px] bg-[#06283a]'>
+            <iframe title={ru?'Карта района атолла Дхаалу':'Dhaalu Atoll region map'} loading='lazy' referrerPolicy='no-referrer-when-downgrade' className='absolute inset-0 h-full w-full border-0' src='https://www.openstreetmap.org/export/embed.html?bbox=72.6%2C2.45%2C73.35%2C3.35&amp;layer=mapnik'/>
+            <span className='pointer-events-none absolute bottom-4 left-4 right-4 rounded-xl bg-[#03283b]/90 p-3 text-xs text-white'>{ru?'Обзорная карта региона · Не для навигации':'Regional overview only · Not for navigation'}</span>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id='dive-spots' className='mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
       <p className='text-xs font-bold uppercase tracking-[.2em] text-cyan-200'>{ru ? 'ГИД ПО ДАЙВ-САЙТАМ' : 'DIVE DESTINATION GUIDE'}</p>
       <h2 className='mt-3 text-3xl font-extrabold md:text-4xl'>{ru ? 'Скоро на LokaWndr · Места для дайвинга на Мальдивах' : 'Coming to LokaWndr · Maldives Dive Destinations'}</h2>
