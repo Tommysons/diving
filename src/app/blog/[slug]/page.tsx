@@ -32,25 +32,25 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
   switch (block.type) {
     case 'heading':
       return block.level === 3 ? (
-        <h3 className='text-2xl font-semibold text-gray-800 mb-3'>
+        <h3 className='text-2xl font-semibold text-slate-100 mb-3'>
           {block.value || ''}
         </h3>
       ) : (
-        <h2 className='text-3xl sm:text-4xl font-bold text-gray-900 mb-4'>
+        <h2 className='text-3xl sm:text-4xl font-bold text-white mb-4'>
           {block.value || ''}
         </h2>
       )
 
     case 'paragraph':
       return (
-        <p className='text-gray-800 text-lg leading-relaxed'>
+        <p className='text-slate-100 text-lg leading-relaxed'>
           {block.value || ''}
         </p>
       )
 
     case 'quote':
       return (
-        <blockquote className='pl-6 border-l-4 border-blue-500 italic text-gray-700 bg-blue-50 p-4 rounded-md shadow-inner my-4'>
+        <blockquote className='pl-6 border-l-4 border-cyan-300 italic text-cyan-50 bg-cyan-300/10 p-4 rounded-md shadow-inner my-4'>
           {block.value || ''}
         </blockquote>
       )
@@ -58,7 +58,7 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
     case 'list':
       if (!block.items || block.items.length === 0) return null
       return (
-        <ul className='list-disc pl-6 space-y-2 text-gray-800'>
+        <ul className='list-disc pl-6 space-y-2 text-slate-100'>
           {block.items.map((item, idx) => (
             <li key={idx}>{item}</li>
           ))}
@@ -77,7 +77,7 @@ const RenderBlock = ({ block }: { block: BlogContentBlock }) => {
             className='w-full h-auto object-cover transition-transform duration-300 hover:scale-105'
           />
           {block.caption && (
-            <p className='text-sm text-gray-500 mt-2 italic'>{block.caption}</p>
+            <p className='text-sm text-slate-400 mt-2 italic'>{block.caption}</p>
           )}
         </div>
       )
@@ -110,24 +110,24 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     <>
       <Header />
 
-      <main className='bg-blue-200 min-h-screen w-full px-4 sm:px-6 py-12'>
+      <main className='bg-[#06283a] min-h-screen w-full px-4 sm:px-6 py-12 md:py-16 text-white'>
         <motion.div
           variants={container}
           initial='hidden'
           animate='show'
-          className='max-w-4xl mx-auto space-y-10'
+          className='max-w-4xl mx-auto space-y-7 sm:space-y-10'
         >
           {/* Title + Navigation */}
           <motion.div
             variants={item}
-            className='bg-white p-8 rounded-xl shadow-lg text-center'
+            className='bg-[#0b354a] border border-white/15 p-5 sm:p-8 rounded-3xl shadow-xl text-center'
           >
-            <div className='flex items-center justify-center gap-6'>
+            <div className='flex items-center justify-center gap-2 sm:gap-6'>
               <NavButton onClick={goToPrev} ariaLabel='Previous post'>
                 <ChevronLeft className='w-6 h-6' />
               </NavButton>
 
-              <h1 className='text-5xl sm:text-6xl font-extrabold text-gray-900 mb-2 leading-tight'>
+              <h1 className='min-w-0 flex-1 text-2xl sm:text-4xl md:text-5xl font-extrabold text-white mb-2 leading-tight break-words'>
                 {post.title}
               </h1>
 
@@ -136,7 +136,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </NavButton>
             </div>
 
-            <p className='text-gray-600 text-sm sm:text-base mt-3'>
+            <p className='text-slate-300 text-sm sm:text-base mt-3'>
               {new Date(post.date).toLocaleDateString('en-GB', {
                 year: 'numeric',
                 month: 'long',
@@ -149,7 +149,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           {post.image && (
             <motion.div
               variants={item}
-              className='rounded-xl overflow-hidden shadow-2xl'
+              className='rounded-3xl overflow-hidden border border-white/15 shadow-2xl'
             >
               <Image
                 src={post.image}
@@ -167,7 +167,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               <motion.div
                 key={idx}
                 variants={item}
-                className='bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition'
+                className='bg-[#0b354a] border border-white/10 p-5 sm:p-7 rounded-2xl shadow-md transition'
               >
                 <RenderBlock block={block} />
               </motion.div>
@@ -180,7 +180,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className='bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-medium hover:bg-blue-200 transition'
+                  className='bg-cyan-300/15 text-cyan-100 px-4 py-1 rounded-full text-sm font-medium hover:bg-cyan-300/25 transition'
                 >
                   #{tag}
                 </span>
@@ -208,7 +208,7 @@ function NavButton({
     <button
       onClick={onClick}
       aria-label={ariaLabel}
-      className='bg-cyan-700 hover:bg-cyan-800 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md transition'
+      className='shrink-0 bg-[#075a74] hover:bg-[#087b96] text-white w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-md transition'
     >
       {children}
     </button>
