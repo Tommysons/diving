@@ -92,7 +92,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
         <h2 className='text-3xl font-extrabold'>{t.plan}</h2><p className='mt-4 max-w-2xl leading-7 text-slate-200'>{t.planText}</p>
         <div className='mt-7 flex flex-wrap gap-4'>
           <Link href={base+'/contact'} className='inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-bold text-[#062536]'><Mail size={18}/>{t.contact}</Link>
-          <a href='#dive-spots' className='inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-bold'>{t.other}<ArrowRight size={18}/></a>
+          <a href={base+'/destinations/thailand'} className='inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-bold'>{ru?'Исследовать Таиланд':'Explore Thailand'}<ArrowRight size={18}/></a>
         </div>
       </div>
       <p className='mt-6 text-xs text-slate-400'>{t.note}</p>
