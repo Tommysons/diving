@@ -24,7 +24,7 @@ export default function DiveSitesPageRu() {
           </motion.h1>
 
           {/* Верхняя секция: Карта + Описание */}
-          <div className='grid md:grid-cols-2 gap-10 items-center bg-white/[.07] border border-white/15 backdrop-blur-md p-5 sm:p-8 rounded-3xl shadow-xl'>
+          <div className='grid lg:grid-cols-2 gap-8 lg:gap-10 items-center bg-white/[.07] border border-white/15 backdrop-blur-md p-5 sm:p-8 rounded-3xl shadow-xl'>
             {/* Левая часть: Карта */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -37,7 +37,8 @@ export default function DiveSitesPageRu() {
                 alt='Карта мест для дайвинга на Ко Тао'
                 width={600}
                 height={400}
-                className='rounded-2xl shadow-lg object-cover'
+                className='h-auto w-full rounded-2xl shadow-lg object-cover'
+                sizes='(max-width: 1024px) 100vw, 50vw'
               />
             </motion.div>
 
@@ -86,12 +87,15 @@ export default function DiveSitesPageRu() {
               >
                 <Link
                   href={`/ru/divesites/${site.slug}`}
-                  className='flex gap-4 items-center'
+                  className='flex gap-4 items-center rounded-xl'
                 >
-                  <img
-                    src={site.imageUrl}
+                  <Image
+                    src={site.imageUrl ?? '/images/hero-about.webp'}
                     alt={site.name}
-                    className='w-28 h-28 object-cover rounded-xl'
+                    width={112}
+                    height={112}
+                    sizes='112px'
+                    className='h-24 w-24 shrink-0 rounded-xl object-cover sm:h-28 sm:w-28'
                   />
                   <div>
                     <h3 className='text-xl font-bold text-white'>
@@ -112,16 +116,16 @@ export default function DiveSitesPageRu() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-center text-black text-lg'
+              className='text-center text-slate-200 text-base sm:text-lg'
             >
               Все фотографии сделаны{' '}
-              <span className='font-semibold text-blue-800'>
+              <span className='font-semibold text-cyan-100'>
                 Mia{' '}
                 <a
                   href='https://www.instagram.com/kakadong123/'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='underline hover:text-blue-400 transition'
+                  className='underline hover:text-cyan-200 transition'
                 >
                   @kakadong123
                 </a>
