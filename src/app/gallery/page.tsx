@@ -11,19 +11,19 @@ export default function GalleryPage() {
     <>
       <Navbar />
 
-      <main className='relative min-h-screen w-full bg-blue-200 overflow-hidden'>
+      <main className='relative min-h-screen w-full bg-[#06283a] text-white overflow-hidden'>
         <section className='relative z-10 max-w-7xl mx-auto px-4 py-12'>
           {/* HEADER */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className='text-center mb-10'
+            className='mx-auto max-w-4xl text-center mb-10'
           >
-            <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
+            <h1 className='text-4xl md:text-5xl font-bold text-center text-cyan-100 mb-2'>
               My Underwater Gallery
             </h1>
-            <p className='text-blue-700 text-lg mx-auto'>
+            <p className='text-cyan-100 text-lg mx-auto'>
               Explore the mesmerizing world beneath the waves. From vibrant
               coral reefs to encounters with majestic marine life, these videos
               capture the beauty and thrill of diving adventures.
@@ -35,7 +35,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className='bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-6'
+            className='bg-white/[.05] border border-white/15 backdrop-blur-md rounded-3xl shadow-xl p-6'
           >
             <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
               {videos.map((video, index) => (
@@ -44,7 +44,7 @@ export default function GalleryPage() {
                   href={`https://www.youtube.com/watch?v=${video.id}`}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='relative group rounded-2xl overflow-hidden shadow-lg cursor-pointer'
+                  className='relative group rounded-2xl overflow-hidden shadow-lg border border-white/15 cursor-pointer'
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.08 }}
