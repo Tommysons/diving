@@ -59,7 +59,7 @@ export default function ScubaDivingCoursesPage() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-gray-700 leading-relaxed text-base sm:text-lg px-2'
+              className='text-white leading-relaxed text-base sm:text-lg px-2'
             >
               <h2 className='text-2xl font-bold mb-4 text-white'>
                 Discover the Underwater World
