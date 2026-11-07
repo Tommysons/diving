@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Waves, Fish, Mail } from 'lucide-react'
 import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
+import LokaVideoSection, { thailandVideos } from '@/components/LokaVideoSection'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -102,6 +103,7 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
    <p className='mt-7 text-sm leading-6 text-slate-400'>{t.safety}</p>
    <p className='mt-4 text-sm text-cyan-100'>{t.sources}: <a href='https://www.padi.com/dive-site/thailand/southwest-pinnacle/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Southwest Pinnacle</a> · <a href='https://www.padi.com/dive-site/thailand/chumphon-pinnacle-2/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Chumphon Pinnacle</a> · <a href='https://www.padi.com/dive-site/thailand/richelieu-rock-3/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Richelieu Rock</a></p>
   </section>
+  <LokaVideoSection locale={locale} videos={thailandVideos} title={ru?'Видео о дайвинге в Таиланде':'Scuba Diving Videos from Thailand'}/>
   <section className='bg-[#03283b] px-6 py-16 md:px-10'>
    <div className='mx-auto max-w-[1480px] rounded-2xl border border-white/20 bg-[#0a3c50] p-8 md:p-12'>
     <h2 className='text-3xl font-extrabold'>{t.plan}</h2>
