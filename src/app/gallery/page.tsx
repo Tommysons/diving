@@ -1,5 +1,6 @@
 'use client'
 
+import LokaVideoSection, { featuredVideos } from '@/components/LokaVideoSection'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import { motion } from 'framer-motion'
@@ -85,6 +86,7 @@ export default function GalleryPage() {
         </section>
       </main>
 
+      <div className='bg-[#06283a]'><LokaVideoSection locale='en' videos={featuredVideos} title='Latest LokaWndr Adventures'/></div>
       <Footer />
     </>
   )
