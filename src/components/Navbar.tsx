@@ -28,9 +28,9 @@ export default function Navbar() {
         <span><strong className='block text-2xl font-extrabold leading-none tracking-tight'>LokaWndr</strong><small className='mt-1 block text-[9px] font-bold tracking-[0.18em] text-cyan-100'>EXPLORE · DIVE · SNORKEL</small></span>
       </Link>
       <div className='hidden items-center gap-6 xl:flex'>
-        <Link href={base||'/'} className='border-b-2 border-cyan-300 pb-1 text-sm font-semibold'>{ru?'Главная':'Home'}</Link>
+        <Link href={base||'/'} className={pathname===(base||'/')?'border-b-2 border-cyan-300 pb-1 text-sm font-semibold':'pb-1 text-sm font-semibold text-slate-100 hover:text-cyan-200'}>{ru?'Главная':'Home'}</Link>
         {items.map(item=><div key={item.label} className='group relative'>
-          <Link href={item.href} className='flex items-center gap-1 rounded-lg px-1 py-3 text-sm font-semibold text-slate-100 transition hover:text-cyan-200'>{item.label}{item.children&&<ChevronDown size={14}/>}</Link>
+          <Link href={item.href} className={`flex items-center gap-1 rounded-lg px-1 py-3 text-sm font-semibold transition hover:text-cyan-200 ${pathname===item.href?'text-cyan-200':'text-slate-100'}`}>{item.label}{item.children&&<ChevronDown size={14}/>}</Link>
           {item.children&&<div className='invisible absolute left-0 top-full min-w-44 rounded-xl border border-cyan-200/15 bg-[#062b41] p-2 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100'>{item.children.map(child=><Link key={child.href} href={child.href} className='block rounded-md px-3 py-2 text-sm hover:bg-white/10'>{child.label}</Link>)}</div>}
         </div>)}
       </div>
@@ -38,11 +38,11 @@ export default function Navbar() {
         <Link href={localePath('en')} className={!ru?'font-bold':'text-slate-300'}>EN</Link><span className='text-white/40'>|</span><Link href={localePath('ru')} className={ru?'font-bold':'text-slate-300'}>RU</Link>
         <Link href={base+'/contact'} className='ml-2 rounded-xl bg-cyan-100 px-4 py-2.5 text-sm font-bold text-[#062536] transition hover:bg-white'>{ru?'Связаться':'Plan Your Experience'}</Link>
       </div>
-      <button className='rounded-md p-2 xl:hidden' aria-label={open?'Close menu':'Open menu'} aria-expanded={open} onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button>
+      <button className='rounded-xl border border-white/20 p-2.5 xl:hidden' aria-label={open?(ru?'Закрыть меню':'Close menu'):(ru?'Открыть меню':'Open menu')} aria-expanded={open} onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button>
     </div>
     {open&&<div className='absolute left-0 right-0 top-full max-h-[80vh] overflow-auto border-t border-white/15 bg-[#03283b] px-6 py-5 shadow-2xl xl:hidden'>
-      <Link onClick={()=>setOpen(false)} href={base||'/'} className='block py-2 font-semibold'>{ru?'Главная':'Home'}</Link>
-      {items.map(item=><div key={item.label}><Link onClick={()=>setOpen(false)} href={item.href} className='block py-2 font-semibold'>{item.label}</Link>{item.children?.map(child=><Link onClick={()=>setOpen(false)} key={child.href} href={child.href} className='block py-1 pl-5 text-sm text-cyan-100'>{child.label}</Link>)}</div>)}
+      <Link onClick={()=>setOpen(false)} href={base||'/'} className='block min-h-11 py-3 font-semibold'>{ru?'Главная':'Home'}</Link>
+      {items.map(item=><div key={item.label}><Link onClick={()=>setOpen(false)} href={item.href} className='block py-2 font-semibold'>{item.label}</Link>{item.children?.map(child=><Link onClick={()=>setOpen(false)} key={child.href} href={child.href} className='block min-h-10 py-2 pl-5 text-sm text-cyan-100'>{child.label}</Link>)}</div>)}
       <div className='mt-4 flex gap-5 border-t border-white/15 pt-4'><Link href={localePath('en')} onClick={()=>setOpen(false)}>EN</Link><Link href={localePath('ru')} onClick={()=>setOpen(false)}>RU</Link><Link href={base+'/contact'} onClick={()=>setOpen(false)}>{ru?'Связаться':'Contact'}</Link></div>
     </div>}
   </nav>
