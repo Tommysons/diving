@@ -63,30 +63,30 @@ export default function ScubaCourseDetailClient({
   }
 
   return (
-    <main className='relative min-h-screen w-full bg-blue-200'>
-      <section className='relative z-10 max-w-7xl mx-auto px-4 py-10'>
+    <main className='relative min-h-screen w-full bg-[#06283a] text-white'>
+      <section className='relative z-10 max-w-[1480px] mx-auto px-4 sm:px-6 md:px-10 py-12 md:py-16'>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className='bg-white/90 backdrop-blur-md shadow-lg rounded-2xl overflow-hidden'
+          className='bg-white/95 text-[#073044] backdrop-blur-md border border-white/20 shadow-2xl rounded-3xl overflow-hidden'
         >
           {/* HEADER */}
-          <div className='flex items-center justify-center gap-4 p-6 border-b bg-white/80'>
+          <div className='flex items-center justify-center gap-2 sm:gap-4 p-4 sm:p-6 border-b bg-white/80'>
             <button
               onClick={() => go(-1)}
-              className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center'
+              className='shrink-0 bg-[#075a74] hover:bg-[#087b96] text-white w-10 h-10 rounded-full flex items-center justify-center'
             >
               <ChevronLeft />
             </button>
 
-            <h1 className='text-3xl font-bold text-gray-800 text-center px-4'>
+            <h1 className='text-xl sm:text-3xl md:text-4xl font-extrabold text-[#073044] text-center leading-tight min-w-0 break-words px-4'>
               {course.name}
             </h1>
 
             <button
               onClick={() => go(1)}
-              className='bg-cyan-700 hover:bg-cyan-800 text-white w-10 h-10 rounded-full flex items-center justify-center'
+              className='shrink-0 bg-[#075a74] hover:bg-[#087b96] text-white w-10 h-10 rounded-full flex items-center justify-center'
             >
               <ChevronRight />
             </button>
@@ -192,7 +192,7 @@ export default function ScubaCourseDetailClient({
                 : 'Перед записью на курс ознакомьтесь с медицинской анкетой.'}
             </p>
 
-            <div className='flex gap-4'>
+            <div className='flex flex-wrap gap-4'>
               <a
                 href={
                   lang === 'en'
@@ -200,14 +200,14 @@ export default function ScubaCourseDetailClient({
                     : '/forms/medical-form-rus.pdf'
                 }
                 download
-                className='bg-blue-600 text-white px-4 py-2 rounded-lg'
+                className='bg-[#075a74] hover:bg-[#043f56] text-white px-4 py-2 rounded-xl'
               >
                 {lang === 'en' ? 'Download PDF' : 'Скачать PDF'}
               </a>
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className='bg-cyan-700 text-white px-4 py-2 rounded-lg'
+                className='bg-[#075a74] hover:bg-[#043f56] text-white px-4 py-2 rounded-xl'
               >
                 {lang === 'en' ? 'View Fullscreen' : 'Открыть'}
               </button>
