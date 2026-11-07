@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
   --loka-deep: #031b2d;
   --loka-ocean: #06283a;
   --loka-panel: #0b354a;
