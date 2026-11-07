@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Fish, Waves, Play, Mail } from 'lucide-react'
 import LokaVideoSection, { maldivesVideos } from '@/components/LokaVideoSection'
+import ViluReefDiveMap from '@/components/ViluReefDiveMap'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -65,13 +66,10 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
             <p className='text-xs font-bold uppercase tracking-[.2em] text-cyan-200'>{ru?'ПЕРВЫЙ ДАЙВ-САЙТ МАЛЬДИВ · DHAALU ATOLL':'FIRST MALDIVES DIVE SITE · DHAALU ATOLL'}</p>
             <h2 className='mt-4 text-4xl font-extrabold'>Azmee Corner</h2>
             <p className='mt-5 leading-8 text-slate-200'>{ru?'Азми Корнер — место для погружений у района Vilu Reef в атолле Дхаалу. Подводная стена, навесы и небольшие пещеры создают укрытия для скатов, мурен, скорпен и рифовых рыб.':'Azmee Corner is a wall dive in the Vilu Reef area of Dhaalu Atoll. Its reef wall, overhangs and caves provide habitat for stingrays, moray eels, scorpionfish and reef fish.'}</p>
-            <p className='mt-4 leading-7 text-slate-300'>{ru?'Точные GPS-координаты дайв-сайта пока не подтверждены. Карта показывает расположенный поблизости остров Велавару (2,979702° с. ш., 73,015684° в. д.), а не точные координаты Азми Корнер.':'The dive site’s exact GPS coordinates have not yet been independently verified. The map is centered on nearby Velavaru Island (2.979702° N, 73.015684° E), not an exact Azmee Corner dive-site pin.'}</p>
+            <p className='mt-4 leading-7 text-slate-300'>{ru?'Точные GPS-координаты пока не подтверждены. На схеме район Azmee Corner отмечен приблизительно к северо-западу от Велавару по вашей фотографии карты. Vilu Reef служит центральной точкой нашего дайв-гида.':'Exact GPS coordinates are not yet verified. The map places Azmee Corner approximately northwest of Velavaru, based on your annotated map screenshot. Vilu Reef is the hub of this developing dive-site guide.'}</p>
             <a href='https://sundiving.com/sun-siyam-vilu-reef/' target='_blank' rel='noopener noreferrer' className='mt-6 inline-flex items-center gap-2 text-sm font-bold text-cyan-200 underline underline-offset-4'>{ru?'Описание дайв-сайта от Sun Diving':'Dive-site description by Sun Diving'} <ArrowRight size={16}/></a>
           </div>
-          <div className='relative min-h-[340px] bg-[#06283a]'>
-            <iframe title={ru?'Карта района атолла Дхаалу':'Dhaalu Atoll region map'} loading='lazy' referrerPolicy='no-referrer-when-downgrade' className='absolute inset-0 h-full w-full border-0' src='https://www.openstreetmap.org/export/embed.html?bbox=72.975%2C2.956%2C73.041%2C3.025&layer=mapnik&marker=2.979702%2C73.015684'/>
-            <span className='pointer-events-none absolute bottom-4 left-4 right-4 rounded-xl bg-[#03283b]/90 p-3 text-xs text-white'>{ru?'Маркер острова Велавару · Координаты Азми Корнер не подтверждены · Не для навигации':'Velavaru island reference pin · Azmee Corner position unverified · Not for navigation'}</span>
-          </div>
+          <ViluReefDiveMap locale={locale}/>
         </div>
       </div>
     </section>
