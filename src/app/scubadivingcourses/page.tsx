@@ -25,20 +25,20 @@ export default function ScubaDivingCoursesPage() {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full bg-blue-200'>
-        <div className='relative z-10 max-w-6xl mx-auto px-6 py-10 space-y-12'>
+      <main className='relative min-h-screen w-full bg-[#06283a] text-white'>
+        <div className='relative z-10 max-w-[1480px] mx-auto px-5 sm:px-6 md:px-10 py-12 md:py-16 space-y-12'>
           {/* Page Title */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className='text-4xl md:text-5xl font-bold text-center text-blue-700'
+            className='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-center text-white'
           >
             Scuba Diving Courses
           </motion.h1>
 
           {/* Introduction */}
-          <div className='grid md:grid-cols-2 gap-8 md:gap-10 items-center bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg'>
+          <div className='grid md:grid-cols-2 gap-8 md:gap-10 items-center bg-white/[.07] border border-white/15 backdrop-blur-md p-5 sm:p-8 rounded-3xl shadow-xl'>
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -61,7 +61,7 @@ export default function ScubaDivingCoursesPage() {
               transition={{ duration: 0.6 }}
               className='text-gray-700 leading-relaxed text-base sm:text-lg px-2'
             >
-              <h2 className='text-2xl font-semibold mb-4 text-blue-700'>
+              <h2 className='text-2xl font-bold mb-4 text-white'>
                 Discover the Underwater World
               </h2>
               <p className='mb-4'>
@@ -133,7 +133,7 @@ function CourseSection({ id, title, courses, activeForm, setActiveForm }: any) {
     <div className='space-y-8'>
       <h2
         id={id}
-        className='text-2xl sm:text-3xl font-bold text-blue-700 mb-6 text-center'
+        className='text-2xl sm:text-3xl font-extrabold text-white mb-6 text-center'
       >
         {title}
       </h2>
@@ -156,7 +156,7 @@ function CourseCard({ course, activeForm, setActiveForm }: any) {
   const isActive = activeForm === course.slug
 
   return (
-    <div className='border rounded-2xl shadow-lg bg-white transform transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl flex flex-col md:flex-row md:items-stretch relative w-full max-w-full overflow-hidden'>
+    <div className='border border-white/15 rounded-2xl shadow-lg bg-white text-[#073044] transition duration-300 ease-in-out hover:border-cyan-300/60 hover:shadow-2xl flex flex-col md:flex-row md:items-stretch relative w-full max-w-full overflow-hidden'>
       <Link
         href={`/scubadivingcourses/${course.slug}`}
         className='flex-1 flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 cursor-pointer'
@@ -177,13 +177,13 @@ function CourseCard({ course, activeForm, setActiveForm }: any) {
           </p>
           {'maxDepth' in course && (
             <p className='text-sm sm:text-base'>
-              <span className='font-semibold text-blue-600'>Max Depth:</span>{' '}
+              <span className='font-semibold text-cyan-700'>Max Depth:</span>{' '}
               {course.maxDepth}
             </p>
           )}
           {course.prerequisites && (
             <p className='text-sm sm:text-base'>
-              <span className='font-semibold text-blue-600'>
+              <span className='font-semibold text-cyan-700'>
                 Prerequisites:
               </span>{' '}
               {course.prerequisites}
@@ -194,7 +194,7 @@ function CourseCard({ course, activeForm, setActiveForm }: any) {
 
       <div className='p-4 sm:p-6 pt-0'>
         <button
-          className='inline-block mt-2 px-4 py-2 bg-cyan-700 hover:bg-cyan-800 text-white rounded transition text-sm sm:text-base'
+          className='inline-block mt-2 px-4 py-2 bg-[#075a74] hover:bg-[#043f56] text-white rounded-xl transition text-sm sm:text-base'
           onClick={(e) => {
             e.stopPropagation()
             setActiveForm(isActive ? null : course.slug)
