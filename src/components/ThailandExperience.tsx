@@ -14,14 +14,14 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
   koh:'Ко Тао — начало истории LokaWndr',kohText:'Ко Тао занимает особое место в истории LokaWndr. Здесь можно найти как неглубокие учебные рифы, так и более глубокие подводные скалы. Наши существующие статьи помогут познакомиться с местными дайв-сайтами.',
   gallery:'Дайв-сайты Ко Тао — фотографии и подробности',depth:'Глубина',current:'Течение',visibility:'Видимость',see:'Морские обитатели',details:'Подробнее о дайв-сайте',photos:'Фотогалерея',credit:'Фотографии предоставлены Mia',existing:'Наш гид по дайв-сайтам Ко Тао',courses:'Курсы дайвинга',other:'Скоро на LokaWndr · Другие места для дайвинга',
   plan:'Вопросы о дайвинге в Таиланде?',planText:'Напишите нам, чтобы узнать больше. Наличие инструкторов и возможность бронирования не гарантируются.',
-  contact:'Связаться',maldives:'Исследовать Мальдивы',sources:'Источники',safety:'Условия и доступность дайв-сайтов зависят от сезона, погоды, течений и подготовки дайвера. Уточняйте информацию у местного оператора.'
+  contact:'Связаться',maldives:'Исследовать дайв-сайты Мальдив',sources:'Источники',safety:'Условия и доступность дайв-сайтов зависят от сезона, погоды, течений и подготовки дайвера. Уточняйте информацию у местного оператора.'
  }:{
   label:'CHAPTER 01 · THAILAND',title:'Dive into Thailand',intro:'From Koh Tao’s reefs to the dramatic dive sites of the Andaman Sea.',
   guide:'Explore Dive Sites',heading:'Where to Dive in Thailand',intro2:'Thailand offers everything from calm training reefs to offshore pinnacles, wrecks and current-swept sites for experienced divers.',
   koh:'Koh Tao — Where LokaWndr Began',kohText:'Koh Tao is part of the LokaWndr story. Explore shallow training reefs as well as deeper offshore pinnacles, and discover the island through our existing dive-site guides.',
   gallery:'Koh Tao Dive Sites — Photos & Details',depth:'Depth',current:'Current',visibility:'Visibility',see:'Marine life',details:'View Full Dive-Site Guide',photos:'Photo Gallery',credit:'Photography by Mia',existing:'Explore Our Koh Tao Dive Sites',courses:'Scuba Diving Courses',other:'Coming to LokaWndr · More Thai Dive Destinations',
   plan:'Questions About Diving in Thailand?',planText:'Contact us to learn more. Instructor availability and trip bookings are not guaranteed.',
-  contact:'Get in Touch',maldives:'Explore Maldives',sources:'Sources',safety:'Dive conditions and access depend on season, weather, currents and diver experience. Confirm details with a local operator.'
+  contact:'Get in Touch',maldives:'Explore Maldives Dive Sites',sources:'Sources',safety:'Dive conditions and access depend on season, weather, currents and diver experience. Confirm details with a local operator.'
  }
  const spots=ru?[
   {name:'Sail Rock · Сиамский залив',tag:'Подводная скала и стаи рыб',body:'Известный дайв-сайт между Ко Тао и Ко Пханганом. Глубина и течения требуют внимательного планирования.'},
