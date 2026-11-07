@@ -38,7 +38,7 @@ export default function ScubaDivingCoursesPage() {
           </motion.h1>
 
           {/* Introduction */}
-          <div className='grid md:grid-cols-2 gap-8 md:gap-10 items-center bg-white/[.07] border border-white/15 backdrop-blur-md p-5 sm:p-8 rounded-3xl shadow-xl'>
+          <div className='grid lg:grid-cols-2 gap-8 lg:gap-10 items-center bg-white/[.07] border border-white/15 backdrop-blur-md p-5 sm:p-8 rounded-3xl shadow-xl'>
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -80,10 +80,10 @@ export default function ScubaDivingCoursesPage() {
           </div>
 
           {/* Navigation Links */}
-          <div className='grid md:grid-cols-2 gap-6 mb-12'>
+          <div className='grid lg:grid-cols-2 gap-4 sm:gap-6 mb-12'>
             <Link
               href='#non-certified'
-              className='bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl p-5 text-center shadow-lg transition transform hover:scale-105 text-base sm:text-lg'
+              className='min-h-11 bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl p-5 text-center shadow-lg transition motion-safe:hover:scale-[1.02] text-base sm:text-lg'
             >
               <h3 className='text-xl font-semibold mb-2'>
                 For Non-Certified Divers
@@ -93,7 +93,7 @@ export default function ScubaDivingCoursesPage() {
 
             <Link
               href='#certified'
-              className='bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-5 text-center shadow-lg transition transform hover:scale-105 text-base sm:text-lg'
+              className='min-h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-5 text-center shadow-lg transition motion-safe:hover:scale-[1.02] text-base sm:text-lg'
             >
               <h3 className='text-xl font-semibold mb-2'>
                 For Certified Divers
@@ -156,10 +156,10 @@ function CourseCard({ course, activeForm, setActiveForm }: any) {
   const isActive = activeForm === course.slug
 
   return (
-    <div className='border border-white/15 rounded-2xl shadow-lg bg-white text-[#073044] transition duration-300 ease-in-out hover:border-cyan-300/60 hover:shadow-2xl flex flex-col md:flex-row md:items-stretch relative w-full max-w-full overflow-hidden'>
+    <article className='border border-white/15 rounded-2xl shadow-lg bg-white text-[#073044] transition duration-300 ease-in-out hover:border-cyan-300/60 hover:shadow-2xl flex flex-col lg:flex-row lg:items-stretch relative w-full max-w-full overflow-hidden'>
       <Link
         href={`/scubadivingcourses/${course.slug}`}
-        className='flex-1 flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 cursor-pointer'
+        className='flex-1 flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 cursor-pointer focus-visible:outline-offset-[-4px]'
       >
         <div className='relative w-full sm:w-1/3 h-56 sm:h-64 flex-shrink-0'>
           <Image
@@ -194,7 +194,7 @@ function CourseCard({ course, activeForm, setActiveForm }: any) {
 
       <div className='p-4 sm:p-6 pt-0'>
         <button
-          className='inline-block mt-2 px-4 py-2 bg-[#075a74] hover:bg-[#043f56] text-white rounded-xl transition text-sm sm:text-base'
+          className='inline-flex min-h-11 items-center justify-center mt-2 px-4 py-2 bg-[#075a74] hover:bg-[#043f56] text-white rounded-xl transition text-sm sm:text-base'
           onClick={(e) => {
             e.stopPropagation()
             setActiveForm(isActive ? null : course.slug)
@@ -205,6 +205,6 @@ function CourseCard({ course, activeForm, setActiveForm }: any) {
 
         {isActive && <BookingForm type='scuba_course' activity={course.name} />}
       </div>
-    </div>
+    </article>
   )
 }
