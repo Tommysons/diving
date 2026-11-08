@@ -24,12 +24,12 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  const [dragStart,setDragStart]=useState<number|null>(null)
  const site=sites.find(s=>s.slug===selected)
  const t=ru?{
-  eyebrow:'LOKAWNDR · ИНТЕРАКТИВНЫЙ АТЛАС',title:'Одна планета. Бесконечный океан.',lead:'Выберите направление и откройте места для дайвинга. Начните с Ко Тао.',
+  eyebrow:'LOKAWNDR · ИНТЕРАКТИВНЫЙ АТЛАС',title:'Одна планета. Бесконечный океан.',lead:'Выберите направление и откройте места для дайвинга.',
   thailand:'Таиланд',maldives:'Мальдивы',explore:'Исследовать Ко Тао',soon:'Открыть Мальдивы',back:'Назад к Земле',sites:'Места для дайвинга · Ко Тао',
   mapNote:'Интерактивная 3D-иллюстрация Ко Тао: маркеры показывают общие районы погружений, а не точные GPS-координаты.',
   choose:'Выберите маркер, чтобы посмотреть описание и фотографии.',depth:'Глубина',current:'Течение',visibility:'Видимость',photos:'Фотографии',more:'Полная информация',return:'К карте',maldivesText:'Путеводитель по дайвингу и снорклингу на Мальдивах',maldivesLink:'Открыть путеводитель',photoCredit:'Подводные фотографии: Mia @kakadong123',globeNote:'Перетащите Землю, чтобы повернуть её. Выберите направление ниже.',reset:'Сбросить вращение'
  }:{
-  eyebrow:'LOKAWNDR · INTERACTIVE ATLAS',title:'One planet. Infinite blue.',lead:'Choose a destination and discover underwater places. Begin with Koh Tao.',
+  eyebrow:'LOKAWNDR · INTERACTIVE ATLAS',title:'One planet. Infinite blue.',lead:'Choose a destination and discover underwater places.',
   thailand:'Thailand',maldives:'Maldives',explore:'Explore Koh Tao',soon:'Explore Maldives',back:'Back to Earth',sites:'Koh Tao · Dive Sites',
   mapNote:'Explore a stylized 3D view of Koh Tao. Markers indicate general dive-site areas, not verified GPS positions.',
   choose:'Select a marker to discover dive information and underwater photos.',depth:'Depth',current:'Current',visibility:'Visibility',photos:'Photo gallery',more:'Full dive-site guide',return:'Back to map',maldivesText:'Discover the Maldives scuba diving and snorkeling guide',maldivesLink:'Open Maldives guide',photoCredit:'Underwater photography: Mia @kakadong123',globeNote:'Drag the Earth to rotate it. Choose a destination below.',reset:'Reset rotation'
