@@ -24,11 +24,11 @@ export default function HomePage() {
  const [filter,setFilter]=useState('all')
  const t=ru?{
   eyebrow:'L O K A W N D R',title:'Открой подводный мир с LokaWndr',subtitle:'Дайвинг, снорклинг и приключения в удивительных уголках океана.',
-  plan:'Исследовать дайвинг',watch:'Наши видео',diving:'Дайвинг',diveInfo:'Курсы · Дайв-сайты · Погружения',snorkel:'Снорклинг',snorkelInfo:'Рифы · Морская жизнь · Океан',
+  plan:'Исследовать Землю',watch:'Наши видео',diving:'Дайвинг',diveInfo:'Курсы · Дайв-сайты · Погружения',snorkel:'Снорклинг',snorkelInfo:'Рифы · Морская жизнь · Океан',
   destinations:'Наши направления',destInfo:'Невероятные погружения, яркая морская жизнь и впечатления.',thailand:'Таиланд',thaiLead:'Ко Тао — где всё началось.',thaiInfo:'Дайвинг, коралловые рифы и островная жизнь.',maldives:'Мальдивы',malLead:'Новое океанское приключение.',malInfo:'Манты, китовые акулы, рифы и снорклинг.',explore:'Исследовать',stories:'Истории дайвинга и снорклинга',all:'Все',marine:'Морская жизнь',view:'Все истории'
  }:{
   eyebrow:'L O K A W N D R',title:'Explore the Underwater World with LokaWndr',subtitle:'Scuba diving, snorkeling and ocean adventures in extraordinary destinations.',
-  plan:'Explore Diving',watch:'Watch Our Videos',diving:'Scuba Diving',diveInfo:'Courses · Dive Sites · Ocean Stories',snorkel:'Snorkeling',snorkelInfo:'Reefs · Marine Life · Ocean Trips',
+  plan:'Explore Earth',watch:'Watch Our Videos',diving:'Scuba Diving',diveInfo:'Courses · Dive Sites · Ocean Stories',snorkel:'Snorkeling',snorkelInfo:'Reefs · Marine Life · Ocean Trips',
   destinations:'Our Destinations',destInfo:'Chosen for incredible diving, vibrant marine life, and unforgettable ocean experiences.',thailand:'Thailand',thaiLead:'Koh Tao — where the journey began.',thaiInfo:'Scuba diving, vibrant reefs and a true dive community.',maldives:'Maldives',malLead:'A new ocean adventure.',malInfo:'Pristine reefs, manta rays, whale sharks and exceptional snorkeling.',explore:'Explore',stories:'Latest Dive & Snorkel Stories',all:'All',marine:'Marine Life',view:'View All Stories'
  }
  const destinations=[
@@ -45,7 +45,7 @@ export default function HomePage() {
      <p className='mb-4 text-xs font-bold tracking-[.25em]'>{t.eyebrow}</p>
      <h1 className='text-4xl font-extrabold leading-[1.09] tracking-tight md:text-6xl'>{t.title}</h1>
      <p className='mt-5 max-w-xl text-lg leading-snug text-white/95 md:text-xl'>{t.subtitle}</p>
-     <div className='mt-7 flex flex-wrap gap-3'><Link href={base+'/divesites'} className='rounded-xl bg-white px-7 py-3.5 font-bold text-[#062536] hover:bg-cyan-100'>{t.plan}</Link><Link href='https://www.youtube.com/@lokawndr' target='_blank' rel='noopener noreferrer' className='inline-flex items-center gap-2 rounded-xl border border-white px-6 py-3.5 font-semibold hover:bg-white/15'><Play size={18}/>{t.watch}</Link></div>
+     <div className='mt-7 flex flex-wrap gap-3'><Link href={base+'/atlas'} className='rounded-xl bg-white px-7 py-3.5 font-bold text-[#062536] hover:bg-cyan-100'>{t.plan}</Link><Link href='https://www.youtube.com/@lokawndr' target='_blank' rel='noopener noreferrer' className='inline-flex items-center gap-2 rounded-xl border border-white px-6 py-3.5 font-semibold hover:bg-white/15'><Play size={18}/>{t.watch}</Link></div>
     </div>
    </div>
    <div className='relative border-t border-white/15 bg-[#062b3c]/65 backdrop-blur-sm'><div className='mx-auto grid max-w-[1480px] gap-5 px-6 py-5 md:grid-cols-2 md:px-10'>
