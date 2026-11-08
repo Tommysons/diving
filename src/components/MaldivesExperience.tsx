@@ -73,6 +73,25 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
         </div>
       </div>
     </section>
+    <section className='mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
+      <p className='text-xs font-bold tracking-widest text-cyan-200'>LOKAWNDR · VILU REEF</p>
+      <h2 className='mt-3 text-3xl font-extrabold'>{ru?'Дайв-сайты Vilu Reef':'Vilu Reef Dive Sites'}</h2>
+      <p className='mt-4 max-w-3xl leading-8 text-slate-200'>{ru?'Sun Siyam Vilu Reef расположен в атолле Дхаалу. Исследуйте местные рифы и подводные скалы вместе с местным дайв-центром.':'Sun Siyam Vilu Reef is located in Dhaalu Atoll. Explore nearby reefs and underwater pinnacles with the local dive centre.'}</p>
+      <div className='mt-8 grid gap-7 lg:grid-cols-2'>
+        {[
+          {name:'Yuki Reef',depth:'3–35 m',boat:'13 min',en:'A sloping reef near Udh dhoo Island with overhangs around 12–15 m and a deeper sandy bottom.',ru:'Риф у острова Уддху со склоном, навесами на глубине около 12–15 м и песчаным дном.'},
+          {name:'Velavaru Thila',depth:'8–40 m',boat:'20 min',en:'A thila with a shallow top, overhangs, sandy bottom and a nearby channel.',ru:'Подводная скала с неглубокой вершиной, навесами, песчаным дном и каналом.'},
+          {name:'Bodu Thila',depth:'6–35 m',boat:'25 min',en:'A large thila with a sloping reef, overhangs and a smaller deeper pinnacle.',ru:'Большая подводная скала со склоном, навесами и более глубокой небольшой скалой.'},
+          {name:'Udh dhoo Reef',depth:'3–35 m',boat:'10 min',en:'An island reef with a sandy bottom and several thilas rising from deeper water.',ru:'Островной риф с песчаным дном и несколькими подводными скалами.'},
+          {name:'Azmee Corner',depth:'—',boat:'—',en:'A reef wall with overhangs and marine life in the Vilu Reef area.',ru:'Рифовая стена с навесами и морскими обитателями в районе Vilu Reef.'},
+        ].map(site=><article key={site.name} id={site.name==='Azmee Corner'?'azmee-guide':undefined} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.06]'>
+          <div role='img' aria-label='To Be LokaWndred' className='grid aspect-video place-items-center bg-gradient-to-br from-cyan-800 via-[#064158] to-[#031a2c] p-6 text-center text-xl font-extrabold tracking-[.16em] text-cyan-50'>TO BE LOKAWNDRED</div>
+          <div className='p-6'><h3 className='text-2xl font-bold'>{site.name}</h3><p className='mt-3 leading-7 text-slate-200'>{ru?site.ru:site.en}</p>
+            <dl className='mt-5 grid grid-cols-3 gap-3 border-y border-white/15 py-4 text-sm'><div><dt className='text-slate-400'>{ru?'Глубина на схеме':'Chart depth'}</dt><dd className='mt-1 font-semibold'>{site.depth}</dd></div><div><dt className='text-slate-400'>{ru?'Поездка на лодке':'Boat trip'}</dt><dd className='mt-1 font-semibold'>{site.boat}</dd></div><div><dt className='text-slate-400'>{ru?'Течение':'Current'}</dt><dd className='mt-1 font-semibold'>{ru?'Уточняйте':'Check locally'}</dd></div></dl>
+            <h4 className='mt-6 text-sm font-bold uppercase tracking-wider text-cyan-200'>{ru?'Фотогалерея':'Photo gallery'}</h4><div className='mt-3 grid grid-cols-3 gap-2'><div className='grid aspect-square place-items-center rounded-lg bg-[#073c50] p-2 text-center text-xs font-bold text-cyan-100'>TO BE LOKAWNDRED</div></div>
+          </div></article>)}
+      </div><p className='mt-6 text-sm leading-6 text-slate-400'>{ru?'Данные взяты с предоставленных схем. Глубина дна не является рекомендуемой глубиной погружения; уточняйте условия у местного дайв-центра.':'Details are taken from the supplied site diagrams. The seabed depth is not a recommended dive depth; confirm conditions with the local dive centre.'}</p>
+    </section>
     <section id='dive-spots' className='mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
       <p className='text-xs font-bold uppercase tracking-[.2em] text-cyan-200'>{ru ? 'ГИД ПО ДАЙВ-САЙТАМ' : 'DIVE DESTINATION GUIDE'}</p>
       <h2 className='mt-3 text-3xl font-extrabold md:text-4xl'>{ru ? 'Скоро на LokaWndr · Места для дайвинга на Мальдивах' : 'Coming to LokaWndr · Maldives Dive Destinations'}</h2>
