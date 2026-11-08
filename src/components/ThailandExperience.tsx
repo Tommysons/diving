@@ -52,11 +52,11 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
     <h3 className='mt-3 text-3xl font-bold'>{t.koh}</h3>
     <p className='mt-4 max-w-3xl leading-8 text-slate-200'>{t.kohText}</p>
     <div className='mt-6 flex flex-wrap gap-3'>
-     <Link href={base+'/divesites'} className='rounded-xl bg-white px-5 py-3 font-bold text-[#062536]'>{t.existing}</Link>
+     <a href='#koh-tao-sites' className='rounded-xl bg-white px-5 py-3 font-bold text-[#062536]'>{t.existing}</a>
      <Link href={base+'/scubadivingcourses'} className='rounded-xl border border-white/50 px-5 py-3 font-bold'>{t.courses}</Link>
     </div>
    </div>
-   <div className='mt-12'>
+   <div id='koh-tao-sites' className='mt-12 scroll-mt-24'>
     <h3 className='text-3xl font-extrabold'>{t.gallery}</h3>
     <div className='mt-7 grid gap-7 lg:grid-cols-2'>
      {(ru ? diveSitesRU : diveSites).filter(site => site.imageUrl).map(site => (
