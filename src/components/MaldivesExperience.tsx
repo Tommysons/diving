@@ -14,7 +14,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
   const base = ru ? '/ru' : ''
   const t = ru ? {
     label: 'ГЛАВА 02 · МАЛЬДИВЫ', title: 'Мальдивы под водой', intro: 'Рифы, морские обитатели и встречи, которые остаются в памяти надолго.',
-    discover: 'Исследовать океан', videos: 'Смотреть видео', why: 'Откройте Мальдивы с LokaWndr',
+    discover: 'Исследовать дайв-сайты', videos: 'Смотреть видео', why: 'Откройте Мальдивы с LokaWndr',
     whyText: 'Это новая глава истории LokaWndr: впечатления от дайвинга и снорклинга, подводные съёмки и знакомство с удивительной морской жизнью.',
     diving: 'Дайвинг', divingText: 'Исследуйте рифы и наблюдайте за морскими обитателями. Условия погружений зависят от атолла, сезона и конкретного дайв-сайта.',
     snorkeling: 'Снорклинг', snorkelingText: 'Даже с поверхности можно увидеть рифовых рыб, черепах и других обитателей океана. Всегда выбирайте подходящие условия и местного гида.',
@@ -24,7 +24,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
     contact: 'Связаться', other: 'Места для дайвинга на Мальдивах', note: 'Фотографии на странице пока взяты из существующей галереи LokaWndr; снимки с Мальдив будут добавлены позже.'
   } : {
     label: 'CHAPTER 02 · MALDIVES', title: 'The Maldives, Beneath the Surface', intro: 'Coral reefs, incredible marine life and ocean encounters worth remembering.',
-    discover: 'Discover the Ocean', videos: 'Watch Our Videos', why: 'Discover the Maldives with LokaWndr',
+    discover: 'Explore Dive Sites', videos: 'Watch Our Videos', why: 'Discover the Maldives with LokaWndr',
     whyText: 'This is a new chapter in the LokaWndr journey: scuba diving and snorkeling experiences, underwater footage and stories about extraordinary marine life.',
     diving: 'Scuba Diving', divingText: 'Explore reefs and discover marine life. Dive conditions vary by atoll, season and individual dive site.',
     snorkeling: 'Snorkeling', snorkelingText: 'From the surface, you can encounter reef fish, turtles and other ocean life. Choose suitable conditions and local guidance.',
@@ -43,7 +43,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
         <h1 className='mt-4 max-w-3xl text-5xl font-extrabold leading-tight md:text-7xl'>{t.title}</h1>
         <p className='mt-5 max-w-2xl text-xl leading-relaxed text-slate-100'>{t.intro}</p>
         <div className='mt-8 flex flex-wrap gap-3'>
-          <a href='#explore' className='rounded-xl bg-white px-6 py-3 font-bold text-[#062536]'>{t.discover}</a>
+          <a href='#vilu-sites' className='rounded-xl bg-white px-6 py-3 font-bold text-[#062536]'>{t.discover}</a>
           <a href='https://www.youtube.com/@lokawndr' target='_blank' rel='noopener noreferrer' className='inline-flex items-center gap-2 rounded-xl border border-white px-6 py-3 font-bold'><Play size={18}/>{t.videos}</a>
         </div>
       </div>
