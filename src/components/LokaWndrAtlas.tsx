@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import AtlasGlobe from '@/components/AtlasGlobe'
+import MaldivesReefExplorer from '@/components/MaldivesReefExplorer'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Globe2, MapPin, RotateCcw, Waves } from 'lucide-react'
@@ -83,7 +84,7 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  <p className='mt-5 text-xs text-slate-400'>{t.photoCredit}</p>
  </>:<div className='flex h-full min-h-[250px] flex-col items-center justify-center gap-5 text-center'><Globe2 size={48} className='text-cyan-300'/><p className='max-w-xs text-slate-300'>{t.choose}</p></div>}
  </aside></div>
- </>:<div className='mt-8 max-w-3xl rounded-3xl border border-cyan-300/20 bg-white/[.06] p-8'><h2 className='text-3xl font-bold'>{t.maldives}</h2><p className='mt-4 text-slate-300'>{t.maldivesText}</p><Link href={base+'/destinations/maldives'} className='mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-[#03283b]'>{t.maldivesLink}<ArrowRight size={17}/></Link></div>}
+ </>:<div className='mt-8 max-w-3xl rounded-3xl border border-cyan-300/20 bg-white/[.06] p-8'><h2 className='text-3xl font-bold'>{t.maldives}</h2><p className='mt-4 text-slate-300'>{t.maldivesText}</p><MaldivesReefExplorer ru={ru}/><Link href={base+'/destinations/maldives'} className='mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-[#03283b]'>{t.maldivesLink}<ArrowRight size={17}/></Link></div>}
  </>}
  </section></main><Footer/></>
 }
