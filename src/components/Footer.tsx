@@ -49,7 +49,6 @@ export default function Footer() {
   const exploreLinks = [
     { label: t.thailand, href: base + '/destinations/thailand' },
     { label: t.maldives, href: base + '/destinations/maldives' },
-    { label: t.diveSites, href: base + '/divesites' },
     { label: t.courses, href: base + '/scubadivingcourses' },
   ]
   const moreLinks = [
