@@ -43,7 +43,7 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  <p className='mt-5 max-w-2xl text-lg text-slate-300'>{t.lead}</p>
  {destination==='earth'?<>
  <div className='relative mx-auto mt-7 h-[390px] max-w-[950px] overflow-hidden rounded-[2rem] border border-cyan-400/15 bg-[#020b19] md:h-[570px]'>
- <AtlasGlobe focus='earth'/>
+ <AtlasGlobe focus='earth' locale={locale} onSelect={(target)=>{setDestination(target);setSelected(null)}}/>
  <div className='pointer-events-none absolute bottom-5 left-0 right-0 text-center text-xs tracking-wider text-cyan-100/70'>{t.globeNote}</div>
  </div>
  <div className='mx-auto mt-3 flex max-w-2xl flex-wrap justify-center gap-4'>
