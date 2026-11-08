@@ -13,7 +13,7 @@ export const blogPostsRU: BlogPost[] = [
       "дельфины"
     ],
     "slug": "maldives-manta-rays-dolphins-snorkeling",
-    "image": "/images/scuba-intro.webp",
+    "image": "/images/maldives-manta-ai.png",
     "date": "2026-11-07",
     "content": [
       {

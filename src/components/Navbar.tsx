@@ -16,7 +16,7 @@ export default function Navbar() {
     { label:ru?'Направления':'Destinations',href:base+'/destinations/thailand', children:[{label:ru?'Таиланд':'Thailand',href:base+'/destinations/thailand'},{label:ru?'Мальдивы':'Maldives',href:base+'/destinations/maldives'}] },
     { label:ru?'Дайвинг':'Diving',href:base+'/divesites',children:[{label:ru?'Дайв-сайты':'Dive Sites',href:base+'/divesites'},{label:ru?'Курсы':'Courses',href:base+'/scubadivingcourses'}] },
     { label:ru?'Снорклинг':'Snorkeling',href:base+'/destinations/maldives' },
-    { label:ru?'Истории':'Stories',href:base+'/blog' },
+    { label:ru?'Блог':'Blog',href:base+'/blog' },
     { label:ru?'О нас':'About',href:base+'/aboutme' },
     { label:ru?'Контакты':'Contact',href:base+'/contact' },
   ]

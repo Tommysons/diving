@@ -6,12 +6,14 @@ import { useState } from 'react'
 import { Waves, Fish, Play, ArrowRight } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { blogPosts } from '@/lib/data/blogPosts'
+import { blogPostsRU } from '@/lib/data/blogPostsRU'
 
 const stories = [
- { title:'Whale sharks', type:'marine', image:'/images/scuba-intro.webp', href:'https://www.youtube.com/@lokawndr' },
- { title:'Underwater encounters', type:'diving', image:'/images/hero-about.webp', href:'https://www.youtube.com/@lokawndr' },
- { title:'Ocean life', type:'snorkeling', image:'/images/wr/wr1a.webp', href:'https://www.youtube.com/@lokawndr' },
- { title:'Dive destinations', type:'destinations', image:'/images/cpn6a.webp', href:'https://www.youtube.com/@lokawndr' },
+ { title:'Swimming With Mantas & a Whale Shark | Maldives', type:'snorkeling', id:'ZnC4xG3lMlk' },
+ { title:'Snorkeling in the Azmee Corner', type:'snorkeling', id:'v5j3utsgwOo' },
+ { title:'Wondering in Chumphon Pinnacle', type:'diving', id:'8qt0x0oU4hw' },
+ { title:'Wondering in wreck Sattakut', type:'diving', id:'dclxFrsdWVY' },
 ]
 export default function HomePage() {
  const pathname=usePathname()||'/'
@@ -31,7 +33,8 @@ export default function HomePage() {
   {id:'01',title:t.thailand,lead:t.thaiLead,info:t.thaiInfo,img:'/images/cpn6a.webp',href:base+'/destinations/thailand'},
   {id:'02',title:t.maldives,lead:t.malLead,info:t.malInfo,img:'/images/hero-about-a.webp',href:base+'/destinations/maldives'}
  ]
- const tabs=[{id:'all',label:t.all},{id:'diving',label:t.diving},{id:'snorkeling',label:t.snorkel},{id:'destinations',label:t.destinations},{id:'marine',label:t.marine}]
+ const tabs=[{id:'all',label:t.all},{id:'diving',label:t.diving},{id:'snorkeling',label:t.snorkel}]
+ const posts=[...(ru?blogPostsRU:blogPosts)].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3)
  return <><Header/><main className='bg-[#06283a] text-white'>
   <section className='relative isolate overflow-hidden'>
    <div className='absolute inset-0'><Image src='/images/hero-about-a.webp' alt='Scuba diver exploring the underwater world' fill priority fetchPriority='high' sizes='100vw' className='object-cover'/><div className='absolute inset-0 bg-gradient-to-r from-[#032538]/95 via-[#034461]/65 to-[#032538]/10'/><div className='absolute inset-0 bg-gradient-to-t from-[#022335]/80 via-transparent to-transparent'/></div>
@@ -57,11 +60,13 @@ export default function HomePage() {
    </Link>)}</div>
   </section>
   <section className='mx-auto max-w-[1480px] px-6 pb-20 pt-5 md:px-10'>
-   <div className='mb-5 flex flex-wrap items-center justify-between gap-4'><h2 className='text-3xl font-extrabold tracking-tight md:text-4xl'>{t.stories}</h2><Link href={base+'/blog'} className='inline-flex items-center gap-2 text-sm font-semibold'>{t.view}<ArrowRight size={17}/></Link></div>
-   <div className='mb-5 flex flex-wrap gap-2' aria-label='Filter stories'>{tabs.map(tab=><button key={tab.id} onClick={()=>setFilter(tab.id)} aria-pressed={filter===tab.id} className={'rounded-full px-5 py-2 text-sm font-semibold transition '+(filter===tab.id?'bg-white text-[#062536]':'text-white hover:bg-white/15')}>{tab.label}</button>)}</div>
-   <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>{stories.filter(s=>filter==='all'||s.type===filter).map(s=><a key={s.title} href={s.href} target='_blank' rel='noopener noreferrer' className='group relative isolate aspect-[1.55] overflow-hidden rounded-2xl border border-white/40'>
-    <Image src={s.image} alt={s.title} fill sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw' className='object-cover transition duration-500 group-hover:scale-105'/><div className='absolute inset-0 bg-black/15'/><div className='absolute inset-0 flex items-center justify-center'><span className='rounded-full border-2 border-white bg-black/30 p-4'><Play size={24} fill='white'/></span></div><span className='absolute bottom-3 left-4 text-sm font-bold drop-shadow'>{s.title}</span>
-   </a>)}</div>
+   <div className='mb-5 flex flex-wrap items-center justify-between gap-4'><h2 className='text-3xl font-extrabold tracking-tight md:text-4xl'>{ru?'Видео о дайвинге и снорклинге':'Dive & Snorkel Videos'}</h2><a href='https://www.youtube.com/@lokawndr' target='_blank' rel='noopener noreferrer' className='inline-flex items-center gap-2 text-sm font-semibold'>{ru?'Все видео на YouTube':'All videos on YouTube'}<ArrowRight size={17}/></a></div>
+   <div className='mb-5 flex flex-wrap gap-2' aria-label={ru?'Фильтр видео':'Filter videos'}>{tabs.map(tab=><button key={tab.id} onClick={()=>setFilter(tab.id)} aria-pressed={filter===tab.id} className={'min-h-11 rounded-full px-5 py-2 text-sm font-semibold transition '+(filter===tab.id?'bg-white text-[#062536]':'text-white hover:bg-white/15')}>{tab.label}</button>)}</div>
+   <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>{stories.filter(s=>filter==='all'||s.type===filter).map(s=><a key={s.id} href={'https://www.youtube.com/watch?v='+s.id} target='_blank' rel='noopener noreferrer' className='group overflow-hidden rounded-2xl border border-white/20 bg-white/[.06]'><div className='relative aspect-video overflow-hidden'><img src={'https://i.ytimg.com/vi/'+s.id+'/hqdefault.jpg'} alt='' loading='lazy' className='h-full w-full object-cover'/><div className='absolute inset-0 flex items-center justify-center'><span className='rounded-full border-2 border-white bg-black/40 p-4'><Play size={24} fill='white'/></span></div></div><span className='block p-4 text-sm font-bold'>{s.title}</span></a>)}</div>
+  </section>
+  <section className='mx-auto max-w-[1480px] px-6 pb-20 md:px-10'>
+   <div className='mb-6 flex flex-wrap items-center justify-between gap-4'><h2 className='text-3xl font-extrabold tracking-tight md:text-4xl'>{ru?'Последние статьи блога':'Latest from the Blog'}</h2><Link href={base+'/blog'} className='inline-flex items-center gap-2 text-sm font-semibold'>{ru?'Все статьи':'View all articles'}<ArrowRight size={17}/></Link></div>
+   <div className='grid gap-5 md:grid-cols-3'>{posts.map(post=><Link key={post.slug} href={base+'/blog/'+post.slug} className='group overflow-hidden rounded-2xl border border-white/15 bg-white/[.06]'><div className='relative aspect-video'><Image src={post.image} alt='' fill sizes='(max-width: 768px) 100vw, 33vw' className='object-cover transition duration-500 group-hover:scale-105'/></div><div className='p-5'><p className='text-xs text-cyan-200'>{post.date}</p><h3 className='mt-2 text-lg font-bold'>{post.title}</h3><p className='mt-2 text-sm leading-6 text-slate-200'>{post.excerpt}</p></div></Link>)}</div>
   </section>
  </main><Footer/></>
 }
