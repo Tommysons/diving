@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Globe2, MapPin, RotateCcw, Waves } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import ViluReefDiveMap from '@/components/ViluReefDiveMap'
+import ViluAtlas from '@/components/ViluAtlas'
 import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
 
 type Destination = 'earth' | 'thailand' | 'maldives'
@@ -84,7 +84,7 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  <p className='mt-5 text-xs text-slate-400'>{t.photoCredit}</p>
  </>:<div className='flex h-full min-h-[250px] flex-col items-center justify-center gap-5 text-center'><Globe2 size={48} className='text-cyan-300'/><p className='max-w-xs text-slate-300'>{t.choose}</p></div>}
  </aside></div>
- </>:<><h2 className='mt-7 text-3xl font-extrabold'>{ru?'Мальдивы · Дайв-сайты Vilu Reef':'Maldives · Vilu Reef Dive Sites'}</h2><p className='mt-3 text-sm text-slate-400'>{ru?'Схематичная карта — не для навигации.':'Illustrative map — not for navigation.'}</p><div className='mt-7 grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(300px,1fr)]'><div className='overflow-hidden rounded-3xl border border-cyan-300/20'><ViluReefDiveMap locale={locale}/></div><aside className='rounded-3xl border border-white/15 bg-white/[.06] p-5 md:p-7'><div className='grid aspect-video place-items-center rounded-xl bg-gradient-to-br from-cyan-900 to-[#031a2c] text-center font-bold tracking-widest text-cyan-100'>TO BE LOKAWNDRED</div><h3 className='mt-5 text-2xl font-bold'>Azmee Corner</h3><p className='mt-3 text-sm leading-7 text-slate-200'>{ru?'Дайв-сайт в районе Vilu Reef с подводной стеной, навесами и морскими обитателями.':'A dive site in the Vilu Reef area, with a reef wall, overhangs and marine life.'}</p><p className='mt-4 text-sm text-slate-400'>{ru?'Глубина, течение и видимость: уточняйте у местного дайв-центра.':'Depth, current and visibility: check with the local dive centre.'}</p><Link href={base+'/destinations/maldives#azmee-corner'} className='mt-6 inline-flex items-center gap-2 rounded-xl bg-cyan-100 px-5 py-3 font-bold text-[#03283b]'>{t.more}<ArrowRight size={16}/></Link></aside></div></>}
+ </>:<><h2 className='mt-7 text-3xl font-extrabold'>{ru?'Мальдивы · Дайв-сайты Vilu Reef':'Maldives · Vilu Reef Dive Sites'}</h2><p className='mb-7 mt-3 text-sm text-slate-400'>{ru?'Схематичная карта — не для навигации.':'Illustrative map — not for navigation.'}</p><ViluAtlas locale={locale}/></>}
  </>}
  </section></main><Footer/></>
 }
