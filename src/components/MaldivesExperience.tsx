@@ -7,6 +7,7 @@ import LokaVideoSection, { maldivesVideos } from '@/components/LokaVideoSection'
 import ViluAtlas, { maldivesSites, maldivesDetails } from '@/components/ViluAtlas'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { DivingTankIcon, SnorkelMaskIcon } from '@/components/ActivityIcons'
 
 export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) {
   const ru = locale === 'ru'
@@ -50,10 +51,11 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
     <section id='explore' className='mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
       <h2 className='text-3xl font-extrabold md:text-4xl'>{t.why}</h2>
       <p className='mt-4 max-w-3xl text-lg leading-8 text-slate-200'>{t.whyText}</p>
+      <div className='mt-6 flex flex-wrap gap-3'><a href='#vilu-sites' className='inline-flex min-h-11 items-center rounded-xl bg-white px-5 py-3 font-bold text-[#062536]'>{ru?'Исследовать дайв-сайты':'Explore Dive Sites'}</a><Link href={base+'/scubadivingcourses'} className='inline-flex min-h-11 items-center rounded-xl border border-white/50 px-5 py-3 font-bold'>{ru?'Курсы дайвинга':'Scuba Diving Courses'}</Link></div>
       <div className='mt-10 grid gap-5 md:grid-cols-3'>
         {[
-          {icon:<Waves size={30}/>,title:t.diving,body:t.divingText},
-          {icon:<Fish size={30}/>,title:t.snorkeling,body:t.snorkelingText},
+          {icon:<DivingTankIcon/>,title:t.diving,body:t.divingText},
+          {icon:<SnorkelMaskIcon/>,title:t.snorkeling,body:t.snorkelingText},
           {icon:<Fish size={30}/>,title:t.life,body:t.lifeText}
         ].map(card=><article key={card.title} className='rounded-2xl border border-white/15 bg-white/[.06] p-7'>
           <span className='text-cyan-200'>{card.icon}</span><h3 className='mt-4 text-2xl font-bold'>{card.title}</h3>
@@ -61,7 +63,7 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
         </article>)}
       </div>
     </section>
-    <section id='vilu-sites' className='mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
+    <section id='vilu-sites' className='scroll-mt-24 mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
       <p className='text-xs font-bold tracking-widest text-cyan-200'>LOKAWNDR · VILU REEF</p>
       <h2 className='mt-3 text-3xl font-extrabold'>{ru?'Дайв-сайты Vilu Reef':'Vilu Reef Dive Sites'}</h2>
       <p className='mt-4 max-w-3xl leading-8 text-slate-200'>{ru?'Sun Siyam Vilu Reef расположен в атолле Дхаалу. Исследуйте местные рифы и подводные скалы вместе с местным дайв-центром.':'Sun Siyam Vilu Reef is located in Dhaalu Atoll. Explore nearby reefs and underwater pinnacles with the local dive centre.'}</p>
