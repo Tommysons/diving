@@ -1,12 +1,12 @@
 'use client'
 import { useState } from 'react'
 import AtlasGlobe from '@/components/AtlasGlobe'
-import MaldivesReefExplorer from '@/components/MaldivesReefExplorer'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Globe2, MapPin, RotateCcw, Waves } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ViluReefDiveMap from '@/components/ViluReefDiveMap'
 import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
 
 type Destination = 'earth' | 'thailand' | 'maldives'
@@ -69,7 +69,7 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  </svg>
  <div className='pointer-events-none absolute left-[51%] top-[52%] -translate-x-1/2 -translate-y-1/2 -rotate-[75deg] text-xl font-black tracking-[.25em] text-white/35 md:text-2xl'>KOH TAO</div>
  <span className='absolute left-5 top-5 rounded-full border border-cyan-200/25 bg-[#06243a]/80 px-4 py-2 text-xs tracking-wider text-cyan-100'>LOKAWNDR · 3D ISLAND CONCEPT</span>
- {sites.filter(s=>markers[s.slug]).map(s=><button key={s.slug} style={{left:markers[s.slug].x+'%',top:markers[s.slug].y+'%'}} onClick={()=>setSelected(s.slug)} aria-label={s.name} title={s.name} className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 p-2 shadow-[0_0_22px_#00cfffaa] transition hover:scale-125 ${selected===s.slug?'border-white bg-amber-400 text-[#05233a]':'border-white bg-cyan-400 text-[#05233a]'}`}><MapPin size={17}/></button>)}
+ {sites.filter(s=>markers[s.slug]).map(s=><button key={s.slug} type='button' onClick={()=>setSelected(s.slug)} style={{left:markers[s.slug].x+'%',top:markers[s.slug].y+'%'}} aria-label={s.name} className='group absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-cyan-400 p-2 text-[#05233a] shadow-[0_0_22px_#00cfffaa] transition hover:scale-110 focus-visible:z-20'><MapPin size={17}/><span className='pointer-events-none absolute bottom-full left-1/2 mb-3 hidden -translate-x-1/2 whitespace-nowrap rounded-lg bg-[#031a2c] px-3 py-2 text-xs font-bold text-white shadow-lg group-hover:block group-focus-visible:block'>{s.name}</span></button>)}
  <span className='absolute bottom-4 left-4 rounded-full border border-white/20 bg-[#031a2c]/80 px-3 py-2 text-xs'>{ru?'Иллюстрация · Не для навигации':'Illustration · Not for navigation'}</span>
  </div>
  <aside className='min-w-0 rounded-3xl border border-white/15 bg-white/[.06] p-5 md:p-7'>
@@ -84,7 +84,7 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  <p className='mt-5 text-xs text-slate-400'>{t.photoCredit}</p>
  </>:<div className='flex h-full min-h-[250px] flex-col items-center justify-center gap-5 text-center'><Globe2 size={48} className='text-cyan-300'/><p className='max-w-xs text-slate-300'>{t.choose}</p></div>}
  </aside></div>
- </>:<div className='mt-8 max-w-3xl rounded-3xl border border-cyan-300/20 bg-white/[.06] p-8'><h2 className='text-3xl font-bold'>{t.maldives}</h2><p className='mt-4 text-slate-300'>{t.maldivesText}</p><MaldivesReefExplorer ru={ru}/><Link href={base+'/destinations/maldives'} className='mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-[#03283b]'>{t.maldivesLink}<ArrowRight size={17}/></Link></div>}
+ </>:<><h2 className='mt-7 text-3xl font-extrabold'>{ru?'Мальдивы · Дайв-сайты Vilu Reef':'Maldives · Vilu Reef Dive Sites'}</h2><p className='mt-3 text-sm text-slate-400'>{ru?'Схематичная карта — не для навигации.':'Illustrative map — not for navigation.'}</p><div className='mt-7 grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(300px,1fr)]'><div className='overflow-hidden rounded-3xl border border-cyan-300/20'><ViluReefDiveMap locale={locale}/></div><aside className='rounded-3xl border border-white/15 bg-white/[.06] p-5 md:p-7'><div className='grid aspect-video place-items-center rounded-xl bg-gradient-to-br from-cyan-900 to-[#031a2c] text-center font-bold tracking-widest text-cyan-100'>TO BE LOKAWNDRED</div><h3 className='mt-5 text-2xl font-bold'>Azmee Corner</h3><p className='mt-3 text-sm leading-7 text-slate-200'>{ru?'Дайв-сайт в районе Vilu Reef с подводной стеной, навесами и морскими обитателями.':'A dive site in the Vilu Reef area, with a reef wall, overhangs and marine life.'}</p><p className='mt-4 text-sm text-slate-400'>{ru?'Глубина, течение и видимость: уточняйте у местного дайв-центра.':'Depth, current and visibility: check with the local dive centre.'}</p><Link href={base+'/destinations/maldives#azmee-corner'} className='mt-6 inline-flex items-center gap-2 rounded-xl bg-cyan-100 px-5 py-3 font-bold text-[#03283b]'>{t.more}<ArrowRight size={16}/></Link></aside></div></>}
  </>}
  </section></main><Footer/></>
 }
