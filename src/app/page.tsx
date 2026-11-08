@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { Waves, Fish, Play, ArrowRight } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { DivingTankIcon, SnorkelMaskIcon } from '@/components/ActivityIcons'
 import { blogPosts } from '@/lib/data/blogPosts'
 import { blogPostsRU } from '@/lib/data/blogPostsRU'
 
@@ -48,8 +49,8 @@ export default function HomePage() {
     </div>
    </div>
    <div className='relative border-t border-white/15 bg-[#062b3c]/65 backdrop-blur-sm'><div className='mx-auto grid max-w-[1480px] gap-5 px-6 py-5 md:grid-cols-2 md:px-10'>
-    <Link href={base+'/scubadivingcourses'} className='flex items-center gap-4'><Waves className='shrink-0' size={32}/><span><strong className='block text-lg'>{t.diving}</strong><small className='text-white/85'>{t.diveInfo}</small></span></Link>
-    <Link href={base+'/destinations/maldives'} className='flex items-center gap-4'><Fish className='shrink-0' size={32}/><span><strong className='block text-lg'>{t.snorkel}</strong><small className='text-white/85'>{t.snorkelInfo}</small></span></Link>
+    <Link href={base+'/scubadivingcourses'} className='flex items-center gap-4'><DivingTankIcon/><span><strong className='block text-lg'>{t.diving}</strong><small className='text-white/85'>{t.diveInfo}</small></span></Link>
+    <Link href={base+'/snorkeling'} className='flex items-center gap-4'><SnorkelMaskIcon/><span><strong className='block text-lg'>{t.snorkel}</strong><small className='text-white/85'>{t.snorkelInfo}</small></span></Link>
    </div></div>
   </section>
   <section className='mx-auto max-w-[1480px] px-6 pb-8 pt-10 md:px-10'>

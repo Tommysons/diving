@@ -43,7 +43,7 @@ export default function AboutPageRu() {
             <div>
               <h2 className='text-2xl font-semibold'>Привет! Я Том!</h2>
               <p className='text-gray-700 mt-2'>
-                Я сертифицированный инструктор по дайвингу на Ко Тао с опытом
+                Я инструктор по дайвингу PADI и SSI с опытом
                 более 3 лет и более 2000 погружений. Мое путешествие началось
                 после впечатляющего погружения на Тенерифе, и с тех пор я
                 исследую океан. Я обучил более 100 студентов и люблю знакомить
@@ -64,6 +64,10 @@ export default function AboutPageRu() {
               <li className='flex items-center gap-2'>
                 <FaCheckCircle className='text-blue-600' />
                 Инструктор PADI Open Water Scuba (OWSI)
+              </li>
+              <li className='flex items-center gap-2'>
+                <FaCheckCircle className='text-blue-600' />
+                Инструктор SSI Open Water (OWI)
               </li>
               <li className='flex items-center gap-2'>
                 <FaCheckCircle className='text-blue-600' />

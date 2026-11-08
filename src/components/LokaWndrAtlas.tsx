@@ -47,8 +47,8 @@ export default function LokaWndrAtlas({locale}:{locale:'en'|'ru'}) {
  <div className='pointer-events-none absolute bottom-5 left-0 right-0 text-center text-xs tracking-wider text-cyan-100/70'>{t.globeNote}</div>
  </div>
  <div className='mx-auto mt-3 flex max-w-2xl flex-wrap justify-center gap-4'>
- <button onClick={()=>{setDestination('thailand');setSelected(null)}} className='flex items-center gap-3 rounded-2xl border border-cyan-300/40 bg-cyan-500/20 px-6 py-4 font-bold transition hover:bg-cyan-400/30'><MapPin size={20}/>{t.thailand}<ArrowRight size={17}/></button>
- <button onClick={()=>{setDestination('maldives');setSelected(null)}} className='flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-6 py-4 font-bold transition hover:bg-white/20'><Waves size={20}/>{t.maldives}<ArrowRight size={17}/></button>
+ <button onClick={()=>{setDestination('thailand');setSelected(null)}} className='flex items-center gap-3 rounded-2xl border border-cyan-300/40 bg-cyan-500/20 px-6 py-4 font-bold transition hover:bg-cyan-400/30'>{t.thailand}<ArrowRight size={17}/></button>
+ <button onClick={()=>{setDestination('maldives');setSelected(null)}} className='flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-6 py-4 font-bold transition hover:bg-white/20'>{t.maldives}<ArrowRight size={17}/></button>
  <button onClick={()=>setSpin(0)} className='flex items-center gap-2 rounded-xl border border-white/15 px-4 py-3 text-sm text-slate-300 hover:bg-white/10'><RotateCcw size={16}/>{t.reset}</button>
  </div>
  </>:<>

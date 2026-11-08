@@ -14,8 +14,7 @@ export default function Navbar() {
   const items = [
     { label:ru?'Атлас Земли':'Explore Earth',href:base+'/atlas' },
     { label:ru?'Направления':'Destinations',href:base+'/destinations/thailand', children:[{label:ru?'Таиланд':'Thailand',href:base+'/destinations/thailand'},{label:ru?'Мальдивы':'Maldives',href:base+'/destinations/maldives'}] },
-    { label:ru?'Дайвинг':'Diving',href:base+'/scubadivingcourses',children:[{label:ru?'Курсы':'Courses',href:base+'/scubadivingcourses'}] },
-    { label:ru?'Снорклинг':'Snorkeling',href:base+'/destinations/maldives' },
+    { label:ru?'Активности':'Activities',href:base+'/snorkeling',children:[{label:ru?'Дайвинг':'Diving',href:base+'/scubadivingcourses',nested:true},{label:ru?'Снорклинг':'Snorkeling',href:base+'/snorkeling',nested:false}] },
     { label:ru?'Блог':'Blog',href:base+'/blog' },
     { label:ru?'О нас':'About',href:base+'/aboutme' },
     { label:ru?'Контакты':'Contact',href:base+'/contact' },
@@ -36,7 +35,7 @@ export default function Navbar() {
         <Link href={base||'/'} aria-current={pathname===(base||'/') ? 'page' : undefined} className={pathname===(base||'/')?'border-b-2 border-cyan-300 pb-1 text-sm font-semibold':'pb-1 text-sm font-semibold text-slate-100 hover:text-cyan-200'}>{ru?'Главная':'Home'}</Link>
         {items.map(item=><div key={item.label} className='group relative'>
           <Link href={item.href} aria-current={pathname===item.href ? 'page' : undefined} className={`flex items-center gap-1 rounded-lg px-1 py-3 text-sm font-semibold transition hover:text-cyan-200 ${pathname===item.href?'text-cyan-200':'text-slate-100'}`}>{item.label}{item.children&&<ChevronDown size={14}/>}</Link>
-          {item.children&&<div className='invisible absolute left-0 top-full min-w-44 rounded-xl border border-cyan-200/15 bg-[#062b41] p-2 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100'>{item.children.map(child=><Link key={child.href} href={child.href} className='block rounded-md px-3 py-2 text-sm hover:bg-white/10'>{child.label}</Link>)}</div>}
+          {item.children&&<div className='invisible absolute left-0 top-full min-w-48 rounded-xl border border-cyan-200/15 bg-[#062b41] p-2 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100'>{item.children.map(child=><div key={child.href} className='group/sub relative'><Link href={child.href} className='block rounded-md px-3 py-2 text-sm hover:bg-white/10'>{child.label}{'nested' in child && child.nested?' ›':''}</Link>{'nested' in child && child.nested&&<div className='invisible absolute left-full top-0 min-w-36 rounded-xl border border-cyan-200/15 bg-[#062b41] p-2 opacity-0 shadow-xl group-hover/sub:visible group-hover/sub:opacity-100 group-focus-within/sub:visible group-focus-within/sub:opacity-100'><Link href={base+'/scubadivingcourses'} className='block rounded-md px-3 py-2 text-sm hover:bg-white/10'>{ru?'Курсы':'Courses'}</Link></div>}</div>)}</div>}
         </div>)}
       </div>
       <div className='hidden shrink-0 items-center gap-3 md:flex'>

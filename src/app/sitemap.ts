@@ -4,7 +4,7 @@ import { scubaCourses, specialtyCourses } from '@/lib/data/scubaCourses'
 import { blogPosts } from '@/lib/data/blogPosts'
 
 const baseUrl = 'https://lokawndr.com'
-const staticPaths = ['', '/atlas', '/aboutme', '/blog', '/contact', '/divesites', '/faq', '/gallery', '/scubadivingcourses', '/destinations/thailand', '/destinations/maldives']
+const staticPaths = ['', '/atlas', '/aboutme', '/blog', '/contact', '/divesites', '/faq', '/gallery', '/scubadivingcourses', '/snorkeling', '/destinations/thailand', '/destinations/maldives']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()

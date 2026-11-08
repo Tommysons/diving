@@ -46,7 +46,7 @@ export default function AboutPage() {
               </h2>
 
               <p className='text-gray-700 mt-2'>
-                I’m a certified scuba diving instructor based in Koh Tao with
+                I’m a PADI and SSI scuba diving instructor with
                 over 3 years of experience and 2000+ dives. My journey began
                 after a life-changing dive in Tenerife, and I’ve been exploring
                 the ocean ever since. I’ve certified more than 100 students and
@@ -64,6 +64,7 @@ export default function AboutPage() {
             <ul className='grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-700'>
               {[
                 'PADI Open Water Scuba Instructor (OWSI)',
+                'SSI Open Water Instructor (OWI)',
                 '2000+ Logged Dives',
                 '100+ Students Certified',
                 'Specialties: Deep, Nitrox, Night, Navigation',
