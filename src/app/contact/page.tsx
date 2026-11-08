@@ -86,8 +86,9 @@ export default function ContactPage() {
             )}
 
             <div>
-              <label className='text-sm font-medium'>Name</label>
+              <label htmlFor='contact-name' className='text-sm font-medium'>Name</label>
               <input
+                id='contact-name'
                 name='name'
                 placeholder='Your name'
                 value={form.name}
@@ -97,8 +98,10 @@ export default function ContactPage() {
             </div>
 
             <div>
-              <label className='text-sm font-medium'>Email</label>
+              <label htmlFor='contact-email' className='text-sm font-medium'>Email</label>
               <input
+                id='contact-email'
+                type='email'
                 name='email'
                 placeholder='you@email.com'
                 value={form.email}
@@ -108,8 +111,9 @@ export default function ContactPage() {
             </div>
 
             <div>
-              <label className='text-sm font-medium'>Subject</label>
+              <label htmlFor='contact-subject' className='text-sm font-medium'>Subject</label>
               <input
+                id='contact-subject'
                 name='subject'
                 placeholder='What is this about?'
                 value={form.subject}
@@ -119,8 +123,9 @@ export default function ContactPage() {
             </div>
 
             <div>
-              <label className='text-sm font-medium'>Message</label>
+              <label htmlFor='contact-message' className='text-sm font-medium'>Message</label>
               <textarea
+                id='contact-message'
                 name='message'
                 rows={5}
                 placeholder='Tell me about your diving plans...'
