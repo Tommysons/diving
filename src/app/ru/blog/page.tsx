@@ -39,7 +39,7 @@ export default function BlogPageRU() {
                   src={post.image}
                   alt={post.title}
                   fill
-                  className='object-cover rounded-t-2xl'
+                  className={post.slug === 'maldives-manta-rays-dolphins-snorkeling' ? 'object-contain rounded-t-2xl bg-[#031b2d]' : 'object-cover rounded-t-2xl'}
                 />
               </div>
 
