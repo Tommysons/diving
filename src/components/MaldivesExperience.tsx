@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Fish, Waves, Play, Mail } from 'lucide-react'
 import LokaVideoSection, { maldivesVideos } from '@/components/LokaVideoSection'
-import ViluReefDiveMap from '@/components/ViluReefDiveMap'
 import ViluAtlas, { maldivesSites, maldivesDetails } from '@/components/ViluAtlas'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -60,20 +59,6 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
           <span className='text-cyan-200'>{card.icon}</span><h3 className='mt-4 text-2xl font-bold'>{card.title}</h3>
           <p className='mt-3 leading-7 text-slate-200'>{card.body}</p>
         </article>)}
-      </div>
-    </section>
-    <section id='azmee-corner' className='mx-auto max-w-[1480px] px-6 py-14 md:px-10'>
-      <div className='overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#0a354b]'>
-        <div className='grid gap-0 lg:grid-cols-2'>
-          <div className='p-7 md:p-10'>
-            <p className='text-xs font-bold uppercase tracking-[.2em] text-cyan-200'>{ru?'ПЕРВЫЙ ДАЙВ-САЙТ МАЛЬДИВ · DHAALU ATOLL':'FIRST MALDIVES DIVE SITE · DHAALU ATOLL'}</p>
-            <h2 className='mt-4 text-4xl font-extrabold'>Azmee Corner</h2>
-            <p className='mt-5 leading-8 text-slate-200'>{ru?'Азми Корнер — место для погружений у района Vilu Reef в атолле Дхаалу. Подводная стена, навесы и небольшие пещеры создают укрытия для скатов, мурен, скорпен и рифовых рыб.':'Azmee Corner is a wall dive in the Vilu Reef area of Dhaalu Atoll. Its reef wall, overhangs and caves provide habitat for stingrays, moray eels, scorpionfish and reef fish.'}</p>
-            <p className='mt-4 leading-7 text-slate-300'>{ru?'Точные GPS-координаты пока не подтверждены. На схеме район Azmee Corner отмечен приблизительно к северо-западу от Велавару по вашей фотографии карты. Vilu Reef служит центральной точкой нашего дайв-гида.':'Exact GPS coordinates are not yet verified. The map places Azmee Corner approximately northwest of Velavaru, based on your annotated map screenshot. Vilu Reef is the hub of this developing dive-site guide.'}</p>
-            <a href='https://sundiving.com/sun-siyam-vilu-reef/' target='_blank' rel='noopener noreferrer' className='mt-6 inline-flex items-center gap-2 text-sm font-bold text-cyan-200 underline underline-offset-4'>{ru?'Описание дайв-сайта от Sun Diving':'Dive-site description by Sun Diving'} <ArrowRight size={16}/></a>
-          </div>
-          <ViluReefDiveMap locale={locale}/>
-        </div>
       </div>
     </section>
     <section id='vilu-sites' className='mx-auto max-w-[1480px] px-6 py-16 md:px-10'>
