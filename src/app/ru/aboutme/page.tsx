@@ -10,7 +10,7 @@ export default function AboutPageRu() {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full bg-blue-200'>
+      <main className='relative min-h-screen w-full bg-[#06283a]'>
         {/* CONTENT */}
         <section className='relative z-10 max-w-5xl mx-auto px-6 py-16 space-y-12'>
           {/* HERO */}
@@ -20,10 +20,10 @@ export default function AboutPageRu() {
             transition={{ duration: 0.7 }}
             className='text-center text-white'
           >
-            <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
+            <h1 className='text-4xl md:text-5xl font-bold text-center text-cyan-100 mb-2'>
               Знакомьтесь с вашим инструктором
             </h1>
-            <p className='text-blue-700 text-lg mx-auto'>
+            <p className='text-cyan-100 text-lg mx-auto'>
               Страсть к дайвингу. Безопасность превыше всего.
             </p>
           </motion.div>
@@ -33,7 +33,7 @@ export default function AboutPageRu() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-8'
+            className='bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-8'
           >
             <img
               src='/images/badge.webp'
@@ -43,7 +43,7 @@ export default function AboutPageRu() {
             <div>
               <h2 className='text-2xl font-semibold'>Привет! Я Том!</h2>
               <p className='text-gray-700 mt-2'>
-                Я сертифицированный инструктор по дайвингу на Ко Тао с опытом
+                Я инструктор по дайвингу PADI и SSI с опытом
                 более 3 лет и более 2000 погружений. Мое путешествие началось
                 после впечатляющего погружения на Тенерифе, и с тех пор я
                 исследую океан. Я обучил более 100 студентов и люблю знакомить
@@ -57,13 +57,17 @@ export default function AboutPageRu() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl'
+            className='bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl'
           >
             <h3 className='text-xl font-semibold mb-4'>Сертификаты и опыт</h3>
             <ul className='grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-700'>
               <li className='flex items-center gap-2'>
                 <FaCheckCircle className='text-blue-600' />
                 Инструктор PADI Open Water Scuba (OWSI)
+              </li>
+              <li className='flex items-center gap-2'>
+                <FaCheckCircle className='text-blue-600' />
+                Инструктор SSI Open Water (OWI)
               </li>
               <li className='flex items-center gap-2'>
                 <FaCheckCircle className='text-blue-600' />
@@ -89,7 +93,7 @@ export default function AboutPageRu() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl italic text-gray-800'
+            className='bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl italic text-gray-800'
           >
             «Я создаю расслабленную и поддерживающую атмосферу, где студенты
             чувствуют себя в безопасности и уверенно — даже если это их первое
@@ -101,7 +105,7 @@ export default function AboutPageRu() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className='bg-white/85 backdrop-blur-md p-6 rounded-2xl shadow-xl'
+            className='bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl'
           >
             <h3 className='text-xl font-semibold mb-2'>Когда я не ныряю...</h3>
             <p className='text-gray-700'>

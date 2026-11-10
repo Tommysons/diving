@@ -12,19 +12,19 @@ export default function DiveSitesPage() {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full bg-blue-200 overflow-hidden'>
-        <div className='relative z-10 max-w-6xl mx-auto px-6 py-10 space-y-12'>
+      <main className='relative min-h-screen w-full bg-[#06283a] text-white overflow-hidden'>
+        <div className='relative z-10 max-w-[1480px] mx-auto px-5 sm:px-6 md:px-10 py-12 md:py-16 space-y-12'>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className='text-4xl md:text-5xl font-bold text-center text-blue-700'
+            className='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-center text-white'
           >
             Dive Sites of Koh Tao
           </motion.h1>
 
           {/* Top section: Map + Description */}
-          <div className='grid md:grid-cols-2 gap-10 items-center bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg'>
+          <div className='grid lg:grid-cols-2 gap-8 lg:gap-10 items-center bg-white/[.07] border border-white/15 backdrop-blur-md p-5 sm:p-8 rounded-3xl shadow-xl'>
             {/* Left side: Map */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -37,7 +37,8 @@ export default function DiveSitesPage() {
                 alt='Koh Tao Dive Sites Map'
                 width={600}
                 height={400}
-                className='rounded-2xl shadow-lg object-cover'
+                className='h-auto w-full rounded-2xl shadow-lg object-cover'
+                sizes='(max-width: 1024px) 100vw, 50vw'
               />
             </motion.div>
 
@@ -46,9 +47,9 @@ export default function DiveSitesPage() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-gray-700 leading-relaxed text-lg'
+              className='text-slate-200 leading-relaxed text-base sm:text-lg'
             >
-              <h2 className='text-2xl font-semibold mb-4 text-blue-700'>
+              <h2 className='text-2xl font-bold mb-4 text-white'>
                 Explore the Underwater World of Koh Tao
               </h2>
               <p className='mb-4'>
@@ -72,33 +73,36 @@ export default function DiveSitesPage() {
           <div className='border-t border-white/40 my-8' />
 
           {/* All Dive Sites Section */}
-          <h2 className='text-3xl font-bold text-center mb-8 text-blue-700'>
+          <h2 className='text-3xl font-bold text-center mb-8 text-white'>
             All Dive Sites
           </h2>
 
-          <div className='grid md:grid-cols-2 gap-8'>
+          <div className='grid md:grid-cols-2 gap-5 sm:gap-8'>
             {diveSites.map((site) => (
               <motion.div
                 key={site.slug}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className='border rounded-2xl bg-white p-5 shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform duration-300'
+                className='border border-white/15 rounded-2xl bg-[#0b354a] p-4 sm:p-5 shadow-lg hover:border-cyan-300/50 hover:shadow-xl transition duration-300'
               >
                 <Link
                   href={`/divesites/${site.slug}`}
-                  className='flex gap-4 items-center'
+                  className='flex gap-4 items-center rounded-xl'
                 >
-                  <img
-                    src={site.imageUrl}
+                  <Image
+                    src={site.imageUrl ?? '/images/hero-about.webp'}
                     alt={site.name}
-                    className='w-28 h-28 object-cover rounded-xl'
+                    width={112}
+                    height={112}
+                    sizes='112px'
+                    className='h-24 w-24 shrink-0 rounded-xl object-cover sm:h-28 sm:w-28'
                   />
                   <div>
-                    <h3 className='text-xl font-semibold text-blue-700'>
+                    <h3 className='text-xl font-bold text-white'>
                       {site.name}
                     </h3>
-                    <p className='text-gray-600 text-sm line-clamp-3'>
+                    <p className='text-slate-200 text-sm line-clamp-3 leading-6'>
                       {site.shortDescription}
                     </p>
                   </div>
@@ -113,16 +117,16 @@ export default function DiveSitesPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-center text-black text-lg'
+              className='text-center text-slate-200 text-base sm:text-lg'
             >
               All photos taken by{' '}
-              <span className='font-semibold text-blue-800'>
+              <span className='font-semibold text-cyan-100'>
                 Mia{' '}
                 <a
                   href='https://www.instagram.com/kakadong123/'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='underline hover:text-blue-400 transition'
+                  className='underline hover:text-cyan-200 transition'
                 >
                   @kakadong123
                 </a>

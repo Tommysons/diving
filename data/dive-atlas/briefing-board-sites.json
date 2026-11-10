@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "source": "User-supplied photographed dive briefing boards, November 2026",
+  "disclaimer": "Illustrative reference only; approximate profiles, not surveyed bathymetry or navigation data. Current arrows are diagram annotations, not live conditions.",
+  "sites": [
+    {
+      "slug": "udhdhoo-reef",
+      "name": "Udhdhoo Reef",
+      "boardNumber": 4,
+      "boatTripMinutes": 10,
+      "depthAnnotationsMeters": [
+        "3–5",
+        "15–18",
+        "25",
+        "35"
+      ],
+      "features": [
+        "Udhdhoo Island",
+        "reef wall",
+        "sandy bottom",
+        "two thilas"
+      ],
+      "current": "bidirectional arrow on reef wall",
+      "terrainPreset": "island-wall-with-pinnacles"
+    },
+    {
+      "slug": "bodu-thila",
+      "name": "Bodu Thila",
+      "boardNumber": 20,
+      "boatTripMinutes": 25,
+      "depthAnnotationsMeters": [
+        "6–8",
+        "20–24",
+        "25",
+        "30–35"
+      ],
+      "features": [
+        "main thila",
+        "secondary thila",
+        "slope",
+        "overhangs",
+        "sandy bottom"
+      ],
+      "current": "curved arrows beside main thila",
+      "terrainPreset": "multi-pinnacle"
+    },
+    {
+      "slug": "velavaru-thila",
+      "name": "Velavaru Thila",
+      "boardNumber": 5,
+      "boatTripMinutes": 20,
+      "depthAnnotationsMeters": [
+        "8–10",
+        "15",
+        "15–18",
+        "25–30",
+        "35–40"
+      ],
+      "features": [
+        "main thila",
+        "overhangs",
+        "channel",
+        "sandy bottom"
+      ],
+      "current": "bidirectional arrow in channel",
+      "terrainPreset": "channel-thila"
+    },
+    {
+      "slug": "yuki-reef",
+      "name": "Yuki Reef",
+      "boardNumber": 23,
+      "boatTripMinutes": 13,
+      "depthAnnotationsMeters": [
+        "3–5",
+        "12–15",
+        "30–35"
+      ],
+      "features": [
+        "Udhdhoo Island",
+        "reef slope",
+        "overhangs",
+        "sandy bottom"
+      ],
+      "current": "bidirectional arrow along slope",
+      "terrainPreset": "island-slope"
+    }
+  ]
+}

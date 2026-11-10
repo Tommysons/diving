@@ -15,10 +15,10 @@ export default function FAQSection() {
   const faqs: FAQItem[] = lang === 'en' ? faqsEN : faqsRU
 
   return (
-    <section className='relative bg-blue-200 py-16'>
-      <div className='relative z-10 max-w-4xl mx-auto px-4 text-gray-900'>
+    <section className='relative bg-[#06283a] py-12 md:py-16'>
+      <div className='relative z-10 max-w-4xl mx-auto px-5 sm:px-6 text-white'>
         <motion.h1
-          className='text-3xl md:text-4xl font-bold text-center text-blue-700 mb-1'
+          className='text-3xl md:text-5xl font-extrabold text-center text-white mb-8'
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -36,7 +36,7 @@ export default function FAQSection() {
             return (
               <div
                 key={index}
-                className='bg-white/90 border rounded-xl p-4 shadow-sm'
+                className='bg-[#0b354a] border border-white/15 rounded-2xl p-5 shadow-lg'
               >
                 <button
                   aria-expanded={openIndex === index}
@@ -56,7 +56,7 @@ export default function FAQSection() {
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.3 }}
-                      className='mt-3 text-gray-700 space-y-4'
+                      className='mt-3 text-slate-200 space-y-4'
                     >
                       <p>{faq.answer}</p>
 
@@ -69,7 +69,7 @@ export default function FAQSection() {
                                 : '/forms/medical-form-rus.pdf'
                             }
                             download
-                            className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition'
+                            className='bg-cyan-100 text-[#073044] px-4 py-2 rounded-xl hover:bg-white transition'
                           >
                             {lang === 'en'
                               ? 'Download Medical Form'
@@ -78,7 +78,7 @@ export default function FAQSection() {
 
                           <button
                             onClick={() => setIsModalOpen(true)}
-                            className='bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition'
+                            className='bg-[#075a74] text-white px-4 py-2 rounded-xl hover:bg-[#087b96] transition'
                           >
                             {lang === 'en'
                               ? 'View Fullscreen'

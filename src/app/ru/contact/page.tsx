@@ -63,18 +63,18 @@ export default function ContactPageRu() {
     <>
       <Header />
 
-      <main className='relative min-h-screen w-full bg-blue-200 flex items-center justify-center px-4 py-12'>
+      <main className='relative min-h-screen w-full bg-[#06283a] flex items-center justify-center px-4 py-12'>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className='w-full max-w-xl bg-white/85 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl'
+          className='w-full max-w-xl bg-white/95 text-[#073044] backdrop-blur-md p-7 sm:p-10 rounded-3xl border border-cyan-100/30 shadow-2xl'
         >
-          <h1 className='text-3xl font-bold tracking-tight text-blue-700 text-center mb-2'>
+          <h1 className='text-3xl font-bold tracking-tight text-[#075475] text-center mb-2'>
             Связаться с LokaWndr
           </h1>
 
-          <p className='text-center text-blue-700 mb-6'>
+          <p className='text-center text-[#075475] mb-6'>
             Запланируем ваше подводное приключение. Спросите о дайвинге, курсах
             или погружениях.
           </p>
@@ -89,8 +89,9 @@ export default function ContactPageRu() {
             )}
 
             <div>
-              <label className='text-sm font-medium'>Имя</label>
+              <label htmlFor='contact-name' className='text-sm font-medium'>Имя</label>
               <input
+                id='contact-name'
                 name='name'
                 placeholder='Ваше имя'
                 value={form.name}
@@ -100,8 +101,10 @@ export default function ContactPageRu() {
             </div>
 
             <div>
-              <label className='text-sm font-medium'>Email</label>
+              <label htmlFor='contact-email' className='text-sm font-medium'>Email</label>
               <input
+                id='contact-email'
+                type='email'
                 name='email'
                 placeholder='you@email.com'
                 value={form.email}
@@ -111,8 +114,9 @@ export default function ContactPageRu() {
             </div>
 
             <div>
-              <label className='text-sm font-medium'>Тема</label>
+              <label htmlFor='contact-subject' className='text-sm font-medium'>Тема</label>
               <input
+                id='contact-subject'
                 name='subject'
                 placeholder='О чём сообщение?'
                 value={form.subject}
@@ -122,8 +126,9 @@ export default function ContactPageRu() {
             </div>
 
             <div>
-              <label className='text-sm font-medium'>Сообщение</label>
+              <label htmlFor='contact-message' className='text-sm font-medium'>Сообщение</label>
               <textarea
+                id='contact-message'
                 name='message'
                 rows={5}
                 placeholder='Расскажите о своих планах погружения...'

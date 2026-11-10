@@ -12,23 +12,23 @@ export default function BlogPageRU() {
     <>
       <Navbar />
 
-      <main className='min-h-screen bg-blue-200 px-6 py-12'>
+      <main className='min-h-screen bg-[#06283a] text-white px-6 py-16 md:px-10'>
         {/* Header */}
-        <div className='text-center mb-12'>
-          <h1 className='text-4xl md:text-5xl font-bold text-center text-blue-700 mb-2'>
+        <div className='mx-auto mb-12 max-w-4xl text-center'>
+          <h1 className='text-4xl md:text-5xl font-bold text-center text-cyan-100 mb-2'>
             Блог
           </h1>
-          <p className='text-blue-700 text-lg'>
+          <p className='text-cyan-100 text-lg'>
             Читайте мои истории из подводного мира.
           </p>
         </div>
 
         {/* Blog Grid */}
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+        <div className='mx-auto grid max-w-[1480px] grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3'>
           {blogPostsRU.map((post) => (
             <motion.div
               key={post.slug}
-              className='bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300'
+              className='bg-[#0a354b] rounded-2xl border border-white/15 shadow-xl overflow-hidden hover:border-cyan-300/50 hover:-translate-y-1 transition duration-300'
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -39,18 +39,18 @@ export default function BlogPageRU() {
                   src={post.image}
                   alt={post.title}
                   fill
-                  className='object-cover rounded-t-xl'
+                  className={post.slug === 'maldives-manta-rays-dolphins-snorkeling' ? 'object-contain rounded-t-2xl bg-[#031b2d]' : 'object-cover rounded-t-2xl'}
                 />
               </div>
 
-              <div className='p-4'>
-                <h2 className='text-xl font-semibold text-blue-900 mb-2'>
+              <div className='p-6'>
+                <h2 className='mb-3 text-xl font-bold leading-snug text-white'>
                   {post.title}
                 </h2>
-                <p className='text-blue-800 mb-4'>{post.excerpt}</p>
+                <p className='mb-6 line-clamp-3 text-sm leading-7 text-slate-200'>{post.excerpt}</p>
                 <Link
                   href={`/ru/blog/${post.slug}`}
-                  className='inline-block px-4 py-2 bg-yellow-400 text-blue-900 font-semibold rounded hover:bg-yellow-300 transition'
+                  className='inline-block px-4 py-2 bg-cyan-100 text-[#03283b] font-semibold rounded hover:bg-white transition'
                 >
                   Читать далее
                 </Link>
