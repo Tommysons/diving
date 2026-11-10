@@ -90,7 +90,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
           >
             {/* Header */}
             <div className='flex items-center justify-center gap-2 sm:gap-6 p-4 sm:p-6 border-b border-slate-200'>
-              <NavButton onClick={goToPrev} ariaLabel='Previous'>
+              <NavButton onClick={goToPrev} ariaLabel={locale === 'ru' ? 'Предыдущий дайв-сайт' : 'Previous dive site'}>
                 <ChevronLeft className='w-5 h-5' />
               </NavButton>
 
@@ -98,7 +98,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                 {site.name}
               </h1>
 
-              <NavButton onClick={goToNext} ariaLabel='Next'>
+              <NavButton onClick={goToNext} ariaLabel={locale === 'ru' ? 'Следующий дайв-сайт' : 'Next dive site'}>
                 <ChevronRight className='w-5 h-5' />
               </NavButton>
             </div>
@@ -153,7 +153,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   <motion.img
                     key={hoveredImage}
                     src={hoveredImage}
-                    alt='Zoomed dive image'
+                    alt={locale === 'ru' ? 'Увеличенная фотография дайв-сайта' : 'Enlarged dive site photo'}
                     className='max-w-[90vw] max-h-[80vh] rounded-xl shadow-2xl object-contain'
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -163,6 +163,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   {/* LEFT ARROW */}
                   <button
                     onClick={goToPrevImage}
+                    aria-label={locale === 'ru' ? 'Предыдущая фотография' : 'Previous photo'}
                     className='absolute left-3 top-1/2 -translate-y-1/2 shrink-0 bg-[#075a74] hover:bg-[#087b96] text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition'
                   >
                     <ChevronLeft className='w-6 h-6' />
@@ -171,6 +172,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   {/* RIGHT ARROW */}
                   <button
                     onClick={goToNextImage}
+                    aria-label={locale === 'ru' ? 'Следующая фотография' : 'Next photo'}
                     className='absolute right-3 top-1/2 -translate-y-1/2 shrink-0 bg-[#075a74] hover:bg-[#087b96] text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition'
                   >
                     <ChevronRight className='w-6 h-6' />
@@ -179,6 +181,7 @@ export default function DiveSiteDetail({ site, locale }: Props) {
                   {/* CLOSE */}
                   <button
                     className='absolute top-3 right-3 text-white hover:text-gray-300'
+                    aria-label={locale === 'ru' ? 'Закрыть фотографию' : 'Close photo'}
                     onClick={() => setHoveredImage(null)}
                   >
                     <X className='w-7 h-7' />
