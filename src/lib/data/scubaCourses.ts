@@ -209,7 +209,7 @@ export const specialtyCourses: SpecialtyCourse[] = [
 // =======================
 export const scubaCoursesRU: ScubaCourse[] = [
   {
-    name: 'Открой Подводное Плавание (DSD)',
+    name: 'Откройте для себя дайвинг (DSD)',
     slug: 'discover-scuba-diving-dsd',
     description:
       'Попробуйте дайвинг впервые под руководством профессиональных инструкторов. Отлично для начинающих.',
@@ -267,7 +267,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
     name: 'Rescue Diver',
     slug: 'rescue-diver',
     description:
-      'Научитесь предотвращать и управлять аварийными ситуациями при дайвинге. Развивайте лидерские навыки.',
+      'Научитесь предотвращать аварийные ситуации во время погружений и справляться с ними. Развивайте лидерские навыки.',
     maxDepth: '30 метров',
     image: '/images/courses/rescue.webp',
     price: '11,000฿',
@@ -304,7 +304,7 @@ export const scubaCoursesRU: ScubaCourse[] = [
 // =======================
 export const specialtyCoursesRU: SpecialtyCourse[] = [
   {
-    name: 'Совершенная Буйность (Peak Performance Buoyancy)',
+    name: 'Мастерство плавучести (Peak Performance Buoyancy)',
     slug: 'peak-performance-buoyancy',
     description:
       'Освойте контроль плавучести для экономии воздуха и точного управления под водой.',
@@ -355,7 +355,7 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     name: 'Обогащенный Воздух (Nitrox)',
     slug: 'enriched-air-nitrox',
     description:
-      'Погружайтесь дольше и безопаснее с обогащенным воздухом, изучая правильное планирование и безопасность.',
+      'Изучите свойства обогащённого воздуха и научитесь планировать погружения с найтроксом с учётом его преимуществ и ограничений.',
     prerequisites: 'OWD или эквивалент',
     image: '/images/courses/nitrox.webp',
     price: '7,500฿',
@@ -363,21 +363,21 @@ export const specialtyCoursesRU: SpecialtyCourse[] = [
     program: [
       'Теория Nitrox и расчеты',
       'Планирование погружения с Nitrox',
-      'Открытое водное погружение с Nitrox',
+      'Погружение в открытой воде с найтроксом',
       'Сертификация и проверка',
     ],
   },
   {
-    name: 'Исследование Кораблекрушений (Wreck Diver)',
+    name: 'Погружения к затонувшим кораблям (Wreck Diver)',
     slug: 'wreck-diver',
     description:
-      'Изучайте подводные кораблекрушения с безопасностью и навигацией внутри конструкций.',
+      'Изучайте затонувшие корабли, безопасные методы погружения и подводную навигацию.',
     prerequisites: 'AOWD или эквивалент',
     image: '/images/courses/wreck.webp',
     price: '฿8,500',
     duration: '1-2 дня',
     program: [
-      'Планирование погружения к кораблекрушению',
+      'Планирование погружения к затонувшему кораблю',
       'Навигация и безопасность',
       'Практика проникновения внутрь',
       'Сертификация и проверка',
