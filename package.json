@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.39.8",
+    "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.2.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.1",
