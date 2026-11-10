@@ -5,6 +5,7 @@ import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
 import LokaVideoSection, { thailandVideos } from '@/components/LokaVideoSection'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import KohTaoAtlas from '@/components/KohTaoAtlas'
 
 export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) {
  const ru=locale==='ru', base=ru?'/ru':''
@@ -57,7 +58,10 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
     </div>
    </div>
    <div id='koh-tao-sites' className='mt-12 scroll-mt-24'>
-    <h3 className='text-3xl font-extrabold'>{t.gallery}</h3>
+    <h3 className='text-3xl font-extrabold'>{ru?'Карта дайв-сайтов Ко Тао':'Koh Tao Dive Site Map'}</h3>
+    <p className='mt-3 max-w-3xl text-sm leading-6 text-slate-300'>{ru?'Выберите номер на карте или название в списке, чтобы узнать больше. Расположение дайв-сайтов приблизительное; карта не предназначена для навигации.':'Select a number on the map or a site in the list to learn more. Dive-site locations are approximate; this illustration is not for navigation.'}</p>
+    <KohTaoAtlas locale={locale}/>
+    <h3 className='mt-12 text-3xl font-extrabold'>{t.gallery}</h3>
     <div className='mt-7 grid gap-7 lg:grid-cols-2'>
      {(ru ? diveSitesRU : diveSites).filter(site => site.imageUrl).map(site => (
       <article key={site.slug} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.06]'>
