@@ -6,10 +6,13 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { UdhdhooCover, UdhdhooGallery } from '@/components/UdhdhooGallery'
 import { maldivesDetails } from '@/components/ViluAtlas'
+import DiveGuideNavigation from '@/components/DiveGuideNavigation'
+import { maldivesGuideNeighbors } from '@/lib/data/maldivesGuides'
 
 export default function UdhdhooReefGuide({ locale }: { locale: 'en' | 'ru' }) {
   const ru = locale === 'ru'
   const base = ru ? '/ru' : ''
+  const neighbors = maldivesGuideNeighbors('udhdhoo-reef', locale)!
   const t = ru ? {
     back: 'Все дайв-сайты Мальдив', eyebrow: 'МАЛЬДИВЫ · АТОЛЛ ДХААЛУ', title: 'Дайвинг на Udhdhoo Reef',
     intro: 'Кораллы, рифовые рыбы и подводные впечатления в районе Vilu Reef.', about: 'О дайв-сайте Udhdhoo Reef',
@@ -41,6 +44,7 @@ export default function UdhdhooReefGuide({ locale }: { locale: 'en' | 'ru' }) {
         </dl><p className='mt-7 text-sm leading-6 text-slate-300'>{t.note}</p></section>
       </div>
       <section className='mt-14'><h2 className='text-3xl font-bold'>{t.photos}</h2><p className='mt-3 text-slate-300'>{t.photoText}</p><div className='mt-5'><UdhdhooGallery locale={locale}/></div></section>
+      <DiveGuideNavigation locale={locale} previous={neighbors.previous} next={neighbors.next}/>
       <section className='mt-14 rounded-3xl border border-white/15 bg-[#0a3c50] p-7 md:p-10'><h2 className='text-2xl font-bold'>{t.next}</h2><p className='mt-3 max-w-2xl leading-7 text-slate-200'>{t.nextText}</p><div className='mt-6 flex flex-wrap gap-3'><Link href={`${base}/destinations/maldives#vilu-sites`} className='inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-[#062536]'>{t.map}<ArrowRight size={16}/></Link><Link href={`${base}/contact`} className='inline-flex min-h-11 items-center rounded-xl border border-white/50 px-5 py-3 font-bold'>{t.contact}</Link></div></section>
     </div>
   </main><Footer/></>

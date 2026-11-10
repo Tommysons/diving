@@ -15,7 +15,7 @@ export default function KohTaoAtlas({locale}:{locale:'en'|'ru'}) {
  const sites=ru?diveSitesRU:diveSites
  const [selected,setSelected]=useState<string|null>(null)
  const site=sites.find(s=>s.slug===selected)
- const t=ru?{depth:'Глубина',current:'Течение',visibility:'Видимость',photos:'Фотографии',more:'Полная информация',photoCredit:'Подводные фотографии: Mia @kakadong123'}:{depth:'Depth',current:'Current',visibility:'Visibility',photos:'Photo gallery',more:'Full dive-site guide',photoCredit:'Underwater photography: Mia @kakadong123'}
+ const t=ru?{depth:'Глубина',current:'Течение',visibility:'Видимость',photos:'Фотографии',more:'Подробнее о дайв-сайте',photoCredit:'Подводные фотографии: Mia @kakadong123'}:{depth:'Depth',current:'Current',visibility:'Visibility',photos:'Photo gallery',more:'View Full Dive-Site Guide',photoCredit:'Underwater photography: Mia @kakadong123'}
  return <div className='mt-7 grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(300px,1fr)]'>
  <div className='relative aspect-[4/5] max-h-[730px] overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#07334c] md:aspect-[5/4]'>
  <div className='absolute inset-0' style={{background:'radial-gradient(ellipse at 55% 43%,#187b8b 0%,#07506a 38%,#031e37 77%)'}}/>
