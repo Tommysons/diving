@@ -38,7 +38,7 @@ export function UnderwaterParticles() {
    if (cancelled || !element) return
    const width = element.clientWidth, height = element.clientHeight
    if (!width || !height) return
-   let renderer: THREE.WebGLRenderer
+   let renderer: InstanceType<typeof THREE.WebGLRenderer>
    try {
     renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'low-power' })
    } catch { return }
