@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { ReactNode } from 'react'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Analytics } from '@vercel/analytics/next'
+import SiteMotion from '@/components/SiteMotion'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lokawndr.com'),
@@ -27,7 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en'>
       <body className='flex min-h-screen flex-col bg-[#031b2d] text-white antialiased'>
-        <ClerkProvider>{children}</ClerkProvider>
+        <ClerkProvider><SiteMotion/>{children}</ClerkProvider>
         <Analytics />
       </body>
     </html>

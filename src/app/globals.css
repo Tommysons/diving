@@ -51,3 +51,10 @@ body { background: var(--loka-deep); color: #f8fafc; }
 }
 @media (max-width: 767px) { .ocean-motion-bubbles i:nth-child(n+5) { display: none; } }
 @media (prefers-reduced-motion: reduce) { .ocean-motion-layer { display: none; } }
+
+
+/* Subtle interactions across the site without animating maps or form controls. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  main article { transition: border-color .3s ease, box-shadow .3s ease; }
+  main article:hover, main article:focus-within { border-color: rgba(165, 243, 252, .7); box-shadow: 0 12px 30px rgba(0, 12, 24, .2); }
+}
