@@ -8,6 +8,12 @@ export function HomeMotion() {
  useEffect(() => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   gsap.registerPlugin(ScrollTrigger)
+  const motionLayer = document.querySelector<HTMLElement>('.ocean-motion-layer')
+  let heroVisible = true
+  const syncLayer = () => motionLayer?.classList.toggle('is-paused', !heroVisible || document.hidden)
+  const layerObserver = new IntersectionObserver(entries => { heroVisible = !!entries[0]?.isIntersecting; syncLayer() })
+  if (motionLayer) layerObserver.observe(motionLayer)
+  document.addEventListener('visibilitychange', syncLayer)
   const ctx = gsap.context(() => {
    gsap.fromTo('[data-hero-motion]', { opacity: 0, y: 26 }, {
     opacity: 1, y: 0, duration: 0.85, stagger: 0.13, ease: 'power2.out', clearProps: 'transform,opacity'
@@ -19,8 +25,12 @@ export function HomeMotion() {
      clearProps: 'transform,opacity'
     })
    })
+   gsap.utils.toArray<HTMLElement>('[data-card-motion]').forEach(el => {
+    gsap.fromTo(el, { y: 18 }, { y: 0, duration: 0.7, ease: 'power2.out',
+     scrollTrigger: { trigger: el, start: 'top 96%', once: true }, clearProps: 'transform' })
+   })
   })
-  return () => ctx.revert()
+  return () => { layerObserver.disconnect(); document.removeEventListener('visibilitychange', syncLayer); ctx.revert() }
  }, [])
  return null
 }
@@ -30,8 +40,10 @@ export function UnderwaterParticles() {
  const host = useRef<HTMLDivElement>(null)
  useEffect(() => {
   const element = host.current
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection
   if (!element || window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      window.matchMedia('(max-width: 767px)').matches) return
+      window.matchMedia('(max-width: 767px)').matches || connection?.saveData ||
+      connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g') return
   let cancelled = false
   let cleanup: (() => void) | undefined
   import('three').then(THREE => {
@@ -62,30 +74,39 @@ export function UnderwaterParticles() {
    const material = new THREE.PointsMaterial({ color: 0xb4eaff, size: .045, transparent: true, opacity: .48, depthWrite: false })
    const particles = new THREE.Points(geometry, material)
    scene.add(particles)
-   const clock = new THREE.Clock()
    let frame = 0
-   let visible = !document.hidden
-   const observer = new IntersectionObserver(entries => { visible = entries[0]?.isIntersecting && !document.hidden }, { threshold: 0 })
+   let elapsed = 0
+   let lastTime = 0
+   let inView = false
+   const tick = (time: number) => {
+    if (lastTime) elapsed += Math.min((time - lastTime) / 1000, .1)
+    lastTime = time
+    particles.rotation.y += .00015
+    particles.position.y = Math.sin(elapsed * .18) * .22
+    renderer.render(scene, camera)
+    frame = window.requestAnimationFrame(tick)
+   }
+   const syncAnimation = () => {
+    if (inView && !document.hidden) {
+     if (!frame) frame = window.requestAnimationFrame(tick)
+    } else {
+     if (frame) cancelAnimationFrame(frame)
+     frame = 0
+     lastTime = 0
+    }
+   }
+   const observer = new IntersectionObserver(entries => { inView = !!entries[0]?.isIntersecting; syncAnimation() }, { threshold: 0 })
    observer.observe(element)
-   const onVisibility = () => { visible = !document.hidden }
-   document.addEventListener('visibilitychange', onVisibility)
+   document.addEventListener('visibilitychange', syncAnimation)
    const onResize = () => {
     const w = element.clientWidth, h = element.clientHeight
     if (!w || !h) return
     camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h)
    }
    window.addEventListener('resize', onResize, { passive: true })
-   const tick = () => {
-    frame = window.requestAnimationFrame(tick)
-    if (!visible) { clock.getDelta(); return }
-    particles.rotation.y += .00015
-    particles.position.y = Math.sin(clock.getElapsedTime() * .18) * .22
-    renderer.render(scene, camera)
-   }
-   tick()
    cleanup = () => {
     cancelAnimationFrame(frame); observer.disconnect()
-    document.removeEventListener('visibilitychange', onVisibility)
+    document.removeEventListener('visibilitychange', syncAnimation)
     window.removeEventListener('resize', onResize)
     geometry.dispose(); material.dispose(); renderer.dispose()
     renderer.domElement.remove()

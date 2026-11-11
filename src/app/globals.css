@@ -27,3 +27,27 @@ body { background: var(--loka-deep); color: #f8fafc; }
   .loka-button { @apply inline-flex min-h-11 items-center justify-center rounded-xl bg-cyan-100 px-5 py-3 text-sm font-bold text-[#062536] transition hover:bg-white; }
   .loka-button-outline { @apply inline-flex min-h-11 items-center justify-center rounded-xl border border-white/30 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10; }
 }
+
+
+/* Lightweight motion for the existing home page; no extra image or video downloads. */
+.ocean-motion-layer { position: absolute; inset: 0 0 90px; z-index: 1; pointer-events: none; overflow: hidden; }
+.ocean-motion-light { position: absolute; inset: -20% -30%; opacity: .7; background: linear-gradient(110deg, transparent 30%, rgba(157, 244, 241, .15) 40%, transparent 51%, rgba(126, 223, 239, .09) 57%, transparent 67%); animation: ocean-light-drift 11s ease-in-out infinite alternate; }
+.ocean-motion-bubbles { position: absolute; inset: 0; }
+.ocean-motion-bubbles i { position: absolute; bottom: -28px; display: block; border: 1px solid rgba(209, 255, 255, .8); border-radius: 50%; background: rgba(210, 250, 255, .1); animation: ocean-bubble-rise 9s ease-in infinite; }
+.ocean-motion-bubbles i:nth-child(1) { left: 55%; width: 13px; height: 13px; animation-delay: -2s; }
+.ocean-motion-bubbles i:nth-child(2) { left: 69%; width: 8px; height: 8px; animation-delay: -7s; animation-duration: 10s; }
+.ocean-motion-bubbles i:nth-child(3) { left: 82%; width: 18px; height: 18px; animation-delay: -4s; animation-duration: 12s; }
+.ocean-motion-bubbles i:nth-child(4) { left: 93%; width: 10px; height: 10px; animation-delay: -1s; }
+.ocean-motion-bubbles i:nth-child(5) { left: 75%; width: 6px; height: 6px; animation-delay: -6s; animation-duration: 8s; }
+.ocean-motion-bubbles i:nth-child(6) { left: 47%; width: 7px; height: 7px; animation-delay: -3s; animation-duration: 11s; }
+.ocean-motion-layer.is-paused .ocean-motion-light, .ocean-motion-layer.is-paused .ocean-motion-bubbles i { animation-play-state: paused; }
+@keyframes ocean-light-drift { from { transform: translateX(-8%); } to { transform: translateX(8%); } }
+@keyframes ocean-bubble-rise { 0% { opacity: 0; transform: translate3d(0, 0, 0); } 15% { opacity: .75; } 85% { opacity: .65; } 100% { opacity: 0; transform: translate3d(20px, -360px, 0); } }
+.ocean-motion-card { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.ocean-motion-activity { transition: transform .25s ease, color .25s ease; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ocean-motion-card:hover, .ocean-motion-card:focus-visible { transform: translateY(-5px); border-color: rgba(165, 243, 252, .75); box-shadow: 0 16px 36px rgba(0, 10, 24, .25); }
+  .ocean-motion-activity:hover, .ocean-motion-activity:focus-visible { transform: translateY(-3px); color: #a5f3fc; }
+}
+@media (max-width: 767px) { .ocean-motion-bubbles i:nth-child(n+5) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ocean-motion-layer { display: none; } }
