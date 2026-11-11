@@ -1,36 +1,36 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 /** Progressive enhancement: never hide content before JS is ready. */
 export function HomeMotion() {
  useEffect(() => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-  gsap.registerPlugin(ScrollTrigger)
   const motionLayer = document.querySelector<HTMLElement>('.ocean-motion-layer')
-  let heroVisible = true
+  let heroVisible = true, cancelled = false
+  let cleanupMotion: (() => void) | undefined
   const syncLayer = () => motionLayer?.classList.toggle('is-paused', !heroVisible || document.hidden)
   const layerObserver = new IntersectionObserver(entries => { heroVisible = !!entries[0]?.isIntersecting; syncLayer() })
   if (motionLayer) layerObserver.observe(motionLayer)
   document.addEventListener('visibilitychange', syncLayer)
-  const ctx = gsap.context(() => {
-   gsap.fromTo('[data-hero-motion]', { opacity: 0, y: 26 }, {
-    opacity: 1, y: 0, duration: 0.85, stagger: 0.13, ease: 'power2.out', clearProps: 'transform,opacity'
-   })
-   gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(el => {
-    gsap.fromTo(el, { opacity: 0, y: 32 }, {
-     opacity: 1, y: 0, duration: 0.75, ease: 'power2.out',
-     scrollTrigger: { trigger: el, start: 'top 92%', once: true },
-     clearProps: 'transform,opacity'
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection
+  const loadScrollMotion = () => {
+   window.removeEventListener('scroll', loadScrollMotion)
+   if (connection?.saveData || connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g') return
+   Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+    if (cancelled) return
+    gsap.registerPlugin(ScrollTrigger)
+    const ctx = gsap.context(() => {
+     gsap.utils.toArray<HTMLElement>('[data-reveal], [data-card-motion]').forEach(el => {
+      if (el.getBoundingClientRect().top <= window.innerHeight) return
+      gsap.fromTo(el, { y: 18 }, { y: 0, duration: .7, ease: 'power2.out',
+       scrollTrigger: { trigger: el, start: 'top 96%', once: true }, clearProps: 'transform' })
+     })
     })
-   })
-   gsap.utils.toArray<HTMLElement>('[data-card-motion]').forEach(el => {
-    gsap.fromTo(el, { y: 18 }, { y: 0, duration: 0.7, ease: 'power2.out',
-     scrollTrigger: { trigger: el, start: 'top 96%', once: true }, clearProps: 'transform' })
-   })
-  })
-  return () => { layerObserver.disconnect(); document.removeEventListener('visibilitychange', syncLayer); ctx.revert() }
+    cleanupMotion = () => ctx.revert()
+   }).catch(() => { /* Content remains available without animation. */ })
+  }
+  window.addEventListener('scroll', loadScrollMotion, { passive: true, once: true })
+  return () => { cancelled = true; window.removeEventListener('scroll', loadScrollMotion); layerObserver.disconnect(); document.removeEventListener('visibilitychange', syncLayer); cleanupMotion?.() }
  }, [])
  return null
 }

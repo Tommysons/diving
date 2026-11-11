@@ -12,6 +12,7 @@ export default function Footer() {
   const locale = ru ? 'ru' : 'en'
   const base = ru ? '/ru' : ''
   const currentContacts = contacts[locale]
+  const socialLinks = [{ platform: 'Instagram', url: 'https://www.instagram.com/lokawndr/' }, { platform: 'YouTube', url: 'https://www.youtube.com/@lokawndr' }]
   const t = ru
     ? {
         tagline: 'Открывайте подводный мир вместе с нами.',
@@ -101,9 +102,9 @@ export default function Footer() {
         <div>
           <h2 className='mb-5 text-sm font-bold uppercase tracking-[0.16em] text-cyan-100'>{t.follow}</h2>
           <ul className='space-y-3'>
-            {currentContacts.socialLinks.filter(({ platform }) => platform.toLowerCase() !== 'facebook').map(({ platform, url }) => (
+            {socialLinks.map(({ platform, url }) => (
               <li key={platform}>
-                <a href={platform.toLowerCase() === 'instagram' ? 'https://www.instagram.com/lokawndr/' : url} target='_blank' rel='noopener noreferrer' className='inline-flex items-center gap-1 text-sm text-slate-200 transition hover:text-white'>
+                <a href={url} target='_blank' rel='noopener noreferrer' className='inline-flex items-center gap-1 text-sm text-slate-200 transition hover:text-white'>
                   {platform}<ArrowUpRight size={14} aria-hidden='true' />
                 </a>
               </li>

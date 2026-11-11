@@ -5,7 +5,6 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { UdhdhooCover, UdhdhooGallery } from '@/components/UdhdhooGallery'
-import { maldivesDetails } from '@/components/ViluAtlas'
 import DiveGuideNavigation from '@/components/DiveGuideNavigation'
 import { maldivesGuideNeighbors } from '@/lib/data/maldivesGuides'
 
@@ -15,7 +14,7 @@ export default function UdhdhooReefGuide({ locale }: { locale: 'en' | 'ru' }) {
   const neighbors = maldivesGuideNeighbors('udhdhoo-reef', locale)!
   const t = ru ? {
     back: 'Все дайв-сайты Мальдив', eyebrow: 'МАЛЬДИВЫ · АТОЛЛ ДХААЛУ', title: 'Дайвинг на Udhdhoo Reef',
-    intro: 'Кораллы, рифовые рыбы и подводные впечатления в районе Vilu Reef.', about: 'О дайв-сайте Udhdhoo Reef',
+    intro: 'Кораллы, рифовые рыбы и подводные впечатления в районе Vilu Reef.', aboutText: 'Udhdhoo Reef — богатый кораллами дайв-сайт в районе Vilu Reef, атолл Дхаалу. Здесь можно исследовать риф и наблюдать за его обитателями.', about: 'О дайв-сайте Udhdhoo Reef',
     conditions: 'Условия погружения', depth: 'Глубина дна на схеме', current: 'Течение', currentValue: 'Слабое–умеренное', visibility: 'Видимость', boat: 'От Vilu Reef на лодке', boatValue: 'Около 10 минут',
     note: 'Глубина дна на схеме не является рекомендуемой глубиной погружения. Течение и видимость меняются; уточняйте условия у местного дайв-центра и выбирайте погружение в пределах своей подготовки.',
     marine: 'Кого можно увидеть', marineText: 'На рифе можно встретить стаи фузилёров и мелких рифовых рыб, а среди кораллов — мурен и лобстеров. Здесь также иногда появляются белопёрые рифовые акулы. Встречи с морскими обитателями не гарантированы.',
@@ -23,7 +22,7 @@ export default function UdhdhooReefGuide({ locale }: { locale: 'en' | 'ru' }) {
     next: 'Исследуйте Мальдивы с LokaWndr', nextText: 'Посмотрите карту дайв-сайтов в районе Vilu Reef или свяжитесь с нами, если хотите узнать больше.', map: 'Посмотреть карту дайв-сайтов', contact: 'Связаться',
   } : {
     back: 'All Maldives dive sites', eyebrow: 'MALDIVES · DHAALU ATOLL', title: 'Diving Udhdhoo Reef',
-    intro: 'Corals, reef fish and underwater encounters in the Vilu Reef area.', about: 'About Udhdhoo Reef',
+    intro: 'Corals, reef fish and underwater encounters in the Vilu Reef area.', aboutText: 'Udhdhoo Reef is a coral-rich dive site in the Vilu Reef area of Dhaalu Atoll. Explore the reef and discover the marine life that calls it home.', about: 'About Udhdhoo Reef',
     conditions: 'Dive conditions', depth: 'Charted seabed depth', current: 'Current', currentValue: 'Low–moderate', visibility: 'Visibility', boat: 'Boat from Vilu Reef', boatValue: 'About 10 minutes',
     note: 'Charted seabed depth is not a recommended dive depth. Current and visibility change; confirm conditions with a local dive centre and dive within your training.',
     marine: 'Marine life to look for', marineText: 'Look for schools of fusiliers and small reef fish, as well as moray eels and lobsters among the coral. Whitetip reef sharks may also appear. Wildlife sightings are never guaranteed.',
@@ -38,7 +37,7 @@ export default function UdhdhooReefGuide({ locale }: { locale: 'en' | 'ru' }) {
         <UdhdhooCover locale={locale}/>
       </div>
       <div className='mt-12 grid gap-8 lg:grid-cols-[1.25fr_1fr]'>
-        <section className='rounded-3xl border border-white/15 bg-white/[.06] p-6 md:p-8'><h2 className='text-2xl font-bold'>{t.about}</h2><p className='mt-4 leading-8 text-slate-200'>{maldivesDetails['Udhdhoo Reef'][locale]}</p><h2 className='mt-8 text-2xl font-bold'>{t.marine}</h2><p className='mt-4 leading-8 text-slate-200'>{t.marineText}</p></section>
+        <section className='rounded-3xl border border-white/15 bg-white/[.06] p-6 md:p-8'><h2 className='text-2xl font-bold'>{t.about}</h2><p className='mt-4 leading-8 text-slate-200'>{t.aboutText}</p><h2 className='mt-8 text-2xl font-bold'>{t.marine}</h2><p className='mt-4 leading-8 text-slate-200'>{t.marineText}</p></section>
         <section className='rounded-3xl border border-cyan-200/20 bg-[#0a3c50] p-6 md:p-8'><h2 className='text-2xl font-bold'>{t.conditions}</h2><dl className='mt-5 grid grid-cols-2 gap-x-4 gap-y-6'>
           {[[t.depth, ru?'3–35 м':'3–35 m'],[t.current,t.currentValue],[t.visibility,ru?'10–15+ м':'10–15+ m'],[t.boat,t.boatValue]].map(([label,value])=><div key={label}><dt className='text-sm text-cyan-100/80'>{label}</dt><dd className='mt-1 font-semibold'>{value}</dd></div>)}
         </dl><p className='mt-7 text-sm leading-6 text-slate-300'>{t.note}</p></section>
