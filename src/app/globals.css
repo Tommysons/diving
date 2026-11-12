@@ -30,7 +30,8 @@ body { background: var(--loka-deep); color: #f8fafc; }
 
 
 /* Lightweight motion for the existing home page; no extra image or video downloads. */
-.ocean-motion-layer { position: absolute; inset: 0 0 90px; z-index: 1; pointer-events: none; overflow: hidden; }
+.ocean-motion-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.ocean-motion-layer--home { bottom: 90px; }
 .ocean-motion-light { position: absolute; inset: -20% -30%; opacity: .7; background: linear-gradient(110deg, transparent 30%, rgba(157, 244, 241, .15) 40%, transparent 51%, rgba(126, 223, 239, .09) 57%, transparent 67%); animation: ocean-light-drift 11s ease-in-out infinite alternate; }
 .ocean-motion-bubbles { position: absolute; inset: 0; }
 .ocean-motion-bubbles i { position: absolute; bottom: -28px; display: block; border: 1px solid rgba(209, 255, 255, .8); border-radius: 50%; background: rgba(210, 250, 255, .1); animation: ocean-bubble-rise 9s ease-in infinite; }
