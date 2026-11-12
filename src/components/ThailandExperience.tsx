@@ -35,11 +35,12 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
  ]
  return <><Header/><main className='bg-[#06283a] text-white'>
   <section className='relative isolate flex min-h-[530px] items-end overflow-hidden'>
-   <Image src='/images/cpn6a.webp' alt='Koh Tao underwater scenery photographed for LokaWndr' fill priority sizes='100vw' className='object-cover'/>
+   <Image src='/images/generated/thailand-diving.webp' alt={ru?'Созданная ИИ иллюстрация дайвера':'AI-generated illustration of a scuba diver'} fill priority sizes='100vw' className='object-cover'/>
    <div className='absolute inset-0 bg-gradient-to-r from-[#032538]/90 via-[#032538]/55 to-[#032538]/20'/>
    <div className='absolute inset-0 bg-gradient-to-t from-[#032538] via-transparent to-transparent'/>
+   <div className='ocean-motion-layer' aria-hidden='true'><div className='ocean-motion-light'/><div className='ocean-motion-bubbles'><i/><i/><i/><i/><i/><i/></div></div>
    <div className='relative mx-auto w-full max-w-[1480px] px-6 pb-20 pt-32 md:px-10'>
-    <p className='text-xs font-bold tracking-[.24em] text-cyan-100'>{t.label}</p>
+    <p className='text-xs font-bold tracking-[.24em] text-cyan-100'>{t.label}</p><p className='mt-2 text-xs text-white/75'>{ru?'Иллюстрация, созданная с помощью ИИ':'AI-generated illustration'}</p>
     <h1 className='mt-4 max-w-3xl text-5xl font-extrabold md:text-7xl'>{t.title}</h1>
     <p className='mt-5 max-w-2xl text-xl leading-relaxed text-slate-100'>{t.intro}</p>
     <a href='#dive-spots' className='mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-bold text-[#062536]'>{t.guide}<ArrowRight size={18}/></a>

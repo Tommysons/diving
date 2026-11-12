@@ -4,13 +4,13 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { blogPosts } from '@/lib/data/blogPosts'
-import Navbar from '@/components/Navbar'
+import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export default function BlogPage() {
   return (
     <>
-      <Navbar />
+      <Header />
 
       <main className='min-h-screen bg-[#06283a] text-white px-6 py-16 md:px-10'>
         {/* Header */}

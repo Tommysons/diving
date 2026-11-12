@@ -37,11 +37,12 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
   }
   return <><Header/><main className='bg-[#06283a] text-white'>
     <section className='relative isolate flex min-h-[530px] items-end overflow-hidden'>
-      <Image src='/images/hero-about-a.webp' alt='LokaWndr underwater ocean photography' fill priority sizes='100vw' className='object-cover'/>
+      <Image src='/images/generated/maldives-diving.webp' alt={ru?'Созданная ИИ иллюстрация дайвера на коралловом рифе':'AI-generated illustration of a diver above a coral reef'} fill priority sizes='100vw' className='object-cover'/>
       <div className='absolute inset-0 bg-gradient-to-r from-[#032538]/90 via-[#032538]/55 to-[#032538]/20'/>
       <div className='absolute inset-0 bg-gradient-to-t from-[#032538] via-transparent to-transparent'/>
+      <div className='ocean-motion-layer' aria-hidden='true'><div className='ocean-motion-light'/><div className='ocean-motion-bubbles'><i/><i/><i/><i/><i/><i/></div></div>
       <div className='relative mx-auto w-full max-w-[1480px] px-6 pb-20 pt-32 md:px-10'>
-        <p className='text-xs font-bold tracking-[0.24em] text-cyan-100'>{t.label}</p>
+        <p className='text-xs font-bold tracking-[0.24em] text-cyan-100'>{t.label}</p><p className='mt-2 text-xs text-white/75'>{ru?'Иллюстрация, созданная с помощью ИИ':'AI-generated illustration'}</p>
         <h1 className='mt-4 max-w-3xl text-5xl font-extrabold leading-tight md:text-7xl'>{t.title}</h1>
         <p className='mt-5 max-w-2xl text-xl leading-relaxed text-slate-100'>{t.intro}</p>
         <div className='mt-8 flex flex-wrap gap-3'>
