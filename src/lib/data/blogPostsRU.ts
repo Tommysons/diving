@@ -361,7 +361,7 @@ export const blogPostsRU: BlogPost[] = [
     slug: 'why-try-scuba-diving',
     excerpt:
       'Личная история о том, как дайвинг может изменить взгляд на жизнь и почему каждому стоит попробовать его хотя бы раз.',
-    image: '/images/twins/blog.webp',
+    image: '/images/dive-sites/twins/blog.webp',
     date: '2026-03-16',
     tags: ['дайвинг', 'новички', 'подводный мир'],
     content: [
