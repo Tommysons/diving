@@ -22,7 +22,7 @@ export const maldivesReefSites:ReefSite[] = [
  {slug:'coral-garden',name:'Coral Garden',mapNumber:25,boatMinutes:20,minDepthM:10,maxDepthM:35,features:['thila','channel','outer-reef','sandy-bottom'],source:'briefing-diagram',verifiedCoordinates:false},
  {slug:'octopus-lover',name:'Octopus Lover',mapNumber:17,boatMinutes:20,minDepthM:3,maxDepthM:35,features:['slope','overhangs','outer-reef','thila'],source:'briefing-diagram',verifiedCoordinates:false},
  {slug:'meedhoo-cave',name:'Meedhoo Cave',mapNumber:32,boatMinutes:5,minDepthM:3,maxDepthM:35,features:['slope','channel','outer-reef','sandy-bottom','island'],surfaceIsland:'Meedhoo Island',source:'briefing-diagram',verifiedCoordinates:false},
- {slug:'wella-giri',name:'Wella Giri',mapNumber:9,boatMinutes:20,minDepthM:1,maxDepthM:35,features:['giri','wall','slope','sandy-bottom'],source:'briefing-diagram',verifiedCoordinates:false},
+ {slug:'wella-giri',name:'Wella Giri',mapNumber:9,boatMinutes:25,minDepthM:1,maxDepthM:35,features:['giri','wall','slope','sandy-bottom'],source:'briefing-diagram',verifiedCoordinates:false},
  {slug:'azmee-corner',name:'Azmee Corner',mapNumber:26,boatMinutes:15,minDepthM:3,maxDepthM:35,features:['wall','overhangs','sandy-bottom'],source:'briefing-diagram',verifiedCoordinates:false},
  {slug:'kermit-corner',name:'Kermit Corner',mapNumber:7,boatMinutes:30,minDepthM:6,maxDepthM:35,features:['thila','channel','coral-blocks','outer-reef','sandy-bottom','island'],surfaceIsland:'Kandely Fara Island',source:'briefing-diagram',verifiedCoordinates:false},
  {slug:'velavaru-tongue',name:'Velavaru Tongue',mapNumber:11,boatMinutes:20,minDepthM:3,maxDepthM:35,features:['channel','outer-reef','coral-blocks','sandy-bottom'],source:'briefing-diagram',verifiedCoordinates:false},
