@@ -7,7 +7,6 @@ const baseUrl = 'https://lokawndr.com'
 const staticPaths = ['', '/activities', '/destinations', '/atlas', '/aboutme', '/blog', '/contact', '/divesites', '/faq', '/gallery', '/scubadivingcourses', '/snorkeling', '/destinations/thailand', '/destinations/maldives', '/destinations/maldives/udhdhoo-reef']
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date()
   const localized = staticPaths.flatMap((path) => [path, `/ru${path}`])
   const contentPaths = [
     ...diveSites.flatMap((site) => [`/divesites/${site.slug}`, `/ru/divesites/${site.slug}`]),
@@ -17,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...localized, ...contentPaths].map((path) => ({
     url: `${baseUrl}${path}`,
-    lastModified: now,
     changeFrequency: path.includes('/blog/') ? 'monthly' : 'weekly',
     priority: path === '' || path === '/ru' ? 1 : 0.7,
   }))

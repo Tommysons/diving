@@ -414,7 +414,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'why-try-scuba-diving',
     excerpt:
       'A personal story about how scuba diving can change your perspective on life and why everyone should try it at least once.',
-    image: '/images/twins/blog.webp',
+    image: '/images/dive-sites/twins/blog.webp',
     date: '2026-03-16',
     tags: ['scuba diving', 'beginners', 'underwater'],
     content: [
