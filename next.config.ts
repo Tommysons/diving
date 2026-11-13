@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
     },
   },
 
+  async redirects() {
+    return ['313', 'cpn', 'sattakut', 'sw', 'twins', 'udhdhoo', 'wr'].map((site) => ({
+      source: `/images/${site}/:path*`,
+      destination: `/images/dive-sites/${site}/:path*`,
+      permanent: true,
+    }))
+  },
+
   async headers() {
     return [
       {
