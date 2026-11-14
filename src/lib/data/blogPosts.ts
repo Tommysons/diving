@@ -24,6 +24,148 @@ export interface BlogPost {
 // Example blog post data
 export const blogPosts: BlogPost[] = [
   {
+    "title": "The Maldives: My Favourite Place to Dive and Escape",
+    "slug": "maldives-favourite-place-to-dive-and-escape",
+    "excerpt": "From manta rays and drift dives to local customs and island stays: discover why the Maldives is my favourite place to dive and escape.",
+    "image": "/images/generated/maldives-diving-escape.webp",
+    "date": "2026-11-14",
+    "tags": [
+      "Maldives",
+      "scuba diving",
+      "travel"
+    ],
+    "content": [
+      {
+        "type": "paragraph",
+        "value": "When people think about the Maldives, they often picture white-sand beaches, turquoise water and villas standing above the ocean. And yes, you’ll find all of that here. But for me, the real magic begins when you put your face underwater."
+      },
+      {
+        "type": "paragraph",
+        "value": "The Maldives is made up of around 1,192 islands, surrounded by an ocean full of life. It’s one of the world’s best-known scuba diving destinations, and personally, it’s my number one. Of course, I haven’t explored the whole world yet, so I’ll let you know if that ever changes!"
+      },
+      {
+        "type": "heading",
+        "value": "Why I Love Diving in the Maldives",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "The Maldives is famous for whale sharks, manta rays, shark encounters and exciting drift dives. Depending on where and when you visit, you might also find colourful reef fish, turtles, rays and all kinds of other marine life."
+      },
+      {
+        "type": "paragraph",
+        "value": "What I love most is that every dive can be different. One day you might be enjoying a peaceful reef, watching fish move through the corals. The next, you could be drifting along with the current, wondering what might appear out of the blue."
+      },
+      {
+        "type": "paragraph",
+        "value": "And you don’t have to be a scuba diver to enjoy the ocean. Snorkelling and freediving are great ways to discover the underwater world too. Many resorts also offer activities such as jet skiing, surfing and boat trips, depending on their location."
+      },
+      {
+        "type": "heading",
+        "value": "Where Can You Stay?",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "The Maldives offers more choices than many people expect. You can stay at a resort, on a liveaboard or in a guesthouse on a local island."
+      },
+      {
+        "type": "paragraph",
+        "value": "Resorts range from beach villas surrounded by palm trees to overwater villas where the ocean is just a few steps away. And if that isn’t close enough to the water, there’s even an underwater villa where you can sleep below the surface."
+      },
+      {
+        "type": "paragraph",
+        "value": "Personally, I’m not sure how I would feel about that. Imagine waking up, going to the bathroom, turning your head to the left and seeing a shark at the window:"
+      },
+      {
+        "type": "quote",
+        "value": "“Hey, when are you coming out? I’m hungry!”"
+      },
+      {
+        "type": "paragraph",
+        "value": "Jokes aside, waking up with a view of the underwater world must be an unforgettable experience."
+      },
+      {
+        "type": "paragraph",
+        "value": "If you’re wondering how many resorts there are, the answer changes as new properties open. A figure of around 110 is outdated: a 2026 report citing the tourism ministry listed 180 operating resorts."
+      },
+      {
+        "type": "heading",
+        "value": "What Should You Know Before Visiting?",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "The Maldives is a Muslim country, and it’s helpful to understand a little about local customs before your trip—especially if you’re planning to visit or stay on an inhabited island."
+      },
+      {
+        "type": "heading",
+        "value": "Alcohol is restricted",
+        "level": 3
+      },
+      {
+        "type": "paragraph",
+        "value": "If you’re dreaming of enjoying a cold beer on a local island, you’ll need to make different plans. Alcohol is generally available at licensed resorts and liveaboards, but it isn’t permitted on inhabited local islands. Don’t bring alcohol into the country in your luggage."
+      },
+      {
+        "type": "heading",
+        "value": "Plan around prayer times and weekends",
+        "level": 3
+      },
+      {
+        "type": "paragraph",
+        "value": "On local islands, some shops and services may close briefly during prayer times. Friday midday prayers can also affect opening hours, so it’s a good idea to plan shopping and errands accordingly."
+      },
+      {
+        "type": "paragraph",
+        "value": "Friday and Saturday are the usual weekend days, and banks or other services may have limited hours or be closed. Ask your accommodation about local opening times and transport schedules, as they can vary."
+      },
+      {
+        "type": "heading",
+        "value": "Respect local dress customs",
+        "level": 3
+      },
+      {
+        "type": "paragraph",
+        "value": "Resort islands and local islands can have different expectations. When exploring inhabited islands, dress modestly in public areas and check where swimwear is appropriate."
+      },
+      {
+        "type": "heading",
+        "value": "Budget for more than your room",
+        "level": 3
+      },
+      {
+        "type": "paragraph",
+        "value": "The Maldives can be expensive, particularly if you’re staying at a resort. When planning your trip, remember to check the cost of transfers, meals, diving, excursions and any taxes or service charges."
+      },
+      {
+        "type": "paragraph",
+        "value": "That said, there are different ways to experience the country. A guesthouse on a local island may offer a more affordable trip, while a resort or liveaboard will provide a different kind of experience. Think about what matters most to you and compare the full cost before booking."
+      },
+      {
+        "type": "heading",
+        "value": "A Place to Reset",
+        "level": 2
+      },
+      {
+        "type": "paragraph",
+        "value": "For me, the Maldives is a wonderful place to escape the noise and struggles of city life."
+      },
+      {
+        "type": "paragraph",
+        "value": "Whether you’re exploring a reef, relaxing at a spa or simply looking out at the endless ocean horizon, there’s something about this place that makes it easier to slow down and reset."
+      },
+      {
+        "type": "paragraph",
+        "value": "And if you decide to get underwater, who knows? You might discover your new favourite dive destination too."
+      },
+      {
+        "type": "paragraph",
+        "value": "Have you been to the Maldives, or is it on your travel list? What would you most like to see underwater?"
+      }
+    ]
+  },
+  {
     "title": "Snorkeling with Manta Rays in the Maldives — and a Surprise from Dolphins",
     "excerpt": "A manta ray, a playful pod of dolphins, and a whale shark that got away: my unforgettable Maldives snorkeling adventure.",
     "tags": [
