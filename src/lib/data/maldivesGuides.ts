@@ -1,5 +1,5 @@
 export const maldivesGuideSites = [
- {slug:'yuki-reef',name:'Yuki Reef',en:'A sloping reef near Udhdhoo Island, with overhangs around 12–15 m and a deeper sandy bottom.',ru:'Риф у острова Уддху со склоном, навесами на глубине около 12–15 м и песчаным дном.',depth:'3–35 m',boat:'13'},
+ {slug:'yuki-reef',name:'Yuki Reef',en:"A reef wall with sloping sections and overhangs where lobsters and reef fish can be found. Look out for schools of fusiliers, and occasionally turtles and reef sharks. Wildlife sightings are never guaranteed.",ru:"Рифовая стена со склонами и навесами, под которыми можно встретить лобстеров и рифовых рыб. Здесь встречаются стаи фузилёров, а иногда черепахи и рифовые акулы. Встречи с животными не гарантированы.",depth:'Max 30–35 m',boat:'15'},
  {slug:'velavaru-thila',name:'Velavaru Thila',en:'An underwater pinnacle with a shallow top, overhangs, sandy bottom and a nearby channel.',ru:'Подводная скала с неглубокой вершиной, навесами, песчаным дном и каналом.',depth:'8–40 m',boat:'20'},
  {slug:'bodu-thila',name:'Bodu Thila',en:'A large thila with a sloping reef, overhangs and a smaller deeper pinnacle.',ru:'Большая подводная скала со склоном, навесами и более глубокой небольшой скалой.',depth:'6–35 m',boat:'25'},
  {slug:'udhdhoo-reef',name:'Udhdhoo Reef',en:'',ru:'',depth:'3–35 m',boat:'10'},
