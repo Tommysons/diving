@@ -9,6 +9,13 @@ export default function StoryCarousel({ children, locale, label, resetKey }: {
 }) {
  const items = Children.toArray(children)
  const [index, setIndex] = useState(0)
+ const [visible, setVisible] = useState(1)
+ useEffect(() => {
+  const resize = () => setVisible(window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1)
+  resize()
+  window.addEventListener('resize', resize)
+  return () => window.removeEventListener('resize', resize)
+ }, [])
  const track = useRef<HTMLDivElement>(null)
  const start = useRef<number | null>(null)
  const locked = useRef(false)
@@ -27,7 +34,7 @@ export default function StoryCarousel({ children, locale, label, resetKey }: {
    gsap.fromTo(el, { x: direction * 35, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, onComplete: () => { locked.current = false } })
   } })
  }
- const ordered = items.map((_, i) => items[(i + index) % items.length])
+ const ordered = items.slice(0, visible).map((_, i) => items[(i + index) % items.length])
  const ru = locale === 'ru'
  return <div role='region' aria-label={label} aria-roledescription={ru ? 'карусель' : 'carousel'}>
   <div className='mb-4 flex justify-end gap-2'>
