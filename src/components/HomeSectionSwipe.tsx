@@ -2,51 +2,78 @@
 
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { Observer } from 'gsap/Observer'
 
-gsap.registerPlugin(ScrollToPlugin)
+gsap.registerPlugin(Observer)
 
 export default function HomeSectionSwipe() {
  useEffect(() => {
   const main = document.querySelector<HTMLElement>('[data-home-sections]')
-  if (!main) return
-  const media = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)')
-  let active = false
-  let tween: gsap.core.Tween | null = null
-  let releaseTimer: ReturnType<typeof setTimeout> | undefined
-  const onWheel = (event: WheelEvent) => {
-   if (!media.matches || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || Math.abs(event.deltaY) < 4) return
-   const target = event.target as HTMLElement | null
-   if (target?.closest('input, textarea, select, iframe, [data-native-scroll]')) return
-   const sections = Array.from(main.querySelectorAll<HTMLElement>(':scope > section'))
+  const footer = document.querySelector<HTMLElement>('footer')
+  if (!main || !footer) return
+  const media = gsap.matchMedia()
+  media.add('(min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)', () => {
+   const sections = [...Array.from(main.querySelectorAll<HTMLElement>(':scope > section')), footer]
    if (sections.length < 2) return
-   const direction = event.deltaY > 0 ? 1 : -1
-   const y = window.scrollY
-   const tops = sections.map(el => Math.max(0, el.getBoundingClientRect().top + y - 20))
-   const footerTop = main.getBoundingClientRect().bottom + y
-   if (y > footerTop - 60 || (direction < 0 && y <= tops[0] + 2)) return
-   if (active) { event.preventDefault(); return }
-   const current = sections.findIndex((el, i) => y >= tops[i] - 35 && y < (tops[i + 1] ?? footerTop) - 35)
-   if (current < 0) return
-   const el = sections[current]
-   const top = tops[current]
-   const bottom = el.getBoundingClientRect().bottom + y
-   // Long sections must remain normally scrollable so no content becomes unreachable.
-   if (el.offsetHeight > window.innerHeight - 30 &&
-       (direction > 0 ? y + window.innerHeight < bottom - 30 : y > top + 35)) return
-   const next = current + direction
-   if (next < 0 || next >= sections.length) return
-   event.preventDefault()
-   active = true
-   tween = gsap.to(window, {
-    scrollTo: { y: tops[next], autoKill: true },
-    duration: 0.8, ease: 'power2.inOut',
-    onComplete: () => { releaseTimer = setTimeout(() => { active = false }, 180) },
-    onInterrupt: () => { active = false },
+   let index = 0
+   let animating = false
+   let timeline: gsap.core.Timeline | undefined
+   const originalOverflow = document.body.style.overflow
+   document.body.style.overflow = 'hidden'
+   const header = document.querySelector<HTMLElement>('header')
+   const headerHeight = header?.getBoundingClientRect().height || 0
+   const context = gsap.context(() => {
+    gsap.set(sections, { position: 'fixed', top: headerHeight, left: 0, width: '100%', height: `calc(100dvh - ${headerHeight}px)`, overflowY: 'auto', autoAlpha: 0, zIndex: 1 })
+    gsap.set(sections[0], { autoAlpha: 1, zIndex: 2 })
    })
-  }
-  window.addEventListener('wheel', onWheel, { passive: false })
-  return () => { window.removeEventListener('wheel', onWheel); tween?.kill(); if (releaseTimer) clearTimeout(releaseTimer) }
+   sections.forEach((section, i) => { section.inert = i !== 0 })
+   const go = (direction: number) => {
+    if (animating) return
+    const next = gsap.utils.wrap(0, sections.length, index + direction)
+    const from = sections[index], to = sections[next]
+    animating = true
+    from.inert = true
+    to.inert = false
+    to.scrollTop = 0
+    gsap.set(to, { autoAlpha: 1, zIndex: 3, clipPath: direction > 0 ? 'inset(100% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)' })
+    timeline = gsap.timeline({ defaults: { duration: 1, ease: 'power2.inOut' }, onComplete: () => {
+     gsap.set(from, { autoAlpha: 0, clearProps: 'transform' })
+     gsap.set(to, { zIndex: 2, clearProps: 'clipPath,transform' })
+     animating = false
+    } })
+    timeline.to(from, { yPercent: -direction * 12 }, 0)
+      .to(to, { clipPath: 'inset(0% 0% 0% 0%)' }, 0)
+      .fromTo(to.firstElementChild || to, { y: direction * 45, opacity: 0.75 }, { y: 0, opacity: 1, clearProps: 'transform,opacity' }, 0)
+    index = next
+   }
+   const observer = Observer.create({
+    target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 35, preventDefault: true,
+    ignore: 'header, input, textarea, select, iframe',
+    allowClicks: true,
+    ignoreCheck: (event) => {
+     const panel = sections[index]
+     if (!(event instanceof WheelEvent) && (event.target as Element | null)?.closest('button, a, [role="region"]')) return true
+     if (!(event instanceof WheelEvent)) return panel.scrollHeight > panel.clientHeight + 2
+     return panel.scrollHeight > panel.clientHeight + 2 && (event.deltaY > 0 ? panel.scrollTop + panel.clientHeight < panel.scrollHeight - 2 : panel.scrollTop > 2)
+    },
+    onDown: () => go(-1), onUp: () => go(1),
+   })
+   const onKey = (event: KeyboardEvent) => {
+    if (event.key !== 'PageDown' && event.key !== 'PageUp') return
+    if ((event.target as Element | null)?.closest('input, textarea, select, button, a')) return
+    const panel = sections[index]
+    if (panel.scrollHeight > panel.clientHeight + 2 && (event.key === 'PageDown' ? panel.scrollTop + panel.clientHeight < panel.scrollHeight - 2 : panel.scrollTop > 2)) return
+    event.preventDefault()
+    go(event.key === 'PageDown' ? 1 : -1)
+   }
+   window.addEventListener('keydown', onKey)
+   return () => {
+    window.removeEventListener('keydown', onKey)
+    observer.kill(); timeline?.kill(); sections.forEach(section => { section.inert = false })
+    context.revert(); document.body.style.overflow = originalOverflow
+   }
+  })
+  return () => media.revert()
  }, [])
  return null
 }
