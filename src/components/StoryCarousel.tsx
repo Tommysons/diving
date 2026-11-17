@@ -49,7 +49,7 @@ export default function StoryCarousel({ children, locale, label, resetKey, autoP
  }, [])
  useEffect(() => {
   if (!autoPlay || paused || interacting || !inView || items.length <= visible || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-  const timer = window.setInterval(() => { if (!document.hidden) advance.current() }, 6000)
+  const timer = window.setInterval(() => { if (!document.hidden) advance.current() }, 4000)
   return () => window.clearInterval(timer)
  }, [autoPlay, paused, interacting, inView, items.length, visible])
  const ordered = items.slice(0, visible).map((_, i) => items[(i + index) % items.length])
