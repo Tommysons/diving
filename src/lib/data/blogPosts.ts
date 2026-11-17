@@ -24,6 +24,94 @@ export interface BlogPost {
 // Example blog post data
 export const blogPosts: BlogPost[] = [
   {
+  "title": "Diving in Dhaalu Atoll",
+  "slug": "diving-in-dhaalu-atoll",
+  "excerpt": "Explore Lhohi Caves, Wella Giri and channel diving through my experiences in Dhaalu Atoll.",
+  "image": "/images/generated/maldives-diving-escape.webp",
+  "date": "2026-11-17",
+  "tags": [
+    "Maldives",
+    "scuba diving",
+    "Dhaalu Atoll"
+  ],
+  "content": [
+    {
+      "type": "paragraph",
+      "value": "Dhaalu Atoll, also known as South Nilandhe Atoll, offers a mix of reef overhangs, coral-covered pinnacles and channel dives. I have enjoyed exploring these dive sites, and every visit seems to bring a different encounter."
+    },
+    {
+      "type": "heading",
+      "value": "Getting to Dhaalu Atoll",
+      "level": 2
+    },
+    {
+      "type": "paragraph",
+      "value": "Depending on where you are staying, you may reach Dhaalu Atoll by seaplane from Malé’s Velana International Airport. Flights can take around 30–40 minutes, and some journeys may also include a speedboat transfer. Routes and travel times vary, so check the details with your accommodation."
+    },
+    {
+      "type": "heading",
+      "value": "Lhohi Caves: Exploring the Overhangs",
+      "level": 2
+    },
+    {
+      "type": "paragraph",
+      "value": "Lhohi Caves has plenty of overhangs, from around 7 to 20 metres, while the reef can descend to approximately 30 metres. I like to call the overhangs mini caves: look carefully and you may find marine life sheltering beneath the reef."
+    },
+    {
+      "type": "heading",
+      "value": "Wella Giri: A Pinnacle Full of Life",
+      "level": 2
+    },
+    {
+      "type": "paragraph",
+      "value": "Wella Giri is a coral-rich underwater pinnacle with a variety of marine life. It can be enjoyed by divers at different experience levels when conditions and the dive plan are suitable."
+    },
+    {
+      "type": "paragraph",
+      "value": "On one dive I encountered an eagle ray, a whitetip reef shark and four moray eels. One of the morays almost bit me—a reminder to look carefully where you swim and be aware of the animals around you. Give marine life space, and keep your hands clear of holes and crevices."
+    },
+    {
+      "type": "paragraph",
+      "value": "I also saw a pufferfish and many other reef fish. One thing to remember at a pinnacle is that the current can feel different as you move around it: even if you start with the current behind you, it may be against you on another side. Follow your guide and choose a route suited to the conditions."
+    },
+    {
+      "type": "heading",
+      "value": "Velavaru Tongue: Drifting in the Channel",
+      "level": 2
+    },
+    {
+      "type": "paragraph",
+      "value": "For those who enjoy drift diving, Velavaru Tongue is a channel dive worth exploring when conditions are suitable. I have dived there twice, although I have not yet had the chance to capture footage of the site."
+    },
+    {
+      "type": "paragraph",
+      "value": "You may encounter reef sharks, stingrays, eagle rays and other marine life in the channel, but sightings are never guaranteed. Currents can be strong, so discuss the conditions and required experience with your dive centre before choosing this dive."
+    },
+    {
+      "type": "heading",
+      "value": "A Wreck Still to Explore",
+      "level": 2
+    },
+    {
+      "type": "paragraph",
+      "value": "I have also heard that there is a wreck in Dhaalu Atoll, but I haven’t LokaWndred it yet. That gives me another reason to keep exploring!"
+    },
+    {
+      "type": "heading",
+      "value": "Never Try, Never Know",
+      "level": 2
+    },
+    {
+      "type": "paragraph",
+      "value": "If you are planning a diving trip to Dhaalu Atoll, I recommend giving its dive sites a try. From overhangs and colourful pinnacles to channel dives, there is plenty to discover—always within your training and experience, with a plan suited to the day’s conditions."
+    },
+    {
+      "type": "quote",
+      "value": "Never try, never know!"
+    }
+  ]
+},
+  {
     "title": "The Maldives: My Favourite Place to Dive and Escape",
     "slug": "maldives-favourite-place-to-dive-and-escape",
     "excerpt": "From manta rays and drift dives to local customs and island stays: discover why the Maldives is my favourite place to dive and escape.",
