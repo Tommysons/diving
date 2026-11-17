@@ -27,7 +27,7 @@ export const blogPosts: BlogPost[] = [
   "title": "Diving in Dhaalu Atoll",
   "slug": "diving-in-dhaalu-atoll",
   "excerpt": "Explore Lhohi Caves, Wella Giri and channel diving through my experiences in Dhaalu Atoll.",
-  "image": "/images/generated/maldives-diving-escape.webp",
+  "image": "/images/generated/dhaalu-atoll-blog.webp",
   "date": "2026-11-17",
   "tags": [
     "Maldives",
@@ -55,7 +55,7 @@ export const blogPosts: BlogPost[] = [
     },
     {
       "type": "paragraph",
-      "value": "Lhohi Caves has plenty of overhangs, from around 7 to 20 metres, while the reef can descend to approximately 30 metres. I like to call the overhangs mini caves: look carefully and you may find marine life sheltering beneath the reef."
+      "value": "Lhohi Caves has plenty of overhangs, from around 7 to 20 metres, while the reef ranges from approximately 5 to 30 metres. I like to call the overhangs mini caves: look carefully and you may find marine life sheltering beneath the reef."
     },
     {
       "type": "heading",
