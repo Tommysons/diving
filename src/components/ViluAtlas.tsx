@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { UdhdhooCover, UdhdhooGallery } from '@/components/UdhdhooGallery'
 import { maldivesGuideSites } from '@/lib/data/maldivesGuides'
 export const maldivesSites = [
- ['Vilu House Reef',77,39],['Alika Reef',51,39],['Stephen Thila',72,54],['Udhdhoo Reef',65,51],['Velavaru Thila',78,54],['Velavaru Kandu',81,43],['Kermitt Corner',85,65],['Thibisa Far Garden',27,43],['Wella Giri',75,57],['Dhara Wall',44,26],['Velavau Tongue',83,47],['Napoleon Reef',74,44],['Extasy Deep',72,38],['Meedhoo Out',79,41],['Magoodhoo Reef',60,26],['Loricanto Terrace',84,74],['Octopus Lover',63,38],['Lhohi Caves',63,54],['Bandidhoo Giri',77,63],['Bodu Thila',72,61],['Hulhuveli Kandu',83,79],['Madivaru Express',83,85],['Yuki Reef',68,52],['Hulhudheli Kandu',19,79],['Coral Garden',84,49],['Azmee Corner',74,48],['Anemone City',42,47],['Eves Thila',39,49],['Manta Point',13,12],['Beru Thila',84,52],
+ ['Vilu House Reef',77,39],['Alika Reef',51,39],['Stephen Thila',72,54],['Udhdhoo Reef',65,51],['Velavaru Thila',78,54],['Velavaru Kandu',81,43],['Kermitt Corner',85,65],['Thibisa Far Garden',27,43],['Wella Giri',75,57],['Dhara Wall',44,26],['Velavaru Tongue',83,47],['Napoleon Reef',74,44],['Extasy Deep',72,38],['Meedhoo Out',79,41],['Magoodhoo Reef',60,26],['Loricanto Terrace',84,74],['Octopus Lover',63,38],['Lhohi Caves',63,54],['Bandidhoo Giri',77,63],['Bodu Thila',72,61],['Hulhuveli Kandu',83,79],['Madivaru Express',83,85],['Yuki Reef',68,52],['Hulhudheli Kandu',19,79],['Coral Garden',84,49],['Azmee Corner',74,48],['Anemone City',42,47],['Eves Thila',39,49],['Manta Point',13,12],['Beru Thila',84,52],
 ] as const
 const sites = maldivesSites
 export const maldivesDetails: Record<string,{en:string;ru:string;depth:string}> = {
