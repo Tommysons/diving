@@ -2,10 +2,10 @@ import { Play } from 'lucide-react'
 
 export type LokaVideo = { id: string; title: string; category?: string }
 export const maldivesVideos: LokaVideo[] = [
+ { id:'qMadZd0RqRs', title:'Dolphins, a Reef Shark & a Turtle | A Maldives Dive to Remember' },
+ { id:'A83GuC7Rry4', title:'Diving in Dhaalu atoll Maldives' },
  { id:'ZnC4xG3lMlk', title:'Swimming With Mantas & a Whale Shark | Maldives' },
  { id:'v5j3utsgwOo', title:'Snorkeling in the Azmee Corner' },
- { id:'li5cLk8_I8s', title:'Manta snorkeling' },
- { id:'Q-r-b5iU8Jk', title:'My first freedive in Maldives' },
  { id:'qjmaeHgSXAE', title:'Captured the ocean through my eyes' },
 ]
 export const thailandVideos: LokaVideo[] = [
