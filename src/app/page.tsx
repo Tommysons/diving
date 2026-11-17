@@ -9,6 +9,7 @@ import { HomeMotion, UnderwaterParticles } from '@/components/HomeMotion'
 import Footer from '@/components/Footer'
 import StoryCarousel from '@/components/StoryCarousel'
 import HeroSlider from '@/components/HeroSlider'
+import HomeSectionSwipe from '@/components/HomeSectionSwipe'
 import { DivingTankIcon, SnorkelMaskIcon } from '@/components/ActivityIcons'
 import { blogPosts } from '@/lib/data/blogPosts'
 import { blogPostsRU } from '@/lib/data/blogPostsRU'
@@ -41,7 +42,7 @@ export default function HomePage() {
  ]
  const tabs=[{id:'all',label:t.all},{id:'diving',label:t.diving},{id:'snorkeling',label:t.snorkel}]
  const posts=[...(ru?blogPostsRU:blogPosts)].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,9)
- return <><HomeMotion/><Header/><main className='bg-[#06283a] text-white'>
+ return <><HomeMotion/><HomeSectionSwipe/><Header/><main data-home-sections className='bg-[#06283a] text-white'>
   <section className='relative isolate overflow-hidden'>
    <HeroSlider locale={ru?'ru':'en'}/>
    <div className='ocean-motion-layer ocean-motion-layer--home' aria-hidden='true'><div className='ocean-motion-light'/><div className='ocean-motion-bubbles'><i/><i/><i/><i/><i/><i/></div></div><UnderwaterParticles/><div className='pointer-events-none relative z-[2] mx-auto flex min-h-[460px] max-w-[1480px] items-center px-6 py-16 md:min-h-[540px] md:px-10'>
