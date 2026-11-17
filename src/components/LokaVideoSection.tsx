@@ -1,4 +1,5 @@
 import { Play } from 'lucide-react'
+import StoryCarousel from '@/components/StoryCarousel'
 
 export type LokaVideo = { id: string; title: string; category?: string }
 export const maldivesVideos: LokaVideo[] = [
@@ -31,11 +32,11 @@ export default function LokaVideoSection({locale,videos,title}:{locale:'en'|'ru'
  <div><p className='mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[.2em] text-cyan-300'><Play size={15}/> LokaWndr · YouTube</p><h2 className='text-3xl font-extrabold text-white'>{title || (ru?'Видео из наших приключений':'Watch Our Ocean Adventures')}</h2></div>
  <a href='https://www.youtube.com/@lokawndr' target='_blank' rel='noopener noreferrer' className='rounded-xl border border-white/30 px-4 py-3 text-sm font-semibold text-white hover:bg-white/10'>{ru?'Все видео на YouTube':'See all on YouTube'} ↗</a>
  </div>
- <div className='grid gap-6 md:grid-cols-2 xl:grid-cols-3'>
+ <StoryCarousel locale={locale} label={title || (ru?'Видео LokaWndr':'LokaWndr videos')}>
  {videos.map(video=><article key={video.id} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.07]'>
  <div className='aspect-video bg-[#031727]'><iframe loading='lazy' className='h-full w-full' src={`https://www.youtube-nocookie.com/embed/${video.id}`} title={video.title} allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerPolicy='strict-origin-when-cross-origin' allowFullScreen/></div>
  <div className='p-4'><h3 className='font-bold leading-6 text-white'>{video.title}</h3></div>
  </article>)}
- </div>
+ </StoryCarousel>
  </section>
 }
