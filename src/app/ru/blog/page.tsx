@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { blogPostsRU } from '@/lib/data/blogPostsRU'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import StoryCarousel from '@/components/StoryCarousel'
 
 export default function BlogPageRU() {
   return (
@@ -24,7 +25,7 @@ export default function BlogPageRU() {
         </div>
 
         {/* Blog Grid */}
-        <div className='mx-auto grid max-w-[1480px] grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3'>
+        <div className='mx-auto max-w-[1480px]'><StoryCarousel locale='ru' label='Статьи блога'>
           {blogPostsRU.map((post) => (
             <motion.div
               key={post.slug}
@@ -57,7 +58,7 @@ export default function BlogPageRU() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </StoryCarousel></div>
       </main>
 
       <Footer />
