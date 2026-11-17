@@ -12,7 +12,8 @@ import { blogPosts } from '@/lib/data/blogPosts'
 import { blogPostsRU } from '@/lib/data/blogPostsRU'
 
 const stories = [
- { title:'My workday', type:'all-only', id:'iizHruVhvtU' },
+ { title:'Dolphins, a Reef Shark & a Turtle | A Maldives Dive to Remember', type:'diving', id:'qMadZd0RqRs' },
+ { title:'Diving in Dhaalu atoll Maldives', type:'diving', id:'A83GuC7Rry4' },
  { title:'Swimming With Mantas & a Whale Shark | Maldives', type:'snorkeling', id:'ZnC4xG3lMlk' },
  { title:'Snorkeling in the Azmee Corner', type:'snorkeling', id:'v5j3utsgwOo' },
  { title:'Wondering in Chumphon Pinnacle', type:'diving', id:'8qt0x0oU4hw' },
