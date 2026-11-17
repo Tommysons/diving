@@ -48,15 +48,27 @@ export default function HomeSectionSwipe() {
    }
    const observer = Observer.create({
     target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 35, preventDefault: true,
-    ignore: 'header, button, a, input, textarea, select, iframe, [role="carousel"]',
+    ignore: 'header, input, textarea, select, iframe',
+    allowClicks: true,
     ignoreCheck: (event) => {
      const panel = sections[index]
+     if (!(event instanceof WheelEvent) && (event.target as Element | null)?.closest('button, a, [role="region"]')) return true
      if (!(event instanceof WheelEvent)) return panel.scrollHeight > panel.clientHeight + 2
      return panel.scrollHeight > panel.clientHeight + 2 && (event.deltaY > 0 ? panel.scrollTop + panel.clientHeight < panel.scrollHeight - 2 : panel.scrollTop > 2)
     },
     onDown: () => go(-1), onUp: () => go(1),
    })
+   const onKey = (event: KeyboardEvent) => {
+    if (event.key !== 'PageDown' && event.key !== 'PageUp') return
+    if ((event.target as Element | null)?.closest('input, textarea, select, button, a')) return
+    const panel = sections[index]
+    if (panel.scrollHeight > panel.clientHeight + 2 && (event.key === 'PageDown' ? panel.scrollTop + panel.clientHeight < panel.scrollHeight - 2 : panel.scrollTop > 2)) return
+    event.preventDefault()
+    go(event.key === 'PageDown' ? 1 : -1)
+   }
+   window.addEventListener('keydown', onKey)
    return () => {
+    window.removeEventListener('keydown', onKey)
     observer.kill(); timeline?.kill(); sections.forEach(section => { section.inert = false })
     context.revert(); document.body.style.overflow = originalOverflow
    }
