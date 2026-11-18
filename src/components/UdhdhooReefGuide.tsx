@@ -42,6 +42,13 @@ export default function UdhdhooReefGuide({ locale }: { locale: 'en' | 'ru' }) {
           {[[t.depth, ru?'3–35 м':'3–35 m'],[t.current,t.currentValue],[t.visibility,ru?'10–15+ м':'10–15+ m'],[t.boat,t.boatValue]].map(([label,value])=><div key={label}><dt className='text-sm text-cyan-100/80'>{label}</dt><dd className='mt-1 font-semibold'>{value}</dd></div>)}
         </dl><p className='mt-7 text-sm leading-6 text-slate-300'>{t.note}</p></section>
       </div>
+      <section className='mt-12 rounded-3xl border border-white/15 bg-white/[.06] p-6 md:p-8'><h2 className='text-2xl font-bold'>{ru?'Вопросы о погружении':'Dive planning questions'}</h2><div className='mt-6 space-y-6'>{(ru ? [
+        ['Какие условия на Udhdhoo Reef?','В гиде указаны глубина дна 3–35 м, слабое или умеренное течение и видимость 10–15+ м. Условия меняются; уточняйте их перед погружением.'],
+        ['Каких морских обитателей можно увидеть?','На коралловом рифе встречаются стаи фузилёров, мелкие рифовые рыбы, мурены и лобстеры. Иногда можно увидеть белопёрых рифовых акул; встречи не гарантированы.']
+      ] : [
+        ['What are the conditions at Udhdhoo Reef?','The guide lists a charted seabed depth of 3–35 m, low to moderate current and visibility of 10–15+ m. Conditions vary, so confirm them before diving.'],
+        ['What marine life might I see?','Look for schools of fusiliers, small reef fish, moray eels and lobsters among the coral. Whitetip reef sharks are occasional visitors; sightings are never guaranteed.']
+      ]).map(([question,answer])=><div key={question}><h3 className='text-lg font-semibold text-cyan-100'>{question}</h3><p className='mt-2 leading-7 text-slate-200'>{answer}</p></div>)}</div></section>
       <section className='mt-14'><h2 className='text-3xl font-bold'>{t.photos}</h2><p className='mt-3 text-slate-300'>{t.photoText}</p><div className='mt-5'><UdhdhooGallery locale={locale}/></div></section>
       <DiveGuideNavigation locale={locale} previous={neighbors.previous} next={neighbors.next}/>
       <section className='mt-14 rounded-3xl border border-white/15 bg-[#0a3c50] p-7 md:p-10'><h2 className='text-2xl font-bold'>{t.next}</h2><p className='mt-3 max-w-2xl leading-7 text-slate-200'>{t.nextText}</p><div className='mt-6 flex flex-wrap gap-3'><Link href={`${base}/destinations/maldives#vilu-sites`} className='inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-[#062536]'>{t.map}<ArrowRight size={16}/></Link><Link href={`${base}/contact`} className='inline-flex min-h-11 items-center rounded-xl border border-white/50 px-5 py-3 font-bold'>{t.contact}</Link></div></section>
