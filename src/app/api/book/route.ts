@@ -47,11 +47,16 @@ export async function POST(req: NextRequest) {
 
     // Check for conflicts (2-hour sessions)
     const bookingStart = new Date(`${date}T${time}:00`)
+    if (Number.isNaN(bookingStart.getTime()) || bookingStart.toISOString().slice(0, 10) !== date) {
+      return NextResponse.json({ error: 'Invalid booking date' }, { status: 400 })
+    }
     const bookingEnd = new Date(bookingStart)
     bookingEnd.setHours(bookingEnd.getHours() + 2)
 
+    // Pending enquiries do not reserve availability; check approved bookings for this activity only.
+    const activityField = type === 'dive_trip' ? 'site' : 'course'
     const existingBookings = await collection
-      .find({ date, status: { $ne: 'cancelled' } })
+      .find({ date, status: 'approved', [activityField]: activity })
       .toArray()
 
     const conflict = existingBookings.find((b) => {
@@ -66,7 +71,7 @@ export async function POST(req: NextRequest) {
     })
 
     if (conflict) {
-      console.warn('Conflict detected with:', conflict)
+      console.warn('Approved booking conflict detected')
       return NextResponse.json(
         { error: 'This time slot is already booked' },
         { status: 400 }
