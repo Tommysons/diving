@@ -15,6 +15,7 @@ export default function ContactPageRu() {
   })
   const [status, setStatus] = useState('')
   const [errors, setErrors] = useState<string[]>([])
+  const [sending, setSending] = useState(false)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -35,6 +36,7 @@ export default function ContactPageRu() {
     }
     setErrors([])
 
+    setSending(true)
     setStatus('Отправка...')
     try {
       const res = await fetch('/api/contact', {
@@ -44,8 +46,9 @@ export default function ContactPageRu() {
       })
 
       if (res.ok) {
+        const result = await res.json()
         setStatus(
-          'Сообщение успешно отправлено! Проверьте почту для подтверждения.',
+          result.confirmationSent ? 'Сообщение отправлено! Подтверждение отправлено на почту.' : 'Сообщение отправлено! Подтверждение по почте пока недоступно.',
         )
         setForm({ name: '', email: '', subject: '', message: '' })
       } else {
@@ -56,6 +59,8 @@ export default function ContactPageRu() {
       }
     } catch {
       setStatus('Ошибка при отправке сообщения.')
+    } finally {
+      setSending(false)
     }
   }
 
@@ -139,10 +144,11 @@ export default function ContactPageRu() {
             </div>
 
             <button
+              disabled={sending}
               type='submit'
               className='w-full py-3 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white active:scale-95 transition'
             >
-              {status || 'Отправить сообщение'}
+              {sending ? 'Отправка...' : 'Отправить сообщение'}
             </button>
 
             {status && (
