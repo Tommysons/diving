@@ -42,7 +42,7 @@ export default function HomePage() {
  const posts=[...(ru?blogPostsRU:blogPosts)].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,9)
  return <><HomeMotion/><Header/><main className='bg-[#06283a] text-white'>
   <section className='relative isolate overflow-hidden'>
-   <div className='absolute inset-0'><Image src='/images/generated/maldives-diving.webp' alt='' fill priority fetchPriority='high' sizes='100vw' className='object-cover'/><div className='absolute inset-0 bg-gradient-to-r from-[#032538]/95 via-[#034461]/65 to-[#032538]/10'/><div className='absolute inset-0 bg-gradient-to-t from-[#022335]/80 via-transparent to-transparent'/></div>
+   <div className='absolute inset-0'><Image src='/images/generated/maldives-diving.webp' alt='' fill priority fetchPriority='high' quality={60} sizes='100vw' className='object-cover'/><div className='absolute inset-0 bg-gradient-to-r from-[#032538]/95 via-[#034461]/65 to-[#032538]/10'/><div className='absolute inset-0 bg-gradient-to-t from-[#022335]/80 via-transparent to-transparent'/></div>
    <div className='ocean-motion-layer ocean-motion-layer--home' aria-hidden='true'><div className='ocean-motion-light'/><div className='ocean-motion-bubbles'><i/><i/><i/><i/><i/><i/></div></div><UnderwaterParticles/><div className='pointer-events-none relative z-[2] mx-auto flex min-h-[460px] max-w-[1480px] items-center px-6 py-16 md:min-h-[540px] md:px-10'>
     <div className='max-w-[710px]'>
      <p data-hero-motion className='mb-4 text-xs font-bold tracking-[.25em]'>{t.eyebrow}</p>
