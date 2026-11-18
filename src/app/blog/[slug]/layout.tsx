@@ -19,6 +19,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function BlogPostLayout({ children }: Props) {
-  return children
+export default async function BlogPostLayout({ children, params }: Props) {
+  const { slug } = await params
+  const post = blogPosts.find((item) => item.slug === slug)
+  if (!post) return children
+  const url = `https://lokawndr.com/blog/${post.slug}`
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    inLanguage: 'en',
+    image: `https://lokawndr.com${post.image}`,
+    mainEntityOfPage: url,
+    author: { '@type': 'Organization', name: 'LokaWndr' },
+    publisher: { '@type': 'Organization', name: 'LokaWndr', url: 'https://lokawndr.com' },
+  }
+  return <>
+    <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
+    {children}
+  </>
 }
