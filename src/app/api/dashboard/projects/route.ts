@@ -1,134 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb'
-import { currentUser } from '@clerk/nextjs/server'
 import { ObjectId } from 'mongodb'
+import { bookingDb, collections, notifyBooking, requireAdmin } from '@/lib/adminBookings'
 
-const projectCollections: Record<string, string> = {
-  scuba: 'scuba_bookings',
-  freediving: 'freediving_bookings',
-  dive_trips: 'dive_trips',
-  digital_art: 'bookings',
+export const dynamic = 'force-dynamic'
+const statuses = ['pending', 'approved', 'cancelled'] as const
+function validDate(s: unknown) { return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s + 'T00:00:00Z')) && new Date(s + 'T00:00:00Z').toISOString().slice(0, 10) === s }
+function validTime(s: unknown) { return typeof s === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(s) }
+async function conflict(db: Awaited<ReturnType<typeof bookingDb>>, collection: string, original: Record<string, any>, date: string, time: string, id: ObjectId) {
+  const activityField = collection === 'dive_trips' ? 'site' : 'course'
+  const other = await db.collection(collection).find({ _id: { $ne: id }, date, status: 'approved', [activityField]: original[activityField] }).toArray()
+  const start = Date.parse(date + 'T' + time + ':00Z')
+  return other.some(b => Math.abs(Date.parse(date + 'T' + b.time + ':00Z') - start) < 2 * 60 * 60 * 1000)
 }
-
-function isAdminUser(user: any) {
-  const email = user?.emailAddresses?.[0]?.emailAddress
-  return email === process.env.ADMIN_EMAIL
-}
-
 export async function GET() {
+  if (!await requireAdmin()) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   try {
-    const user = await currentUser()
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    if (!isAdminUser(user)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
-
-    let results: any[] = []
-
-    for (const [project, collection] of Object.entries(projectCollections)) {
-      const items = await db
-        .collection(collection)
-        .find({})
-        .sort({ createdAt: -1 })
-        .toArray()
-
-      const tagged = items.map((item) => ({
-        ...item,
-        project,
-      }))
-
-      results = results.concat(tagged)
-    }
-
-    results.sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
-
-    return NextResponse.json(results)
-  } catch (err) {
-    console.error('Dashboard GET error:', err)
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
-  }
+    const db = await bookingDb()
+    const groups = await Promise.all(Object.entries(collections).map(async ([project, collection]) => {
+      const rows = await db.collection(collection).find({ status: { $ne: 'deleted' } }).sort({ createdAt: -1 }).limit(300).toArray()
+      return rows.map(b => ({ ...b, _id: b._id.toHexString(), project }))
+    }))
+    return NextResponse.json(groups.flat().sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()), { headers: { 'Cache-Control': 'no-store' } })
+  } catch (error) { console.error('Booking list error', error); return NextResponse.json({ error: 'Unable to load bookings' }, { status: 500 }) }
 }
-
-export async function PUT(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
+  if (!await requireAdmin()) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   try {
-    const user = await currentUser()
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    if (!isAdminUser(user)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
     const body = await req.json()
-    const { id, status, project } = body
-
-    if (!id || !project) {
-      return NextResponse.json({ error: 'Missing data' }, { status: 400 })
-    }
-
-    const collection = projectCollections[project]
-    if (!collection) {
-      return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
-    }
-
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
-
-    await db
-      .collection(collection)
-      .updateOne({ _id: new ObjectId(id) }, { $set: { status } })
-
-    return NextResponse.json({ success: true })
-  } catch (err) {
-    console.error('Dashboard PUT error:', err)
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
-  }
+    const { project, id, date, time, status } = body
+    const collection = collections[project]
+    if (!collection || !ObjectId.isValid(id || '') || !validDate(date) || !validTime(time) || !statuses.includes(status)) return NextResponse.json({ error: 'Invalid booking update' }, { status: 400 })
+    const db = await bookingDb()
+    const _id = new ObjectId(id)
+    const existing = await db.collection(collection).findOne({ _id, status: { $ne: 'deleted' } })
+    if (!existing) return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
+    if (status === 'approved' && await conflict(db, collection, existing, date, time, _id)) return NextResponse.json({ error: 'Conflicting confirmed booking in this two-hour time slot' }, { status: 409 })
+    if (existing.date === date && existing.time === time && (existing.status || 'pending') === status) return NextResponse.json({ success: true, unchanged: true })
+    const result = await db.collection(collection).updateOne({ _id, status: existing.status }, { $set: { date, time, status, updatedAt: new Date() } })
+    if (!result.matchedCount) return NextResponse.json({ error: 'Booking changed; reload and try again' }, { status: 409 })
+    const action = status === 'cancelled' ? 'cancelled' : status === 'approved' && existing.status !== 'approved' ? 'approved' : 'updated'
+    const notifications = await notifyBooking({ ...existing, date, time, status }, action, existing)
+    return NextResponse.json({ success: true, notifications })
+  } catch (error) { console.error('Booking update error', error); return NextResponse.json({ error: 'Unable to update booking' }, { status: 500 }) }
 }
-
 export async function DELETE(req: NextRequest) {
+  if (!await requireAdmin()) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   try {
-    const user = await currentUser()
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    if (!isAdminUser(user)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
-    const { searchParams } = new URL(req.url)
-    const id = searchParams.get('id')
-    const project = searchParams.get('project')
-
-    if (!id || !project) {
-      return NextResponse.json({ error: 'Missing data' }, { status: 400 })
-    }
-
-    const collection = projectCollections[project]
-    if (!collection) {
-      return NextResponse.json({ error: 'Invalid project' }, { status: 400 })
-    }
-
-    const client = await clientPromise
-    const db = client.db(process.env.MONGODB_DB)
-
-    await db.collection(collection).deleteOne({
-      _id: new ObjectId(id),
-    })
-
-    return NextResponse.json({ success: true })
-  } catch (err) {
-    console.error('Dashboard DELETE error:', err)
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
-  }
+    const { project, id } = await req.json()
+    const collection = collections[project]
+    if (!collection || !ObjectId.isValid(id || '')) return NextResponse.json({ error: 'Invalid booking' }, { status: 400 })
+    const db = await bookingDb()
+    const _id = new ObjectId(id)
+    const booking = await db.collection(collection).findOneAndUpdate({ _id, status: { $ne: 'deleted' } }, { $set: { status: 'deleted', deletedAt: new Date() } }, { returnDocument: 'before' })
+    if (!booking) return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
+    const notifications = await notifyBooking({ ...booking, status: 'deleted' }, 'deleted', booking)
+    return NextResponse.json({ success: true, notifications })
+  } catch (error) { console.error('Booking deletion error', error); return NextResponse.json({ error: 'Unable to delete booking' }, { status: 500 }) }
 }
