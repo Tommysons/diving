@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Waves, Fish, Play, ArrowRight } from 'lucide-react'
 import Header from '@/components/Header'
-import { HomeMotion, UnderwaterParticles } from '@/components/HomeMotion'
+import { HomeMotion } from '@/components/HomeMotion'
 import Footer from '@/components/Footer'
 import VisionCinema from '@/components/VisionCinema'
 import StoryCarousel from '@/components/StoryCarousel'
@@ -42,22 +42,11 @@ export default function HomePage() {
  const tabs=[{id:'all',label:t.all},{id:'diving',label:t.diving},{id:'snorkeling',label:t.snorkel}]
  const posts=[...(ru?blogPostsRU:blogPosts)].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,9)
  return <><HomeMotion/><Header/><main className='bg-[#06283a] text-white'>
-  <section className='relative isolate overflow-hidden'>
-   <div className='absolute inset-0'><Image src='/images/generated/maldives-diving.webp' alt='' fill priority fetchPriority='high' quality={60} sizes='100vw' className='object-cover'/><div className='absolute inset-0 bg-gradient-to-r from-[#032538]/95 via-[#034461]/65 to-[#032538]/10'/><div className='absolute inset-0 bg-gradient-to-t from-[#022335]/80 via-transparent to-transparent'/></div>
-   <div className='ocean-motion-layer ocean-motion-layer--home' aria-hidden='true'><div className='ocean-motion-light'/><div className='ocean-motion-bubbles'><i/><i/><i/><i/><i/><i/></div></div><UnderwaterParticles/><div className='pointer-events-none relative z-[2] mx-auto flex min-h-[460px] max-w-[1480px] items-center px-6 py-16 md:min-h-[540px] md:px-10'>
-    <div className='max-w-[710px]'>
-     <p data-hero-motion className='mb-4 text-xs font-bold tracking-[.25em]'>{t.eyebrow}</p>
-     <h1 data-hero-motion className='text-4xl font-extrabold leading-[1.09] tracking-tight md:text-6xl'>{t.title}</h1>
-     <p data-hero-motion className='mt-5 max-w-xl text-lg leading-snug text-white/95 md:text-xl'>{t.subtitle}</p>
-     <div data-hero-motion className='pointer-events-auto mt-7 flex flex-wrap gap-3'><Link href={base+'/atlas'} className='rounded-xl bg-white px-7 py-3.5 font-bold text-[#062536] hover:bg-cyan-100'>{t.plan}</Link><Link href='https://www.youtube.com/@lokawndr' target='_blank' rel='noopener noreferrer' className='inline-flex items-center gap-2 rounded-xl border border-white px-6 py-3.5 font-semibold hover:bg-white/15'><Play size={18}/>{t.watch}</Link></div>
-    </div>
-   </div>
-   <div className='relative border-t border-white/15 bg-[#062b3c]/65 backdrop-blur-sm'><div className='mx-auto grid max-w-[1480px] gap-5 px-6 py-5 md:grid-cols-2 md:px-10'>
+  <VisionCinema locale={ru?'ru':'en'}/>
+  <div className='border-b border-white/15 bg-[#062b3c]'><div className='mx-auto grid max-w-[1480px] gap-5 px-6 py-5 md:grid-cols-2 md:px-10'>
     <Link href={base+'/scubadivingcourses'} className='ocean-motion-activity flex items-center gap-4'><DivingTankIcon/><span><strong className='block text-lg'>{t.diving}</strong><small className='text-white/85'>{t.diveInfo}</small></span></Link>
     <Link href={base+'/snorkeling'} className='ocean-motion-activity flex items-center gap-4'><SnorkelMaskIcon/><span><strong className='block text-lg'>{t.snorkel}</strong><small className='text-white/85'>{t.snorkelInfo}</small></span></Link>
    </div></div>
-  </section>
-  <VisionCinema locale={ru?'ru':'en'}/>
   <section data-reveal className='mx-auto max-w-[1480px] px-6 pb-8 pt-10 md:px-10'>
    <div className='mb-5 flex flex-wrap items-end justify-between gap-3'><h2 className='text-3xl font-extrabold tracking-tight md:text-4xl'>{t.destinations}</h2><p className='max-w-xl text-sm text-slate-200'>{t.destInfo}</p></div>
    <div className='grid gap-5 md:grid-cols-2'>{destinations.map(d=><Link href={d.href} key={d.id} data-card-motion className='ocean-motion-card group relative isolate flex min-h-[260px] flex-col justify-end overflow-hidden rounded-2xl border border-white/60 p-7 md:min-h-[300px] md:p-9'>
