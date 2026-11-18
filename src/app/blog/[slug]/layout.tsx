@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { blogPosts } from '@/lib/data/blogPosts'
 
