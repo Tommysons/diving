@@ -9,6 +9,7 @@ const staticPaths = ['', '/activities', '/diving', '/fun-diving', '/destinations
 export default function sitemap(): MetadataRoute.Sitemap {
   const localized = staticPaths.flatMap((path) => [path, `/ru${path}`])
   const contentPaths = [
+    ...['yuki-reef', 'wella-giri', 'lhohi-caves'].flatMap((slug) => [`/destinations/maldives/${slug}`, `/ru/destinations/maldives/${slug}`]),
     ...diveSites.flatMap((site) => [`/divesites/${site.slug}`, `/ru/divesites/${site.slug}`]),
     ...[...scubaCourses, ...specialtyCourses].flatMap((course) => [`/scubadivingcourses/${course.slug}`, `/ru/scubadivingcourses/${course.slug}`]),
     ...blogPosts.flatMap((post) => [`/blog/${post.slug}`, `/ru/blog/${post.slug}`]),
