@@ -20,6 +20,6 @@ export default function OceanPageAccent() {
     <Image src={page.image} alt='' fill priority sizes='100vw' className='-z-20 object-cover'/>
     <div className='absolute inset-0 -z-10 bg-gradient-to-r from-[#021d30]/95 via-[#03273a]/75 to-[#03273a]/25'/>
     <div className='ocean-motion-layer' aria-hidden='true'><div className='ocean-motion-light'/><div className='ocean-motion-bubbles'><i/><i/><i/><i/><i/><i/></div></div>
-    <div className='relative z-[2] mx-auto w-full max-w-[1480px] px-6 py-16 md:px-10'><p className='text-xs font-bold tracking-[.24em] text-cyan-200'>LOKAWNDR · {ru?'ИССЛЕДУЙТЕ ОКЕАН':'EXPLORE THE OCEAN'}</p><p className='mt-4 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-white md:text-6xl'>{ru?page.ru:page.en}</p><p className='mt-5 max-w-xl text-lg leading-8 text-slate-100'>{ru?page.ruSub:page.enSub}</p><p className='mt-5 text-xs text-white/75'>{ru?'Иллюстрация, созданная с помощью ИИ':'AI-generated illustration'}</p></div>
+    <div className='relative z-[2] mx-auto w-full max-w-[1480px] px-6 py-16 md:px-10'><p className='text-xs font-bold tracking-[.24em] text-cyan-200'>LOKAWNDR · {ru?'ИССЛЕДУЙТЕ ОКЕАН':'EXPLORE THE OCEAN'}</p><p className='mt-4 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-white md:text-6xl'>{ru?page.ru:page.en}</p><p className='mt-5 max-w-xl text-lg leading-8 text-slate-100'>{ru?page.ruSub:page.enSub}</p></div>
   </div>
 }
