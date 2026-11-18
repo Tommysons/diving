@@ -51,14 +51,14 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}) {
    cardLayers.current.forEach((card,i)=>{
     if(!card)return
     const distance=(i-index+slides.length)%slides.length
-    gsap.to(card,{x:distance*18,y:-distance*10,rotation:distance*2,scale:1-distance*.045,zIndex:slides.length-distance,duration:.75,ease:'power3.inOut',overwrite:true})
+    gsap.to(card,{x:distance*58,y:-distance*12,rotation:distance*5,scale:1-distance*.045,zIndex:slides.length-distance,duration:.75,ease:'power3.inOut',overwrite:true})
    })
   })
   return()=>{canceled=true}
  },[index,reduced])
  useEffect(()=>{
   if(paused||hovered||!visible||reduced)return
-  const timer=window.setInterval(()=>{if(!document.hidden)setIndex(i=>(i+1)%slides.length)},5000)
+  const timer=window.setInterval(()=>{if(!document.hidden)setIndex(i=>(i+1)%slides.length)},4000)
   return()=>window.clearInterval(timer)
  },[paused,hovered,visible,reduced])
  const current=slides[index]
@@ -74,15 +74,15 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}) {
      <p className='text-xs font-bold tracking-[.25em] text-cyan-200'>LOKAWNDR · {ru?'НАША ФИЛОСОФИЯ':'OUR PHILOSOPHY'}</p>
      <h1 className='mt-5 max-w-3xl text-4xl font-black leading-tight tracking-tight sm:text-6xl md:text-7xl'>{ru?'Истории, которые стоит прожить':'Stories Worth Living'}</h1>
     </div>
-    <div className='flex items-end justify-between gap-6'>
+    <div className='flex flex-col gap-8 lg:gap-10'>
      <div ref={heading} key={index} className='relative max-w-2xl' aria-live='polite' aria-atomic='true'>
       <p className='mb-3 text-xs font-bold tracking-[.24em] text-cyan-200'>0{index+1} / 04</p>
       <h2 className='text-4xl font-black tracking-wide sm:text-6xl'>{current[locale][0]}</h2>
       <p className='mt-4 max-w-xl text-lg leading-relaxed text-white/90 sm:text-xl'>{current[locale][1]}</p>
      </div>
-     <div className='relative hidden h-48 w-40 shrink-0 lg:block' aria-label={ru?'Выбор кадра':'Select a frame'}>
-      {slides.map((slide,i)=><button type='button' key={i} ref={el=>{cardLayers.current[i]=el}} onClick={()=>setIndex(i)} aria-label={ru?'Показать кадр '+(i+1):'Show frame '+(i+1)} aria-pressed={index===i} className='absolute bottom-2 right-6 h-40 w-28 overflow-hidden rounded-xl border-2 border-white/70 bg-[#12394b] shadow-xl focus-visible:outline focus-visible:outline-4 focus-visible:outline-cyan-200' style={{transform:'translate('+(((i-index+slides.length)%slides.length)*18)+'px,'+(-((i-index+slides.length)%slides.length)*10)+'px) rotate('+(((i-index+slides.length)%slides.length)*2)+'deg)',zIndex:slides.length-((i-index+slides.length)%slides.length)}}>
-       <Image src={slide.image} alt='' fill sizes='112px' className='object-cover'/>
+     <div className='relative mx-auto hidden h-[310px] w-[420px] shrink-0 lg:block' aria-label={ru?'Выбор кадра':'Select a frame'}>
+      {slides.map((slide,i)=><button type='button' key={i} ref={el=>{cardLayers.current[i]=el}} onClick={()=>setIndex(i)} aria-label={ru?'Показать кадр '+(i+1):'Show frame '+(i+1)} aria-pressed={index===i} className='absolute bottom-4 left-1/2 h-[280px] w-[200px] -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-white/70 bg-[#12394b] shadow-xl focus-visible:outline focus-visible:outline-4 focus-visible:outline-cyan-200' style={{transform:'translate('+(((i-index+slides.length)%slides.length)*58)+'px,'+(-((i-index+slides.length)%slides.length)*12)+'px) rotate('+(((i-index+slides.length)%slides.length)*5)+'deg)',zIndex:slides.length-((i-index+slides.length)%slides.length)}}>
+       <Image src={slide.image} alt='' fill sizes='200px' className='object-cover'/>
        <span className='absolute inset-x-0 bottom-0 bg-black/60 px-2 py-2 text-center text-[10px] font-bold tracking-wider'>{slide[locale][0]}</span>
       </button>)}
      </div>
