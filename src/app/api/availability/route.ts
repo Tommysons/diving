@@ -12,8 +12,6 @@ export async function GET(req: NextRequest) {
   const type = req.nextUrl.searchParams.get('type')
   const activity = req.nextUrl.searchParams.get('activity') || null
 
-  console.log('Availability API called')
-  console.log('Params:', { date, type, activity })
 
   if (!date || !type) {
     console.warn('Missing date or type')
@@ -36,11 +34,10 @@ export async function GET(req: NextRequest) {
     const query: any = { date }
     if (activity) query.$or = [{ course: activity }, { site: activity }]
 
-    console.log('Mongo query:', query)
-    const bookings = await db.collection(collectionName).find(query).toArray()
-    const bookedTimes = bookings.map((b) => b.time)
-
-    console.log('Booked times:', bookedTimes)
+    // Only approved bookings reserve a time slot. Pending requests are enquiries.
+    query.status = 'approved'
+    const bookings = await db.collection(collectionName).find(query, { projection: { time: 1, _id: 0 } }).toArray()
+    const bookedTimes = bookings.map((b) => b.time).filter((t): t is string => typeof t === 'string')
     return NextResponse.json({ bookedTimes })
   } catch (error) {
     console.error('Availability API error:', error)
