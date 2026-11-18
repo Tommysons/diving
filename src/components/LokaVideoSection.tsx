@@ -1,4 +1,5 @@
 import { Play } from 'lucide-react'
+import Link from 'next/link'
 import StoryCarousel from '@/components/StoryCarousel'
 
 export type LokaVideo = { id: string; title: string; category?: string }
@@ -35,8 +36,9 @@ export default function LokaVideoSection({locale,videos,title}:{locale:'en'|'ru'
  <StoryCarousel autoPlay={false} locale={locale} label={title || (ru?'Видео LokaWndr':'LokaWndr videos')}>
  {videos.map(video=><article key={video.id} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.07]'>
  <div className='aspect-video bg-[#031727]'><iframe loading='lazy' className='h-full w-full' src={`https://www.youtube-nocookie.com/embed/${video.id}`} title={video.title} allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerPolicy='strict-origin-when-cross-origin' allowFullScreen/></div>
- <div className='p-4'><h3 className='font-bold leading-6 text-white'>{video.title}</h3></div>
+ <div className='p-4'><h3 className='font-bold leading-6 text-white'>{video.title}</h3><a href={`https://www.youtube.com/watch?v=${video.id}`} target='_blank' rel='noopener noreferrer' className='mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-cyan-200 underline underline-offset-4 hover:text-white'>{ru?'Смотреть на YouTube':'Watch on YouTube'}<span className='sr-only'>: {video.title}</span></a></div>
  </article>)}
  </StoryCarousel>
+ {videos === maldivesVideos && <div className='mt-7 rounded-2xl border border-cyan-200/20 bg-white/[.05] p-6'><h3 className='text-xl font-bold text-white'>{ru?'Узнайте больше о дайвинге на атолле Даалу':'Explore the dive sites behind the footage'}</h3><p className='mt-3 max-w-3xl leading-7 text-slate-200'>{ru?'Эти видео дополняют наши рассказы о рифах и морских обитателях Мальдив. Читайте практический гид по атоллу Даалу и изучайте отдельные дайв-сайты.':'These underwater videos complement our first-hand guides to Dhaalu Atoll. Learn about reef conditions, overhangs and marine life before exploring individual dive sites.'}</p><div className='mt-4 flex flex-wrap gap-4'><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/blog/diving-in-dhaalu-atoll`}>{ru?'Гид по дайвингу на атолле Даалу':'Read the Dhaalu Atoll diving guide'}</Link><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/destinations/maldives/wella-giri`}>Wella Giri</Link><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/destinations/maldives/lhohi-caves`}>Lhohi Caves</Link></div></div>}
  </section>
 }
