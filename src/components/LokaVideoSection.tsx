@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import { Play } from 'lucide-react'
 import Link from 'next/link'
 import StoryCarousel from '@/components/StoryCarousel'
@@ -26,6 +29,13 @@ export const featuredVideos: LokaVideo[] = [
  { id:'qcc3i3AIxMw', title:'Why I Chose Scuba Diving as My Profession' },
  { id:'LNj_6UeX8RM', title:'Testing the New GoPro Update on a Scuba Dive' },
 ]
+function VideoPlayer({video,locale}:{video:LokaVideo;locale:'en'|'ru'}) {
+ const [playing,setPlaying]=useState(false)
+ return <div className='relative aspect-video overflow-hidden bg-[#031727]'>
+  {playing?<iframe className='h-full w-full' src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1`} title={video.title} allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerPolicy='strict-origin-when-cross-origin' allowFullScreen/>:<button type='button' onClick={()=>setPlaying(true)} aria-label={`${locale==='ru'?'Воспроизвести':'Play video'}: ${video.title}`} className='group relative flex h-full w-full items-center justify-center bg-cover bg-center focus-visible:outline focus-visible:outline-4 focus-visible:outline-cyan-200' style={{backgroundImage:`linear-gradient(0deg,rgba(3,23,39,.48),rgba(3,23,39,.2)),url(https://i.ytimg.com/vi/${video.id}/hqdefault.jpg)`}}><span className='flex h-16 w-16 items-center justify-center rounded-full bg-red-600 text-white shadow-xl transition group-hover:scale-110 group-focus-visible:scale-110'><Play size={29} fill='currentColor' aria-hidden='true'/></span><span className='sr-only'>{video.title}</span></button>}
+ </div>
+}
+
 export default function LokaVideoSection({locale,videos,title}:{locale:'en'|'ru';videos:LokaVideo[];title?:string}){
  const ru=locale==='ru'
  return <section aria-label={title || (ru?'Видео LokaWndr':'LokaWndr videos')} className='mx-auto w-full max-w-[1480px] px-6 py-14 md:px-10'>
@@ -35,7 +45,7 @@ export default function LokaVideoSection({locale,videos,title}:{locale:'en'|'ru'
  </div>
  <StoryCarousel autoPlay={false} locale={locale} label={title || (ru?'Видео LokaWndr':'LokaWndr videos')}>
  {videos.map(video=><article key={video.id} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.07]'>
- <div className='aspect-video bg-[#031727]'><iframe loading='lazy' className='h-full w-full' src={`https://www.youtube-nocookie.com/embed/${video.id}`} title={video.title} allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerPolicy='strict-origin-when-cross-origin' allowFullScreen/></div>
+ <VideoPlayer video={video} locale={locale}/>
  <div className='p-4'><h3 className='font-bold leading-6 text-white'>{video.title}</h3><a href={`https://www.youtube.com/watch?v=${video.id}`} target='_blank' rel='noopener noreferrer' className='mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-cyan-200 underline underline-offset-4 hover:text-white'>{ru?'Смотреть на YouTube':'Watch on YouTube'}<span className='sr-only'>: {video.title}</span></a></div>
  </article>)}
  </StoryCarousel>
