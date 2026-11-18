@@ -14,9 +14,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogPosts.flatMap((post) => [`/blog/${post.slug}`, `/ru/blog/${post.slug}`]),
   ]
 
-  return [...localized, ...contentPaths].map((path) => ({
+  return [...localized, ...contentPaths].map((path) => {
+    const unlocalizedPath = path.startsWith('/ru') ? path.slice(3) : path
+    return {
     url: `${baseUrl}${path}`,
+    alternates: { languages: { en: `${baseUrl}${unlocalizedPath}`, ru: `${baseUrl}/ru${unlocalizedPath}` } },
     changeFrequency: path.includes('/blog/') ? 'monthly' : 'weekly',
     priority: path === '' || path === '/ru' ? 1 : 0.7,
-  }))
+  }
+  })
 }
