@@ -43,7 +43,18 @@ export default function DiveGuideLayout({ guide }: { guide: DiveGuide }) {
     photos: `${guide.name} photo gallery`, photoText: 'Select a photo to open it.', photo: 'photo', open: 'open photo',
     next: maldives?'Explore the Maldives with LokaWndr':'Explore Koh Tao with LokaWndr', nextText: maldives?'Explore the Vilu Reef dive-site map or get in touch if you would like to know more.':'Explore the Koh Tao dive-site map or get in touch if you would like to know more.', map: 'Explore the dive-site map', contact: 'Get in touch',
   }
-  return <><Header/><main lang={guide.locale} className='min-h-screen bg-[#06283a] text-white'>
+  const breadcrumbPath = maldives ? 'destinations/maldives' : 'destinations/thailand'
+  const breadcrumbUrl = `https://lokawndr.com${base}/${breadcrumbPath}`
+  const guideUrl = maldives ? `https://lokawndr.com${base}/destinations/maldives/${guide.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') .replace(/-$/,'')}` : undefined
+  const breadcrumbs = {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: ru ? 'Главная' : 'Home', item: `https://lokawndr.com${base || '/'}` },
+      { '@type': 'ListItem', position: 2, name: maldives ? (ru ? 'Мальдивы' : 'Maldives') : (ru ? 'Таиланд' : 'Thailand'), item: breadcrumbUrl },
+      { '@type': 'ListItem', position: 3, name: guide.name, ...(guideUrl ? { item: guideUrl } : {}) },
+    ],
+  }
+  return <><script type='application/ld+json' dangerouslySetInnerHTML={{__html:JSON.stringify(breadcrumbs).replace(/</g, '\\u003c')}}/><Header/><main lang={guide.locale} className='min-h-screen bg-[#06283a] text-white'>
     <div className='mx-auto max-w-[1200px] px-5 pb-20 pt-10 md:px-10 md:pt-14'>
       <Link href={guide.backHref} className='inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-cyan-100 hover:underline'><ArrowLeft size={16}/>{t.back}</Link>
       <div className='mt-7 grid items-center gap-8 lg:grid-cols-2'>
