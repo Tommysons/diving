@@ -108,6 +108,13 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
    <p className='mt-7 text-sm leading-6 text-slate-400'>{t.safety}</p>
    <p className='mt-4 text-sm text-cyan-100'>{t.sources}: <a href='https://www.padi.com/dive-site/thailand/southwest-pinnacle/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Southwest Pinnacle</a> · <a href='https://www.padi.com/dive-site/thailand/chumphon-pinnacle-2/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Chumphon Pinnacle</a> · <a href='https://www.padi.com/dive-site/thailand/richelieu-rock-3/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Richelieu Rock</a></p>
   </section>
+  <section aria-label={ru ? 'Истории дайвинга на Ко Тао' : 'Read Koh Tao diving stories'} className='mx-auto max-w-[1480px] px-6 py-12 md:px-10'>
+    <h2 className='text-2xl font-bold md:text-3xl'>{ru ? 'Истории дайвинга на Ко Тао' : 'Read Koh Tao diving stories'}</h2>
+    <div className='mt-6 grid gap-4 md:grid-cols-2'>
+      <Link href={base + '/blog/first-dives-koh-tao'} className='group flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-white/[.06] p-6 transition hover:border-cyan-300/60 hover:bg-white/[.1]'><span className='font-semibold text-white'>{ru ? 'Первые погружения на Ко Тао' : 'First Dives in Koh Tao'}</span><ArrowRight aria-hidden='true' size={20} className='shrink-0 transition group-hover:translate-x-1'/></Link>
+      <Link href={base + '/blog/bans-diving-resort'} className='group flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-white/[.06] p-6 transition hover:border-cyan-300/60 hover:bg-white/[.1]'><span className='font-semibold text-white'>{ru ? 'Ban’s Diving Resort — Ко Тао' : 'Ban’s Diving Resort — Koh Tao'}</span><ArrowRight aria-hidden='true' size={20} className='shrink-0 transition group-hover:translate-x-1'/></Link>
+    </div>
+  </section>
   <LokaVideoSection locale={locale} videos={thailandVideos} title={ru?'Видео о дайвинге в Таиланде':'Scuba Diving Videos from Thailand'}/>
   <section className='bg-[#03283b] px-6 py-16 md:px-10'>
    <div className='mx-auto max-w-[1480px] rounded-2xl border border-white/20 bg-[#0a3c50] p-8 md:p-12'>
