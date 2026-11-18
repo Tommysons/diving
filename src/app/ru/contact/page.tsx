@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { contactSchema } from '@/lib/validation/contactSchema'
 import Header from '@/components/Header'
@@ -16,6 +16,11 @@ export default function ContactPageRu() {
   const [status, setStatus] = useState('')
   const [errors, setErrors] = useState<string[]>([])
   const [sending, setSending] = useState(false)
+
+  useEffect(() => {
+    const subject = new URLSearchParams(window.location.search).get('subject')
+    if (subject) setForm(current => ({ ...current, subject: subject.slice(0, 160) }))
+  }, [])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
