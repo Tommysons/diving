@@ -15,6 +15,7 @@ export default function ContactPage() {
   })
   const [status, setStatus] = useState('')
   const [errors, setErrors] = useState<string[]>([])
+  const [sending, setSending] = useState(false)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -35,6 +36,7 @@ export default function ContactPage() {
     }
     setErrors([])
 
+    setSending(true)
     setStatus('Sending...')
     try {
       const res = await fetch('/api/contact', {
@@ -44,8 +46,9 @@ export default function ContactPage() {
       })
 
       if (res.ok) {
+        const result = await res.json()
         setStatus(
-          'Message sent successfully! Check your email for confirmation.',
+          result.confirmationSent ? 'Message sent! A confirmation email was sent.' : 'Message sent! Email confirmation is currently unavailable.',
         )
         setForm({ name: '', email: '', subject: '', message: '' })
       } else {
@@ -54,6 +57,8 @@ export default function ContactPage() {
       }
     } catch {
       setStatus('Error sending message.')
+    } finally {
+      setSending(false)
     }
   }
 
@@ -136,10 +141,11 @@ export default function ContactPage() {
             </div>
 
             <button
+              disabled={sending}
               type='submit'
               className='w-full py-3 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white active:scale-95 transition'
             >
-              {status || 'Send Message'}
+              {sending ? 'Sending...' : 'Send Message'}
             </button>
 
             {status && (
