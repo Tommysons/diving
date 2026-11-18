@@ -2,7 +2,7 @@
 
 import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
-import { gsap } from 'gsap'
+import type { GSAP } from 'gsap'
 
 export default function StoryCarousel({ children, locale, label, resetKey, autoPlay = true }: {
  children: ReactNode; locale: 'en' | 'ru'; label: string; resetKey?: string; autoPlay?: boolean
@@ -24,9 +24,14 @@ export default function StoryCarousel({ children, locale, label, resetKey, autoP
  const track = useRef<HTMLDivElement>(null)
  const start = useRef<number | null>(null)
  const locked = useRef(false)
+ const gsapInstance = useRef<GSAP | null>(null)
+ const disposed = useRef(false)
  useEffect(() => { setIndex(0) }, [resetKey])
- useEffect(() => () => { if (track.current) gsap.killTweensOf(track.current) }, [])
- const move = (direction: number) => {
+ useEffect(() => {
+  disposed.current = false
+  return () => { disposed.current = true; if (track.current) gsapInstance.current?.killTweensOf(track.current) }
+ }, [])
+ const move = async (direction: number) => {
   if (items.length < 2 || locked.current) return
   const el = track.current
   if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -34,10 +39,18 @@ export default function StoryCarousel({ children, locale, label, resetKey, autoP
    return
   }
   locked.current = true
-  gsap.to(el, { x: -direction * 35, opacity: 0, duration: 0.16, onComplete: () => {
+  try {
+   const gsap = gsapInstance.current ?? (await import('gsap')).gsap
+   gsapInstance.current = gsap
+   if (disposed.current || !el.isConnected) { locked.current = false; return }
+   gsap.to(el, { x: -direction * 35, opacity: 0, duration: 0.16, onComplete: () => {
    setIndex(i => (i + direction + items.length) % items.length)
    gsap.fromTo(el, { x: direction * 35, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, onComplete: () => { locked.current = false } })
   } })
+  } catch {
+   locked.current = false
+   if (!disposed.current) setIndex(i => (i + direction + items.length) % items.length)
+  }
  }
  advance.current = () => move(1)
  useEffect(() => {
