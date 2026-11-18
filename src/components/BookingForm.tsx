@@ -65,7 +65,7 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
 
       const data = await res.json()
       if (res.ok) {
-        setStatus('Booking received successfully!')
+        setStatus('Booking request received. This is not confirmed until we contact you.')
         setName('')
         setEmail('')
         setPhone('')
