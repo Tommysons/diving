@@ -105,6 +105,13 @@ export default function MaldivesExperience({ locale }: { locale: 'en' | 'ru' }) 
       <p className='mt-7 max-w-4xl text-sm leading-6 text-slate-400'>{ru?'Сезон, погода и течения влияют на выбор дайв-сайта. Выбирайте погружения в рамках своей подготовки и с местным оператором.':'Season, weather and currents affect site selection. Dive within your training and follow a qualified local operator.'}</p>
       <p className='mt-4 text-sm text-cyan-100'>{ru?'Источники:':'Sources:'} <a className='underline' href='https://www.padi.com/diving-in/maldives/' target='_blank' rel='noopener noreferrer'>PADI Maldives</a> · <a className='underline' href='https://blog.padi.com/best-maldives-atolls-scuba-diving/' target='_blank' rel='noopener noreferrer'>PADI Atoll Guide</a> · <a className='underline' href='https://www.padi.com/dive-site/maldives/hanifaru-bay/' target='_blank' rel='noopener noreferrer'>Hanifaru Bay</a></p>
     </section>
+  <section aria-label={ru ? 'Читайте истории о Мальдивах' : 'Explore Maldives diving stories'} className='mx-auto max-w-[1480px] px-6 py-12 md:px-10'>
+    <h2 className='text-2xl font-bold md:text-3xl'>{ru ? 'Читайте истории о Мальдивах' : 'Explore Maldives diving stories'}</h2>
+    <div className='mt-6 grid gap-4 md:grid-cols-2'>
+      <Link href={base + '/blog/diving-in-dhaalu-atoll'} className='group flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-white/[.06] p-6 transition hover:border-cyan-300/60 hover:bg-white/[.1]'><span className='font-semibold text-white'>{ru ? 'Дайвинг на атолле Даалу' : 'Diving in Dhaalu Atoll'}</span><ArrowRight aria-hidden='true' size={20} className='shrink-0 transition group-hover:translate-x-1'/></Link>
+      <Link href={base + '/blog/maldives-manta-rays-dolphins-snorkeling'} className='group flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-white/[.06] p-6 transition hover:border-cyan-300/60 hover:bg-white/[.1]'><span className='font-semibold text-white'>{ru ? 'Манты, дельфины и снорклинг на Мальдивах' : 'Manta Rays, Dolphins & Snorkeling in the Maldives'}</span><ArrowRight aria-hidden='true' size={20} className='shrink-0 transition group-hover:translate-x-1'/></Link>
+    </div>
+  </section>
     <LokaVideoSection locale={locale} videos={maldivesVideos} title={ru?'Видео о Мальдивах':'Snorkeling & Diving Videos from the Maldives'}/>
   <section className='bg-[#03283b] px-6 py-16 md:px-10'>
       <div className='mx-auto grid max-w-[1480px] items-center gap-9 md:grid-cols-2'>
