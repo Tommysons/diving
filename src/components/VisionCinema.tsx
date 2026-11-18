@@ -21,7 +21,6 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}) {
  const layers=useRef<(HTMLDivElement|null)[]>([])
  const titles=useRef<(HTMLDivElement|null)[]>([])
  const active=useRef(0)
- const gsapRef=useRef<typeof import('gsap').gsap|null>(null)
  useEffect(()=>{
   const motion=window.matchMedia('(prefers-reduced-motion: reduce)')
   const sync=()=>setReduced(motion.matches)
@@ -34,13 +33,12 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}) {
   let cancelled=false
   const previous=active.current
   active.current=index
-  if(reduced){layers.current.forEach((node,i)=>{if(node)node.style.opacity=i===index?'1':'0'});return}
+  if(reduced){layers.current.forEach((node,i)=>{if(node)node.style.opacity=i===index?'1':'0'});titles.current.forEach((node,i)=>{if(node)node.style.opacity=i===index?'1':'0'});return}
   import('gsap').then(({gsap})=>{
    if(cancelled)return
-   gsapRef.current=gsap
    const incoming=layers.current[index],outgoing=layers.current[previous],heading=titles.current[index]
    if(!incoming)return
-   gsap.killTweensOf([incoming,outgoing,heading].filter(Boolean))
+   gsap.killTweensOf([incoming,outgoing,heading].filter((node):node is HTMLDivElement=>Boolean(node)))
    gsap.set(incoming,{zIndex:2})
    gsap.fromTo(incoming,{autoAlpha:previous===index?1:0,scale:1.08},{autoAlpha:1,scale:1,duration:1.6,ease:'power2.out'})
    if(outgoing&&previous!==index){gsap.set(outgoing,{zIndex:1});gsap.to(outgoing,{autoAlpha:0,duration:1.5,ease:'power2.out'})}
@@ -53,15 +51,15 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}) {
   const timer=window.setInterval(()=>{if(!document.hidden)setIndex(i=>(i+1)%frames.length)},5000)
   return()=>window.clearInterval(timer)
  },[paused,hovered,inView,reduced])
- return <section ref={root} aria-label={ru?'Видение LokaWndr':'LokaWndr vision'} className='mx-auto max-w-[1480px] px-5 py-10 md:px-10 md:py-16'>
-  <div className='relative isolate min-h-[490px] overflow-hidden rounded-[1.5rem] border border-cyan-200/20 bg-[#031827] shadow-2xl md:min-h-[590px]' onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)} onFocusCapture={()=>setHovered(true)} onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node|null))setHovered(false)}}>
+ return <section ref={root} aria-label={ru?'Видение LokaWndr':'LokaWndr vision'} className='relative'>
+  <div className='relative isolate min-h-[620px] overflow-hidden bg-[#031827] md:min-h-[760px]' onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)} onFocusCapture={()=>setHovered(true)} onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node|null))setHovered(false)}}>
    {frames.map((frame,i)=><div key={i} ref={el=>{layers.current[i]=el}} aria-hidden='true' className='absolute inset-0' style={{opacity:i===0?1:0,zIndex:i===0?2:0}}>
-    <Image src={frame.image} alt='' fill sizes='(max-width: 768px) 100vw, 1400px' quality={60} className='object-cover'/>
+    <Image src={frame.image} alt='' fill sizes='(max-width: 768px) 100vw, 1400px' quality={60} className='object-cover' priority={i===0} fetchPriority={i===0?'high':undefined}/>
    </div>)}
    <div className='pointer-events-none absolute inset-0 z-[3] bg-gradient-to-r from-[#021a2c]/90 via-[#021a2c]/50 to-[#021a2c]/15'/>
    <div className='pointer-events-none absolute inset-0 z-[3] bg-gradient-to-t from-[#021a2c]/80 via-transparent to-transparent'/>
-   <div className='relative z-[4] flex min-h-[490px] flex-col justify-between p-6 sm:p-10 md:min-h-[590px] md:p-14'>
-    <div><p className='text-xs font-bold tracking-[.26em] text-cyan-200'>LOKAWNDR · {ru?'НАША ФИЛОСОФИЯ':'OUR PHILOSOPHY'}</p><h2 className='mt-4 max-w-2xl text-3xl font-black tracking-tight sm:text-5xl'>{ru?'Истории, которые стоит прожить':'Stories Worth Living'}</h2></div>
+   <div className='relative z-[4] mx-auto flex min-h-[620px] max-w-[1480px] flex-col justify-between px-6 pb-10 pt-20 sm:px-10 md:min-h-[760px] md:px-14 md:pb-14 md:pt-28'>
+    <div><p className='text-xs font-bold tracking-[.26em] text-cyan-200'>LOKAWNDR · {ru?'НАША ФИЛОСОФИЯ':'OUR PHILOSOPHY'}</p><h1 className='mt-4 max-w-3xl text-5xl font-black tracking-tight sm:text-7xl'>{ru?'Истории, которые стоит прожить':'Stories Worth Living'}</h1></div>
     <div aria-live='off' className='relative min-h-44'>
      {frames.map((frame,i)=><div key={i} ref={el=>{titles.current[i]=el}} aria-hidden={index!==i} className={'absolute bottom-0 left-0 max-w-2xl '+(index===i?'':'pointer-events-none opacity-0')}>
       <p className='mb-3 text-xs font-bold tracking-[.24em] text-cyan-200'>0{i+1} / 04</p>
@@ -79,6 +77,6 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}) {
     </div>
    </div>
   </div>
-  <div className='mx-auto mt-7 max-w-3xl text-center'><p className='text-lg leading-8 text-slate-200'>{ru?'Живи приключением. Создавай воспоминания. Рассказывай истории.':'Live the adventure. Create the memory. Tell the story.'}</p><Link href={(ru?'/ru':'')+'/about'} className='mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-cyan-200 underline underline-offset-4'>{ru?'Наша история':'Discover our story'}<ArrowRight size={16}/></Link></div>
+  <div className='mx-auto max-w-[1480px] px-6 py-8 text-center md:px-10'><p className='text-lg leading-8 text-slate-200'>{ru?'Живи приключением. Создавай воспоминания. Рассказывай истории.':'Live the adventure. Create the memory. Tell the story.'}</p><Link href={(ru?'/ru':'')+'/about'} className='mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-cyan-200 underline underline-offset-4'>{ru?'Наша история':'Discover our story'}<ArrowRight size={16}/></Link></div>
  </section>
 }
