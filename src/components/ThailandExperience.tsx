@@ -108,7 +108,23 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
    <p className='mt-7 text-sm leading-6 text-slate-400'>{t.safety}</p>
    <p className='mt-4 text-sm text-cyan-100'>{t.sources}: <a href='https://www.padi.com/dive-site/thailand/southwest-pinnacle/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Southwest Pinnacle</a> · <a href='https://www.padi.com/dive-site/thailand/chumphon-pinnacle-2/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Chumphon Pinnacle</a> · <a href='https://www.padi.com/dive-site/thailand/richelieu-rock-3/' target='_blank' rel='noopener noreferrer' className='underline'>PADI Richelieu Rock</a></p>
   </section>
-  <section aria-label={ru ? 'Истории дайвинга на Ко Тао' : 'Read Koh Tao diving stories'} className='mx-auto max-w-[1480px] px-6 py-12 md:px-10'>
+     <section aria-labelledby='koh-tao-planning' className='mx-auto max-w-[1480px] px-6 py-12 md:px-10'>
+    <div className='rounded-3xl border border-cyan-200/20 bg-[#0a3c50] p-7 md:p-10'>
+     <p className='text-xs font-bold uppercase tracking-widest text-cyan-200'>{ru?'ПЛАНИРОВАНИЕ ПОГРУЖЕНИЙ':'PLAN YOUR DIVES'}</p>
+     <h2 id='koh-tao-planning' className='mt-3 text-3xl font-bold'>{ru?'Гид по дайвингу на Ко Тао: с чего начать':'Koh Tao diving guide: where to start'}</h2>
+     <p className='mt-4 max-w-4xl leading-8 text-slate-200'>{ru?'Ко Тао предлагает разные подводные маршруты: спокойные неглубокие рифы, скальные образования и затонувшие корабли. Начните с условий и глубины каждого дайв-сайта, а не только с его фотографий.':'Koh Tao offers varied underwater terrain, from sheltered shallow reefs to offshore pinnacles and shipwrecks. Start by comparing each site’s depth and conditions, rather than choosing from photos alone.'}</p>
+     <div className='mt-7 grid gap-5 md:grid-cols-3'>
+      {[
+       {slug:'twins',name:'Twins',en:'Shallow rock formations and generally calm water make this a useful starting point when conditions suit your training.',ru:'Неглубокие скалы и обычно спокойная вода — хороший вариант для знакомства с местными погружениями при подходящих условиях.'},
+       {slug:'chumphon-pinnacle',name:'Chumphon Pinnacle',en:'An offshore pinnacle with deeper water, changing currents and possible pelagic encounters.',ru:'Удалённая подводная вершина с большей глубиной, переменным течением и возможными встречами с крупными морскими обитателями.'},
+       {slug:'sattakut-shipwreck',name:'HTMS Sattakut',en:'Explore a wreck from the outside; entering enclosed spaces requires specialist wreck training and planning.',ru:'Исследуйте затонувшее судно снаружи; проникновение внутрь требует специальной подготовки и планирования.'}
+      ].map(site=><Link key={site.slug} href={base+'/divesites/'+site.slug} className='group rounded-2xl border border-white/20 bg-white/[.05] p-5 transition hover:border-cyan-200/60'><h3 className='font-bold text-white'>{site.name}<ArrowRight size={16} className='ml-2 inline transition group-hover:translate-x-1'/></h3><p className='mt-2 text-sm leading-6 text-slate-200'>{ru?site.ru:site.en}</p></Link>)}
+     </div>
+     <p className='mt-6 max-w-4xl text-sm leading-7 text-slate-300'>{ru?'Видимость, течение и доступность меняются. Обсудите условия с местным дайв-центром и выбирайте погружения в пределах своей подготовки.':'Visibility, current and access can change. Check the day’s conditions with a local dive centre and choose dives within your training and experience.'}</p>
+     <div className='mt-5 flex flex-wrap gap-4'><Link href={base+'/scubadivingcourses'} className='font-semibold text-cyan-100 underline underline-offset-4'>{ru?'Курсы дайвинга':'Explore scuba courses'}</Link><Link href={base+'/blog/first-dives-koh-tao'} className='font-semibold text-cyan-100 underline underline-offset-4'>{ru?'История первых погружений на Ко Тао':'Read a Koh Tao diving story'}</Link></div>
+    </div>
+   </section>
+<section aria-label={ru ? 'Истории дайвинга на Ко Тао' : 'Read Koh Tao diving stories'} className='mx-auto max-w-[1480px] px-6 py-12 md:px-10'>
     <h2 className='text-2xl font-bold md:text-3xl'>{ru ? 'Истории дайвинга на Ко Тао' : 'Read Koh Tao diving stories'}</h2>
     <div className='mt-6 grid gap-4 md:grid-cols-2'>
       <Link href={base + '/blog/first-dives-koh-tao'} className='group flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-white/[.06] p-6 transition hover:border-cyan-300/60 hover:bg-white/[.1]'><span className='font-semibold text-white'>{ru ? 'Первые погружения на Ко Тао' : 'First Dives in Koh Tao'}</span><ArrowRight aria-hidden='true' size={20} className='shrink-0 transition group-hover:translate-x-1'/></Link>
