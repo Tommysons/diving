@@ -4,6 +4,10 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+function escapeHtml(value: unknown) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!)
+}
+
 const collectionMap: Record<string, string> = {
   scuba_course: 'scuba_bookings',
   freediving_course: 'freediving_bookings',
@@ -13,26 +17,29 @@ const collectionMap: Record<string, string> = {
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json()
-    console.log('Incoming booking data:', data)
+    // Avoid logging customers' personal details.
 
     const { name, email, phone, type, activity, date, time, message } = data
 
     // Validate required fields
     if (!name || !email || !date || !time || !type || !activity) {
-      console.error('Missing required fields:', data)
+      console.error('Booking request missing required fields')
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
       )
     }
 
+    if (typeof name !== 'string' || typeof email !== 'string' || typeof activity !== 'string' || typeof date !== 'string' || typeof time !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) {
+      return NextResponse.json({ error: 'Invalid booking details' }, { status: 400 })
+    }
     const collectionName = collectionMap[type]
     if (!collectionName) {
       console.error('Invalid type:', type)
       return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
     }
 
-    console.log('Using collection:', collectionName)
+
 
     const client = await clientPromise
     const db = client.db(process.env.MONGODB_DB)
@@ -84,33 +91,41 @@ export async function POST(req: NextRequest) {
     if (type === 'dive_trip') doc.site = activity
 
     const result = await collection.insertOne(doc)
-    console.log('Booking inserted with ID:', result.insertedId)
 
-    const subjectText = `Booking: ${activity} on ${date} at ${time}`
+
+    const subjectText = `Booking request: ${activity} on ${date} at ${time}`
+    const safeName = escapeHtml(name)
+    const safeEmail = escapeHtml(email)
+    const safePhone = escapeHtml(phone)
+    const safeActivity = escapeHtml(activity)
+    const safeDate = escapeHtml(date)
+    const safeTime = escapeHtml(time)
+    const safeType = escapeHtml(type)
+    const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
 
     // -----------------------------
     // SEND CLIENT CONFIRMATION EMAIL
     // -----------------------------
-    console.log('Attempting to send client confirmation email to:', email)
+
 
     try {
       const response = await resend.emails.send({
         from: 'Loka Wonder <contact@lokawndr.com>',
         to: email,
-        subject: `Booking Confirmation / Подтверждение бронирования: ${activity} on ${date}`,
+        subject: `Booking request received / Заявка получена: ${safeActivity} on ${safeDate}`,
         html: `
-          <p>Hi ${name},</p>
-          <p>Thank you for booking with us! We have received your booking for <strong>${activity}</strong> on <strong>${date}</strong> at <strong>${time}</strong>.</p>
-          <p>Спасибо за бронирование! Мы получили вашу заявку на <strong>${activity}</strong> на <strong>${date}</strong> в <strong>${time}</strong>.</p>
+          <p>Hi ${safeName},</p>
+          <p>We have received your booking request for <strong>${safeActivity}</strong> on <strong>${safeDate}</strong> at <strong>${safeTime}</strong>. This is not a confirmed reservation; we will contact you after checking availability.</p>
+          <p>Ваша заявка получена и ожидает подтверждения оператора: <strong>${safeActivity}</strong> на <strong>${safeDate}</strong> в <strong>${safeTime}</strong>. Это ещё не подтверждённое бронирование. Мы свяжемся с вами после проверки доступности.</p>
           ${
             message
-              ? `<p><strong>Your message / Ваше сообщение:</strong><br>${message}</p>`
+              ? `<p><strong>Your message / Ваше сообщение:</strong><br>${safeMessage}</p>`
               : ''
           }
         `,
       })
 
-      console.log('Client email sent successfully:', response)
+      if (response.error) console.error('Booking acknowledgement rejected:', response.error)
     } catch (err: any) {
       console.error(
         'Resend client email error:',
@@ -122,7 +137,7 @@ export async function POST(req: NextRequest) {
     // SEND ADMIN EMAIL
     // -----------------------------
     if (process.env.ADMIN_EMAIL) {
-      console.log('Attempting to send admin email to:', process.env.ADMIN_EMAIL)
+
 
       try {
         const response = await resend.emails.send({
@@ -131,22 +146,22 @@ export async function POST(req: NextRequest) {
           subject: subjectText,
           html: `
             <h3>New Booking / Новое бронирование</h3>
-            <p><strong>Name / Имя:</strong> ${name}</p>
-            <p><strong>Email / Эл. почта:</strong> ${email}</p>
-            <p><strong>Phone / Телефон:</strong> ${phone}</p>
-            <p><strong>Type / Тип:</strong> ${type}</p>
-            <p><strong>Activity / Активность:</strong> ${activity}</p>
-            <p><strong>Date / Дата:</strong> ${date}</p>
-            <p><strong>Time / Время:</strong> ${time}</p>
+            <p><strong>Name / Имя:</strong> ${safeName}</p>
+            <p><strong>Email / Эл. почта:</strong> ${safeEmail}</p>
+            <p><strong>Phone / Телефон:</strong> ${safePhone}</p>
+            <p><strong>Type / Тип:</strong> ${safeType}</p>
+            <p><strong>Activity / Активность:</strong> ${safeActivity}</p>
+            <p><strong>Date / Дата:</strong> ${safeDate}</p>
+            <p><strong>Time / Время:</strong> ${safeTime}</p>
             ${
               message
-                ? `<p><strong>Message / Сообщение:</strong><br>${message}</p>`
+                ? `<p><strong>Message / Сообщение:</strong><br>${safeMessage}</p>`
                 : ''
             }
           `,
         })
 
-        console.log('Admin email sent successfully:', response)
+        if (response.error) console.error('Booking notification rejected:', response.error)
       } catch (err: any) {
         console.error(
           'Resend admin email error:',
@@ -158,7 +173,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: 'Booking received successfully!', id: result.insertedId },
+      { message: 'Booking request received; awaiting confirmation', status: 'pending', id: result.insertedId },
       { status: 200 }
     )
   } catch (error: any) {
