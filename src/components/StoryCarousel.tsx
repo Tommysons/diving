@@ -2,7 +2,6 @@
 
 import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
-import type { GSAP } from 'gsap'
 
 export default function StoryCarousel({ children, locale, label, resetKey, autoPlay = true }: {
  children: ReactNode; locale: 'en' | 'ru'; label: string; resetKey?: string; autoPlay?: boolean
@@ -24,7 +23,7 @@ export default function StoryCarousel({ children, locale, label, resetKey, autoP
  const track = useRef<HTMLDivElement>(null)
  const start = useRef<number | null>(null)
  const locked = useRef(false)
- const gsapInstance = useRef<GSAP | null>(null)
+ const gsapInstance = useRef<typeof import('gsap').gsap | null>(null)
  const disposed = useRef(false)
  useEffect(() => { setIndex(0) }, [resetKey])
  useEffect(() => {
