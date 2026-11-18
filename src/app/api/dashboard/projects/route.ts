@@ -20,7 +20,7 @@ export async function GET() {
       const rows = await db.collection(collection).find({ status: { $ne: 'deleted' } }).sort({ createdAt: -1 }).limit(300).toArray()
       return rows.map(b => ({ ...b, _id: b._id.toHexString(), project }))
     }))
-    return NextResponse.json(groups.flat().sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()), { headers: { 'Cache-Control': 'no-store' } })
+    return NextResponse.json(groups.flat().sort((a, b) => new Date((b as { createdAt?: Date }).createdAt || 0).getTime() - new Date((a as { createdAt?: Date }).createdAt || 0).getTime()), { headers: { 'Cache-Control': 'no-store' } })
   } catch (error) { console.error('Booking list error', error); return NextResponse.json({ error: 'Unable to load bookings' }, { status: 500 }) }
 }
 export async function PATCH(req: NextRequest) {
