@@ -15,6 +15,8 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
   const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
   const [status, setStatus] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const allTimes = [
     '09:00',
@@ -47,6 +49,8 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
       return
     }
 
+    if (submitting || submitted) return
+    setSubmitting(true)
     try {
       const res = await fetch('/api/book', {
         method: 'POST',
@@ -65,6 +69,7 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
 
       const data = await res.json()
       if (res.ok) {
+        setSubmitted(true)
         setStatus('Booking request received. This is not confirmed until we contact you.')
         setName('')
         setEmail('')
@@ -78,8 +83,16 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
     } catch (err) {
       console.error(err)
       setStatus('Failed to book')
+    } finally {
+      setSubmitting(false)
     }
   }
+
+  if (submitted) return (
+    <div role='status' aria-live='polite' className='max-w-md rounded border border-emerald-300/40 bg-emerald-950/30 p-4 text-white'>
+      Booking request received. This is not confirmed until we contact you.
+    </div>
+  )
 
   return (
     <form onSubmit={handleSubmit} className='p-4 border rounded max-w-md'>
@@ -142,9 +155,10 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
 
       <button
         type='submit'
-        className='bg-blue-600 text-white px-4 py-2 rounded'
+        disabled={submitting}
+        className='bg-blue-600 text-white px-4 py-2 rounded disabled:cursor-not-allowed disabled:opacity-50'
       >
-        Book Appointment
+        {submitting ? 'Submitting…' : 'Book Appointment'}
       </button>
       {status && <p className='mt-2'>{status}</p>}
     </form>
