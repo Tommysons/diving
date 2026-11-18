@@ -51,7 +51,7 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}) {
    cardLayers.current.forEach((card,i)=>{
     if(!card)return
     const distance=(i-index+slides.length)%slides.length
-    gsap.to(card,{x:distance*58,y:-distance*12,rotation:distance*5,scale:1-distance*.045,zIndex:slides.length-distance,duration:.75,ease:'power3.inOut',overwrite:true})
+    gsap.to(card,{x:-112+distance*62,y:-distance*12,rotation:distance*5,scale:1-distance*.045,zIndex:slides.length-distance,duration:.75,ease:'power3.inOut',overwrite:true})
    })
   })
   return()=>{canceled=true}
@@ -63,31 +63,31 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}) {
  },[paused,hovered,visible,reduced])
  const current=slides[index]
  return <section ref={root} aria-label={ru?'Видение LokaWndr':'LokaWndr vision'} className='relative'>
-  <div className='relative isolate min-h-[650px] overflow-hidden bg-[#031827] md:min-h-[760px]'>
+  <div className='relative isolate min-h-[600px] overflow-hidden bg-[#031827] md:min-h-[660px]'>
    {slides.map((slide,i)=><div key={i} ref={el=>{imageLayers.current[i]=el}} aria-hidden='true' className='absolute inset-0' style={{opacity:i===0?1:0,visibility:i===0?'visible':'hidden',zIndex:i===0?2:0}}>
     <Image src={slide.image} alt='' fill priority={i===0} sizes='100vw' quality={65} className='object-cover'/>
    </div>)}
-   <div className='pointer-events-none absolute inset-0 z-[3] bg-gradient-to-r from-[#021a2c]/95 via-[#021a2c]/70 to-[#021a2c]/20'/>
+   <div className='pointer-events-none absolute inset-0 z-[3] bg-gradient-to-r from-[#021a2c]/95 via-[#021a2c]/55 to-[#021a2c]/10'/>
    <div className='pointer-events-none absolute inset-0 z-[3] bg-gradient-to-t from-[#021a2c]/80 via-transparent to-transparent'/>
-   <div className='relative z-[4] mx-auto flex min-h-[650px] max-w-[1480px] flex-col justify-between px-6 pb-10 pt-20 md:min-h-[760px] md:px-14 md:pb-14 md:pt-28'>
+   <div className='relative z-[4] mx-auto flex min-h-[600px] max-w-[1480px] flex-col justify-between px-6 pb-8 pt-12 md:min-h-[660px] md:px-14 md:pb-10 md:pt-16'>
     <div>
      <p className='text-xs font-bold tracking-[.25em] text-cyan-200'>LOKAWNDR · {ru?'НАША ФИЛОСОФИЯ':'OUR PHILOSOPHY'}</p>
-     <h1 className='mt-5 max-w-3xl text-4xl font-black leading-tight tracking-tight sm:text-6xl md:text-7xl'>{ru?'Истории, которые стоит прожить':'Stories Worth Living'}</h1>
+     <h1 className='mt-4 max-w-3xl text-4xl font-black leading-tight tracking-tight sm:text-6xl'>{ru?'Истории, которые стоит прожить':'Stories Worth Living'}</h1>
     </div>
-    <div className='flex flex-col gap-8 lg:gap-10'>
-     <div ref={heading} key={index} className='relative max-w-2xl' aria-live='polite' aria-atomic='true'>
+    <div className='grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(350px,1fr)] lg:gap-10'>
+     <div ref={heading} key={index} className='relative max-w-2xl self-center' aria-live='polite' aria-atomic='true'>
       <p className='mb-3 text-xs font-bold tracking-[.24em] text-cyan-200'>0{index+1} / 04</p>
       <h2 className='text-4xl font-black tracking-wide sm:text-6xl'>{current[locale][0]}</h2>
       <p className='mt-4 max-w-xl text-lg leading-relaxed text-white/90 sm:text-xl'>{current[locale][1]}</p>
      </div>
-     <div className='relative mx-auto hidden h-[310px] w-[420px] shrink-0 lg:block' aria-label={ru?'Выбор кадра':'Select a frame'}>
-      {slides.map((slide,i)=><button type='button' key={i} ref={el=>{cardLayers.current[i]=el}} onClick={()=>setIndex(i)} aria-label={ru?'Показать кадр '+(i+1):'Show frame '+(i+1)} aria-pressed={index===i} className='absolute bottom-4 left-1/2 h-[280px] w-[200px] -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-white/70 bg-[#12394b] shadow-xl focus-visible:outline focus-visible:outline-4 focus-visible:outline-cyan-200' style={{transform:'translate('+(((i-index+slides.length)%slides.length)*58)+'px,'+(-((i-index+slides.length)%slides.length)*12)+'px) rotate('+(((i-index+slides.length)%slides.length)*5)+'deg)',zIndex:slides.length-((i-index+slides.length)%slides.length)}}>
-       <Image src={slide.image} alt='' fill sizes='200px' className='object-cover'/>
+     <div className='relative mx-auto hidden h-[340px] w-[430px] shrink-0 lg:block' aria-label={ru?'Выбор кадра':'Select a frame'}>
+      {slides.map((slide,i)=><button type='button' key={i} ref={el=>{cardLayers.current[i]=el}} onClick={()=>setIndex(i)} aria-label={ru?'Показать кадр '+(i+1):'Show frame '+(i+1)} aria-pressed={index===i} className='absolute bottom-4 left-1/2 h-[310px] w-[225px] overflow-hidden rounded-2xl border-2 border-white/70 bg-[#12394b] shadow-xl focus-visible:outline focus-visible:outline-4 focus-visible:outline-cyan-200' style={{transform:'translate('+(-112+((i-index+slides.length)%slides.length)*62)+'px,'+(-((i-index+slides.length)%slides.length)*12)+'px) rotate('+(((i-index+slides.length)%slides.length)*5)+'deg)',zIndex:slides.length-((i-index+slides.length)%slides.length)}}>
+       <Image src={slide.image} alt='' fill sizes='225px' className='object-cover'/>
        <span className='absolute inset-x-0 bottom-0 bg-black/60 px-2 py-2 text-center text-[10px] font-bold tracking-wider'>{slide[locale][0]}</span>
       </button>)}
      </div>
     </div>
-    <div className='mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/25 pt-5'>
+    <div className='mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-white/25 pt-5'>
      <div className='flex items-center gap-1' aria-label={ru?'Выбрать слайд':'Choose a slide'}>{slides.map((_,i)=><button key={i} type='button' onClick={()=>setIndex(i)} aria-label={ru?'Слайд '+(i+1):'Slide '+(i+1)} aria-current={index===i?'true':undefined} className='flex h-11 items-center px-1'><span className={'block h-1 rounded-full transition-all '+(index===i?'w-9 bg-cyan-200':'w-4 bg-white/45')}/></button>)}</div>
      <div className='flex gap-2'>
       <button type='button' onClick={()=>setPaused(p=>!p)} aria-label={paused?(ru?'Продолжить':'Resume autoplay'):(ru?'Пауза':'Pause autoplay')} className='grid h-11 w-11 place-items-center rounded-full border border-white/50 hover:bg-white/15'>{paused?<Play size={18}/>:<Pause size={18}/>}</button>
