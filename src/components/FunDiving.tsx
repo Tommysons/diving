@@ -27,9 +27,9 @@ export default function FunDiving({ locale }: { locale: 'en' | 'ru' }) {
       <div className='mt-8 grid gap-6 md:grid-cols-3'>{options.map(item=><article key={item.subject} className='overflow-hidden rounded-3xl border border-white/15 bg-white/[.06]'>
         <div className='relative h-52 w-full'><Image src={item.image} alt={item.alt} fill sizes='(max-width: 768px) 100vw, 33vw' className='object-cover'/></div>
         <div className='p-7'><h3 className='text-2xl font-bold'>{item.title}</h3>
-        <p className='mt-4 min-h-32 leading-7 text-slate-200'>{item.description}</p>
-        <Link href={base+'/contact?subject='+encodeURIComponent(item.subject+' — Thailand or Maldives')} className='mt-6 inline-flex min-h-11 items-center rounded-xl bg-cyan-600 px-5 py-3 font-bold text-white hover:bg-cyan-500'>{ru ? 'Узнать стоимость' : 'Ask for pricing'}</Link></div>
+        <p className='mt-4 min-h-32 leading-7 text-slate-200'>{item.description}</p></div>
       </article>)}</div>
+      <div className='mt-10 flex justify-center'><Link href={base+'/contact?subject='+encodeURIComponent('Fun diving, Nitrox and equipment rental — Thailand or Maldives')} className='inline-flex min-h-12 items-center justify-center rounded-xl bg-cyan-600 px-8 py-3 text-lg font-bold text-white transition hover:bg-cyan-500'>{ru ? 'Узнать стоимость' : 'Ask for pricing'}</Link></div>
       <p className='mt-8 text-sm text-slate-300'>{ru ? 'Услуги зависят от направления, условий и доступности. Отправка запроса не является подтверждённым бронированием.' : 'Services depend on destination, conditions and availability. An enquiry is not a confirmed reservation.'}</p>
       <div className='mt-10'><Link href={base+'/scubadivingcourses'} className='font-semibold text-cyan-200 underline underline-offset-4'>{ru ? 'Ищете обучение? Посмотреть курсы дайвинга' : 'Looking for training? Explore scuba courses'}</Link></div>
     </section>
