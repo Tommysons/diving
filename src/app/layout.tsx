@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { ReactNode } from 'react'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import SiteMotion from '@/components/SiteMotion'
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className='flex min-h-screen flex-col bg-[#031b2d] text-white antialiased'>
         <ClerkProvider><SiteMotion/>{children}</ClerkProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
