@@ -1,20 +1,16 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { clerkMiddleware } from '@clerk/nextjs/server'
 
-const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
-  '/account(.*)',
-  '/protected(.*)',
-  '/api/dashboard(.*)',
-])
-
-export const proxy = clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) {
-    await auth.protect()
-  }
+// Keep authentication middleware off public, search-indexable pages.
+// Only private dashboard/account routes require Clerk authentication.
+export default clerkMiddleware(async (auth) => {
+  await auth.protect()
 })
 
-export default proxy
-
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/'],
+  matcher: [
+    '/dashboard(.*)',
+    '/account(.*)',
+    '/protected(.*)',
+    '/api/dashboard(.*)',
+  ],
 }
