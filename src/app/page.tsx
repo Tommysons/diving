@@ -7,6 +7,7 @@ import { Waves, Fish, Play, ArrowRight } from 'lucide-react'
 import Header from '@/components/Header'
 import { HomeMotion, UnderwaterParticles } from '@/components/HomeMotion'
 import Footer from '@/components/Footer'
+import VisionCinema from '@/components/VisionCinema'
 import StoryCarousel from '@/components/StoryCarousel'
 import { DivingTankIcon, SnorkelMaskIcon } from '@/components/ActivityIcons'
 import { blogPosts } from '@/lib/data/blogPosts'
@@ -56,6 +57,7 @@ export default function HomePage() {
     <Link href={base+'/snorkeling'} className='ocean-motion-activity flex items-center gap-4'><SnorkelMaskIcon/><span><strong className='block text-lg'>{t.snorkel}</strong><small className='text-white/85'>{t.snorkelInfo}</small></span></Link>
    </div></div>
   </section>
+  <VisionCinema locale={ru?'ru':'en'}/>
   <section data-reveal className='mx-auto max-w-[1480px] px-6 pb-8 pt-10 md:px-10'>
    <div className='mb-5 flex flex-wrap items-end justify-between gap-3'><h2 className='text-3xl font-extrabold tracking-tight md:text-4xl'>{t.destinations}</h2><p className='max-w-xl text-sm text-slate-200'>{t.destInfo}</p></div>
    <div className='grid gap-5 md:grid-cols-2'>{destinations.map(d=><Link href={d.href} key={d.id} data-card-motion className='ocean-motion-card group relative isolate flex min-h-[260px] flex-col justify-end overflow-hidden rounded-2xl border border-white/60 p-7 md:min-h-[300px] md:p-9'>
