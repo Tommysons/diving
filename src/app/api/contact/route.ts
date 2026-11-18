@@ -47,7 +47,7 @@ export async function POST(req: Request) {
         <p><strong>Name / Имя:</strong> ${safeName}</p>
         <p><strong>Email / Эл. почта:</strong> ${safeEmail}</p>
         <p><strong>Subject / Тема:</strong> ${
-          subject || '(no subject / без темы)'
+          safeSubject
         }</p>
         <p><strong>Time Sent / Время отправки:</strong> ${timeSent}</p>
         <p><strong>Message / Сообщение:</strong></p>
