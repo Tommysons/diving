@@ -1,15 +1,6 @@
-'use client'
+import { notFound } from 'next/navigation'
 
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import FAQSection from '@/components/FAQSection'
-
-export default function FAQPage() {
-  return (
-    <>
-      <Navbar />
-      <FAQSection />
-      <Footer />
-    </>
-  )
+// Temporarily disabled. Restore this route when the page is ready to publish.
+export default function DisabledPage() {
+  notFound()
 }
