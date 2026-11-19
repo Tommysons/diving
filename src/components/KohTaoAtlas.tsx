@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
+import { publishedDiveSites, publishedDiveSitesRU } from '@/lib/data/diveSites'
 
 const markers: Record<string,{x:number;y:number}> = {
  'chumphon-pinnacle':{x:31,y:17},'southwest-pinnacle':{x:18,y:67},
@@ -12,7 +12,7 @@ const markers: Record<string,{x:number;y:number}> = {
 }
 export default function KohTaoAtlas({locale}:{locale:'en'|'ru'}) {
  const ru=locale==='ru', base=ru?'/ru':''
- const sites=ru?diveSitesRU:diveSites
+ const sites=ru?publishedDiveSitesRU:publishedDiveSites
  const [selected,setSelected]=useState<string|null>(null)
  const site=sites.find(s=>s.slug===selected)
  const t=ru?{depth:'Глубина',current:'Течение',visibility:'Видимость',photos:'Фотографии',more:'Подробнее о дайв-сайте',photoCredit:'Подводные фотографии: Mia @kakadong123'}:{depth:'Depth',current:'Current',visibility:'Visibility',photos:'Photo gallery',more:'View Full Dive-Site Guide',photoCredit:'Underwater photography: Mia @kakadong123'}

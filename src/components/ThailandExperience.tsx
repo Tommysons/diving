@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Waves, Fish, Mail } from 'lucide-react'
-import { diveSites, diveSitesRU } from '@/lib/data/diveSites'
+import { publishedDiveSites, publishedDiveSitesRU } from '@/lib/data/diveSites'
 import LokaVideoSection, { thailandVideos } from '@/components/LokaVideoSection'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -64,7 +64,7 @@ export default function ThailandExperience({ locale }: { locale: 'en' | 'ru' }) 
     <KohTaoAtlas locale={locale}/>
     <h3 className='mt-12 text-3xl font-extrabold'>{t.gallery}</h3>
     <div className='mt-7 grid gap-7 lg:grid-cols-2'>
-     {(ru ? diveSitesRU : diveSites).filter(site => site.imageUrl).map(site => (
+     {(ru ? publishedDiveSitesRU : publishedDiveSites).map(site => (
       <article key={site.slug} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.06]'>
        <Link href={base+'/divesites/'+site.slug} className='block'>
         <div className='relative aspect-[16/9] overflow-hidden'>

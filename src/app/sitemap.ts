@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { diveSites } from '@/lib/data/diveSites'
+import { publishedDiveSites } from '@/lib/data/diveSites'
 import { scubaCourses, specialtyCourses } from '@/lib/data/scubaCourses'
 import { blogPosts } from '@/lib/data/blogPosts'
 
@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const localized = staticPaths.flatMap((path) => [path, `/ru${path}`])
   const contentPaths = [
     ...['yuki-reef', 'wella-giri', 'lhohi-caves'].flatMap((slug) => [`/destinations/maldives/${slug}`, `/ru/destinations/maldives/${slug}`]),
-    ...diveSites.flatMap((site) => [`/divesites/${site.slug}`, `/ru/divesites/${site.slug}`]),
+    ...publishedDiveSites.flatMap((site) => [`/divesites/${site.slug}`, `/ru/divesites/${site.slug}`]),
     ...[...scubaCourses, ...specialtyCourses].flatMap((course) => [`/scubadivingcourses/${course.slug}`, `/ru/scubadivingcourses/${course.slug}`]),
     ...blogPosts.flatMap((post) => [`/blog/${post.slug}`, `/ru/blog/${post.slug}`]),
   ]

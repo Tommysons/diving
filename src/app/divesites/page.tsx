@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { diveSites } from '@/lib/data/diveSites'
+import { publishedDiveSites } from '@/lib/data/diveSites'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { motion } from 'framer-motion'
@@ -78,7 +78,7 @@ export default function DiveSitesPage() {
           </h2>
 
           <div className='grid md:grid-cols-2 gap-5 sm:gap-8'>
-            {diveSites.map((site) => (
+            {publishedDiveSites.map((site) => (
               <motion.div
                 key={site.slug}
                 initial={{ opacity: 0, y: 20 }}
