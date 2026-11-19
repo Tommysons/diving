@@ -815,3 +815,7 @@ export const diveSitesRU: DiveSite[] = [
   //   prices: defaultPrices,
   // },
 ]
+
+// Only publish dive-site guides with their own photography; placeholder guides remain in the data for later completion.
+export const publishedDiveSites = diveSites.filter(site => site.imageUrl && site.imageUrl !== '/images/awaits.png')
+export const publishedDiveSitesRU = diveSitesRU.filter(site => site.imageUrl && site.imageUrl !== '/images/awaits.png')
