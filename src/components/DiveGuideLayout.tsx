@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import DiveGuideNavigation from '@/components/DiveGuideNavigation'
 import WellaStory from '@/components/WellaStory'
+import DiveStory from '@/components/DiveStory'
 
 export type DiveGuide = {
   name: string
@@ -63,7 +64,7 @@ export default function DiveGuideLayout({ guide }: { guide: DiveGuide }) {
         <div><p className='text-xs font-bold tracking-[.2em] text-cyan-200'>{t.eyebrow}</p><h1 className='mt-4 text-4xl font-extrabold leading-tight md:text-6xl'>{guide.name}</h1><p className='mt-5 max-w-xl text-lg leading-8 text-slate-200'>{guide.intro}</p></div>
         {guide.cover?<div className='relative aspect-video overflow-hidden rounded-xl'><Image src={guide.cover} alt={ru?`${guide.name} — подводная фотография`:`Underwater photo of ${guide.name}`} fill priority sizes='(max-width: 1024px) 100vw, 50vw' className='object-cover'/></div>:<div className='grid aspect-video place-items-center rounded-xl bg-[#073c50] text-center font-bold tracking-widest text-cyan-100'>TO BE LOKAWNDRED</div>}
       </div>
-      {guide.destination === 'maldives' && guide.name === 'Wella Giri' && <WellaStory locale={guide.locale}/>}
+      {guide.destination === 'maldives' && guide.name === 'Wella Giri' ? <WellaStory locale={guide.locale}/> : guide.destination && <DiveStory name={guide.name} locale={guide.locale} destination={guide.destination} intro={guide.intro} description={guide.description} photos={guide.photos} conditions={guide.conditions} marineLife={guide.marineLife} photoCredit={guide.photoCredit} note={guide.depthNeedsConfirmation?t.depthNote:t.note}/>}
       <div className='mt-12 grid gap-8 lg:grid-cols-[1.25fr_1fr]'>
         <section className='rounded-3xl border border-white/15 bg-white/[.06] p-6 md:p-8'><h2 className='text-2xl font-bold'>{t.about}</h2><p className='mt-4 whitespace-pre-line leading-8 text-slate-200'>{guide.description}</p>{guide.marineLife && guide.marineLife.length>0&&<><h2 className='mt-8 text-2xl font-bold'>{t.marine}</h2><p className='mt-4 leading-8 text-slate-200'>{guide.marineLife.join(', ')}. {t.sightings}</p></>}</section>
         <section id='dive-conditions' className='scroll-mt-24 rounded-3xl border border-cyan-200/20 bg-[#0a3c50] p-6 md:p-8'><h2 className='text-2xl font-bold'>{t.conditions}</h2><dl className='mt-5 grid grid-cols-2 gap-x-4 gap-y-6'>{guide.conditions.map(({label,value})=><div key={label}><dt className='text-sm text-cyan-100/80'>{label}</dt><dd className='mt-1 font-semibold'>{value}</dd></div>)}</dl><p className='mt-7 text-sm leading-6 text-slate-300'>{guide.depthNeedsConfirmation?t.depthNote:t.note}</p></section>
