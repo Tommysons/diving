@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { ReactNode } from 'react'
+import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import SiteMotion from '@/components/SiteMotion'
@@ -24,9 +25,10 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image' },
 }
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const locale = (await headers()).get('x-lokawndr-locale') === 'ru' ? 'ru' : 'en'
   return (
-    <html lang='en'>
+    <html lang={locale}>
       <body className='flex min-h-screen flex-col bg-[#031b2d] text-white antialiased'>
         <SiteMotion/>{children}
         <Analytics />
