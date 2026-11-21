@@ -8,6 +8,11 @@ export default function StoryCarousel({ children, locale, label, resetKey, autoP
 }) {
  const items = Children.toArray(children)
  const [index, setIndex] = useState(0)
+ const [previousResetKey, setPreviousResetKey] = useState(resetKey)
+ if (previousResetKey !== resetKey) {
+  setPreviousResetKey(resetKey)
+  setIndex(0)
+ }
  const [paused, setPaused] = useState(false)
  const [interacting, setInteracting] = useState(false)
  const [inView, setInView] = useState(false)
@@ -25,7 +30,6 @@ export default function StoryCarousel({ children, locale, label, resetKey, autoP
  const locked = useRef(false)
  const gsapInstance = useRef<typeof import('gsap').gsap | null>(null)
  const disposed = useRef(false)
- useEffect(() => { setIndex(0) }, [resetKey])
  useEffect(() => {
   disposed.current = false
   return () => { disposed.current = true; if (track.current) gsapInstance.current?.killTweensOf(track.current) }
@@ -51,7 +55,7 @@ export default function StoryCarousel({ children, locale, label, resetKey, autoP
    if (!disposed.current) setIndex(i => (i + direction + items.length) % items.length)
   }
  }
- advance.current = () => move(1)
+ useEffect(() => { advance.current = () => { void move(1) } })
  useEffect(() => {
   const el = container.current
   if (!el) return
