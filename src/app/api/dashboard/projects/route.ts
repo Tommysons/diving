@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 const statuses = ['pending', 'approved', 'cancelled'] as const
 function validDate(s: unknown) { return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s + 'T00:00:00Z')) && new Date(s + 'T00:00:00Z').toISOString().slice(0, 10) === s }
 function validTime(s: unknown) { return typeof s === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(s) }
-async function conflict(db: Awaited<ReturnType<typeof bookingDb>>, collection: string, original: Record<string, any>, date: string, time: string, id: ObjectId) {
+async function conflict(db: Awaited<ReturnType<typeof bookingDb>>, collection: string, original: Record<string, unknown>, date: string, time: string, id: ObjectId) {
   const activityField = collection === 'dive_trips' ? 'site' : 'course'
   const other = await db.collection(collection).find({ _id: { $ne: id }, date, status: 'approved', [activityField]: original[activityField] }).toArray()
   const start = Date.parse(date + 'T' + time + ':00Z')
