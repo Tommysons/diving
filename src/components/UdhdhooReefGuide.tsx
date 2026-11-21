@@ -6,6 +6,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { UdhdhooCover, UdhdhooGallery } from '@/components/UdhdhooGallery'
 import DiveGuideNavigation from '@/components/DiveGuideNavigation'
+import DiveStory from '@/components/DiveStory'
 import { maldivesGuideNeighbors } from '@/lib/data/maldivesGuides'
 
 export default function UdhdhooReefGuide({ locale }: { locale: 'en' | 'ru' }) {
@@ -36,9 +37,10 @@ export default function UdhdhooReefGuide({ locale }: { locale: 'en' | 'ru' }) {
         <div><p className='text-xs font-bold tracking-[.2em] text-cyan-200'>{t.eyebrow}</p><h1 className='mt-4 text-4xl font-extrabold leading-tight md:text-6xl'>{t.title}</h1><p className='mt-5 max-w-xl text-lg leading-8 text-slate-200'>{t.intro}</p></div>
         <UdhdhooCover locale={locale}/>
       </div>
+      <DiveStory name='Udhdhoo Reef' locale={locale} destination='maldives' intro={t.intro} description={t.aboutText} photos={['/images/dive-sites/udhdhoo/reef-2.webp','/images/dive-sites/udhdhoo/reef-3.webp']} conditions={[[t.depth, ru?'3–35 м':'3–35 m'],[t.current,t.currentValue],[t.visibility,ru?'10–15+ м':'10–15+ m'],[t.boat,t.boatValue]].map(([label,value])=>({label,value}))} marineText={t.marineText} note={t.note}/>
       <div className='mt-12 grid gap-8 lg:grid-cols-[1.25fr_1fr]'>
         <section className='rounded-3xl border border-white/15 bg-white/[.06] p-6 md:p-8'><h2 className='text-2xl font-bold'>{t.about}</h2><p className='mt-4 leading-8 text-slate-200'>{t.aboutText}</p><h2 className='mt-8 text-2xl font-bold'>{t.marine}</h2><p className='mt-4 leading-8 text-slate-200'>{t.marineText}</p></section>
-        <section className='rounded-3xl border border-cyan-200/20 bg-[#0a3c50] p-6 md:p-8'><h2 className='text-2xl font-bold'>{t.conditions}</h2><dl className='mt-5 grid grid-cols-2 gap-x-4 gap-y-6'>
+        <section id='dive-conditions' className='scroll-mt-24 rounded-3xl border border-cyan-200/20 bg-[#0a3c50] p-6 md:p-8'><h2 className='text-2xl font-bold'>{t.conditions}</h2><dl className='mt-5 grid grid-cols-2 gap-x-4 gap-y-6'>
           {[[t.depth, ru?'3–35 м':'3–35 m'],[t.current,t.currentValue],[t.visibility,ru?'10–15+ м':'10–15+ m'],[t.boat,t.boatValue]].map(([label,value])=><div key={label}><dt className='text-sm text-cyan-100/80'>{label}</dt><dd className='mt-1 font-semibold'>{value}</dd></div>)}
         </dl><p className='mt-7 text-sm leading-6 text-slate-300'>{t.note}</p></section>
       </div>
