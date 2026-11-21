@@ -74,8 +74,28 @@ async function main() {
     before = await first()
     await page.waitForTimeout(4500)
     assert.equal(await first(), before, 'carousel pause stops autoplay')
+    if (size.width === 390) {
+      before = await first()
+      await carousel.locator('.overflow-hidden').first().evaluate(el => {
+        const start = new Touch({ identifier: 1, target: el, clientX: 300, clientY: 100 })
+        const end = new Touch({ identifier: 1, target: el, clientX: 100, clientY: 100 })
+        el.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, touches: [start], changedTouches: [start] }))
+        el.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [], changedTouches: [end] }))
+      })
+      await page.waitForTimeout(800)
+      assert.notEqual(await first(), before, 'emulated touch swipe advances carousel')
+    }
     await page.close()
   }
+  const reduced = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' })
+  await reduced.goto(base + '/')
+  const reducedCarousel = reduced.getByRole('region', { name: 'Dive and snorkel videos' })
+  await reducedCarousel.scrollIntoViewIfNeeded()
+  const firstReduced = await reducedCarousel.locator('a').first().getAttribute('href')
+  await reduced.waitForTimeout(4500)
+  assert.equal(await reducedCarousel.locator('a').first().getAttribute('href'), firstReduced, 'reduced motion disables autoplay')
+  await reducedCarousel.getByRole('button', { name: 'Next', exact: true }).click()
+  assert.notEqual(await reducedCarousel.locator('a').first().getAttribute('href'), firstReduced, 'manual navigation works with reduced motion')
   await browser.close()
   await api.dispose()
   console.log('PASS: isolated booking, contact, responsive route and carousel smoke checks')
