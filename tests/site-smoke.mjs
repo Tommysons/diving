@@ -47,6 +47,21 @@ async function main() {
         assert.equal(await page.locator('section[aria-labelledby="wella-story-title"] img').count(), 2, `${size.width} ${path} story photographs`)
       }
     }
+    const divePaths = [
+      ...['chumphon-pinnacle', 'southwest-pinnacle', 'white-rock', 'twins', 'sattakut-shipwreck', '313-shipwreck'].map(slug => '/divesites/' + slug),
+      ...['udhdhoo-reef', 'wella-giri', 'lhohi-caves', 'yuki-reef', 'velavaru-thila', 'bodu-thila', 'azmee-corner'].map(slug => '/destinations/maldives/' + slug),
+    ]
+    for (const prefix of ['', '/ru']) for (const path of divePaths) {
+      const response = await page.goto(base + prefix + path, { waitUntil: 'domcontentloaded' })
+      assert.equal(response.status(), 200, `${size.width} ${prefix}${path} response`)
+      const story = page.locator(path.endsWith('/wella-giri') ? '#wella-story-title' : '#dive-story-title')
+      await story.scrollIntoViewIfNeeded()
+      assert.ok(await story.isVisible(), `${size.width} ${prefix}${path} visual story`)
+      assert.equal(await page.locator('a[href=\"#dive-conditions\"]').count(), 1, `${size.width} ${prefix}${path} conditions link`)
+      assert.equal(await page.locator('#dive-conditions').count(), 1, `${size.width} ${prefix}${path} conditions target`)
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
+      assert.ok(overflow <= 2, `${size.width} ${prefix}${path} horizontal overflow: ${overflow}`)
+    }
     await page.goto(base + '/ru/scubadivingcourses')
     const open = page.getByRole('button', { name: /записаться|забронировать/i }).first()
     await open.click()
