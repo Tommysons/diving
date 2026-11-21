@@ -42,7 +42,7 @@ export default function AboutPage() {
 
             <div>
               <h2 className='text-2xl font-semibold text-gray-900'>
-                Hi, I'm Tom!
+                Hi, I&apos;m Tom!
               </h2>
 
               <p className='text-gray-700 mt-2'>
