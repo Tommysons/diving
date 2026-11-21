@@ -12,7 +12,7 @@ let clientPromise: Promise<MongoClient>
 
 if (process.env.NODE_ENV === 'development') {
   //dinde dev, use a global variable to preserve the connection
-  let globalWithMongo = global as typeof globalThis & {
+  const globalWithMongo = global as typeof globalThis & {
     _mongoClientPromise?: Promise<MongoClient>
   }
   if (!globalWithMongo._mongoClientPromise) {
