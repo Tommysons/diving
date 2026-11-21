@@ -4,7 +4,6 @@ import type { ReactNode } from 'react'
 export const metadata: Metadata = {
   title: 'LokaWndr | Дайвинг, снорклинг и океанские приключения',
   description: 'Откройте дайвинг, снорклинг, морскую жизнь и подводные приключения в Таиланде и на Мальдивах вместе с LokaWndr.',
-  alternates: { canonical: '/ru', languages: { en: '/', ru: '/ru' } },
   openGraph: {
     locale: 'ru_RU',
     title: 'LokaWndr | Дайвинг, снорклинг и океанские приключения',
