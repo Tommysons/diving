@@ -50,7 +50,7 @@ export default function ScubaCourseDetailClient({
     )
 
   const course = allCourses[index]
-  const isScubaCourse = (c: any): c is ScubaCourse => 'maxDepth' in c
+  const isScubaCourse = (c: ScubaCourse | SpecialtyCourse): c is ScubaCourse => 'maxDepth' in c
 
   const go = (dir: -1 | 1) => {
     const nextIndex = (index + dir + allCourses.length) % allCourses.length
