@@ -25,6 +25,8 @@ async function main() {
   const contact = await api.post('/api/contact', { data: { name: 'Test Visitor', email: 'visitor@example.invalid', subject: 'CI test', message: 'This is an isolated test message.' } })
   assert.equal(contact.status(), 200, `contact status: ${await contact.text()}`)
   assert.equal((await contact.json()).confirmationSent, true)
+  const failedContact = await api.post('/api/contact', { data: { name: 'Test Visitor', email: 'visitor@example.invalid', subject: 'CI simulated mail failure', message: 'This is an isolated test message.' } })
+  assert.equal(failedContact.status(), 502, 'contact reports simulated mail failure')
   await mongo.close()
   const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] })
   for (const size of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
