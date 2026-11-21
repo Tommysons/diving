@@ -32,7 +32,8 @@ export default function StoryCarousel({ children, locale, label, resetKey, autoP
  const disposed = useRef(false)
  useEffect(() => {
   disposed.current = false
-  return () => { disposed.current = true; if (track.current) gsapInstance.current?.killTweensOf(track.current) }
+  const element = track.current
+  return () => { disposed.current = true; if (element) gsapInstance.current?.killTweensOf(element) }
  }, [])
  const move = async (direction: number) => {
   if (items.length < 2 || locked.current) return
