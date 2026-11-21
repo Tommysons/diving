@@ -1,6 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type Dispatch, type SetStateAction } from 'react'
+import type { ScubaCourse, SpecialtyCourse } from '@/lib/data/scubaCourses'
+
+type Course = ScubaCourse | SpecialtyCourse
+type FormProps = { activeForm: string | null; setActiveForm: Dispatch<SetStateAction<string | null>> }
+type SectionProps = FormProps & { id: string; title: string; courses: Course[] }
+type CardProps = FormProps & { course: Course }
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
@@ -139,7 +145,7 @@ function CourseSectionRU({
   courses,
   activeForm,
   setActiveForm,
-}: any) {
+}: SectionProps) {
   return (
     <div className='space-y-8'>
       <h2
@@ -148,7 +154,7 @@ function CourseSectionRU({
       >
         {title}
       </h2>
-      {courses.map((course: any) => (
+      {courses.map((course: Course) => (
         <CourseCardRU
           key={course.slug}
           course={course}
@@ -161,7 +167,7 @@ function CourseSectionRU({
 }
 
 // Individual Course Card
-function CourseCardRU({ course, activeForm, setActiveForm }: any) {
+function CourseCardRU({ course, activeForm, setActiveForm }: CardProps) {
   if (!course) return null
 
   const isActive = activeForm === course.slug
