@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: smoke-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   smoke:
     runs-on: ubuntu-latest
@@ -30,6 +33,8 @@ jobs:
       - run: npm ci
       - run: npm install --no-save --package-lock=false playwright
       - run: npx playwright install --with-deps chromium
+      - name: Build with isolated services
+        run: NODE_OPTIONS="--require=$PWD/tests/mock-external-fetch.cjs" npm run build
       - name: Start isolated server
         run: |
           NODE_OPTIONS="--require=$PWD/tests/mock-external-fetch.cjs" ./node_modules/.bin/next dev -H 127.0.0.1 -p 3131 > /tmp/lokawndr-server.log 2>&1 &
