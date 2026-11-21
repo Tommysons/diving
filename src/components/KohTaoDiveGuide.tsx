@@ -39,7 +39,7 @@ export default function KohTaoDiveGuide({site,locale}:{site:DiveSite;locale:'en'
  const guide:DiveGuide={
   faqs:faq,
   video:videos[site.slug],
-  name:site.name, intro:site.shortDescription, description:site.longDescription, cover:site.imageUrl,
+  destination:'thailand', name:site.name, intro:site.shortDescription, description:site.longDescription, cover:site.imageUrl,
   photos:(site.extraImages??[]).filter(src=>/\.(webp|jpg|jpeg|png)$/i.test(src)&&!src.includes('-map.')),
   conditions:[{label:ru?'Глубина':'Depth',value:depthNeedsConfirmation?(ru?'Уточняйте':'Check locally'):site.depth},{label:ru?'Течение':'Current',value:site.current},{label:ru?'Видимость':'Visibility',value:site.visibility}],
   marineLife:site.thingsToSee,backHref:`${base}/destinations/thailand#koh-tao-sites`,mapHref:`${base}/destinations/thailand#koh-tao-sites`,locale,
