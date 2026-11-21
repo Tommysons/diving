@@ -1,7 +1,11 @@
-'use client'
+import type { Metadata } from 'next'
+import HomePageClient from '@/components/HomePageClient'
 
-import HomePage from '../page'
+export const metadata: Metadata = {
+  alternates: { canonical: '/ru', languages: { en: '/', ru: '/ru' } },
+  openGraph: { url: '/ru', locale: 'ru_RU' },
+}
 
 export default function HomePageRU() {
-  return <HomePage />
+  return <HomePageClient />
 }
