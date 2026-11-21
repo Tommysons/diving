@@ -33,6 +33,8 @@ export default function DashboardTable({ projectId }: DashboardTableProps) {
   }
 
   useEffect(() => {
+    // Begin loading server data when the selected project changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchBookings()
   }, [projectId])
 
