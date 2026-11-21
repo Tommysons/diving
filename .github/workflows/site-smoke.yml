@@ -1,0 +1,42 @@
+name: Isolated site smoke tests
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      mongo:
+        image: mongo:7
+        ports:
+          - 27017:27017
+    env:
+      MONGODB_URI: mongodb://127.0.0.1:27017
+      MONGODB_DB: scuba_booking
+      RESEND_API_KEY: re_isolated_test
+      ADMIN_EMAIL: admin@example.invalid
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_ZXhhbXBsZS5jb20k
+      CLERK_SECRET_KEY: sk_test_isolated
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Start isolated server
+        run: |
+          NODE_OPTIONS="--require=$PWD/tests/mock-external-fetch.cjs" ./node_modules/.bin/next dev -H 127.0.0.1 -p 3131 > /tmp/lokawndr-server.log 2>&1 &
+          for i in {1..60}; do curl --silent --fail http://127.0.0.1:3131/ >/dev/null && exit 0; sleep 2; done
+          cat /tmp/lokawndr-server.log
+          exit 1
+      - run: node tests/site-smoke.cjs
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/lokawndr-server.log
