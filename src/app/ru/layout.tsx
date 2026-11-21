@@ -8,7 +8,6 @@ export const metadata: Metadata = {
     locale: 'ru_RU',
     title: 'LokaWndr | Дайвинг, снорклинг и океанские приключения',
     description: 'Дайвинг, снорклинг и реальные истории о подводном мире Таиланда и Мальдив.',
-    url: '/ru',
   },
 }
 
