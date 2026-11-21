@@ -20,6 +20,12 @@ async function main() {
   assert.deepEqual((await availability.json()).bookedTimes, ['10:00'])
   const conflict = await api.post('/api/book', { data: { ...booking, time: '11:00' } })
   assert.equal(conflict.status(), 400, 'overlapping booking rejected')
+  for (const prefix of ['', '/ru']) for (const slug of ['velavaru-thila', 'bodu-thila', 'azmee-corner']) {
+    const response = await api.get(`${prefix}/destinations/maldives/${slug}`)
+    assert.equal(response.status(), 404, `${prefix} ${slug} draft returns 404`)
+  }
+  const sitemap = await (await api.get('/sitemap.xml')).text()
+  for (const slug of ['velavaru-thila', 'bodu-thila', 'azmee-corner']) assert.ok(!sitemap.includes(slug), `${slug} absent from sitemap`)
   const invalidContact = await api.post('/api/contact', { data: {} })
   assert.equal(invalidContact.status(), 400)
   const contact = await api.post('/api/contact', { data: { name: 'Test Visitor', email: 'visitor@example.invalid', subject: 'CI test', message: 'This is an isolated test message.' } })
@@ -49,7 +55,7 @@ async function main() {
     }
     const divePaths = [
       ...['chumphon-pinnacle', 'southwest-pinnacle', 'white-rock', 'twins', 'sattakut-shipwreck', '313-shipwreck'].map(slug => '/divesites/' + slug),
-      ...['udhdhoo-reef', 'wella-giri', 'lhohi-caves', 'yuki-reef', 'velavaru-thila', 'bodu-thila', 'azmee-corner'].map(slug => '/destinations/maldives/' + slug),
+      ...['udhdhoo-reef', 'wella-giri', 'lhohi-caves', 'yuki-reef'].map(slug => '/destinations/maldives/' + slug),
     ]
     for (const prefix of ['', '/ru']) for (const path of divePaths) {
       const response = await page.goto(base + prefix + path, { waitUntil: 'domcontentloaded' })
@@ -61,6 +67,7 @@ async function main() {
       assert.equal(await page.locator('#dive-conditions').count(), 1, `${size.width} ${prefix}${path} conditions target`)
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
       assert.ok(overflow <= 2, `${size.width} ${prefix}${path} horizontal overflow: ${overflow}`)
+      for (const draft of ['velavaru-thila', 'bodu-thila', 'azmee-corner']) assert.equal(await page.locator(`a[href$=\"/${draft}\"]`).count(), 0, `${prefix}${path} must not link to ${draft}`)
     }
     await page.goto(base + '/ru/scubadivingcourses')
     const open = page.getByRole('button', { name: /записаться|забронировать/i }).first()
