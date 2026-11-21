@@ -8,10 +8,15 @@ export const maldivesGuideSites = [
  {slug:'azmee-corner',name:'Azmee Corner',en:'A reef wall in the Vilu Reef area with overhangs and marine life.',ru:'Рифовая стена с навесами и морскими обитателями в районе Vilu Reef.',depth:'—',boat:'—'},
 ] as const
 
+// Guides without their own photographs remain drafts until ready to publish.
+export const publishedMaldivesGuideSites = maldivesGuideSites.filter(site =>
+  ['udhdhoo-reef', 'wella-giri', 'lhohi-caves', 'yuki-reef'].includes(site.slug),
+)
+
 export function maldivesGuideNeighbors(slug:string, locale:'en'|'ru') {
- const i=maldivesGuideSites.findIndex(site=>site.slug===slug)
+ const i=publishedMaldivesGuideSites.findIndex(site=>site.slug===slug)
  if(i<0) return null
  const base=locale==='ru'?'/ru':''
  const toLink=(site:(typeof maldivesGuideSites)[number])=>({name:site.name,href:`${base}/destinations/maldives/${site.slug}`})
- return {previous:toLink(maldivesGuideSites[(i-1+maldivesGuideSites.length)%maldivesGuideSites.length]),next:toLink(maldivesGuideSites[(i+1)%maldivesGuideSites.length])}
+ return {previous:toLink(publishedMaldivesGuideSites[(i-1+publishedMaldivesGuideSites.length)%publishedMaldivesGuideSites.length]),next:toLink(publishedMaldivesGuideSites[(i+1)%publishedMaldivesGuideSites.length])}
 }
