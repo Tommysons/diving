@@ -13,19 +13,26 @@ export default function WellaStory({ locale }: Props) {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (!section || preference.matches || !('IntersectionObserver' in window)) return
     let disposed = false
-    let animation: { revert: () => void } | undefined
-    const observer = new IntersectionObserver(async entries => {
-      if (!entries.some(entry => entry.isIntersecting)) return
-      observer.disconnect()
-      const { gsap } = await import('gsap')
-      if (disposed) return
-      animation = gsap.context(() => {
-        gsap.fromTo(section.querySelectorAll('[data-story-reveal]'),
-          { y: 18 }, { y: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out', clearProps: 'transform' })
-      }, section)
+    const animations: { revert: () => void }[] = []
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(async entry => {
+        if (!entry.isIntersecting) return
+        observer.unobserve(entry.target)
+        const { gsap } = await import('gsap')
+        if (disposed || preference.matches) return
+        animations.push(gsap.context(() => {
+          gsap.fromTo(entry.target, { y: 18 }, {
+            y: 0, duration: 0.7, ease: 'power2.out', clearProps: 'transform',
+          })
+        }, section))
+      })
     }, { rootMargin: '0px 0px -5% 0px' })
-    observer.observe(section)
-    return () => { disposed = true; observer.disconnect(); animation?.revert() }
+    section.querySelectorAll('[data-story-reveal]').forEach(element => observer.observe(element))
+    const stopForReducedMotion = () => {
+      if (preference.matches) { observer.disconnect(); animations.forEach(animation => animation.revert()) }
+    }
+    preference.addEventListener('change', stopForReducedMotion)
+    return () => { disposed = true; preference.removeEventListener('change', stopForReducedMotion); observer.disconnect(); animations.forEach(animation => animation.revert()) }
   }, [])
 
   const t = ru ? {
