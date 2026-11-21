@@ -30,7 +30,7 @@ export default function AdminAllProjects() {
     loadAll()
   }, [])
 
-  async function updateBooking(id: string, project: string, updates: any) {
+  async function updateBooking(id: string, project: string, updates: { date?: string; time?: string; status?: string }) {
     await fetch(`/api/dashboard/projects/${project}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
