@@ -27,6 +27,8 @@ export default function AdminAllProjects() {
   }
 
   useEffect(() => {
+    // Fetch the current server data on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadAll()
   }, [])
 
