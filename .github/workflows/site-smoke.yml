@@ -36,7 +36,7 @@ jobs:
           for i in {1..60}; do curl --silent --fail http://127.0.0.1:3131/ >/dev/null && exit 0; sleep 2; done
           cat /tmp/lokawndr-server.log
           exit 1
-      - run: node tests/site-smoke.cjs
+      - run: node tests/site-smoke.mjs
       - name: Show server log on failure
         if: failure()
         run: cat /tmp/lokawndr-server.log
