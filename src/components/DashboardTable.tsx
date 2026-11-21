@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface Booking {
   _id: string
@@ -24,19 +24,19 @@ export default function DashboardTable({ projectId }: DashboardTableProps) {
   const [loading, setLoading] = useState(false)
 
   // Fetch bookings
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     setLoading(true)
     const res = await fetch(`/api/dashboard/projects/${projectId}`)
     const data = await res.json()
     setBookings(data)
     setLoading(false)
-  }
+  }, [projectId])
 
   useEffect(() => {
     // Begin loading server data when the selected project changes.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchBookings()
-  }, [projectId])
+  }, [fetchBookings])
 
   // Handle approve, cancel, edit
   const handleAction = async (
