@@ -24,6 +24,8 @@ export default function AdminBookings() {
     } catch (err) { setError(err instanceof Error ? err.message : 'Unable to load bookings') }
     finally { setLoading(false) }
   }, [])
+  // Initial loading state and the fetch must start together on mount.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { void load() }, [load])
   const visible = useMemo(() => rows.filter(b => (filter === 'all' || b.status === filter) && [b.name, b.email, b.course, b.site, b.project].join(' ').toLowerCase().includes(search.toLowerCase())), [rows, filter, search])
   async function mutate(method: 'PATCH' | 'DELETE', booking: Booking, updates?: typeof form) {
