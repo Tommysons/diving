@@ -19,6 +19,8 @@ export default function ContactPageRu() {
 
   useEffect(() => {
     const subject = new URLSearchParams(window.location.search).get('subject')
+    // Query parameters are only available in the browser after hydration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (subject) setForm(current => ({ ...current, subject: subject.slice(0, 160) }))
   }, [])
 

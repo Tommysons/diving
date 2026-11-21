@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Insert booking
-    const doc: any = {
+    const doc = {
       name,
       email,
       phone,
@@ -89,11 +89,8 @@ export async function POST(req: NextRequest) {
       message: message || '',
       status: 'pending',
       createdAt: new Date(),
+      ...(type === 'dive_trip' ? { site: activity } : { course: activity }),
     }
-
-    if (type === 'scuba_course' || type === 'freediving_course')
-      doc.course = activity
-    if (type === 'dive_trip') doc.site = activity
 
     const result = await collection.insertOne(doc)
 
@@ -131,10 +128,10 @@ export async function POST(req: NextRequest) {
       })
 
       if (response.error) console.error('Booking acknowledgement rejected:', response.error)
-    } catch (err: any) {
+    } catch (err) {
       console.error(
         'Resend client email error:',
-        err?.response?.data || err?.message || err
+        err
       )
     }
 
@@ -167,10 +164,10 @@ export async function POST(req: NextRequest) {
         })
 
         if (response.error) console.error('Booking notification rejected:', response.error)
-      } catch (err: any) {
+      } catch (err) {
         console.error(
           'Resend admin email error:',
-          err?.response?.data || err?.message || err
+          err
         )
       }
     } else {
@@ -181,10 +178,10 @@ export async function POST(req: NextRequest) {
       { message: 'Booking request received; awaiting confirmation', status: 'pending', id: result.insertedId },
       { status: 200 }
     )
-  } catch (error: any) {
+  } catch (error) {
     console.error('Booking route fatal error:', error)
     return NextResponse.json(
-      { error: error?.message || 'Server error' },
+      { error: error instanceof Error ? error.message : 'Server error' },
       { status: 500 }
     )
   }

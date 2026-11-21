@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
     const client = await clientPromise
     const db = client.db('scuba_booking')
 
-    const query: any = { date }
+    const query: { date: string; status?: string; $or?: Array<{ course: string } | { site: string }> } = { date }
     if (activity) query.$or = [{ course: activity }, { site: activity }]
 
     // Only approved bookings reserve a time slot. Pending requests are enquiries.

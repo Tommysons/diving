@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 interface BookingFormProps {
   type: 'scuba_course' | 'freediving_course' | 'dive_trip'
@@ -7,6 +8,9 @@ interface BookingFormProps {
 }
 
 export default function BookingForm({ type, activity }: BookingFormProps) {
+  const pathname = usePathname()
+  const ru = pathname === '/ru' || pathname?.startsWith('/ru/')
+  const text = ru ? { booking: 'Запись', name: 'Имя', email: 'Эл. почта', phone: 'Телефон', date: 'Дата:', time: 'Время:', select: 'Выберите время', booked: '(Занято)', message: 'Сообщение (необязательно)', submit: 'Отправить заявку', sending: 'Отправка…', required: 'Заполните все обязательные поля', success: 'Заявка получена. Запись будет подтверждена после того, как мы свяжемся с вами.', failure: 'Не удалось отправить заявку. Попробуйте ещё раз.', conflict: 'Это время уже занято. Выберите другое время.' } : { booking: 'Booking', name: 'Name', email: 'Email', phone: 'Phone', date: 'Date:', time: 'Time:', select: 'Select a time', booked: '(Booked)', message: 'Message (optional)', submit: 'Book Appointment', sending: 'Submitting…', required: 'Please fill all required fields', success: 'Booking request received. This is not confirmed until we contact you.', failure: 'Failed to book', conflict: 'This time slot is already booked' }
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
   const [bookedTimes, setBookedTimes] = useState<string[]>([])
@@ -45,7 +49,7 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name || !email || !date || !time) {
-      setStatus('Please fill all required fields')
+      setStatus(text.required)
       return
     }
 
@@ -70,7 +74,7 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
       const data = await res.json()
       if (res.ok) {
         setSubmitted(true)
-        setStatus('Booking request received. This is not confirmed until we contact you.')
+        setStatus(text.success)
         setName('')
         setEmail('')
         setPhone('')
@@ -78,11 +82,11 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
         setDate('')
         setTime('')
       } else {
-        setStatus(data.error || 'Failed to book')
+        setStatus(ru ? (data.error === 'This time slot is already booked' ? text.conflict : text.failure) : (data.error || text.failure))
       }
     } catch (err) {
       console.error(err)
-      setStatus('Failed to book')
+      setStatus(text.failure)
     } finally {
       setSubmitting(false)
     }
@@ -90,17 +94,17 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
 
   if (submitted) return (
     <div role='status' aria-live='polite' className='max-w-md rounded border border-emerald-300/40 bg-emerald-950/30 p-4 text-white'>
-      Booking request received. This is not confirmed until we contact you.
+      {text.success}
     </div>
   )
 
   return (
     <form onSubmit={handleSubmit} className='p-4 border rounded max-w-md'>
-      <h2 className='font-bold mb-2'>{activity} Booking</h2>
+      <h2 className='font-bold mb-2'>{activity} {text.booking}</h2>
 
       <input
         type='text'
-        placeholder='Name'
+        placeholder={text.name}
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
@@ -108,7 +112,7 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
       />
       <input
         type='email'
-        placeholder='Email'
+        placeholder={text.email}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
@@ -116,13 +120,13 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
       />
       <input
         type='tel'
-        placeholder='Phone'
+        placeholder={text.phone}
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
         className='mb-2 block w-full'
       />
 
-      <label className='block mb-2'>Date:</label>
+      <label className='block mb-2'>{text.date}</label>
       <input
         type='date'
         value={date}
@@ -131,23 +135,23 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
         className='mb-2 block w-full'
       />
 
-      <label className='block mb-2'>Time:</label>
+      <label className='block mb-2'>{text.time}</label>
       <select
         value={time}
         onChange={(e) => setTime(e.target.value)}
         required
         className='mb-2 block w-full'
       >
-        <option value=''>Select a time</option>
+        <option value=''>{text.select}</option>
         {allTimes.map((t) => (
           <option key={t} value={t} disabled={bookedTimes.includes(t)}>
-            {t} {bookedTimes.includes(t) ? '(Booked)' : ''}
+            {t} {bookedTimes.includes(t) ? text.booked : ''}
           </option>
         ))}
       </select>
 
       <textarea
-        placeholder='Message (optional)'
+        placeholder={text.message}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         className='mb-2 block w-full'
@@ -158,7 +162,7 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
         disabled={submitting}
         className='bg-blue-600 text-white px-4 py-2 rounded disabled:cursor-not-allowed disabled:opacity-50'
       >
-        {submitting ? 'Submitting…' : 'Book Appointment'}
+        {submitting ? text.sending : text.submit}
       </button>
       {status && <p className='mt-2'>{status}</p>}
     </form>

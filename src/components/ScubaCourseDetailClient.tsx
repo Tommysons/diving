@@ -29,10 +29,12 @@ export default function ScubaCourseDetailClient({
   const rawSlug = params?.slug
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug
 
-  const allCourses: (ScubaCourse | SpecialtyCourse)[] =
-    lang === 'en'
+  const allCourses = useMemo<(ScubaCourse | SpecialtyCourse)[]>(
+    () => lang === 'en'
       ? [...scubaCourses, ...specialtyCourses]
-      : [...scubaCoursesRU, ...specialtyCoursesRU]
+      : [...scubaCoursesRU, ...specialtyCoursesRU],
+    [lang],
+  )
 
   const index = useMemo(
     () => allCourses.findIndex((c) => c.slug === slug),
@@ -50,7 +52,7 @@ export default function ScubaCourseDetailClient({
     )
 
   const course = allCourses[index]
-  const isScubaCourse = (c: any): c is ScubaCourse => 'maxDepth' in c
+  const isScubaCourse = (c: ScubaCourse | SpecialtyCourse): c is ScubaCourse => 'maxDepth' in c
 
   const go = (dir: -1 | 1) => {
     const nextIndex = (index + dir + allCourses.length) % allCourses.length

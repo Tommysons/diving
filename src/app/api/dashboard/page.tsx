@@ -27,10 +27,12 @@ export default function AdminAllProjects() {
   }
 
   useEffect(() => {
+    // Fetch the current server data on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadAll()
   }, [])
 
-  async function updateBooking(id: string, project: string, updates: any) {
+  async function updateBooking(id: string, project: string, updates: { date?: string; time?: string; status?: string }) {
     await fetch(`/api/dashboard/projects/${project}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

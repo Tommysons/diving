@@ -53,7 +53,7 @@ export default function DiveSitesPage() {
                 Explore the Underwater World of Koh Tao
               </h2>
               <p className='mb-4'>
-                Koh Tao, meaning "Turtle Island," is a diver's paradise known
+                Koh Tao, meaning &quot;Turtle Island,&quot; is a diver&apos;s paradise known
                 for its crystal-clear waters, thriving coral reefs, and abundant
                 marine life. From shallow bays perfect for beginners to deep
                 pinnacles for advanced divers, the island offers a variety of
