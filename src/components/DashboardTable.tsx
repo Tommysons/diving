@@ -48,7 +48,7 @@ export default function DashboardTable({ projectId }: DashboardTableProps) {
       if (!confirmCancel) return
     }
 
-    const body: { id: string; action: typeof action; date?: string; time?: string } = { id, action }
+    const body: { id: string; action: typeof action; newDate?: string; newTime?: string } = { id, action }
 
     if (action === 'edit') {
       const newDate = prompt('Enter new date (YYYY-MM-DD):')
