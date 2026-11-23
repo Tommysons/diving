@@ -14,10 +14,13 @@ import { blogPosts } from '@/lib/data/blogPosts'
 import { blogPostsRU } from '@/lib/data/blogPostsRU'
 
 const stories = [
+ { title:'Swimming with a Manta Ray in the Maldives | South Ari Atoll', type:'snorkeling', id:'3Ee3Md1R16A' },
+ { title:'One Country, Many Dive Sites | Maldives Marine Life on GoPro', type:'diving', id:'Aqj2hctqOFM' },
  { title:'Dolphins, a Reef Shark & a Turtle | A Maldives Dive to Remember', type:'diving', id:'qMadZd0RqRs' },
  { title:'Diving in Dhaalu atoll Maldives', type:'diving', id:'A83GuC7Rry4' },
  { title:'Swimming With Mantas & a Whale Shark | Maldives', type:'snorkeling', id:'ZnC4xG3lMlk' },
  { title:'Snorkeling in the Azmee Corner', type:'snorkeling', id:'v5j3utsgwOo' },
+ { title:'Why do I love teaching scuba diving?', type:'diving', id:'kgGqFdnqAwM' },
  { title:'Wondering in Chumphon Pinnacle', type:'diving', id:'8qt0x0oU4hw' },
  { title:'Wondering in wreck Sattakut', type:'diving', id:'dclxFrsdWVY' },
 ]
