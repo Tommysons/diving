@@ -187,6 +187,7 @@ function CourseCard({ course, activeForm, setActiveForm }: CardProps) {
               {course.maxDepth}
             </p>
           )}
+          <p className='text-sm sm:text-base font-semibold text-cyan-700'>Contact for pricing</p>
           {course.prerequisites && (
             <p className='text-sm sm:text-base'>
               <span className='font-semibold text-cyan-700'>
