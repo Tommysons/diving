@@ -115,7 +115,7 @@ export default function ScubaCourseDetailClient({
               <div className='grid grid-cols-3 gap-3'>
                 <Info
                   label={lang === 'en' ? 'Price' : 'Цена'}
-                  value={course.price || '-'}
+                  value={lang === 'en' ? 'Contact for pricing' : 'Стоимость по запросу'}
                 />
                 <Info
                   label={lang === 'en' ? 'Duration' : 'Длительность'}
