@@ -31,7 +31,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm install --no-save --package-lock=false playwright
+      - run: npm install --no-save --package-lock=false --save-exact playwright@1.56.1 @typescript-eslint/parser@8.72.1
       - run: npx playwright install --with-deps chromium
       - name: Build with isolated services
         run: NODE_OPTIONS="--require=$PWD/tests/mock-external-fetch.cjs" npm run build
@@ -44,4 +44,4 @@ jobs:
       - run: node tests/site-smoke.mjs
       - name: Show server log on failure
         if: failure()
-        run: cat /tmp/lokawndr-server.log
+        run: if [ -f /tmp/lokawndr-server.log ]; then cat /tmp/lokawndr-server.log; else echo 'Server did not start; no server log was created.'; fi
