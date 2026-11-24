@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { contactSchema } from '@/lib/validation/contactSchema'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import {formCard,formHeading,formIntro,formInput,formLabel,formButton} from '@/lib/styles/form'
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -78,12 +79,12 @@ export default function ContactPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className='w-full max-w-xl bg-white/95 text-[#073044] backdrop-blur-md p-7 sm:p-10 rounded-3xl border border-cyan-100/30 shadow-2xl'
+          className={'max-w-xl '+formCard}
         >
-          <h1 className='text-3xl font-bold text-center text-[#075475] mb-2'>
+          <h1 className={formHeading}>
             Contact LokaWndr
           </h1>
-          <p className='text-center text-[#075475] mb-6'>
+          <p className={formIntro}>
             Let’s plan your underwater adventure. Ask anything about diving,
             courses, or experiences.
           </p>
@@ -98,19 +99,19 @@ export default function ContactPage() {
             )}
 
             <div>
-              <label htmlFor='contact-name' className='text-sm font-medium'>Name</label>
+              <label htmlFor='contact-name' className={formLabel}>Name</label>
               <input
                 id='contact-name'
                 name='name'
                 placeholder='Your name'
                 value={form.name}
                 onChange={handleChange}
-                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+                className={formInput}
               />
             </div>
 
             <div>
-              <label htmlFor='contact-email' className='text-sm font-medium'>Email</label>
+              <label htmlFor='contact-email' className={formLabel}>Email</label>
               <input
                 id='contact-email'
                 type='email'
@@ -118,24 +119,24 @@ export default function ContactPage() {
                 placeholder='you@email.com'
                 value={form.email}
                 onChange={handleChange}
-                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+                className={formInput}
               />
             </div>
 
             <div>
-              <label htmlFor='contact-subject' className='text-sm font-medium'>Subject</label>
+              <label htmlFor='contact-subject' className={formLabel}>Subject</label>
               <input
                 id='contact-subject'
                 name='subject'
                 placeholder='What is this about?'
                 value={form.subject}
                 onChange={handleChange}
-                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+                className={formInput}
               />
             </div>
 
             <div>
-              <label htmlFor='contact-message' className='text-sm font-medium'>Message</label>
+              <label htmlFor='contact-message' className={formLabel}>Message</label>
               <textarea
                 id='contact-message'
                 name='message'
@@ -143,14 +144,14 @@ export default function ContactPage() {
                 placeholder='Tell me about your diving plans...'
                 value={form.message}
                 onChange={handleChange}
-                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none resize-none'
+                className={formInput+' resize-y'}
               />
             </div>
 
             <button
               disabled={sending}
               type='submit'
-              className='w-full py-3 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white active:scale-95 transition'
+              className={formButton}
             >
               {sending ? 'Sending...' : 'Send Message'}
             </button>
