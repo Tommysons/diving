@@ -7,6 +7,8 @@ import StoryCarousel from '@/components/StoryCarousel'
 
 export type LokaVideo = { id: string; title: string; category?: string }
 export const maldivesVideos: LokaVideo[] = [
+ { id:'3Ee3Md1R16A', title:'Swimming with a Manta Ray in the Maldives | South Ari Atoll' },
+ { id:'Aqj2hctqOFM', title:'One Country, Many Dive Sites | Maldives Marine Life on GoPro' },
  { id:'qMadZd0RqRs', title:'Dolphins, a Reef Shark & a Turtle | A Maldives Dive to Remember' },
  { id:'A83GuC7Rry4', title:'Diving in Dhaalu atoll Maldives' },
  { id:'ZnC4xG3lMlk', title:'Swimming With Mantas & a Whale Shark | Maldives' },
@@ -28,6 +30,7 @@ export const featuredVideos: LokaVideo[] = [
  { id:'kgGqFdnqAwM', title:'Why do I love teaching scuba diving?' },
  { id:'qcc3i3AIxMw', title:'Why I Chose Scuba Diving as My Profession' },
  { id:'LNj_6UeX8RM', title:'Testing the New GoPro Update on a Scuba Dive' },
+ { id:'Kdr_EgOgCkg', title:'1-Minute Dive Highlights' },
 ]
 function VideoPlayer({video,locale}:{video:LokaVideo;locale:'en'|'ru'}) {
  const [playing,setPlaying]=useState(false)
