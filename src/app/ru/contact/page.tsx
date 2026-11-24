@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { contactSchema } from '@/lib/validation/contactSchema'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import {formCard,formHeading,formIntro,formInput,formLabel,formButton} from '@/lib/styles/form'
 
 export default function ContactPageRu() {
   const [form, setForm] = useState({
@@ -80,13 +81,13 @@ export default function ContactPageRu() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className='w-full max-w-xl bg-white/95 text-[#073044] backdrop-blur-md p-7 sm:p-10 rounded-3xl border border-cyan-100/30 shadow-2xl'
+          className={'max-w-xl '+formCard}
         >
           <h1 className='text-3xl font-bold tracking-tight text-[#075475] text-center mb-2'>
             Связаться с LokaWndr
           </h1>
 
-          <p className='text-center text-[#075475] mb-6'>
+          <p className={formIntro}>
             Запланируем ваше подводное приключение. Спросите о дайвинге, курсах
             или погружениях.
           </p>
@@ -101,19 +102,19 @@ export default function ContactPageRu() {
             )}
 
             <div>
-              <label htmlFor='contact-name' className='text-sm font-medium'>Имя</label>
+              <label htmlFor='contact-name' className={formLabel}>Имя</label>
               <input
                 id='contact-name'
                 name='name'
                 placeholder='Ваше имя'
                 value={form.name}
                 onChange={handleChange}
-                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+                className={formInput}
               />
             </div>
 
             <div>
-              <label htmlFor='contact-email' className='text-sm font-medium'>Email</label>
+              <label htmlFor='contact-email' className={formLabel}>Email</label>
               <input
                 id='contact-email'
                 type='email'
@@ -121,24 +122,24 @@ export default function ContactPageRu() {
                 placeholder='you@email.com'
                 value={form.email}
                 onChange={handleChange}
-                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+                className={formInput}
               />
             </div>
 
             <div>
-              <label htmlFor='contact-subject' className='text-sm font-medium'>Тема</label>
+              <label htmlFor='contact-subject' className={formLabel}>Тема</label>
               <input
                 id='contact-subject'
                 name='subject'
                 placeholder='О чём сообщение?'
                 value={form.subject}
                 onChange={handleChange}
-                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none'
+                className={formInput}
               />
             </div>
 
             <div>
-              <label htmlFor='contact-message' className='text-sm font-medium'>Сообщение</label>
+              <label htmlFor='contact-message' className={formLabel}>Сообщение</label>
               <textarea
                 id='contact-message'
                 name='message'
@@ -146,14 +147,14 @@ export default function ContactPageRu() {
                 placeholder='Расскажите о своих планах погружения...'
                 value={form.message}
                 onChange={handleChange}
-                className='mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none resize-none'
+                className={formInput+' resize-y'}
               />
             </div>
 
             <button
               disabled={sending}
               type='submit'
-              className='w-full py-3 rounded-xl bg-cyan-700 hover:bg-cyan-800 text-white active:scale-95 transition'
+              className={formButton}
             >
               {sending ? 'Отправка...' : 'Отправить сообщение'}
             </button>
