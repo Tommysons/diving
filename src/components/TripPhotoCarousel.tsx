@@ -10,7 +10,7 @@ export default function TripPhotoCarousel({images,ru,label}:Props){
  const move=(next:number)=>{
   const target=Math.max(0,Math.min(images.length-1,next))
   const el=track.current?.children.item(target) as HTMLElement|null
-  el?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest',inline:'start'})
+  el?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest',inline:'start'})
   setIndex(target)
  }
  return <div className="relative mt-5">
