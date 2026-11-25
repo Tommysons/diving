@@ -14,6 +14,14 @@ const diveGroups = [
  {title:'SEO settings',fields:['slug','seoEn','seoRu']}
 ]
 const diveLabels: Record<string,string> = {depth:'Chart depth (EN)',depthRu:'Chart depth (RU)',current:'Current (EN)',currentRu:'Current (RU)',visibility:'Visibility (EN)',visibilityRu:'Visibility (RU)',boat:'Boat journey (optional, EN)',boatRu:'Boat journey (optional, RU)',country:'Country',destination:'Destination'}
+const tripGroups = [
+ {title:'Trip overview',fields:['titleEn','titleRu','country','destination','bodyEn','bodyRu','nights','dives','capacity','dates']},
+ {title:'Accommodation',fields:['stayType','stayName','stayLocation','stayEn','stayRu','rooms','mealsEn','mealsRu']},
+ {title:'Package and pricing',fields:['currency','doublePrice','singlePrice','price','inclusionsEn','inclusionsRu','extrasEn','extrasRu','itinerary','itineraryRu','faqEn','faqRu']},
+ {title:'SEO settings',fields:['slug','seoEn','seoRu']}
+]
+const tripLabels: Record<string,string> = {stayType:'Accommodation type',stayName:'Property or boat name',stayLocation:'Island / town / departure port',stayEn:'Accommodation description (EN)',stayRu:'Accommodation description (RU)',rooms:'Rooms or cabins',nights:'Nights',dives:'Included dives',capacity:'Maximum guests',dates:'Travel dates / season',mealsEn:'Meal plan (EN)',mealsRu:'Meal plan (RU)',doublePrice:'Double / twin sharing price per person',singlePrice:'Single occupancy price per person',price:'Other / starting price per person',currency:'Currency (e.g. USD)',inclusionsEn:'Package inclusions (EN)',inclusionsRu:'Package inclusions (RU)',extrasEn:'Optional extras and rental prices (EN)',extrasRu:'Optional extras and rental prices (RU)',itinerary:'Itinerary (EN)',itineraryRu:'Itinerary (RU)',faqEn:'Frequently asked questions (EN)',faqRu:'Frequently asked questions (RU)',videoGallery:'Dive video URLs (one per line)'}
+const longField = /body|itinerary|^stay(En|Ru)$|inclusions|extras|faq|videoGallery/
 const input = 'w-full rounded-lg border border-white/20 bg-[#0b3045] p-3 text-white'
 export default function AdminWorkspace() {
  const [section,setSection] = useState<Kind>('bookings')
@@ -45,9 +53,19 @@ export default function AdminWorkspace() {
   setForm(next)
  }
  function slugify(value:string){return value.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
- function field(key:string) {return <label key={key} className={'block text-sm '+(/body|itinerary/.test(key)?'sm:col-span-2':'')}>{diveLabels[key]||labels[key]||key}{/body|itinerary/.test(key)?<textarea rows={6} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>:<input required={key==='titleEn'||key==='slug'} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>}</label>}
+ function field(key:string) {return <label key={key} className={'block text-sm '+(longField.test(key)?'sm:col-span-2':'')}>{tripLabels[key]||diveLabels[key]||labels[key]||key}{key==='stayType'?<select className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}><option value=''>Choose accommodation type</option>{[['local-island','Local island'],['resort-island','Resort island'],['mainland','Mainland'],['liveaboard','Liveaboard / safari boat'],['other','Other']].map(([v,l])=><option key={v} value={v}>{l}</option>)}</select>:longField.test(key)?<textarea rows={6} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>:<input required={key==='titleEn'||key==='slug'} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>}</label>}
  const gallery=(form?.gallery||form?.mediaUrl||'').split('\n').filter(Boolean)
  function updateGallery(items:string[],cover?:string){if(form)setForm({...form,gallery:items.join('\n'),mediaUrl:cover??(items.includes(form.mediaUrl)?form.mediaUrl:items[0]||'')})}
+ function tripGallery(key:string,coverKey:string,title:string) {
+  if(!form)return null
+  const items=(form[key]||'').split('\n').filter(Boolean)
+  const pending=key+'Pending'
+  function update(next:string[],cover?:string){setForm(old=>old?{...old,[key]:next.join('\n'),[coverKey]:cover??(next.includes(old[coverKey])?old[coverKey]:next[0]||'')}:old)}
+  return <fieldset className='space-y-3 rounded-xl border border-white/15 p-4 sm:col-span-2'><legend className='px-2 font-semibold'>{title}</legend>
+  <p className='text-sm text-slate-300'>Use HTTPS image URLs or existing website image paths.</p>
+  <div className='grid gap-3 sm:grid-cols-2'>{items.map((url,i)=><div key={i} className='min-w-0 space-y-2 rounded-lg border border-white/15 p-2'>{(/^https:\/\/[^\s]+$/.test(url)||/^\/(?!\/)[^\s]+$/.test(url))&&<img src={url} alt={title+' '+(i+1)} loading='lazy' referrerPolicy='no-referrer' className='aspect-video w-full rounded object-cover'/>}<p className='break-all text-xs'>{url}</p><div className='flex flex-wrap gap-3 text-sm'><button type='button' onClick={()=>update(items,url)}>{(form[coverKey]||items[0])===url?'Cover selected':'Set cover'}</button><button type='button' disabled={i===0} onClick={()=>{const a=[...items];[a[i-1],a[i]]=[a[i],a[i-1]];update(a)}}>Up</button><button type='button' disabled={i===items.length-1} onClick={()=>{const a=[...items];[a[i+1],a[i]]=[a[i],a[i+1]];update(a)}}>Down</button><button type='button' onClick={()=>update(items.filter((_,j)=>j!==i))} className='text-red-200'>Remove</button></div></div>)}</div>
+  <label className='block text-sm'>Add photo URL<input className={input} value={form[pending]||''} onChange={e=>change(pending,e.target.value)}/></label><button type='button' disabled={!form[pending]?.trim()} className='rounded-lg border border-white/30 px-4 py-2' onClick={()=>{const url=form[pending].trim();if(!/^https:\/\/[^\s]+$/.test(url)&&!/^\/(?!\/)[^\s]+$/.test(url)){setNotice('Enter an HTTPS URL or local image path');return}setForm({...form,[pending]:'',[key]:[...items,url].join('\n'),[coverKey]:form[coverKey]||url})}}>Add photo</button></fieldset>
+ }
  return <div className='mt-8 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]'>
  <nav aria-label='Admin sections' className='flex flex-wrap gap-2 self-start rounded-xl border border-white/15 p-3 lg:flex-col'>
  {sections.map(([id,label])=><button key={id} disabled={busy} aria-current={section===id?'page':undefined} className={'rounded-lg px-4 py-3 text-left text-sm '+(section===id?'bg-cyan-100 font-semibold text-[#062536]':'hover:bg-white/10')} onClick={()=>{if(form&&!window.confirm('Discard unsaved editor changes?'))return;setSection(id);setForm(null);setNotice('');if(id!=='bookings')void load()}}>{label}</button>)}
@@ -58,7 +76,7 @@ export default function AdminWorkspace() {
  <p className='rounded-lg border border-cyan-200/30 p-3 text-sm text-cyan-100'>Draft workspace: saving here does not publish or change existing public pages.</p>
  {notice&&<p role='status' className='rounded-lg bg-white/10 p-3'>{notice}</p>}
  {form?<form className='grid gap-4 rounded-xl border border-white/15 p-4 sm:grid-cols-2' onSubmit={e=>{e.preventDefault();void save()}}>
- {section==='dive-site'?<>
+ {section==='dive-trip'?<>{tripGroups.slice(0,2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}{tripGallery('stayGallery','stayCover','Accommodation photo gallery')}{tripGallery('gallery','mediaUrl','Diving photo gallery')}<div className='sm:col-span-2'>{field('videoGallery')}</div>{tripGroups.slice(2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}</>:section==='dive-site'?<>
  {diveGroups.slice(0,2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}
  <fieldset className='space-y-3 rounded-xl border border-white/15 p-4 sm:col-span-2'><legend className='px-2 font-semibold'>Photo gallery</legend>
  <p className='text-sm text-slate-300'>Add existing image URLs or local website image paths. Select a cover and arrange the gallery. Direct file uploads are not enabled yet.</p>
