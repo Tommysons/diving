@@ -4,7 +4,7 @@ import { bookingDb, requireAdmin } from '@/lib/adminBookings'
 
 export const dynamic = 'force-dynamic'
 const kinds = ['country','destination','dive-site','activity','dive-trip','blog','video']
-const fields = ['titleEn','titleRu','bodyEn','bodyRu','slug','country','destination','activity','mediaUrl','youtubeUrl','price','currency','depth','visibility','current','latitude','longitude','capacity','dates','itinerary','seoEn','seoRu','gallery','depthRu','currentRu','visibilityRu','boat','boatRu','stayType','stayName','stayLocation','stayEn','stayRu','stayGallery','stayCover','nights','dives','rooms','mealsEn','mealsRu','singlePrice','doublePrice','extrasEn','extrasRu','inclusionsEn','inclusionsRu','itineraryRu','videoGallery','faqEn','faqRu'] as const
+const fields = ['titleEn','titleRu','bodyEn','bodyRu','slug','country','destination','activity','mediaUrl','youtubeUrl','price','currency','depth','visibility','current','latitude','longitude','capacity','dates','itinerary','seoEn','seoRu','gallery','depthRu','currentRu','visibilityRu','boat','boatRu','stayType','stayName','stayLocation','stayEn','stayRu','stayGallery','stayCover','nights','dives','rooms','mealsEn','mealsRu','singlePrice','doublePrice','extrasEn','extrasRu','inclusionsEn','inclusionsRu','itineraryRu','videoGallery','faqEn','faqRu','excerptEn','excerptRu','articleDate','tagsEn','tagsRu','thumbnailUrl'] as const
 async function collection() { return (await bookingDb()).collection('cms_drafts') }
 export async function GET() {
   if (!await requireAdmin()) return NextResponse.json({error:'Forbidden'},{status:403})
