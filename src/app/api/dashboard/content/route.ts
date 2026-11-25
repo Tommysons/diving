@@ -4,7 +4,7 @@ import { bookingDb, requireAdmin } from '@/lib/adminBookings'
 
 export const dynamic = 'force-dynamic'
 const kinds = ['country','destination','dive-site','activity','dive-trip','blog','video']
-const fields = ['titleEn','titleRu','bodyEn','bodyRu','slug','country','destination','activity','mediaUrl','youtubeUrl','price','currency','depth','visibility','current','latitude','longitude','capacity','dates','itinerary','seoEn','seoRu'] as const
+const fields = ['titleEn','titleRu','bodyEn','bodyRu','slug','country','destination','activity','mediaUrl','youtubeUrl','price','currency','depth','visibility','current','latitude','longitude','capacity','dates','itinerary','seoEn','seoRu','gallery','depthRu','currentRu','visibilityRu','boat','boatRu'] as const
 async function collection() { return (await bookingDb()).collection('cms_drafts') }
 export async function GET() {
   if (!await requireAdmin()) return NextResponse.json({error:'Forbidden'},{status:403})
@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
     if (b[key] !== undefined && (typeof b[key] !== 'string' || b[key].length > 30000)) return NextResponse.json({error:'Invalid field: '+key},{status:400})
     values[key] = (b[key] || '').trim()
   }
+  if (values.gallery && values.gallery.split('\n').filter(Boolean).some(url => !/^https:\/\/[^\s]+$/.test(url) && !/^\/(?!\/)[^\s]+$/.test(url))) return NextResponse.json({error:'Gallery images must be HTTPS URLs or local image paths'},{status:400})
   const c = await collection()
   const id = b.id
   if (id && (typeof id !== 'string' || !ObjectId.isValid(id))) return NextResponse.json({error:'Invalid ID'},{status:400})
