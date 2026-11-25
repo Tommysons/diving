@@ -46,7 +46,7 @@ export default function HomePage() {
  const posts=[...(ru?blogPostsRU:blogPosts)].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,9)
  return <><HomeMotion/><Header/><main className='bg-[#06283a] text-white'>
   <section className='relative isolate overflow-hidden'>
-   <div className='absolute inset-0'><Image src='/images/generated/lokawndr-manta-reef-background.webp' alt='' fill priority fetchPriority='high' quality={60} sizes='100vw' className='object-cover'/><div className='absolute inset-0 bg-gradient-to-r from-[#032538]/95 via-[#034461]/65 to-[#032538]/10'/><div className='absolute inset-0 bg-gradient-to-t from-[#022335]/80 via-transparent to-transparent'/></div>
+   <div className='absolute inset-0'><Image src='/images/generated/lokawndr-manta-reef-background.webp' alt='' fill priority fetchPriority='high' quality={45} sizes='100vw' className='object-cover'/><div className='absolute inset-0 bg-gradient-to-r from-[#032538]/95 via-[#034461]/65 to-[#032538]/10'/><div className='absolute inset-0 bg-gradient-to-t from-[#022335]/80 via-transparent to-transparent'/></div>
    <div className='ocean-motion-layer ocean-motion-layer--home' aria-hidden='true'><div className='ocean-motion-light'/><div className='ocean-motion-bubbles'><i/><i/><i/><i/><i/><i/></div></div><UnderwaterParticles/><div className='relative z-[2] mx-auto grid min-h-[560px] max-w-[1480px] items-center gap-10 px-6 py-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,.9fr)] md:px-10 lg:min-h-[600px]'>
     <div className='max-w-[710px]'>
      <p data-hero-motion className='mb-4 text-xs font-bold tracking-[.25em]'>{t.eyebrow}</p>
@@ -64,7 +64,7 @@ export default function HomePage() {
   <section data-reveal className='mx-auto max-w-[1480px] px-6 pb-8 pt-10 md:px-10'>
    <div className='mb-5 flex flex-wrap items-end justify-between gap-3'><h2 className='text-3xl font-extrabold tracking-tight md:text-4xl'>{t.destinations}</h2><p className='max-w-xl text-sm text-slate-200'>{t.destInfo}</p></div>
    <div className='grid gap-5 md:grid-cols-2'>{destinations.map(d=><Link href={d.href} key={d.id} data-card-motion className='ocean-motion-card group relative isolate flex min-h-[260px] flex-col justify-end overflow-hidden rounded-2xl border border-white/60 p-7 md:min-h-[300px] md:p-9'>
-    <Image src={d.img} alt={d.title} fill sizes='(max-width: 768px) 100vw, 50vw' className='object-cover transition duration-500 group-hover:scale-105'/>
+    <Image src={d.img} alt={d.title} fill quality={60} sizes='(max-width: 768px) 100vw, 50vw' className='object-cover transition duration-500 group-hover:scale-105'/>
     <div className='absolute inset-0 bg-gradient-to-r from-[#03283c]/95 via-[#03283c]/65 to-transparent'/>
     <div className='relative'><p className='text-xs font-bold tracking-[.2em]'>CHAPTER {d.id}</p><h3 className='mt-1 text-4xl font-extrabold md:text-5xl'>{d.title}</h3><p className='mt-1 font-semibold'>{d.lead}</p><p className='mt-2 max-w-[290px] text-sm text-slate-100'>{d.info}</p><span className='mt-5 inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-[#062536]'>{t.explore} {d.title}<ArrowRight size={16}/></span></div>
    </Link>)}</div>

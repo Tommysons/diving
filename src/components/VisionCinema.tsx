@@ -14,7 +14,6 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}){
  const [reduced,setReduced]=useState(false)
  const [visible,setVisible]=useState(true)
  const root=useRef<HTMLDivElement>(null)
- const track=useRef<HTMLDivElement>(null)
  useEffect(()=>{
   const mq=window.matchMedia('(prefers-reduced-motion: reduce)')
   const sync=()=>setReduced(mq.matches)
@@ -24,25 +23,15 @@ export default function VisionCinema({locale}:{locale:'en'|'ru'}){
   return()=>{mq.removeEventListener('change',sync);observer.disconnect()}
  },[])
  useEffect(()=>{
-  if(!track.current)return
-  let cancelled=false
-  if(reduced){track.current.style.transform='translateX(-'+active*100+'%)';return}
-  import('gsap').then(({gsap})=>{
-   if(cancelled||!track.current)return
-   gsap.to(track.current,{xPercent:-active*100,duration:1,ease:'power3.inOut',overwrite:true})
-  })
-  return()=>{cancelled=true}
- },[active,reduced])
- useEffect(()=>{
   if(hover||!visible||reduced)return
   const timer=window.setInterval(()=>{if(!document.hidden)setActive(n=>(n+1)%slides.length)},4000)
   return()=>window.clearInterval(timer)
  },[hover,visible,reduced])
  return <div ref={root} onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)} onFocusCapture={()=>setHover(true)} onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node|null))setHover(false)}} className='relative z-10 mx-auto w-full max-w-[500px] min-w-0 overflow-hidden rounded-[24px] border-[3px] border-white/90 bg-[#031b2c] shadow-[0_24px_70px_rgba(0,0,0,0.65)] ring-1 ring-cyan-200/50 lg:justify-self-end' aria-label={locale==='ru'?'Истории LokaWndr':'LokaWndr stories'}>
   <div className='overflow-hidden'>
-   <div ref={track} className='flex will-change-transform'>
+   <div className='flex transition-transform duration-700 ease-in-out motion-reduce:transition-none' style={{transform:`translate3d(-${active*100}%,0,0)`}}>
     {slides.map((slide,i)=><article key={i} className='relative h-[300px] min-w-full sm:h-[350px] lg:h-[380px]'>
-     <Image src={slide.image} alt='' fill sizes='(max-width: 1024px) 100vw, 45vw' className='object-cover' quality={75}/>
+     <Image src={slide.image} alt='' fill sizes='(max-width: 1024px) 100vw, 45vw' className='object-cover' quality={60}/>
      <div className='absolute inset-0 bg-gradient-to-t from-[#00111f] via-[#00111f]/45 to-[#00111f]/10'/>
      <div className='absolute inset-x-0 bottom-0 p-6 text-white sm:p-8'>
       <p className='mb-2 text-xs font-bold tracking-[.25em] text-cyan-200'>LOKAWNDR · 0{i+1}</p>
