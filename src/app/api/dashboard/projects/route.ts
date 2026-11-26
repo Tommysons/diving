@@ -29,17 +29,25 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json()
     const { project, id, date, time, status } = body
     const collection = collections[project]
-    if (!collection || !ObjectId.isValid(id || '') || !validDate(date) || !validTime(time) || !statuses.includes(status)) return NextResponse.json({ error: 'Invalid booking update' }, { status: 400 })
+    if (!collection || !ObjectId.isValid(id || '') || !validDate(date) || !statuses.includes(status)) return NextResponse.json({ error: 'Invalid booking update' }, { status: 400 })
     const db = await bookingDb()
     const _id = new ObjectId(id)
     const existing = await db.collection(collection).findOne({ _id, status: { $ne: 'deleted' } })
     if (!existing) return NextResponse.json({ error: 'Booking not found' }, { status: 404 })
-    if (status === 'approved' && await conflict(db, collection, existing, date, time, _id)) return NextResponse.json({ error: 'Conflicting confirmed booking in this two-hour time slot' }, { status: 409 })
-    if (existing.date === date && existing.time === time && (existing.status || 'pending') === status) return NextResponse.json({ success: true, unchanged: true })
-    const result = await db.collection(collection).updateOne({ _id, status: existing.status }, { $set: { date, time, status, updatedAt: new Date() } })
+    const isGroup=!!existing.departure
+    const departure=body.departure ?? existing.departure
+    const group=body.group ?? existing.group
+    const room=body.room ?? existing.room
+    if(isGroup ? (!validDate(departure)||(Date.parse(departure)-Date.parse(date))/86400000<7||!Number.isInteger(group)||group<12||group>22||!['double','single','mixed'].includes(room)) : !validTime(time)) return NextResponse.json({error:'Invalid booking details'},{status:400})
+    const language=body.language ?? existing.language ?? 'en'
+    if(!['en','ru'].includes(language))return NextResponse.json({error:'Invalid language'},{status:400})
+    const changes=isGroup?{date,departure,group,room,status,language}:{date,time,status,language}
+    if (!isGroup && status === 'approved' && await conflict(db, collection, existing, date, time, _id)) return NextResponse.json({ error: 'Conflicting confirmed booking in this two-hour time slot' }, { status: 409 })
+    if (Object.entries(changes).every(([key,value])=>existing[key]===value)) return NextResponse.json({ success: true, unchanged: true })
+    const result = await db.collection(collection).updateOne({ _id, status: existing.status }, { $set: { ...changes, updatedAt: new Date() } })
     if (!result.matchedCount) return NextResponse.json({ error: 'Booking changed; reload and try again' }, { status: 409 })
     const action = status === 'cancelled' ? 'cancelled' : status === 'approved' && existing.status !== 'approved' ? 'approved' : 'updated'
-    const notifications = await notifyBooking({ ...existing, date, time, status }, action, existing)
+    const notifications = await notifyBooking({ ...existing, ...changes }, action, existing)
     return NextResponse.json({ success: true, notifications })
   } catch (error) { console.error('Booking update error', error); return NextResponse.json({ error: 'Unable to update booking' }, { status: 500 }) }
 }

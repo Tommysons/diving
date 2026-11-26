@@ -24,13 +24,14 @@ export async function POST(req: Request) {
     }
 
     const { name, email, subject, message } = validation.data
+    const ru = body.language === 'ru'
     const timeSent = new Date().toISOString()
     if (!process.env.RESEND_API_KEY || !process.env.ADMIN_EMAIL) {
       return NextResponse.json({ error: 'Email service is not configured' }, { status: 503 })
     }
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
-    const safeSubject = escapeHtml(subject || '(no subject / без темы)')
+    const safeSubject = escapeHtml(subject || '(no subject)')
     const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
 
     if (!email) {
@@ -43,14 +44,14 @@ export async function POST(req: Request) {
       to: process.env.ADMIN_EMAIL!, // Vercel variable
       subject: subject || 'New Contact Message from website',
       html: `
-        <h3>New message from your website contact form / Новое сообщение с формы контакта</h3>
-        <p><strong>Name / Имя:</strong> ${safeName}</p>
-        <p><strong>Email / Эл. почта:</strong> ${safeEmail}</p>
-        <p><strong>Subject / Тема:</strong> ${
+        <h3>New message from your website contact form</h3>
+        <p><strong>Name:</strong> ${safeName}</p>
+        <p><strong>Email:</strong> ${safeEmail}</p>
+        <p><strong>Subject:</strong> ${
           safeSubject
         }</p>
-        <p><strong>Time Sent / Время отправки:</strong> ${timeSent}</p>
-        <p><strong>Message / Сообщение:</strong></p>
+        <p><strong>Customer language:</strong> ${ru?'Russian':'English'}</p><p><strong>Time Sent:</strong> ${timeSent}</p>
+        <p><strong>Message:</strong></p>
         <p>${safeMessage}</p>
       `,
     })
@@ -64,19 +65,8 @@ export async function POST(req: Request) {
     const confirmationResult = await resend.emails.send({
       from: 'Loka Wonder <contact@lokawndr.com>',
       to: email!,
-      subject: subject
-        ? `Re: ${subject}`
-        : 'We received your email / Мы получили ваше письмо',
-      html: `
-        <p>Hi ${safeName},</p>
-        <p>Thank you for reaching out! We have received your message and will get back to you shortly.</p>
-        <p>Спасибо за ваше обращение! Мы получили ваше сообщение и свяжемся с вами в ближайшее время.</p>
-
-        <p><strong>Your message / Ваше сообщение:</strong></p>
-        <p>${safeMessage}</p>
-        <br/>
-        <p>Best regards / С уважением, <br/> Your Scuba Diving Team / Ваша команда по дайвингу</p>
-      `,
+      subject: ru ? 'Мы получили ваше сообщение' : 'We received your message',
+      html: ru ? `<p>Здравствуйте, ${safeName}!</p><p>Спасибо за ваше обращение! Мы получили ваше сообщение и свяжемся с вами в ближайшее время.</p><p><strong>Ваше сообщение:</strong></p><p>${safeMessage}</p><p>С уважением,<br>LokaWndr</p>` : `<p>Hello ${safeName},</p><p>Thank you for reaching out! We have received your message and will get back to you shortly.</p><p><strong>Your message:</strong></p><p>${safeMessage}</p><p>Best regards,<br>LokaWndr</p>`,
     })
 
     if (confirmationResult.error) {
