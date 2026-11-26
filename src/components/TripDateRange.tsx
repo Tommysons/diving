@@ -1,5 +1,6 @@
 'use client'
 import {useState} from 'react'
+import {formLabel} from '@/lib/styles/form'
 export function dateKey(d:Date){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 export function nightsBetween(a:string,b:string){return Math.round((Date.parse(b)-Date.parse(a))/86400000)}
 function addDays(s:string,n:number){const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return dateKey(d)}
@@ -18,7 +19,7 @@ export default function TripDateRange({ru,start,end,minNights,onChange}:{ru:bool
  const firstYear=minMonth.getFullYear(),lastYear=Math.max(firstYear+10,month.getFullYear()+1)
  const nav='flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-cyan-200/60 bg-[#16445b] text-xl font-bold text-white hover:bg-[#235b72] disabled:opacity-30 focus-visible:outline focus-visible:outline-cyan-200'
  const field='min-w-0 rounded-xl border p-3 text-left text-white focus-visible:outline focus-visible:outline-cyan-200 '
- return <fieldset className="space-y-3 text-white"><legend className="mb-2 text-base font-bold text-black">{ru?'Предпочтительные даты':'Preferred dates'}</legend>
+ return <fieldset className="space-y-3 text-white"><legend className={formLabel}>{ru?'Предпочтительные даты':'Preferred dates'}</legend>
  <div className="rounded-xl border-2 border-cyan-200 bg-[#103246] p-4"><p className="text-lg font-bold text-cyan-100">{ru?'Минимальный срок проживания — '+minNights+' ночей':'Minimum stay: '+minNights+' nights'}</p><p className="mt-1 text-sm text-white">{ru?'Даты подтверждаются партнёром.':'Dates subject to partner confirmation.'}</p></div>
  <div className="grid grid-cols-2 gap-2"><button type="button" aria-expanded={mode==='arrival'} onClick={()=>open('arrival')} className={field+(mode==='arrival'?'border-cyan-200 bg-[#16445b]':'border-white/40 bg-[#0b3045]')}><span className="block text-xs font-bold text-cyan-200">{ru?'Заезд':'Arrival'}</span><span className="block break-words">{fmt(start)}</span></button><button type="button" aria-expanded={mode==='departure'} onClick={()=>open('departure')} className={field+(mode==='departure'?'border-cyan-200 bg-[#16445b]':'border-white/40 bg-[#0b3045]')}><span className="block text-xs font-bold text-cyan-200">{ru?'Выезд':'Departure'}</span><span className="block break-words">{fmt(end)}</span></button></div>
  {mode&&<div className="rounded-xl border border-cyan-200/40 bg-[#0b3045] p-3"><p className="mb-3 font-semibold text-white">{mode==='arrival'?(ru?'Выберите дату заезда':'Select arrival date'):(ru?'Выберите дату выезда':'Select departure date')}</p>{mode==='departure'&&<p className="mb-3 text-sm text-cyan-100">{ru?'Самая ранняя дата выезда: ':'Earliest departure: '}{fmt(earliest)}</p>}
