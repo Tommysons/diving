@@ -39,7 +39,9 @@ export async function PATCH(req: NextRequest) {
     const group=body.group ?? existing.group
     const room=body.room ?? existing.room
     if(isGroup ? (!validDate(departure)||(Date.parse(departure)-Date.parse(date))/86400000<7||!Number.isInteger(group)||group<12||group>22||!['double','single','mixed'].includes(room)) : !validTime(time)) return NextResponse.json({error:'Invalid booking details'},{status:400})
-    const changes=isGroup?{date,departure,group,room,status}:{date,time,status}
+    const language=body.language ?? existing.language ?? 'en'
+    if(!['en','ru'].includes(language))return NextResponse.json({error:'Invalid language'},{status:400})
+    const changes=isGroup?{date,departure,group,room,status,language}:{date,time,status,language}
     if (!isGroup && status === 'approved' && await conflict(db, collection, existing, date, time, _id)) return NextResponse.json({ error: 'Conflicting confirmed booking in this two-hour time slot' }, { status: 409 })
     if (Object.entries(changes).every(([key,value])=>existing[key]===value)) return NextResponse.json({ success: true, unchanged: true })
     const result = await db.collection(collection).updateOne({ _id, status: existing.status }, { $set: { ...changes, updatedAt: new Date() } })
