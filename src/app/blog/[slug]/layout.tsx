@@ -1,13 +1,16 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { blogPosts } from '@/lib/data/blogPosts'
 
 type Props = { children: ReactNode; params: Promise<{ slug: string }> }
 
+export function generateStaticParams() { return blogPosts.map(post=>({slug:post.slug})) }
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const post = blogPosts.find((item) => item.slug === slug)
-  if (!post) return {}
+  if (!post) notFound()
   const path = `/blog/${post.slug}`
   const canonical = `${path}`
   return {
@@ -22,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostLayout({ children, params }: Props) {
   const { slug } = await params
   const post = blogPosts.find((item) => item.slug === slug)
-  if (!post) return children
+  if (!post) notFound()
   const url = `https://lokawndr.com/blog/${post.slug}`
   const structuredData = {
     '@context': 'https://schema.org',
