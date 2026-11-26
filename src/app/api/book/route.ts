@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import clientPromise from '@/lib/mongodb'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
-
-function escapeHtml(value: unknown) {
-  return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!)
-}
+import { notifyBooking } from '@/lib/adminBookings'
 
 const collectionMap: Record<string, string> = {
   scuba_course: 'scuba_bookings',
@@ -87,6 +81,7 @@ export async function POST(req: NextRequest) {
       date,
       time,
       message: message || '',
+      language: data.language === 'ru' ? 'ru' : 'en',
       status: 'pending',
       createdAt: new Date(),
       ...(type === 'dive_trip' ? { site: activity } : { course: activity }),
@@ -95,87 +90,9 @@ export async function POST(req: NextRequest) {
     const result = await collection.insertOne(doc)
 
 
-    const subjectText = `Booking request: ${activity} on ${date} at ${time}`
-    const safeName = escapeHtml(name)
-    const safeEmail = escapeHtml(email)
-    const safePhone = escapeHtml(phone)
-    const safeActivity = escapeHtml(activity)
-    const safeDate = escapeHtml(date)
-    const safeTime = escapeHtml(time)
-    const safeType = escapeHtml(type)
-    const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
-
-    // -----------------------------
-    // SEND CLIENT CONFIRMATION EMAIL
-    // -----------------------------
-
-
-    try {
-      const response = await resend.emails.send({
-        from: 'Loka Wonder <contact@lokawndr.com>',
-        to: email,
-        subject: `Booking request received / Заявка получена: ${safeActivity} on ${safeDate}`,
-        html: `
-          <p>Hi ${safeName},</p>
-          <p>We have received your booking request for <strong>${safeActivity}</strong> on <strong>${safeDate}</strong> at <strong>${safeTime}</strong>. This is not a confirmed reservation; we will contact you after checking availability.</p>
-          <p>Ваша заявка получена и ожидает подтверждения оператора: <strong>${safeActivity}</strong> на <strong>${safeDate}</strong> в <strong>${safeTime}</strong>. Это ещё не подтверждённое бронирование. Мы свяжемся с вами после проверки доступности.</p>
-          ${
-            message
-              ? `<p><strong>Your message / Ваше сообщение:</strong><br>${safeMessage}</p>`
-              : ''
-          }
-        `,
-      })
-
-      if (response.error) console.error('Booking acknowledgement rejected:', response.error)
-    } catch (err) {
-      console.error(
-        'Resend client email error:',
-        err
-      )
-    }
-
-    // -----------------------------
-    // SEND ADMIN EMAIL
-    // -----------------------------
-    if (process.env.ADMIN_EMAIL) {
-
-
-      try {
-        const response = await resend.emails.send({
-          from: 'Loka Wonder <contact@lokawndr.com>',
-          to: process.env.ADMIN_EMAIL,
-          subject: subjectText,
-          html: `
-            <h3>New Booking / Новое бронирование</h3>
-            <p><strong>Name / Имя:</strong> ${safeName}</p>
-            <p><strong>Email / Эл. почта:</strong> ${safeEmail}</p>
-            <p><strong>Phone / Телефон:</strong> ${safePhone}</p>
-            <p><strong>Type / Тип:</strong> ${safeType}</p>
-            <p><strong>Activity / Активность:</strong> ${safeActivity}</p>
-            <p><strong>Date / Дата:</strong> ${safeDate}</p>
-            <p><strong>Time / Время:</strong> ${safeTime}</p>
-            ${
-              message
-                ? `<p><strong>Message / Сообщение:</strong><br>${safeMessage}</p>`
-                : ''
-            }
-          `,
-        })
-
-        if (response.error) console.error('Booking notification rejected:', response.error)
-      } catch (err) {
-        console.error(
-          'Resend admin email error:',
-          err
-        )
-      }
-    } else {
-      console.warn('ADMIN_EMAIL is not set, skipping admin notification.')
-    }
-
+    const notifications = await notifyBooking(doc, 'received')
     return NextResponse.json(
-      { message: 'Booking request received; awaiting confirmation', status: 'pending', id: result.insertedId },
+      { message: 'Booking request received; awaiting confirmation', status: 'pending', id: result.insertedId, notifications },
       { status: 200 }
     )
   } catch (error) {
