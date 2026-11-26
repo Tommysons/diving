@@ -68,6 +68,7 @@ export default function BookingForm({ type, activity }: BookingFormProps) {
           type,
           activity,
           message,
+          language: ru ? 'ru' : 'en',
         }),
       })
 
