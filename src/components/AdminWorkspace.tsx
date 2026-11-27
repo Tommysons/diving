@@ -1,12 +1,13 @@
 'use client'
 import { useState } from 'react'
+import { youtubeId, videoSlug } from '@/lib/videoCmsValidation'
 import AdminBookings from '@/components/AdminBookings'
 
 const sections = [['bookings','Bookings'],['country','Countries'],['destination','Destinations'],['dive-site','Dive sites'],['activity','Activities'],['dive-trip','Dive trips'],['blog','Blog posts'],['video','YouTube videos']] as const
 type Kind = typeof sections[number][0]
 type Draft = Record<string,string>
 const common = ['titleEn','titleRu','slug','bodyEn','bodyRu','mediaUrl','seoEn','seoRu']
-const extras: Record<string,string[]> = {country:['latitude','longitude'],destination:['country','latitude','longitude'], 'dive-site':['country','destination','depth','depthRu','current','currentRu','visibility','visibilityRu','boat','boatRu'],activity:[], 'dive-trip':['country','destination','activity','price','currency','capacity','dates','itinerary'],blog:['activity','country','destination','excerptEn','excerptRu','articleDate','tagsEn','tagsRu'],video:['youtubeUrl','activity','country','destination','thumbnailUrl']}
+const extras: Record<string,string[]> = {country:['latitude','longitude'],destination:['country','latitude','longitude'], 'dive-site':['country','destination','depth','depthRu','current','currentRu','visibility','visibilityRu','boat','boatRu'],activity:[], 'dive-trip':['country','destination','activity','price','currency','capacity','dates','itinerary'],blog:['activity','country','destination','excerptEn','excerptRu','articleDate','tagsEn','tagsRu'],video:['youtubeUrl','activity','country','destination','thumbnailUrl','uploadDate','duration']}
 const labels: Record<string,string> = {titleEn:'English title',titleRu:'Russian title',bodyEn:'English description / article',bodyRu:'Russian description / article',slug:'URL slug',mediaUrl:'Cover image URL',seoEn:'English SEO description',seoRu:'Russian SEO description',youtubeUrl:'YouTube URL'}
 const diveGroups = [
  {title:'General information',fields:['titleEn','titleRu','country','destination','bodyEn','bodyRu']},
@@ -25,6 +26,7 @@ const longField = /body|itinerary|^stay(En|Ru)$|inclusions|extras|faq|videoGalle
 const input = 'w-full rounded-lg border border-white/20 bg-[#0b3045] p-3 text-white'
 export default function AdminWorkspace() {
  const [section,setSection] = useState<Kind>('bookings')
+ const [liveVideos,setLiveVideos]=useState<Draft[]>([])
  const [rows,setRows] = useState<Draft[]>([])
  const [form,setForm] = useState<Draft|null>(null)
  const [busy,setBusy] = useState(false)
@@ -34,9 +36,15 @@ export default function AdminWorkspace() {
  const [preview,setPreview] = useState(false)
  async function load() {
   setBusy(true)
-  try {const r=await fetch('/api/dashboard/content',{cache:'no-store'}); if(!r.ok) throw Error('Unable to load drafts');setRows(await r.json())}
+  try {const r=await fetch('/api/dashboard/content',{cache:'no-store'}); if(!r.ok) throw Error('Unable to load drafts');setRows(await r.json());const v=await fetch('/api/dashboard/videos',{cache:'no-store'});if(v.ok)setLiveVideos(await v.json())}
   catch(e){setNotice(e instanceof Error?e.message:'Unable to load drafts')}
   finally{setBusy(false)}
+ }
+ async function publish(status:'published'|'unpublished') {
+ if(!form||busy)return
+ if(!window.confirm(status==='published'?'Publish both language pages?':'Remove this video from public pages?'))return
+ setBusy(true);setNotice('')
+ try{const r=await fetch('/api/dashboard/videos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...form,region:form.country||'ocean',status})});const data=await r.json();if(!r.ok)throw Error(data.error||'Publishing failed');setNotice(status==='published'?'Video published':'Video unpublished');await load();setForm(null)}catch(e){setNotice(e instanceof Error?e.message:'Operation failed')}finally{setBusy(false)}
  }
  async function save(remove=false) {
   if(!form || busy) return
@@ -52,11 +60,12 @@ export default function AdminWorkspace() {
  function change(key:string,value:string) {
   if(!form)return
   const next={...form,[key]:value}
-  if(key==='titleEn' && !form._id && (!form.slug || form.slug===slugify(form.titleEn||''))) next.slug=slugify(value)
+  if(key==='titleEn' && !form._id && !form.youtubeId && (!form.slug || form.slug===slugify(form.titleEn||''))) next.slug=slugify(value)
+  if(key==='youtubeUrl' && section==='video'){const id=youtubeId(value);if(id)next.thumbnailUrl='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'}
   setForm(next)
  }
- function slugify(value:string){return value.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
- function field(key:string) {return <label key={key} className={'block text-sm '+(longField.test(key)?'sm:col-span-2':'')}>{tripLabels[key]||diveLabels[key]||labels[key]||key}{key==='stayType'?<select className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}><option value=''>Choose accommodation type</option>{[['local-island','Local island'],['resort-island','Resort island'],['mainland','Mainland'],['liveaboard','Liveaboard / safari boat'],['other','Other']].map(([v,l])=><option key={v} value={v}>{l}</option>)}</select>:longField.test(key)?<textarea rows={6} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>:<input required={key==='titleEn'||key==='slug'} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>}</label>}
+ function slugify(value:string){return videoSlug(value)}
+ function field(key:string) {return <label key={key} className={'block text-sm '+(longField.test(key)?'sm:col-span-2':'')}>{tripLabels[key]||diveLabels[key]||labels[key]||key}{key==='stayType'?<select className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}><option value=''>Choose accommodation type</option>{[['local-island','Local island'],['resort-island','Resort island'],['mainland','Mainland'],['liveaboard','Liveaboard / safari boat'],['other','Other']].map(([v,l])=><option key={v} value={v}>{l}</option>)}</select>:longField.test(key)?<textarea rows={6} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>:<input readOnly={!!form?.youtubeId&&(key==='slug'||key==='youtubeUrl')} required={key==='titleEn'||key==='slug'} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>}</label>}
  const gallery=(form?.gallery||form?.mediaUrl||'').split('\n').filter(Boolean)
  function updateGallery(items:string[],cover?:string){if(form)setForm({...form,gallery:items.join('\n'),mediaUrl:cover??(items.includes(form.mediaUrl)?form.mediaUrl:items[0]||'')})}
  function tripGallery(key:string,coverKey:string,title:string) {
@@ -76,11 +85,13 @@ export default function AdminWorkspace() {
  <div className='min-w-0'>
  {section==='bookings'?<AdminBookings/>:<section className='space-y-4'>
  <div className='flex flex-wrap items-center justify-between gap-3'><h2 className='text-2xl font-bold'>{sections.find(s=>s[0]===section)?.[1]}</h2><button disabled={busy||!!form} onClick={()=>{setForm({});setPreview(false)}} className='rounded-lg bg-cyan-100 px-4 py-2 font-semibold text-[#062536]'>New draft</button></div>
- <p className='rounded-lg border border-cyan-200/30 p-3 text-sm text-cyan-100'>Draft workspace: saving here does not publish or change existing public pages.</p>
+ <p className='rounded-lg border border-cyan-200/30 p-3 text-sm text-cyan-100'>{section==='video'?'Save a draft privately or explicitly publish both languages.':'Draft workspace: saving here does not publish or change existing public pages.'}</p>
  {!form&&<div className='flex flex-wrap gap-3'><input aria-label='Search drafts' placeholder='Search title, slug or destination' className={input+' flex-1'} value={search} onChange={e=>setSearch(e.target.value)}/><select aria-label='Sort drafts' className='rounded-lg bg-[#0b3045] p-3' value={sort} onChange={e=>setSort(e.target.value)}><option value='recent'>Recently updated</option><option value='title'>Title A–Z</option></select><button type='button' disabled={busy} onClick={()=>void load()}>Refresh</button></div>}
  {notice&&<p role='status' className='rounded-lg bg-white/10 p-3'>{notice}</p>}
  {form&&<div className='flex flex-wrap gap-3 text-sm'><span>{form.titleEn?'✓':'○'} English title</span><span>{form.titleRu?'✓':'○'} Russian title</span><span>{form.bodyEn?'✓':'○'} English description</span><span>{form.bodyRu?'✓':'○'} Russian description</span><button type='button' onClick={()=>setPreview(!preview)} className='underline'>{preview?'Hide':'Show'} draft summary</button></div>}
  {form&&preview&&<div className='space-y-3 rounded-xl border border-white/20 p-4'><p className='text-xs uppercase text-cyan-200'>Draft summary — not a public page preview</p><h3 className='text-xl font-bold'>{form.titleEn||'Untitled'}</h3><p className='whitespace-pre-wrap'>{form.bodyEn}</p><h3 className='text-xl font-bold'>{form.titleRu}</h3><p className='whitespace-pre-wrap'>{form.bodyRu}</p><p>{form.country} {form.destination}</p><p>{form.slug}</p></div>}
+ {form&&section==='video'&&youtubeId(form.youtubeUrl||'')&&<div className='max-w-xl space-y-2'><p className='text-sm text-cyan-200'>YouTube preview</p><iframe title='Video preview' className='aspect-video w-full rounded-xl' src={'https://www.youtube-nocookie.com/embed/'+youtubeId(form.youtubeUrl||'')} allowFullScreen/></div>}
+ {!form&&section==='video'&&<div className='space-y-2'><h3 className='font-bold'>Public video catalog</h3>{liveVideos.filter(v=>[v.titleEn,v.titleRu,v.slug].join(' ').toLowerCase().includes(search.toLowerCase())).map(v=><button key={v.youtubeId} className='block w-full rounded-xl border border-white/15 p-4 text-left' onClick={()=>{const { _id:ignored,...rest}=v;void ignored;setForm({...rest,country:v.region});setPreview(false)}}><strong>{v.titleEn}</strong><span className='ml-3 text-sm text-cyan-200'>{v.status}</span></button>)}</div>}
  {form?<form className='grid gap-4 rounded-xl border border-white/15 p-4 sm:grid-cols-2' onSubmit={e=>{e.preventDefault();void save()}}>
  {section==='dive-trip'?<>{tripGroups.slice(0,2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}{tripGallery('stayGallery','stayCover','Accommodation photo gallery')}{tripGallery('gallery','mediaUrl','Diving photo gallery')}<div className='sm:col-span-2'>{field('videoGallery')}</div>{tripGroups.slice(2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}</>:section==='dive-site'?<>
  {diveGroups.slice(0,2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}
@@ -91,9 +102,9 @@ export default function AdminWorkspace() {
  <button type='button' disabled={!form.newPhoto?.trim()} className='rounded-lg border border-white/30 px-4 py-2' onClick={()=>{const a=[...gallery,form.newPhoto.trim()];setForm({...form,newPhoto:'',gallery:a.join('\n'),mediaUrl:form.mediaUrl||a[0]})}}>Add photo</button>
  </fieldset>
  {diveGroups.slice(2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}
- </>: [...common,...(extras[section]||[])].map(field)}
+ </>: (section==='video'?['youtubeUrl','titleEn','titleRu','slug','bodyEn','bodyRu','country','uploadDate','duration']: [...common,...(extras[section]||[])]).map(field)}
 
- <div className='flex flex-wrap gap-2 sm:col-span-2'><button disabled={busy} className='rounded-lg bg-cyan-100 px-4 py-2 font-semibold text-[#062536]'>Save draft</button><button type='button' disabled={busy} onClick={()=>setForm(null)} className='rounded-lg border border-white/30 px-4 py-2'>Close</button>{form._id&&<button type='button' disabled={busy} onClick={()=>void save(true)} className='rounded-lg border border-red-400 px-4 py-2 text-red-200'>Delete draft</button>}</div>
+ <div className='flex flex-wrap gap-2 sm:col-span-2'><button disabled={busy} className='rounded-lg bg-cyan-100 px-4 py-2 font-semibold text-[#062536]'>Save draft</button>{section==='video'&&<><button type='button' disabled={busy} onClick={()=>void publish('published')} className='rounded-lg bg-emerald-700 px-4 py-2 font-semibold'>Publish / update</button><button type='button' disabled={busy} onClick={()=>void publish('unpublished')} className='rounded-lg border border-white/30 px-4 py-2'>Unpublish</button><p className='w-full text-xs text-slate-300'>Use a lowercase country slug (maldives, thailand, ocean), an upload date and ISO duration (e.g. PT3M15S). Save a draft to retain editor changes.</p></>}<button type='button' disabled={busy} onClick={()=>setForm(null)} className='rounded-lg border border-white/30 px-4 py-2'>Close</button>{form._id&&<button type='button' disabled={busy} onClick={()=>void save(true)} className='rounded-lg border border-red-400 px-4 py-2 text-red-200'>Delete draft</button>}</div>
  </form>:<div className='space-y-2'>{busy?<p>Loading…</p>:rows.filter(r=>r.kind===section&&[r.titleEn,r.titleRu,r.slug,r.country,r.destination].join(' ').toLowerCase().includes(search.toLowerCase())).sort((a,b)=>sort==='title'?(a.titleEn||'').localeCompare(b.titleEn||''):0).map(r=><div key={r._id} className='flex flex-wrap items-center gap-3 rounded-xl border border-white/15 p-4'><button onClick={()=>{setForm(r);setPreview(false)}} className='flex-1 text-left'><strong>{r.titleEn}</strong><span className='ml-3 text-sm text-slate-300'>{r.slug} · Draft · {r.titleRu&&r.bodyRu?'RU ready':'RU incomplete'}</span></button><button type='button' onClick={()=>{const copy:Draft={...r,titleEn:r.titleEn+' (copy)',slug:r.slug+'-copy'};delete copy._id;setForm(copy);setPreview(false)}} className='rounded border border-white/30 px-3 py-1'>Duplicate</button></div>)}</div>}
  </section>}
  </div></div>
