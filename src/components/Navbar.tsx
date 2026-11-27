@@ -16,6 +16,7 @@ export default function Navbar() {
     { label:ru?'Направления':'Destinations',href:base+'/destinations', children:[{label:ru?'Таиланд':'Thailand',href:base+'/destinations/thailand'},{label:ru?'Мальдивы':'Maldives',href:base+'/destinations/maldives'}] },
     { label:ru?'Активности':'Activities',href:base+'/activities',children:[{label:ru?'Дайвинг':'Diving',href:base+'/diving',nested:true},{label:ru?'Снорклинг':'Snorkeling',href:base+'/snorkeling',nested:false}] },
     { label:ru?'Блог':'Blog',href:base+'/blog' },
+    { label:ru?'Видео':'Videos',href:base+'/videos' },
     { label:ru?'О нас':'About',href:base+'/aboutme' },
     { label:ru?'Контакты':'Contact',href:base+'/contact' },
   ]
@@ -31,7 +32,7 @@ export default function Navbar() {
         <Image src='/images/logo.png' alt='' width={56} height={48} className='h-12 w-14 object-contain' />
         <span><strong className='block text-2xl font-extrabold leading-none tracking-tight'>LokaWndr</strong><small className='mt-1 block text-[9px] font-bold tracking-[0.18em] text-cyan-100'>EXPLORE · DIVE · SNORKEL</small></span>
       </Link>
-      <div className='hidden items-center gap-6 xl:flex'>
+      <div className='hidden items-center gap-3 xl:flex'>
         <Link href={base||'/'} aria-current={pathname===(base||'/') ? 'page' : undefined} className={pathname===(base||'/')?'border-b-2 border-cyan-300 pb-1 text-sm font-semibold':'pb-1 text-sm font-semibold text-slate-100 hover:text-cyan-200'}>{ru?'Главная':'Home'}</Link>
         {items.map(item=><div key={item.label} className='group relative'>
           <Link href={item.href} aria-current={pathname===item.href ? 'page' : undefined} className={`flex items-center gap-1 rounded-lg px-1 py-3 text-sm font-semibold transition hover:text-cyan-200 ${pathname===item.href?'text-cyan-200':'text-slate-100'}`}>{item.label}{item.children&&<ChevronDown size={14}/>}</Link>
