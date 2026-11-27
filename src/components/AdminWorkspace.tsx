@@ -39,6 +39,12 @@ export default function AdminWorkspace() {
   catch(e){setNotice(e instanceof Error?e.message:'Unable to load drafts')}
   finally{setBusy(false)}
  }
+ async function publish(status:'published'|'unpublished') {
+ if(!form||busy)return
+ if(!window.confirm(status==='published'?'Publish both language pages?':'Remove this video from public pages?'))return
+ setBusy(true);setNotice('')
+ try{const r=await fetch('/api/dashboard/videos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...form,region:form.country||'ocean',status})});const data=await r.json();if(!r.ok)throw Error(data.error||'Publishing failed');setNotice(status==='published'?'Video published':'Video unpublished')}catch(e){setNotice(e instanceof Error?e.message:'Operation failed')}finally{setBusy(false)}
+ }
  async function save(remove=false) {
   if(!form || busy) return
   if(remove && !window.confirm('Delete this draft?')) return
@@ -78,7 +84,7 @@ export default function AdminWorkspace() {
  <div className='min-w-0'>
  {section==='bookings'?<AdminBookings/>:<section className='space-y-4'>
  <div className='flex flex-wrap items-center justify-between gap-3'><h2 className='text-2xl font-bold'>{sections.find(s=>s[0]===section)?.[1]}</h2><button disabled={busy||!!form} onClick={()=>{setForm({});setPreview(false)}} className='rounded-lg bg-cyan-100 px-4 py-2 font-semibold text-[#062536]'>New draft</button></div>
- <p className='rounded-lg border border-cyan-200/30 p-3 text-sm text-cyan-100'>Draft workspace: saving here does not publish or change existing public pages.</p>
+ <p className='rounded-lg border border-cyan-200/30 p-3 text-sm text-cyan-100'>{section==='video'?'Save a draft privately or explicitly publish both languages.':'Draft workspace: saving here does not publish or change existing public pages.'}</p>
  {!form&&<div className='flex flex-wrap gap-3'><input aria-label='Search drafts' placeholder='Search title, slug or destination' className={input+' flex-1'} value={search} onChange={e=>setSearch(e.target.value)}/><select aria-label='Sort drafts' className='rounded-lg bg-[#0b3045] p-3' value={sort} onChange={e=>setSort(e.target.value)}><option value='recent'>Recently updated</option><option value='title'>Title A–Z</option></select><button type='button' disabled={busy} onClick={()=>void load()}>Refresh</button></div>}
  {notice&&<p role='status' className='rounded-lg bg-white/10 p-3'>{notice}</p>}
  {form&&<div className='flex flex-wrap gap-3 text-sm'><span>{form.titleEn?'✓':'○'} English title</span><span>{form.titleRu?'✓':'○'} Russian title</span><span>{form.bodyEn?'✓':'○'} English description</span><span>{form.bodyRu?'✓':'○'} Russian description</span><button type='button' onClick={()=>setPreview(!preview)} className='underline'>{preview?'Hide':'Show'} draft summary</button></div>}
@@ -96,7 +102,7 @@ export default function AdminWorkspace() {
  {diveGroups.slice(2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}
  </>: [...common,...(extras[section]||[])].map(field)}
 
- <div className='flex flex-wrap gap-2 sm:col-span-2'><button disabled={busy} className='rounded-lg bg-cyan-100 px-4 py-2 font-semibold text-[#062536]'>Save draft</button><button type='button' disabled={busy} onClick={()=>setForm(null)} className='rounded-lg border border-white/30 px-4 py-2'>Close</button>{form._id&&<button type='button' disabled={busy} onClick={()=>void save(true)} className='rounded-lg border border-red-400 px-4 py-2 text-red-200'>Delete draft</button>}</div>
+ <div className='flex flex-wrap gap-2 sm:col-span-2'><button disabled={busy} className='rounded-lg bg-cyan-100 px-4 py-2 font-semibold text-[#062536]'>Save draft</button>{section==='video'&&<><button type='button' disabled={busy} onClick={()=>void publish('published')} className='rounded-lg bg-emerald-700 px-4 py-2 font-semibold'>Publish / update</button><button type='button' disabled={busy} onClick={()=>void publish('unpublished')} className='rounded-lg border border-white/30 px-4 py-2'>Unpublish</button><p className='w-full text-xs text-slate-300'>Use a lowercase country slug (maldives, thailand, ocean), an upload date and ISO duration (e.g. PT3M15S). Save a draft to retain editor changes.</p></>}<button type='button' disabled={busy} onClick={()=>setForm(null)} className='rounded-lg border border-white/30 px-4 py-2'>Close</button>{form._id&&<button type='button' disabled={busy} onClick={()=>void save(true)} className='rounded-lg border border-red-400 px-4 py-2 text-red-200'>Delete draft</button>}</div>
  </form>:<div className='space-y-2'>{busy?<p>Loading…</p>:rows.filter(r=>r.kind===section&&[r.titleEn,r.titleRu,r.slug,r.country,r.destination].join(' ').toLowerCase().includes(search.toLowerCase())).sort((a,b)=>sort==='title'?(a.titleEn||'').localeCompare(b.titleEn||''):0).map(r=><div key={r._id} className='flex flex-wrap items-center gap-3 rounded-xl border border-white/15 p-4'><button onClick={()=>{setForm(r);setPreview(false)}} className='flex-1 text-left'><strong>{r.titleEn}</strong><span className='ml-3 text-sm text-slate-300'>{r.slug} · Draft · {r.titleRu&&r.bodyRu?'RU ready':'RU incomplete'}</span></button><button type='button' onClick={()=>{const copy:Draft={...r,titleEn:r.titleEn+' (copy)',slug:r.slug+'-copy'};delete copy._id;setForm(copy);setPreview(false)}} className='rounded border border-white/30 px-3 py-1'>Duplicate</button></div>)}</div>}
  </section>}
  </div></div>
