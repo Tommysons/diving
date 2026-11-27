@@ -5,33 +5,8 @@ import { Play } from 'lucide-react'
 import Link from 'next/link'
 import StoryCarousel from '@/components/StoryCarousel'
 
-export type LokaVideo = { id: string; title: string; category?: string }
-export const maldivesVideos: LokaVideo[] = [
- { id:'3Ee3Md1R16A', title:'Swimming with a Manta Ray in the Maldives | South Ari Atoll' },
- { id:'Aqj2hctqOFM', title:'One Country, Many Dive Sites | Maldives Marine Life on GoPro' },
- { id:'qMadZd0RqRs', title:'Dolphins, a Reef Shark & a Turtle | A Maldives Dive to Remember' },
- { id:'A83GuC7Rry4', title:'Diving in Dhaalu atoll Maldives' },
- { id:'ZnC4xG3lMlk', title:'Swimming With Mantas & a Whale Shark | Maldives' },
- { id:'v5j3utsgwOo', title:'Snorkeling in the Azmee Corner' },
- { id:'qjmaeHgSXAE', title:'Captured the ocean through my eyes' },
-]
-export const thailandVideos: LokaVideo[] = [
- { id:'HeblxqUwoEM', title:'My first dives in Koh Tao' },
- { id:'PWU7G37iXtM', title:'Мои первые погружения на Ко Тао' },
- { id:'8qt0x0oU4hw', title:'Wondering in Chumphon Pinnacle' },
- { id:'uq8XEMwVs6I', title:'Wondering in Southwest Pinnacle' },
- { id:'OEkEryRDFtM', title:'Wondering around White Rock' },
- { id:'dclxFrsdWVY', title:'Wondering in wreck Sattakut' },
- { id:'ucQOhcQAPkQ', title:'313 -wreck' },
-]
-export const featuredVideos: LokaVideo[] = [
- ...maldivesVideos,
- ...thailandVideos,
- { id:'kgGqFdnqAwM', title:'Why do I love teaching scuba diving?' },
- { id:'qcc3i3AIxMw', title:'Why I Chose Scuba Diving as My Profession' },
- { id:'LNj_6UeX8RM', title:'Testing the New GoPro Update on a Scuba Dive' },
- { id:'Kdr_EgOgCkg', title:'1-Minute Dive Highlights' },
-]
+import { type LokaVideo, maldivesVideos, thailandVideos, libraryVideos } from '@/lib/data/videoLibrary'
+export { type LokaVideo, maldivesVideos, thailandVideos, featuredVideos } from '@/lib/data/videoLibrary'
 function VideoPlayer({video,locale}:{video:LokaVideo;locale:'en'|'ru'}) {
  const [playing,setPlaying]=useState(false)
  return <div className='relative aspect-video overflow-hidden bg-[#031727]'>
@@ -49,7 +24,7 @@ export default function LokaVideoSection({locale,videos,title}:{locale:'en'|'ru'
  <StoryCarousel autoPlay={false} locale={locale} label={title || (ru?'Видео LokaWndr':'LokaWndr videos')}>
  {videos.map(video=><article key={video.id} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.07]'>
  <VideoPlayer video={video} locale={locale}/>
- <div className='p-4'><h3 className='font-bold leading-6 text-white'>{video.title}</h3><a href={`https://www.youtube.com/watch?v=${video.id}`} target='_blank' rel='noopener noreferrer' className='mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-cyan-200 underline underline-offset-4 hover:text-white'>{ru?'Смотреть на YouTube':'Watch on YouTube'}<span className='sr-only'>: {video.title}</span></a></div>
+ <div className='p-4'><Link href={`${ru?'/ru':''}/videos/${libraryVideos.find(v=>v.id===video.id)?.slug ?? ''}`} className='text-sm text-cyan-200 underline'>{ru?'Страница видео':'Video page'}</Link><h3 className='font-bold leading-6 text-white'>{video.title}</h3><a href={`https://www.youtube.com/watch?v=${video.id}`} target='_blank' rel='noopener noreferrer' className='mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-cyan-200 underline underline-offset-4 hover:text-white'>{ru?'Смотреть на YouTube':'Watch on YouTube'}<span className='sr-only'>: {video.title}</span></a></div>
  </article>)}
  </StoryCarousel>
  {videos === thailandVideos && <div className='mt-7 rounded-2xl border border-cyan-200/20 bg-white/[.05] p-6'><h3 className='text-xl font-bold text-white'>{ru?'Исследуйте дайв-сайты Ко Тао':'Explore the Koh Tao dive sites in these videos'}</h3><p className='mt-3 max-w-3xl leading-7 text-slate-200'>{ru?'Смотрите подводные видео и читайте подробные гиды по рифам, затонувшим кораблям и подводным скалам Ко Тао.':'Go beyond the footage with first-hand guides to Koh Tao reefs, shipwrecks and underwater pinnacles.'}</p><div className='mt-4 flex flex-wrap gap-4'><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/destinations/thailand`}>{ru?'Гид по дайвингу в Таиланде':'Thailand diving guide'}</Link><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/divesites/chumphon-pinnacle`}>Chumphon Pinnacle</Link><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/divesites/sattakut-shipwreck`}>Sattakut Shipwreck</Link><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/divesites/white-rock`}>White Rock</Link></div></div>}
