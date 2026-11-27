@@ -3,12 +3,14 @@ import { publishedDiveSites } from '@/lib/data/diveSites'
 import { scubaCourses, specialtyCourses } from '@/lib/data/scubaCourses'
 import { blogPosts } from '@/lib/data/blogPosts'
 
-import { libraryVideos } from '@/lib/data/videoLibrary'
+import { getPublishedVideos } from '@/lib/publishedVideos'
+export const dynamic='force-dynamic'
 
 const baseUrl = 'https://lokawndr.com'
 const staticPaths = ['', '/activities', '/videos', '/dive-trips', '/dive-trips/maldives-mahibadhoo', '/diving', '/fun-diving', '/destinations', '/atlas', '/aboutme', '/blog', '/contact', '/scubadivingcourses', '/snorkeling', '/destinations/thailand', '/destinations/maldives', '/destinations/maldives/udhdhoo-reef']
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+ const libraryVideos=await getPublishedVideos()
   const localized = staticPaths.flatMap((path) => [path, `/ru${path}`])
   const contentPaths = [
     ...libraryVideos.flatMap(v=>['/videos/'+v.slug,'/ru/videos/'+v.slug]),
