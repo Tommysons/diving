@@ -1,4 +1,4 @@
-export type LokaVideo = { id: string; title: string; category?: string }
+export type LokaVideo = { id: string; title: string; category?: string; region?: string }
 export const maldivesVideos: LokaVideo[] = [
  { id:'3Ee3Md1R16A', title:'Swimming with a Manta Ray in the Maldives | South Ari Atoll' },
  { id:'Aqj2hctqOFM', title:'One Country, Many Dive Sites | Maldives Marine Life on GoPro' },
@@ -26,6 +26,9 @@ export const featuredVideos: LokaVideo[] = [
  { id:'Kdr_EgOgCkg', title:'1-Minute Dive Highlights' },
 ]
 
-export const libraryVideos = featuredVideos.map(video=>({...video,slug:video.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || video.id, region:maldivesVideos.some(v=>v.id===video.id)?'maldives':thailandVideos.some(v=>v.id===video.id)?'thailand':'ocean'}))
+export const libraryVideos = featuredVideos.map(video=>({...video,slug:video.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || video.id, region:video.region ?? (maldivesVideos.some(v=>v.id===video.id)?'maldives':thailandVideos.some(v=>v.id===video.id)?'thailand':'ocean')}))
 export type LibraryVideo = typeof libraryVideos[number]
 export const thumbnail = (id:string)=>'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'
+
+export const videoRegions = Array.from(new Set(libraryVideos.map(v=>v.region)))
+export const videoRegionName = (region:string,ru:boolean)=>region==='maldives'?(ru?'Мальдивы':'Maldives'):region==='thailand'?(ru?'Таиланд':'Thailand'):region==='ocean'?(ru?'Истории из океана':'Ocean stories'):region.replace(/-/g,' ').replace(/^./,c=>c.toUpperCase())
