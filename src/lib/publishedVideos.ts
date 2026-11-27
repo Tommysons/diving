@@ -6,7 +6,7 @@ export type PublishedVideo = (typeof libraryVideos)[number] & {titleRu?:string; 
 export async function videoCollection(){return (await clientPromise).db(process.env.MONGODB_DB||'scuba_booking').collection('published_videos')}
 export async function getPublishedVideos():Promise<PublishedVideo[]>{
  const original:PublishedVideo[]=libraryVideos.map(v=>({...v,seo:videoSeo[v.id]}))
- const rows=await (await videoCollection()).find({status:'published'}).sort({updatedAt:-1}).toArray()
- const added:PublishedVideo[]=rows.map(r=>({id:String(r.youtubeId),slug:String(r.slug),title:String(r.titleEn),titleRu:String(r.titleRu),region:String(r.region),seo:{en:String(r.bodyEn),ru:String(r.bodyRu),uploadDate:String(r.uploadDate),duration:String(r.duration)}}))
- return [...added,...original.filter(v=>!added.some(a=>a.id===v.id||a.slug===v.slug))]
+ const rows=await (await videoCollection()).find({}).sort({updatedAt:-1}).toArray()
+ const added:PublishedVideo[]=rows.filter(r=>r.status==='published').map(r=>({id:String(r.youtubeId),slug:String(r.slug),title:String(r.titleEn),titleRu:String(r.titleRu),region:String(r.region),seo:{en:String(r.bodyEn),ru:String(r.bodyRu),uploadDate:String(r.uploadDate),duration:String(r.duration),related:videoSeo[String(r.youtubeId)]?.related}}))
+ return [...added,...original.filter(v=>!rows.some(a=>a.youtubeId===v.id))]
 }
