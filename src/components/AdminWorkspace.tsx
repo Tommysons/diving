@@ -1,12 +1,13 @@
 'use client'
 import { useState } from 'react'
+import { youtubeId, videoSlug } from '@/lib/videoCmsValidation'
 import AdminBookings from '@/components/AdminBookings'
 
 const sections = [['bookings','Bookings'],['country','Countries'],['destination','Destinations'],['dive-site','Dive sites'],['activity','Activities'],['dive-trip','Dive trips'],['blog','Blog posts'],['video','YouTube videos']] as const
 type Kind = typeof sections[number][0]
 type Draft = Record<string,string>
 const common = ['titleEn','titleRu','slug','bodyEn','bodyRu','mediaUrl','seoEn','seoRu']
-const extras: Record<string,string[]> = {country:['latitude','longitude'],destination:['country','latitude','longitude'], 'dive-site':['country','destination','depth','depthRu','current','currentRu','visibility','visibilityRu','boat','boatRu'],activity:[], 'dive-trip':['country','destination','activity','price','currency','capacity','dates','itinerary'],blog:['activity','country','destination','excerptEn','excerptRu','articleDate','tagsEn','tagsRu'],video:['youtubeUrl','activity','country','destination','thumbnailUrl']}
+const extras: Record<string,string[]> = {country:['latitude','longitude'],destination:['country','latitude','longitude'], 'dive-site':['country','destination','depth','depthRu','current','currentRu','visibility','visibilityRu','boat','boatRu'],activity:[], 'dive-trip':['country','destination','activity','price','currency','capacity','dates','itinerary'],blog:['activity','country','destination','excerptEn','excerptRu','articleDate','tagsEn','tagsRu'],video:['youtubeUrl','activity','country','destination','thumbnailUrl','uploadDate','duration']}
 const labels: Record<string,string> = {titleEn:'English title',titleRu:'Russian title',bodyEn:'English description / article',bodyRu:'Russian description / article',slug:'URL slug',mediaUrl:'Cover image URL',seoEn:'English SEO description',seoRu:'Russian SEO description',youtubeUrl:'YouTube URL'}
 const diveGroups = [
  {title:'General information',fields:['titleEn','titleRu','country','destination','bodyEn','bodyRu']},
@@ -53,9 +54,10 @@ export default function AdminWorkspace() {
   if(!form)return
   const next={...form,[key]:value}
   if(key==='titleEn' && !form._id && (!form.slug || form.slug===slugify(form.titleEn||''))) next.slug=slugify(value)
+  if(key==='youtubeUrl' && section==='video'){const id=youtubeId(value);if(id)next.thumbnailUrl='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'}
   setForm(next)
  }
- function slugify(value:string){return value.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
+ function slugify(value:string){return videoSlug(value)}
  function field(key:string) {return <label key={key} className={'block text-sm '+(longField.test(key)?'sm:col-span-2':'')}>{tripLabels[key]||diveLabels[key]||labels[key]||key}{key==='stayType'?<select className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}><option value=''>Choose accommodation type</option>{[['local-island','Local island'],['resort-island','Resort island'],['mainland','Mainland'],['liveaboard','Liveaboard / safari boat'],['other','Other']].map(([v,l])=><option key={v} value={v}>{l}</option>)}</select>:longField.test(key)?<textarea rows={6} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>:<input required={key==='titleEn'||key==='slug'} className={input} value={form?.[key]||''} onChange={e=>change(key,e.target.value)}/>}</label>}
  const gallery=(form?.gallery||form?.mediaUrl||'').split('\n').filter(Boolean)
  function updateGallery(items:string[],cover?:string){if(form)setForm({...form,gallery:items.join('\n'),mediaUrl:cover??(items.includes(form.mediaUrl)?form.mediaUrl:items[0]||'')})}
@@ -81,6 +83,7 @@ export default function AdminWorkspace() {
  {notice&&<p role='status' className='rounded-lg bg-white/10 p-3'>{notice}</p>}
  {form&&<div className='flex flex-wrap gap-3 text-sm'><span>{form.titleEn?'✓':'○'} English title</span><span>{form.titleRu?'✓':'○'} Russian title</span><span>{form.bodyEn?'✓':'○'} English description</span><span>{form.bodyRu?'✓':'○'} Russian description</span><button type='button' onClick={()=>setPreview(!preview)} className='underline'>{preview?'Hide':'Show'} draft summary</button></div>}
  {form&&preview&&<div className='space-y-3 rounded-xl border border-white/20 p-4'><p className='text-xs uppercase text-cyan-200'>Draft summary — not a public page preview</p><h3 className='text-xl font-bold'>{form.titleEn||'Untitled'}</h3><p className='whitespace-pre-wrap'>{form.bodyEn}</p><h3 className='text-xl font-bold'>{form.titleRu}</h3><p className='whitespace-pre-wrap'>{form.bodyRu}</p><p>{form.country} {form.destination}</p><p>{form.slug}</p></div>}
+ {form&&section==='video'&&youtubeId(form.youtubeUrl||'')&&<div className='max-w-xl space-y-2'><p className='text-sm text-cyan-200'>YouTube preview</p><iframe title='Video preview' className='aspect-video w-full rounded-xl' src={'https://www.youtube-nocookie.com/embed/'+youtubeId(form.youtubeUrl||'')} allowFullScreen/></div>}
  {form?<form className='grid gap-4 rounded-xl border border-white/15 p-4 sm:grid-cols-2' onSubmit={e=>{e.preventDefault();void save()}}>
  {section==='dive-trip'?<>{tripGroups.slice(0,2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}{tripGallery('stayGallery','stayCover','Accommodation photo gallery')}{tripGallery('gallery','mediaUrl','Diving photo gallery')}<div className='sm:col-span-2'>{field('videoGallery')}</div>{tripGroups.slice(2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}</>:section==='dive-site'?<>
  {diveGroups.slice(0,2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}
