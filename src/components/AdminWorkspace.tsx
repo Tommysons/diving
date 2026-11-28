@@ -41,6 +41,22 @@ export default function AdminWorkspace() {
   catch(e){setNotice(e instanceof Error?e.message:'Unable to load drafts')}
   finally{setBusy(false)}
  }
+ async function importVideo(){
+ if(!form||busy)return
+ const url=form.youtubeUrl||''
+ const id=youtubeId(url)
+ if(!id){setNotice('Enter a valid YouTube watch URL first.');return}
+ if(!form.youtubeId&&(liveVideos||[]).some(v=>v.youtubeId===id)){setNotice('This video already exists in the catalog. Open its existing entry to edit it.');return}
+ if(!window.confirm('Import YouTube metadata into this editor? Existing nonempty titles and descriptions will be preserved.'))return
+ setBusy(true);setNotice('')
+ try{
+ const r=await fetch('/api/dashboard/videos/import',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})})
+ const d=await r.json().catch(()=>null)
+ if(!r.ok||!d)throw Error(d?.error||'Import failed.')
+ setForm(old=>{if(!old||old.youtubeUrl!==url)return old;const ru=String(d.language).startsWith('ru');const titleEn=old.titleEn||(!ru?d.title:'');return {...old,titleEn,titleRu:old.titleRu||(ru?d.title:''),bodyEn:old.bodyEn||(!ru?d.description:''),bodyRu:old.bodyRu||(ru?d.description:''),slug:old.slug||videoSlug(titleEn||d.title)||id.toLowerCase(),uploadDate:d.uploadDate,duration:d.duration,thumbnailUrl:d.thumbnailUrl}})
+ setNotice('Metadata imported. Review language, descriptions and confirm the video is horizontal before publishing.')
+ }catch(e){setNotice(e instanceof Error?e.message:'Import failed')}finally{setBusy(false)}
+ }
  async function publish(status:'published'|'unpublished') {
  if(!form||busy)return
  const region=(form.country||'ocean').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')
@@ -76,6 +92,7 @@ export default function AdminWorkspace() {
  }
  function slugify(value:string){return videoSlug(value)}
  function field(key:string) {
+ if(key==='youtubeUrl'&&section==='video')return <div key={key} className='sm:col-span-2 space-y-2'><label className='block text-sm'>YouTube URL<input className={input} readOnly={!!form?.youtubeId||busy} value={form?.youtubeUrl||''} onChange={e=>change(key,e.target.value)}/></label><button type='button' disabled={busy||!form?.youtubeUrl} onClick={()=>void importVideo()} className='rounded-lg border border-cyan-200 px-4 py-2 font-semibold text-cyan-100'>Import YouTube metadata</button><p className='text-xs text-slate-300'>Manual editing remains available. Import does not publish the video.</p></div>
  if(key==='uploadDate')return <label key={key} className='block text-sm'>Upload date<input type='date' className={input+' [color-scheme:dark]'} max={new Date().toISOString().slice(0,10)} value={(form?.uploadDate||'').slice(0,10)} onChange={e=>change(key,e.target.value)} onClick={e=>{try{e.currentTarget.showPicker?.()}catch{}}}/></label>
  if(key==='duration'){
  const m=/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/.exec(form?.duration||'')
