@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Play } from 'lucide-react'
 import Link from 'next/link'
 import StoryCarousel from '@/components/StoryCarousel'
 
-import { type LokaVideo, maldivesVideos, thailandVideos, libraryVideos } from '@/lib/data/videoLibrary'
+import { type LokaVideo, maldivesVideos, thailandVideos } from '@/lib/data/videoLibrary'
 export { type LokaVideo, maldivesVideos, thailandVideos, featuredVideos } from '@/lib/data/videoLibrary'
 function VideoPlayer({video,locale}:{video:LokaVideo;locale:'en'|'ru'}) {
  const [playing,setPlaying]=useState(false)
@@ -16,15 +16,19 @@ function VideoPlayer({video,locale}:{video:LokaVideo;locale:'en'|'ru'}) {
 
 export default function LokaVideoSection({locale,videos,title}:{locale:'en'|'ru';videos:LokaVideo[];title?:string}){
  const ru=locale==='ru'
+ const [catalog,setCatalog]=useState<(LokaVideo & {slug:string;titleRu?:string})[]|null>(null)
+ useEffect(()=>{const controller=new AbortController();fetch('/api/videos/catalog',{cache:'no-store',signal:controller.signal}).then(r=>{if(!r.ok)throw Error('Catalog unavailable');return r.json()}).then(setCatalog).catch(()=>{});return()=>controller.abort()},[])
+ const visible=catalog?.filter(v=>videos===maldivesVideos?v.region==='maldives':videos===thailandVideos?v.region==='thailand':videos.some(original=>original.id===v.id)).map(v=>({...v,title:ru?v.titleRu||v.title:v.title}))||[]
+ if(!visible.length)return null
  return <section aria-label={title || (ru?'Видео LokaWndr':'LokaWndr videos')} className='mx-auto w-full max-w-[1480px] px-6 py-14 md:px-10'>
  <div className='mb-7 flex flex-wrap items-center justify-between gap-4'>
  <div><p className='mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[.2em] text-cyan-300'><Play size={15}/> LokaWndr · YouTube</p><h2 className='text-3xl font-extrabold text-white'>{title || (ru?'Видео из наших приключений':'Watch Our Ocean Adventures')}</h2></div>
  <a href='https://www.youtube.com/@lokawndr' target='_blank' rel='noopener noreferrer' className='rounded-xl border border-white/30 px-4 py-3 text-sm font-semibold text-white hover:bg-white/10'>{ru?'Все видео на YouTube':'See all on YouTube'} ↗</a>
  </div>
  <StoryCarousel autoPlay={false} locale={locale} label={title || (ru?'Видео LokaWndr':'LokaWndr videos')}>
- {videos.map(video=><article key={video.id} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.07]'>
+ {visible.map(video=><article key={video.id} className='overflow-hidden rounded-2xl border border-white/15 bg-white/[.07]'>
  <VideoPlayer video={video} locale={locale}/>
- <div className='p-4'><Link href={`${ru?'/ru':''}/videos/${libraryVideos.find(v=>v.id===video.id)?.slug ?? ''}`} className='text-sm text-cyan-200 underline'>{ru?'Страница видео':'Video page'}</Link><h3 className='font-bold leading-6 text-white'>{video.title}</h3><a href={`https://www.youtube.com/watch?v=${video.id}`} target='_blank' rel='noopener noreferrer' className='mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-cyan-200 underline underline-offset-4 hover:text-white'>{ru?'Смотреть на YouTube':'Watch on YouTube'}<span className='sr-only'>: {video.title}</span></a></div>
+ <div className='p-4'><Link href={`${ru?'/ru':''}/videos/${video.slug}`} className='text-sm text-cyan-200 underline'>{ru?'Страница видео':'Video page'}</Link><h3 className='font-bold leading-6 text-white'>{video.title}</h3><a href={`https://www.youtube.com/watch?v=${video.id}`} target='_blank' rel='noopener noreferrer' className='mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-cyan-200 underline underline-offset-4 hover:text-white'>{ru?'Смотреть на YouTube':'Watch on YouTube'}<span className='sr-only'>: {video.title}</span></a></div>
  </article>)}
  </StoryCarousel>
  {videos === thailandVideos && <div className='mt-7 rounded-2xl border border-cyan-200/20 bg-white/[.05] p-6'><h3 className='text-xl font-bold text-white'>{ru?'Исследуйте дайв-сайты Ко Тао':'Explore the Koh Tao dive sites in these videos'}</h3><p className='mt-3 max-w-3xl leading-7 text-slate-200'>{ru?'Смотрите подводные видео и читайте подробные гиды по рифам, затонувшим кораблям и подводным скалам Ко Тао.':'Go beyond the footage with first-hand guides to Koh Tao reefs, shipwrecks and underwater pinnacles.'}</p><div className='mt-4 flex flex-wrap gap-4'><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/destinations/thailand`}>{ru?'Гид по дайвингу в Таиланде':'Thailand diving guide'}</Link><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/divesites/chumphon-pinnacle`}>Chumphon Pinnacle</Link><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/divesites/sattakut-shipwreck`}>Sattakut Shipwreck</Link><Link className='font-semibold text-cyan-200 underline underline-offset-4 hover:text-white' href={`${ru?'/ru':''}/divesites/white-rock`}>White Rock</Link></div></div>}
