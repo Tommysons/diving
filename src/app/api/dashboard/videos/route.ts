@@ -19,14 +19,14 @@ export async function POST(req:NextRequest){
  const id=youtubeId(b.youtubeUrl)
  if(!id||!(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(b.slug)||libraryVideos.some(v=>v.id===id&&v.slug===b.slug))||!(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(b.region))||!validVideoDuration(b.duration)||!Number.isFinite(Date.parse(b.uploadDate))||Date.parse(b.uploadDate)>Date.now())return NextResponse.json({error:'Check video URL, slug, region, date and ISO duration'},{status:400})
  if(libraryVideos.some(v=>(v.id===id&&v.slug!==b.slug)||(v.id!==id&&v.slug===b.slug)))return NextResponse.json({error:'Existing video URL cannot change or slug is already in use'},{status:409})
+ try{
  const c=await videoCollection()
  await c.createIndex({youtubeId:1},{unique:true})
  await c.createIndex({slug:1},{unique:true})
  const values=Object.fromEntries(keys.map(k=>[k,b[k].trim()]))
- try{
  const old=await c.findOne({youtubeId:id})
  if(old&&old.slug!==b.slug)return NextResponse.json({error:'Published URL slug cannot be changed'},{status:409})
  await c.updateOne({youtubeId:id,slug:b.slug},{$set:{...values,youtubeId:id,uploadDate:new Date(b.uploadDate).toISOString(),status:b.status==='unpublished'?'unpublished':'published',updatedAt:new Date()},$setOnInsert:{createdAt:new Date()}},{upsert:true})
  return NextResponse.json({success:true})
- }catch(e){if((e as {code?:number}).code===11000)return NextResponse.json({error:'Duplicate video or slug'},{status:409});throw e}
+ }catch(e){if((e as {code?:number}).code===11000)return NextResponse.json({error:'Duplicate video or slug'},{status:409});console.error('Video publication failed',e);return NextResponse.json({error:'Unable to save video to the database. Please retry or contact the administrator.'},{status:500})}
 }
