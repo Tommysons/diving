@@ -14,6 +14,20 @@ export async function POST(req:NextRequest){
  if(!await requireAdmin())return NextResponse.json({error:'Forbidden'},{status:403})
  const b=await req.json().catch(()=>null)
  if(!b||!['published','unpublished'].includes(b.status))return NextResponse.json({error:'Invalid action'},{status:400})
+ if(b.status==='unpublished'){
+ const id=typeof b.youtubeId==='string'&&/^[A-Za-z0-9_-]{11}$/.test(b.youtubeId)?b.youtubeId:typeof b.youtubeUrl==='string'?youtubeId(b.youtubeUrl):null
+ if(!id)return NextResponse.json({error:'Select an existing published video'},{status:400})
+ try{
+ const c=await videoCollection()
+ const existing=await c.findOne({youtubeId:id})
+ if(existing){await c.updateOne({youtubeId:id},{$set:{status:'unpublished',updatedAt:new Date()}});return NextResponse.json({success:true})}
+ const legacy=libraryVideos.find(v=>v.id===id)
+ if(!legacy)return NextResponse.json({error:'Published video not found'},{status:404})
+ const seo=videoSeo[id]
+ await c.updateOne({youtubeId:id},{$set:{status:'unpublished',updatedAt:new Date()},$setOnInsert:{youtubeId:id,youtubeUrl:'https://www.youtube.com/watch?v='+id,slug:legacy.slug,titleEn:legacy.title,titleRu:legacy.title,bodyEn:seo?.en||'',bodyRu:seo?.ru||'',region:legacy.region,uploadDate:seo?.uploadDate||'',duration:seo?.duration||'',createdAt:new Date()}},{upsert:true})
+ return NextResponse.json({success:true})
+ }catch(e){console.error('Video unpublish failed',e);return NextResponse.json({error:'Unable to unpublish video. Please retry.'},{status:500})}
+ }
  const keys=['youtubeUrl','slug','titleEn','titleRu','bodyEn','bodyRu','region','uploadDate','duration'] as const
  for(const k of keys)if(typeof b[k]!=='string'||!b[k].trim()||b[k].length>5000)return NextResponse.json({error:'Invalid '+k},{status:400})
  const id=youtubeId(b.youtubeUrl)
