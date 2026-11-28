@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { youtubeId, videoSlug } from '@/lib/videoCmsValidation'
 import AdminBookings from '@/components/AdminBookings'
 
@@ -26,7 +26,7 @@ const longField = /body|itinerary|^stay(En|Ru)$|inclusions|extras|faq|videoGalle
 const input = 'w-full rounded-lg border border-white/20 bg-[#0b3045] p-3 text-white'
 export default function AdminWorkspace() {
  const [section,setSection] = useState<Kind>('bookings')
- const [liveVideos,setLiveVideos]=useState<Draft[]>([])
+ const [liveVideos,setLiveVideos]=useState<Draft[]|null>(null)
  const [rows,setRows] = useState<Draft[]>([])
  const [form,setForm] = useState<Draft|null>(null)
  const [busy,setBusy] = useState(false)
@@ -34,6 +34,7 @@ export default function AdminWorkspace() {
  const [search,setSearch] = useState('')
  const [sort,setSort] = useState('recent')
  const [preview,setPreview] = useState(false)
+ useEffect(()=>{let active=true;fetch('/api/dashboard/videos',{cache:'no-store'}).then(async r=>{if(!r.ok)throw Error('Video catalog unavailable');const data=await r.json();if(active)setLiveVideos(data)}).catch(()=>{});return()=>{active=false}},[])
  async function load() {
   setBusy(true)
   try {const r=await fetch('/api/dashboard/content',{cache:'no-store'}); if(!r.ok) throw Error('Unable to load drafts');setRows(await r.json());const v=await fetch('/api/dashboard/videos',{cache:'no-store'});if(v.ok)setLiveVideos(await v.json())}
@@ -80,7 +81,7 @@ export default function AdminWorkspace() {
  }
  return <div className='mt-8 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]'>
  <nav aria-label='Admin sections' className='flex flex-wrap gap-2 self-start rounded-xl border border-white/15 p-3 lg:flex-col'>
- {sections.map(([id,label])=><button key={id} disabled={busy} aria-current={section===id?'page':undefined} className={'rounded-lg px-4 py-3 text-left text-sm '+(section===id?'bg-cyan-100 font-semibold text-[#062536]':'hover:bg-white/10')} onClick={()=>{if(form&&!window.confirm('Discard unsaved editor changes?'))return;setSection(id);setForm(null);setNotice('');setSearch('');setPreview(false);if(id!=='bookings')void load()}}>{label}{id!=='bookings'&&<span className='ml-2 text-xs opacity-70'>{rows.filter(r=>r.kind===id).length}</span>}</button>)}
+ {sections.map(([id,label])=><button key={id} disabled={busy} aria-current={section===id?'page':undefined} className={'rounded-lg px-4 py-3 text-left text-sm '+(section===id?'bg-cyan-100 font-semibold text-[#062536]':'hover:bg-white/10')} onClick={()=>{if(form&&!window.confirm('Discard unsaved editor changes?'))return;setSection(id);setForm(null);setNotice('');setSearch('');setPreview(false);if(id!=='bookings')void load()}}>{label}{id!=='bookings'&&<span className='ml-2 text-xs opacity-70'>{id==='video'?(liveVideos===null?'…':liveVideos.filter(v=>v.status==='published').length):rows.filter(r=>r.kind===id).length}</span>}</button>)}
  </nav>
  <div className='min-w-0'>
  {section==='bookings'?<AdminBookings/>:<section className='space-y-4'>
@@ -91,7 +92,7 @@ export default function AdminWorkspace() {
  {form&&<div className='flex flex-wrap gap-3 text-sm'><span>{form.titleEn?'✓':'○'} English title</span><span>{form.titleRu?'✓':'○'} Russian title</span><span>{form.bodyEn?'✓':'○'} English description</span><span>{form.bodyRu?'✓':'○'} Russian description</span><button type='button' onClick={()=>setPreview(!preview)} className='underline'>{preview?'Hide':'Show'} draft summary</button></div>}
  {form&&preview&&<div className='space-y-3 rounded-xl border border-white/20 p-4'><p className='text-xs uppercase text-cyan-200'>Draft summary — not a public page preview</p><h3 className='text-xl font-bold'>{form.titleEn||'Untitled'}</h3><p className='whitespace-pre-wrap'>{form.bodyEn}</p><h3 className='text-xl font-bold'>{form.titleRu}</h3><p className='whitespace-pre-wrap'>{form.bodyRu}</p><p>{form.country} {form.destination}</p><p>{form.slug}</p></div>}
  {form&&section==='video'&&youtubeId(form.youtubeUrl||'')&&<div className='max-w-xl space-y-2'><p className='text-sm text-cyan-200'>YouTube preview</p><iframe title='Video preview' className='aspect-video w-full rounded-xl' src={'https://www.youtube-nocookie.com/embed/'+youtubeId(form.youtubeUrl||'')} allowFullScreen/></div>}
- {!form&&section==='video'&&<div className='space-y-2'><h3 className='font-bold'>Public video catalog</h3>{liveVideos.filter(v=>[v.titleEn,v.titleRu,v.slug].join(' ').toLowerCase().includes(search.toLowerCase())).map(v=><button key={v.youtubeId} className='block w-full rounded-xl border border-white/15 p-4 text-left' onClick={()=>{const { _id:ignored,...rest}=v;void ignored;setForm({...rest,country:v.region});setPreview(false)}}><strong>{v.titleEn}</strong><span className='ml-3 text-sm text-cyan-200'>{v.status}</span></button>)}</div>}
+ {!form&&section==='video'&&<div className='space-y-2'><h3 className='font-bold'>Public video catalog</h3>{(liveVideos||[]).filter(v=>[v.titleEn,v.titleRu,v.slug].join(' ').toLowerCase().includes(search.toLowerCase())).map(v=><button key={v.youtubeId} className='block w-full rounded-xl border border-white/15 p-4 text-left' onClick={()=>{const { _id:ignored,...rest}=v;void ignored;setForm({...rest,country:v.region});setPreview(false)}}><strong>{v.titleEn}</strong><span className='ml-3 text-sm text-cyan-200'>{v.status}</span></button>)}</div>}
  {form?<form className='grid gap-4 rounded-xl border border-white/15 p-4 sm:grid-cols-2' onSubmit={e=>{e.preventDefault();void save()}}>
  {section==='dive-trip'?<>{tripGroups.slice(0,2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}{tripGallery('stayGallery','stayCover','Accommodation photo gallery')}{tripGallery('gallery','mediaUrl','Diving photo gallery')}<div className='sm:col-span-2'>{field('videoGallery')}</div>{tripGroups.slice(2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}</>:section==='dive-site'?<>
  {diveGroups.slice(0,2).map(group=><fieldset key={group.title} className='grid gap-4 rounded-xl border border-white/15 p-4 sm:col-span-2 sm:grid-cols-2'><legend className='px-2 font-semibold'>{group.title}</legend>{group.fields.map(field)}</fieldset>)}
